@@ -1,0 +1,34 @@
+export const initialInstructionSearchState = {
+  progressStatus: '',
+  employeeName: '',
+  startDate: '',
+  endDate: '',
+  page: 1,
+  pageSize: 8
+};
+
+export const initialInstructionPageState = {
+  instructions: [],
+  currentPage: 0,
+  hasNextPage: false,
+  hasPreviousPage: false
+}
+
+export const initialInstruction = {
+  instructionNo: '',
+  employeeName: '',
+  customerName: '',
+  products: [],
+  instructionDate: '',
+  expirationDate: '',
+  progressStatus: ''
+}
+
+export const initialAddInstruction = {
+  customerNo: 0,
+  products: [],
+  instructionData: '',
+  expirationDate: '',
+  progressStatus: ''
+}
+
