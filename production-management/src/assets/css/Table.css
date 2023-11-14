@@ -1,0 +1,23 @@
+.table-container {
+  margin-top: 0.5vh;
+  width: 125vh;
+  height: 35vh;
+  border: 1px solid #D3D3D3;
+  border-top: 2px solid #0C70F2;
+  margin-bottom: 3vh;
+}
+
+.table-container.table-header {
+  font-size: 1.7vh;
+  font-weight: bold;
+}
+
+.table-container.table {
+  border-collapse: collapse;
+  border-radius: 0;
+}
+
+.table-container.title {
+  font-size: 1.7vh;
+  font-weight: bold;
+}

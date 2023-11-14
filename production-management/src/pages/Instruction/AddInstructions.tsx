@@ -1,9 +1,10 @@
+import {Component} from "react";
+import AddInstructionBar from "../../components/Instruction/AddInstructionBar";
+import AddInstructionTable from "../../components/Instruction/AddInstructionTable";
 import {Box} from "@material-ui/core";
-import React, {Component} from "react";
-import ViewProductListTable from "../../components/Product/ViewProductListTable";
-import ProductSearchBar from "../../components/Product/ProductSearchBar";
 
-class ViewProducts extends Component {
+class AddInstructions extends Component {
+
   render() {
     return (
         <>
@@ -18,7 +19,7 @@ class ViewProducts extends Component {
                 border: '1px solid #D3D3D3',
               }}
           >
-            <span style={{fontSize: '1.7vh', fontWeight: 'bold'}}>지시현황</span>
+            <span style={{fontSize: '1.7vh', fontWeight: 'bold'}}>지시등록</span>
           </Box>
           <Box
               sx={{
@@ -28,12 +29,12 @@ class ViewProducts extends Component {
                 border: '1px solid #D3D3D3'
               }}
           >
-          <ProductSearchBar/>
-          {/*<ViewProductListTable/>*/}
+            <AddInstructionBar/>
+            <AddInstructionTable/>
           </Box>
         </>
     )
   }
 }
 
-export default ViewProducts;
+export default AddInstructions;

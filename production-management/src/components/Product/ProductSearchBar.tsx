@@ -1,6 +1,6 @@
 // ProductSearchBar.tsx
 import React, {Component} from "react";
-import {Box, Button, Grid, Paper, TextField} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import {ProductsContext, Props} from "../../store/Product/products-context";
 import {ProductsState} from "../../object/Product/product-object";
 
@@ -30,49 +30,47 @@ class ProductSearchBar extends Component<{}, SearchState> {
     const state = this.context as ProductsState;
 
     return (
-        <Box component={Paper} //elevation={3}
-             sx={{
-               width: '125vh',
-               height: '13vh',
-               ml: '10vh',
-               mt: '5vh',
-               p: 0.5,
-               border: '1px solid #2b60de',
-               color: '#FFFFFF',
-             }}
+        <Box
+            sx={{
+              width: '99%',
+              height: '4vh',
+              border: '1.4px solid #D3D3D3',
+              marginBottom: '1vh',
+              marginLeft: '0.5vh'
+            }}
         >
-          <Box sx={{
-            pl: '15vh',
-            pt: '3vh'
-          }}
-          >
-            <Grid container>
-              <TextField
-                  id="productCode"
-                  label="상품 코드"
-                  defaultValue={state.search.productCode}
-                  onBlur={(e) => this.setState({productCode: e.target.value})}
-              />
-
-              <TextField
-                  // sx={{ml: '15vh'}}
-                  id="productName"
-                  label="상품 이름"
-                  defaultValue={state.search.productName}
-                  onBlur={(e) => this.setState({productName: e.target.value})}
-              />
-              <Button variant="outlined" color="primary"
-                      // sx={{
-                      //   mt: '1vh',
-                      //   ml: '15vh',
-                      //   color: "#2b60de"
-                      // }}
-                      onClick={this.handleSearchClick}
-              >
-                검색
-              </Button>
-            </Grid>
-          </Box>
+          <label>
+              <span style={{
+                marginLeft: '5vh',
+                marginRight: '0.5vh',
+                fontSize: '1.5vh',
+                fontWeight: 'bold'
+              }}>상품 코드</span>
+            <input type="text" placeholder="상품 코드"
+                   style={{height: '2vh', marginTop: '0.6vh'}}
+                   onChange={(e) => {
+                     this.setState({productCode: e.target.value})
+                   }}
+            />
+          </label>
+          <label>
+              <span style={{
+                marginLeft: '5vh',
+                marginRight: '0.5vh',
+                fontSize: '1.5vh',
+                fontWeight: 'bold'
+              }}>상품 이름</span>
+            <input type="text" placeholder="상품 이름"
+                   style={{height: '2vh', marginTop: '0.6vh', marginRight: '10vh'}}
+                   onChange={(e) => {
+                     this.setState({productCode: e.target.value})
+                   }}
+            />
+          </label>
+          <button type="submit"
+                  style={{height: '2.7vh', marginTop: '0.6vh'}}
+                  onClick={this.handleSearchClick}>검색
+          </button>
         </Box>
     )
   };

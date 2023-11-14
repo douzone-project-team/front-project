@@ -1,9 +1,11 @@
 import {Box} from "@material-ui/core";
-import React, {Component} from "react";
-import ViewProductListTable from "../../components/Product/ViewProductListTable";
-import ProductSearchBar from "../../components/Product/ProductSearchBar";
+import {Component} from "react";
+import SearchInstructionBar from "../../components/Instruction/SearchInstructionBar";
+import ViewInstructionListTable from "../../components/Instruction/ViewInstructionListTable";
+import ViewInstructionTable from "../../components/Instruction/ViewInstructionTable";
 
-class ViewProducts extends Component {
+class ViewInstructions extends Component {
+
   render() {
     return (
         <>
@@ -28,12 +30,13 @@ class ViewProducts extends Component {
                 border: '1px solid #D3D3D3'
               }}
           >
-          <ProductSearchBar/>
-          {/*<ViewProductListTable/>*/}
+            <SearchInstructionBar/>
+            <ViewInstructionListTable/>
+            <ViewInstructionTable/>
           </Box>
         </>
     )
   }
 }
 
-export default ViewProducts;
+export default ViewInstructions;
