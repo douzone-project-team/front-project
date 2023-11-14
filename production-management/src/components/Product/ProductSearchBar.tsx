@@ -63,7 +63,7 @@ class ProductSearchBar extends Component<{}, SearchState> {
             <input type="text" placeholder="상품 이름"
                    style={{height: '2vh', marginTop: '0.6vh', marginRight: '10vh'}}
                    onChange={(e) => {
-                     this.setState({productCode: e.target.value})
+                     this.setState({productName: e.target.value})
                    }}
             />
           </label>
