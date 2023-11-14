@@ -6,17 +6,18 @@ import "./../../../assets/css/Modal.css"
 import ViewProductListTable from "../../../components/Product/ViewProductListTable";
 import ProductSearchBar from "../../../components/Product/ProductSearchBar";
 import {Box} from "@material-ui/core";
+import {AddProductInstruction} from "../../../object/ProductInstruction/product-instruction-object";
 
 type ProductModalProps = {
   onClose: () => void,
   status: boolean,
-  addProduct: (addInstructionProduct: AddInstructionProduct) => void
+  addInstructionProduct: (productNo: number, amount: number) => void
 }
 
 type ProductModalState = {
   product: AddInstructionProduct
   setProduct: (product: AddInstructionProduct) => void
-  addProduct: () => void
+  addInstructionProduct: () => void
 }
 
 export class ProductModal extends Component<ProductModalProps, ProductModalState> {
@@ -30,25 +31,43 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
         productCode: '',
         amount: 0,
       },
+
       setProduct: (product: AddInstructionProduct) => {
         this.setState({product: product});
       },
 
-      addProduct: () => {
-        const {onClose, addProduct} = this.props as ProductModalProps;
-        console.log('product');
-        console.log(this.state.product);
-        addProduct(this.state.product);
+      addInstructionProduct: () => {
+        if(this.state.product.amount <= 0) {
+          alert('수량을 올바르게 입력해주세요.');
+          return;
+        }
+        
+        const {onClose, addInstructionProduct} = this.props as ProductModalProps;
+        addInstructionProduct(this.state.product.productNo, this.state.product.amount);
         onClose();
       }
     }
+  }
+
+
+  handleAmountBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const newAmount = parseInt(event.target.value, 10);
+
+    if (newAmount <= 0 || newAmount === null || newAmount === undefined) {
+      alert('수량을 올바르게 입력해주세요.');
+      return;
+    }
+
+    this.setState((prevState) => ({
+      product: {...prevState.product, amount: newAmount},
+    }));
   }
 
   render() {
     const state = this.context as ProductsState;
 
     const {onClose, status} = this.props as ProductModalProps;
-    const {product, setProduct, addProduct} = this.state;
+    const {product, setProduct, addInstructionProduct} = this.state;
 
     return (
         <div className='modal'>
@@ -106,16 +125,15 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                         fontWeight: 'bold'
                       }}>수량</span>
                         <input
-                            type="number"
-                            min={1} max={product.amount}
+                            type="text"
                             placeholder="수량"
                             style={{height: '2vh', marginTop: '0.6vh', marginRight: '2vh'}}
-                            defaultValue={product.amount.toString()} // Convert to string to display the amount
+                            onBlur={this.handleAmountBlur}
                         />
                       </label>
                       <button type="submit"
                               style={{height: '2.7vh', marginTop: '0.6vh'}}
-                              onClick={addProduct}>등록
+                              onClick={addInstructionProduct}>등록
                       </button>
                     </Box>
                 )}
