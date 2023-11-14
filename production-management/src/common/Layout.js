@@ -14,6 +14,10 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import logo from '../images/logo.png';
+import {Link} from "react-router-dom";
+import AccountMenu from "./AccountMenu";
+import {MainListItems, SecondaryListItems} from "./ListItem";
 
 const drawerWidth = 240;
 
@@ -64,6 +68,7 @@ const styles = theme => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         }),
+        background: '#333948',
     },
     drawerPaperClose: {
         overflowX: 'hidden',
@@ -95,7 +100,6 @@ const styles = theme => ({
 });
 
 
-
 class Layout extends React.Component {
     constructor(props) {
         super(props);
@@ -110,7 +114,10 @@ class Layout extends React.Component {
     };
 
     handleDrawerClose = () => {
-        this.setState({ open: false });
+        this.setState({
+            open: false,
+            isAccordionOpen: false,
+        });
     };
 
     render() {
@@ -122,10 +129,11 @@ class Layout extends React.Component {
                 <AppBar
                     position="absolute"
                     className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
+                    style={{background: 'white'}}
                 >
                     <Toolbar disableGutters={!this.state.open} className={classes.toolbar}>
                         <IconButton
-                            color="inherit"
+                            color="#858891"
                             aria-label="Open drawer"
                             onClick={this.handleDrawerOpen}
                             className={classNames(
@@ -136,16 +144,24 @@ class Layout extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography
-                            component="h1"
+                            component="div"
                             variant="h6"
                             color="inherit"
                             noWrap
+                            style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
                             className={classes.title}
                         >
-                            Dashboard
+                            <Link to='/'>
+                                <img
+                                    src={logo}
+                                    alt='logo'
+                                    style={{ height: '20px', marginRight: '10px' }}
+                                />
+                            </Link>
                         </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
+                        <AccountMenu />
+                        <IconButton color="#858891" style={{ marginLeft: '15px'}}>
+                            <Badge badgeContent={4} color="secondary" >
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
@@ -164,9 +180,9 @@ class Layout extends React.Component {
                         </IconButton>
                     </div>
                     <Divider />
-                    {/*<List>{mainListItems}</List>*/}
+                    <List><MainListItems open={this.state.open} isAccordionOpen={this.state.isAccordionOpen} onDrawerToggle={this.handleDrawerOpen}/></List>
                     <Divider />
-                    {/*<List>{secondaryListItems}</List>*/}
+                    <List><SecondaryListItems/></List>
                 </Drawer>
                 <main className={classes.content}>
                     {this.props.children}
