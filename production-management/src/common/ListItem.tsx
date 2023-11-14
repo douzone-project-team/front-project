@@ -150,7 +150,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                         <AccordionDetails>
                             <ListItem>
                                 <Button>
-                                    <ListItemText primary="지시 조회" style={iconAndTextStyles} />
+                                    <ListItemText primary="지시 현황" style={iconAndTextStyles} />
                                 </Button>
                             </ListItem>
                         </AccordionDetails>
@@ -176,7 +176,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                         <AccordionDetails>
                             <ListItem>
                                 <Button>
-                                    <ListItemText primary="출고 조회" style={iconAndTextStyles} />
+                                    <ListItemText primary="출고 현황" style={iconAndTextStyles} />
                                 </Button>
                             </ListItem>
                         </AccordionDetails>
