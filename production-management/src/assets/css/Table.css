@@ -21,3 +21,12 @@
   font-size: 1.7vh;
   font-weight: bold;
 }
+
+.cellHoverEffect {
+  transition: background-color 0.5s ease;
+}
+
+.cellHoverEffect:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
