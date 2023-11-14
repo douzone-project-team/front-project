@@ -3,20 +3,21 @@ import {Component} from "react";
 import SearchInstructionBar from "../../components/Instruction/SearchInstructionBar";
 import ViewInstructionListTable from "../../components/Instruction/ViewInstructionListTable";
 import ViewInstructionTable from "../../components/Instruction/ViewInstructionTable";
+import Layout from "../../Layout"
 
 class ViewInstructions extends Component {
 
   render() {
     return (
-        <>
+        // @ts-ignore
+        <Layout>
           <Box
               sx={{
-                width: '125vh',
+                width: '145vh',
                 height: '1.5vh',
-                ml: '10vh', // 왼쪽 마진
-                mt: '5vh', // 상단 마진
                 pt: '1vh',
-                p: '1.5vh',
+                pl: '1.5vh',
+                pb: '3vh',
                 border: '1px solid #D3D3D3',
               }}
           >
@@ -24,8 +25,7 @@ class ViewInstructions extends Component {
           </Box>
           <Box
               sx={{
-                width: '125vh',
-                ml: '10vh', // 왼쪽 마진
+                width: '145vh',
                 p: '1.5vh',
                 border: '1px solid #D3D3D3'
               }}
@@ -34,7 +34,7 @@ class ViewInstructions extends Component {
             <ViewInstructionListTable/>
             <ViewInstructionTable/>
           </Box>
-        </>
+        </Layout>
     )
   }
 }

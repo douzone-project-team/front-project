@@ -64,7 +64,7 @@ class ViewInstructionTable extends Component {
                 {list.map((row) => (
                     <TableRow key={row.instructionNo}>
                       <TableCell align="center" style={cellStyle}>{row.progressStatus}</TableCell>
-                      <TableCell align="center" style={cellStyle}
+                      <TableCell align="center" style={cellStyle} className='cellHoverEffect'
                                  onClick={() => state.getInstruction(row.instructionNo)}>{row.instructionNo}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.customerNo}</TableCell>

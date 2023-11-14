@@ -3,28 +3,32 @@ import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "
 import {InstructionsContext, Props} from "../../store/Instruction/Instructions-context";
 import {
   AddInstructionProduct,
-  InstructionsState
+  InstructionsState,
+  ProductInstruction
 } from "../../object/Instruction/Instruction-object";
 import ProductModal from "../Modal/Product/ProductModal";
 
 import "./../../assets/css/Table.css";
+import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
 
 type State = {
+  selectAll: boolean,
   productModalOpen: boolean,
   customerModalOpen: boolean,
-  product: AddInstructionProduct[],
+  product: {
+    addInstructionProduct: AddInstructionProduct,
+    check: boolean
+  }[],
   customerNo: number
 }
 
 const boldCellStyle = {
   border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-  width: '10%',
 };
 
 const cellStyle = {
   border: '1px solid #D3D3D3',
-  width: '10%',
 };
 
 class ViewInstructionTable extends Component<Props, State> {
@@ -33,11 +37,26 @@ class ViewInstructionTable extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      selectAll: false,
       productModalOpen: false,
       customerModalOpen: false,
       product: [],
       customerNo: 0
     } as State;
+  }
+
+  toggleSelectAll = () => {
+    this.setState((prevState) => {
+      const selectAll = !prevState.selectAll;
+      const updatedProducts = prevState.product.map((row) => ({
+        ...row,
+        check: selectAll,
+      }));
+      return {
+        product: updatedProducts,
+        selectAll: selectAll,
+      };
+    });
   }
 
   openProductModal = () => {
@@ -48,17 +67,43 @@ class ViewInstructionTable extends Component<Props, State> {
     this.setState({productModalOpen: false});
   }
 
-  addProducts = (addInstructionProduct: AddInstructionProduct) => {
-    console.log('addProducts 호출');
+  addInstructionProduct = (productNo: number, amount: number) => {
+    const state = this.context as InstructionsState;
+    const instructionNo = state.instruction.instructionNo;
+
+    const instruction: AddProductInstruction = {
+      instructionNo,
+      productNo,
+      amount,
+    };
+    state.addProductInstruction(instruction);
+  }
+
+
+  handleCheckboxChange = (index: number) => {
+    this.setState((prevState) => {
+      const updatedProducts = [...prevState.product];
+      updatedProducts[index] = {
+        ...updatedProducts[index],
+        check: !updatedProducts[index].check,
+      };
+      return {product: updatedProducts};
+    });
+  }
+
+  deleteSelected = () => {
     this.setState((prevState) => ({
-      product: [...prevState.product, addInstructionProduct],
+      product: prevState.product.filter((row) => !row.check),
     }));
   }
 
   render() {
     const state = this.context as InstructionsState;
-    const instruction = state.addInstruction;
-    const {product} = this.state;
+    const instruction = state.instruction;
+    const {product, selectAll} = this.state;
+    const hasSelectedItems = product.some((row) => row.check);
+
+    console.log(instruction);
 
     return (
         <>
@@ -66,63 +111,97 @@ class ViewInstructionTable extends Component<Props, State> {
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
+                  <TableCell align="center" style={{
+                    border: '1px solid #D3D3D3',
+                    fontWeight: 'bold'
+                  }}>
+                    <input
+                        type="checkbox"
+                        onChange={this.toggleSelectAll}
+                        checked={selectAll}
+                    />
+                  </TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 만료일</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 상태</TableCell>
                   <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
                   <TableCell align="center" style={boldCellStyle}>수량</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>잔량</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {product.map((row) => (
+                {instruction.products.map((row: ProductInstruction, index: number) => (
                     <TableRow>
-                      <TableCell align="center" style={cellStyle}></TableCell>
+                      <TableCell align="center" style={{
+                        border: '1px solid #D3D3D3',
+                        fontWeight: 'bold'
+                      }}>
+                        <input type="checkbox" onChange={() => this.handleCheckboxChange(index)}
+                            // defaultChecked={row.check}
+                        />
+                      </TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionData}</TableCell>
+                                 style={cellStyle}>{instruction.instructionNo}</TableCell>
+                      <TableCell align="center"
+                                 style={cellStyle}>{instruction.instructionDate}</TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.expirationDate}</TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.progressStatus}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.customerNo !== 0 ? instruction.customerNo : ''}
+                                 style={cellStyle}>{instruction.customerName !== null ? instruction.customerName : ''}
                       </TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}>{row.productCode}
-                      </TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}>{row.amount}</TableCell>
+                      <TableCell align="center" style={cellStyle}>{row.productNo}</TableCell>
+                      <TableCell align="center" style={cellStyle}>{row.productCode}</TableCell>
+                      <TableCell align="center" style={cellStyle}>{row.productName}</TableCell>
+                      <TableCell align="center" style={cellStyle}>{row.amount}</TableCell>
+
+                      <TableCell align="center" style={cellStyle}>{row.remainAmount}</TableCell>
                     </TableRow>
                 ))}
-                {instruction.customerNo ? (
+                {instruction.instructionNo ? (
                     <TableRow>
-                      <TableCell align="center" style={cellStyle}></TableCell>
+                      <TableCell align="center" style={{
+                        border: '1px solid #D3D3D3',
+                        fontWeight: 'bold'
+                      }}>
+                      </TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionData}</TableCell>
+                                 style={cellStyle}>{instruction.instructionNo}</TableCell>
+                      <TableCell align="center"
+                                 style={cellStyle}>{instruction.instructionDate}</TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.expirationDate}</TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.progressStatus}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.customerNo !== 0 ? instruction.customerNo : ''}
+                                 style={cellStyle}>{instruction.customerName !== null ? instruction.customerName : ''}
                       </TableCell>
                       <TableCell align="center" style={cellStyle}>
-                        <button onClick={this.openProductModal}>품목</button>
+                        <img src={require(`../../images/add.png`)} style={{width: '1vh'}}
+                             onClick={this.openProductModal}/>
                         <React.Fragment>
                           {this.state.productModalOpen ? (
                               <ProductModal onClose={this.closeProductModal}
                                             status={this.state.productModalOpen}
-                                            addProduct={this.addProducts}/>
+                                            addInstructionProduct={this.addInstructionProduct}/>
                           ) : null}
                         </React.Fragment>
                       </TableCell>
                       <TableCell align="center" style={cellStyle}></TableCell>
+                      <TableCell align="center" style={cellStyle}></TableCell>
+                      <TableCell align="center" style={cellStyle}></TableCell>
+                      <TableCell align="center" style={cellStyle}></TableCell>
                     </TableRow>
-                ): null}
+                ) : null}
               </TableBody>
             </Table>
           </TableContainer>
+          <button onClick={this.deleteSelected}>Delete Selected</button>
         </>
     );
   }

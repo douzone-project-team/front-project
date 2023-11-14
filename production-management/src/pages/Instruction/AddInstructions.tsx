@@ -2,20 +2,23 @@ import {Component} from "react";
 import AddInstructionBar from "../../components/Instruction/AddInstructionBar";
 import AddInstructionTable from "../../components/Instruction/AddInstructionTable";
 import {Box} from "@material-ui/core";
+import Layout from "../../Layout"
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+
 
 class AddInstructions extends Component {
 
   render() {
     return (
-        <>
+        // @ts-ignore
+        <Layout>
           <Box
               sx={{
-                width: '125vh',
+                width: '145vh',
                 height: '1.5vh',
-                ml: '10vh', // 왼쪽 마진
-                mt: '5vh', // 상단 마진
                 pt: '1vh',
-                p: '1.5vh',
+                pl: '1.5vh',
+                pb: '3vh',
                 border: '1px solid #D3D3D3',
               }}
           >
@@ -23,8 +26,7 @@ class AddInstructions extends Component {
           </Box>
           <Box
               sx={{
-                width: '125vh',
-                ml: '10vh', // 왼쪽 마진
+                width: '145vh',
                 p: '1.5vh',
                 border: '1px solid #D3D3D3'
               }}
@@ -32,7 +34,7 @@ class AddInstructions extends Component {
             <AddInstructionBar/>
             <AddInstructionTable/>
           </Box>
-        </>
+        </Layout>
     )
   }
 }

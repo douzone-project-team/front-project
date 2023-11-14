@@ -3,26 +3,40 @@ import {Component} from "react";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
 
-let SearchValue = {
+let Instruction = {
   customerNo: 0,
-  products: [],
-  instructionData: '',
+  instructionDate: '',
   expirationDate: '',
   progressStatus: ''
 };
+
+interface AddInstructionBarState {
+  showModal: boolean;
+  message: string;
+}
 
 class AddInstructionBar extends Component {
   static contextType = InstructionsContext;
 
 
   handleAddClick = () => {
-    if (!SearchValue.customerNo) {
+    if (!Instruction.customerNo) {
       alert("거래처를 입력하세요.");
       return;
     }
+    const parsedInstructionData = Instruction.instructionDate
+        ? new Date(Instruction.instructionDate)
+        : new Date();
+    const parsedExpirationDate = Instruction.expirationDate
+        ? new Date(Instruction.expirationDate)
+        : new Date();
+    parsedExpirationDate.setDate(parsedExpirationDate.getDate() + 7);
 
+    Instruction.progressStatus = Instruction.progressStatus === '' ? 'STANDBY' : Instruction.progressStatus;
+    Instruction.instructionDate = parsedInstructionData.toLocaleDateString('en-CA');
+    Instruction.expirationDate = parsedExpirationDate.toLocaleDateString('en-CA');
     const state = this.context as InstructionsState;
-    state.setAddInstruction(SearchValue.customerNo, SearchValue.instructionData, SearchValue.expirationDate, SearchValue.progressStatus);
+    state.addInstruction(Instruction);
   }
 
   render() {
@@ -48,7 +62,7 @@ class AddInstructionBar extends Component {
               <input type="text" placeholder="거래처"
                      style={{height: '2vh', marginTop: '0.6vh'}}
                      onChange={(e) => {
-                       SearchValue.customerNo = e.target.value as unknown as number
+                       Instruction.customerNo = e.target.value as unknown as number
                      }}
               />
             </label>
@@ -62,7 +76,7 @@ class AddInstructionBar extends Component {
               <input type="date"
                      style={{height: '2vh', marginTop: '0.6vh'}}
                      onChange={(e) => {
-                       SearchValue.instructionData = e.target.value
+                       Instruction.instructionDate = e.target.value
                      }}/>
               <input type="date"
                      style={{
@@ -72,7 +86,7 @@ class AddInstructionBar extends Component {
                        marginRight: '5vh'
                      }}
                      onChange={(e) => {
-                       SearchValue.expirationDate = e.target.value
+                       Instruction.expirationDate = e.target.value
                      }}/>
             </label>
             <label><span style={{
@@ -81,14 +95,13 @@ class AddInstructionBar extends Component {
               fontSize: '1.4vh',
               fontWeight: 'bold'
             }}>지시 상태</span>
-              <select name="languages" id="lang" style={{marginRight: '30vh', height: '2.5vh'}}
+              <select name="languages" id="lang" style={{marginRight: '10vh', height: '2.5vh'}}
                       onChange={(e) => {
-                        SearchValue.progressStatus = e.target.value;
-                        console.log(e.target.value);
+                        Instruction.progressStatus = e.target.value;
                       }}>
                 <option value="STANDBY">준비</option>
                 <option value="PROGRESS">진행중</option>
-                <option value="COMPLETE">완료</option>
+                <option value="COMPLETED">완료</option>
               </select>
             </label>
             <button type="submit"

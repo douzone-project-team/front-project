@@ -27,7 +27,7 @@ class SearchInstructionBar extends Component {
   renderProgressButton = (koreanStatus: string, status: string, image: string, color: string) => (
       <Button
           variant="outlined"
-          style={{width: '30.6vh', marginLeft: '0.5vh', border: '1px solid #D3D3D3'}}
+          style={{width: '34.9vh', marginLeft: '0.5vh', border: '1px solid #D3D3D3'}}
           onClick={() => this.handleSearchProgressState(status)}
       >
         <img src={require(`../../images/${image}`)} style={{width: '5vh'}} alt={koreanStatus}/>
@@ -45,9 +45,9 @@ class SearchInstructionBar extends Component {
         <>
           <Box
               sx={{
-                width: '123.5vh',
+                width: '141vh',
                 height: '4vh',
-                border: '1.4px solid #D3D3D3',
+                border: '1.5px solid #D3D3D3',
                 marginBottom: '1vh',
                 marginLeft: '0.5vh'
               }}
@@ -83,7 +83,7 @@ class SearchInstructionBar extends Component {
                        height: '2vh',
                        marginTop: '0.6vh',
                        marginLeft: '2vh',
-                       marginRight: '50vh'
+                       marginRight: '40%'
                      }}
                      onChange={(e) => {
                        searchValue.endDate = e.target.value

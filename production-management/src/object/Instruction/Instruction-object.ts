@@ -1,7 +1,8 @@
+import {AddProductInstruction} from "../ProductInstruction/product-instruction-object"
+
 export type AddInstruction = {
   customerNo: number,
-  products: AddInstructionProduct[],
-  instructionData: string,
+  instructionDate: string,
   expirationDate: string,
   progressStatus: string
 }
@@ -15,8 +16,8 @@ export type InstructionSearch = {
   pageSize: number
 }
 
-type ProductInstruction = {
-  productNo: bigint,
+export type ProductInstruction = {
+  productNo: number,
   productCode: string,
   productName: string,
   amount: number,
@@ -63,6 +64,7 @@ export type Instruction = {
   expirationDate: string,
   progressStatus: string
 }
+
 /* state - type */
 export type InstructionsState = {
   search: InstructionSearch,
@@ -73,7 +75,6 @@ export type InstructionsState = {
   setPage(page: number): void,
   getInstructionList(): void,
   getInstruction(instructionNo: string): void,
-  addInstruction: AddInstruction,
-  setAddInstruction(customerNo: number, instructionData: string, expirationDate: string, progressStatus: string): void,
-  setAddInstructionProducts(products: AddInstructionProduct): void,
+  addInstruction(addInstruction: AddInstruction): void,
+  addProductInstruction(addProductInstruction: AddProductInstruction): void,
 }

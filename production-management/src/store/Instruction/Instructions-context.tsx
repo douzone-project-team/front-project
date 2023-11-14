@@ -1,17 +1,16 @@
 import InstructionAction from "./instructions-action";
-import {
-  AddInstructionProduct,
-  InstructionsState
-} from "../../object/Instruction/Instruction-object";
+import ProductInstructionAction from "../ProductInstruction/product-instruction-action";
+import {AddInstruction, InstructionsState} from "../../object/Instruction/Instruction-object";
 import React, {Component} from "react";
 import {
-  initialAddInstruction,
   initialInstruction,
   initialInstructionPageState,
   initialInstructionSearchState
 } from "../../state/InstructionStateManagement";
+import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
 
 const instructionAction = new InstructionAction;
+const productInstructionAction = new ProductInstructionAction;
 
 export type Props = {
   children?: React.ReactNode;
@@ -31,10 +30,9 @@ export const InstructionsContext = React.createContext<InstructionsState>({
   },
   getInstruction(instructionNo: string): void {
   },
-  addInstruction: initialAddInstruction,
-  setAddInstruction(customerNo: number, instructionData: string, expirationDate: string, progressStatus: string): void {
+  addInstruction(): void {
   },
-  setAddInstructionProducts(products: AddInstructionProduct): void {
+  addProductInstruction(addProductInstruction: AddProductInstruction): void {
   },
 })
 
@@ -43,6 +41,8 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
     search: initialInstructionSearchState,
     instructionPage: initialInstructionPageState,
     instruction: initialInstruction,
+
+    /* Instruction 조회 메서드 */
     setSearch: (employeeName: string, startDate: string, endDate: string) => {
       this.setState((prevState) => ({
         search: {
@@ -69,10 +69,7 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
     },
     setPage: (page: number) => {
       this.setState((prevState) => ({
-        search: {
-          ...prevState.search,
-          page: page,
-        }
+        search: {...prevState.search, page: page}
       }), () => {
         console.log(this.state.search);
         this.getInstructionList();
@@ -89,37 +86,41 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
         this.setState({instruction: data});
       })
     },
-    addInstruction: initialAddInstruction,
-    setAddInstruction: (customerNo: number, instructionData: string, expirationDate: string, progressStatus: string) => {
-      const parsedInstructionData = instructionData
-          ? new Date(instructionData)
-          : new Date();
-      const parsedExpirationDate = expirationDate
-          ? new Date(expirationDate)
-          : new Date();
-      parsedExpirationDate.setDate(parsedExpirationDate.getDate() + 7);
+    /* Instruction 추가 메서드 */
+    addInstruction: (addInstruction: AddInstruction) => {
+      instructionAction.addInstruction(addInstruction).then((result) => {
+        this.setState((prevState) => ({
+          instruction: {
+            ...prevState.instruction,
+            instructionNo: result?.data.instructionNo,
+            customerNo: addInstruction.customerNo,
+            instructionDate: addInstruction.instructionDate,
+            expirationDate: addInstruction.expirationDate,
+            progressStatus: addInstruction.progressStatus,
+            customerName: addInstruction.customerNo as unknown as string
+          }
+        }));
+      });
+    },
+    addProductInstruction: (addProductInstruction: AddProductInstruction) => {
+      const isDuplicate = this.state.instruction.products.some(product => {
+        return product.productNo === addProductInstruction.productNo;
+      });
 
-      this.setState((prevState) => ({
-        addInstruction: {
-          ...prevState.addInstruction,
-          customerNo: customerNo,
-          instructionData: parsedInstructionData.toLocaleDateString('en-CA'),
-          expirationDate: parsedExpirationDate.toLocaleDateString('en-CA'),
-          progressStatus: progressStatus || 'STANDBY',
-        }
-      }))
-    },
-    setAddInstructionProducts: (products: AddInstructionProduct) => {
-      this.setState((prevState) => ({
-        addInstruction: {
-          ...prevState.addInstruction,
-          page: products,
-        }
-      }), () => {
-        console.log(this.state.search);
-        this.getInstructionList();
-      })
-    },
+      if (isDuplicate) {
+        alert('두 개 이상의 상품 번호가 일치합니다.');
+        return;
+      }
+
+      productInstructionAction.addProductInstruction(addProductInstruction)
+      .then((result) => {
+        instructionAction.getInstruction(this.state.instruction.instructionNo)
+        .then((result) => {
+          this.setState({instruction: result?.data})
+        })
+      });
+    }
+
   }
 
   getInstructionList = () => {
