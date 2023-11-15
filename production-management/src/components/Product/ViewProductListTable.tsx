@@ -54,7 +54,7 @@ class ViewProductListTable extends Component<Props> {
 
     return (
         <Box>
-          <TableContainer className='table-container'>
+          <TableContainer className='table-container' style={{height:'350px'}}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>

@@ -1,4 +1,7 @@
-import {AddProductInstruction} from "../ProductInstruction/product-instruction-object"
+import {
+  AddProductInstruction,
+  DeleteProductInstruction
+} from "../ProductInstruction/product-instruction-object"
 
 export type AddInstruction = {
   customerNo: number,
@@ -28,7 +31,6 @@ export type AddInstructionProduct = {
   productNo: number,
   productCode: string,
   amount: number,
-  // status: string
 }
 
 export type UpdateInstruction = {
@@ -77,4 +79,5 @@ export type InstructionsState = {
   getInstruction(instructionNo: string): void,
   addInstruction(addInstruction: AddInstruction): void,
   addProductInstruction(addProductInstruction: AddProductInstruction): void,
+  deleteProductInstruction(deleteProductInstruction: DeleteProductInstruction): void
 }

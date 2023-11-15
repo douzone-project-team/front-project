@@ -32,22 +32,21 @@ class ProductSearchBar extends Component<{}, SearchState> {
     return (
         <Box
             sx={{
-              width: '99%',
-              height: '4vh',
+              width: '770x',
+              height: '40px',
               border: '1.4px solid #D3D3D3',
-              marginBottom: '1vh',
-              marginLeft: '0.5vh'
+              marginBottom: '10px',
             }}
         >
           <label>
               <span style={{
-                marginLeft: '5vh',
-                marginRight: '0.5vh',
-                fontSize: '1.5vh',
+                marginLeft: '50px',
+                marginRight: '5px',
+                fontSize: '15px',
                 fontWeight: 'bold'
               }}>상품 코드</span>
             <input type="text" placeholder="상품 코드"
-                   style={{height: '2vh', marginTop: '0.6vh'}}
+                   style={{height: '20px', marginTop: '6px'}}
                    onChange={(e) => {
                      this.setState({productCode: e.target.value})
                    }}
@@ -55,20 +54,20 @@ class ProductSearchBar extends Component<{}, SearchState> {
           </label>
           <label>
               <span style={{
-                marginLeft: '5vh',
-                marginRight: '0.5vh',
-                fontSize: '1.5vh',
+                marginLeft: '50px',
+                marginRight: '5px',
+                fontSize: '15px',
                 fontWeight: 'bold'
               }}>상품 이름</span>
             <input type="text" placeholder="상품 이름"
-                   style={{height: '2vh', marginTop: '0.6vh', marginRight: '10vh'}}
+                   style={{height: '20px', marginTop: '6px', marginRight: '100px'}}
                    onChange={(e) => {
                      this.setState({productName: e.target.value})
                    }}
             />
           </label>
           <button type="submit"
-                  style={{height: '2.7vh', marginTop: '0.6vh'}}
+                  style={{height: '27px', marginTop: '6px'}}
                   onClick={this.handleSearchClick}>검색
           </button>
         </Box>

@@ -27,10 +27,10 @@ class SearchInstructionBar extends Component {
   renderProgressButton = (koreanStatus: string, status: string, image: string, color: string) => (
       <Button
           variant="outlined"
-          style={{width: '34.9vh', marginLeft: '0.5vh', border: '1px solid #D3D3D3'}}
+          style={{width: '24.8%', marginLeft: '2px', border: '1px solid #D3D3D3'}}
           onClick={() => this.handleSearchProgressState(status)}
       >
-        <img src={require(`../../images/${image}`)} style={{width: '5vh'}} alt={koreanStatus}/>
+        <img src={require(`../../images/${image}`)} style={{width: '50px'}} alt={koreanStatus}/>
         <span style={{fontWeight: 'bold'}}> {koreanStatus}</span>
         <br/>
         <span style={{fontWeight: 'bold', color: color, fontSize: '2vh'}}>
@@ -45,58 +45,68 @@ class SearchInstructionBar extends Component {
         <>
           <Box
               sx={{
-                width: '141vh',
-                height: '4vh',
+                width: '100%',
+                height: '40px',
                 border: '1.5px solid #D3D3D3',
-                marginBottom: '1vh',
-                marginLeft: '0.5vh'
+                marginBottom: '10px',
+                marginLeft: '2px',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center'
               }}
           >
-            <label>
+            <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
+              <label>
               <span style={{
-                marginLeft: '5vh',
-                marginRight: '0.5vh',
-                fontSize: '1.5vh',
+                marginLeft: '50px',
+                marginRight: '5px',
+                fontSize: '15px',
                 fontWeight: 'bold'
               }}>등록자</span>
-              <input type="text" placeholder="등록자"
-                     style={{height: '2vh', marginTop: '0.6vh'}}
-                     onChange={(e) => {
-                       searchValue.employeeName = e.target.value
-                     }}
-              />
-            </label>
-            <label>
+                <input type="text" placeholder="등록자"
+                       style={{height: '20px', marginRight: '100px'}}
+                       onChange={(e) => {
+                         searchValue.employeeName = e.target.value
+                       }}
+                />
+              </label>
+              <label>
               <span style={{
-                marginLeft: '5vh',
-                marginRight: '0.5vh',
-                fontSize: '1.4vh',
+                marginLeft: '5px',
+                marginRight: '5px',
+                fontSize: '14px',
                 fontWeight: 'bold'
               }}>지시일</span>
-              <input type="date"
-                     style={{height: '2vh', marginTop: '0.6vh'}}
-                     onChange={(e) => {
-                       searchValue.startDate = e.target.value
-                     }}/>
-              <input type="date"
-                     style={{
-                       height: '2vh',
-                       marginTop: '0.6vh',
-                       marginLeft: '2vh',
-                       marginRight: '40%'
-                     }}
-                     onChange={(e) => {
-                       searchValue.endDate = e.target.value
-                     }}/>
-            </label>
-            <button type="submit"
-                    style={{height: '2.7vh', marginTop: '0.6vh'}}
-                    onClick={this.handleSearchClick}>검색
-            </button>
+                <input type="date"
+                       style={{height: '20px'}}
+                       onChange={(e) => {
+                         searchValue.startDate = e.target.value
+                       }}/>
+                <input type="date"
+                       style={{
+                         height: '20px',
+                         marginLeft: '20px'
+                       }}
+                       onChange={(e) => {
+                         searchValue.endDate = e.target.value
+                       }}/>
+              </label>
+            </div>
+            <div style={{marginBottom: '7px', marginTop: '7px'}}>
+              <button type="submit"
+                      style={{
+                        height: '25px',
+                        marginRight: '10px'
+                      }}
+                      onClick={this.handleSearchClick}>검색
+              </button>
+            </div>
           </Box>
           <Box
               sx={{
-                mb: '5vh'
+                mb: '20px',
+                ml: '5px'
               }}
           >
             {this.renderProgressButton('전체', '', 'all.png', 'darkblue')}

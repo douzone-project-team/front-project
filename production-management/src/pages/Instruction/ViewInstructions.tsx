@@ -13,20 +13,23 @@ class ViewInstructions extends Component {
         <Layout>
           <Box
               sx={{
-                width: '145vh',
-                height: '1.5vh',
-                pt: '1vh',
-                pl: '1.5vh',
-                pb: '3vh',
+                width: '95%',
+                height: '15px',
+                mt: '100px',
+                ml: '50px',
+                pt: '10px',
+                pl: '15px',
+                pb: '30px',
                 border: '1px solid #D3D3D3',
               }}
           >
-            <span style={{fontSize: '1.7vh', fontWeight: 'bold'}}>지시현황</span>
+            <span style={{fontSize: '17px', fontWeight: 'bold'}}>지시현황</span>
           </Box>
           <Box
               sx={{
-                width: '145vh',
-                p: '1.5vh',
+                width: '95%',
+                p: '15px',
+                ml: '50px',
                 border: '1px solid #D3D3D3'
               }}
           >

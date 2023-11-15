@@ -7,7 +7,10 @@ import {
   initialInstructionPageState,
   initialInstructionSearchState
 } from "../../state/InstructionStateManagement";
-import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
+import {
+  AddProductInstruction,
+  DeleteProductInstruction
+} from "../../object/ProductInstruction/product-instruction-object";
 
 const instructionAction = new InstructionAction;
 const productInstructionAction = new ProductInstructionAction;
@@ -34,6 +37,8 @@ export const InstructionsContext = React.createContext<InstructionsState>({
   },
   addProductInstruction(addProductInstruction: AddProductInstruction): void {
   },
+  deleteProductInstruction(deleteProductInstruction: DeleteProductInstruction): void {
+  }
 })
 
 export class InstrcutionsContextProvider extends Component<Props, InstructionsState> {
@@ -119,8 +124,17 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
           this.setState({instruction: result?.data})
         })
       });
-    }
+    },
 
+    deleteProductInstruction: (deleteProductInstruction: DeleteProductInstruction) => {
+      productInstructionAction.deleteProductInstruction(deleteProductInstruction)
+      .then((result) => {
+        instructionAction.getInstruction(this.state.instruction.instructionNo)
+        .then((result) => {
+          this.setState({instruction: result?.data})
+        })
+      });
+    }
   }
 
   getInstructionList = () => {
