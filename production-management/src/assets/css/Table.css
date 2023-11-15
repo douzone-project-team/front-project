@@ -1,14 +1,13 @@
 .table-container {
-  margin-top: 0.5vh;
-  width: 125vh;
-  height: 35vh;
+  margin-top: 5px;
+  width: 1250px;
   border: 1px solid #D3D3D3;
   border-top: 2px solid #0C70F2;
-  margin-bottom: 3vh;
+  margin-bottom: 3px;
 }
 
 .table-container.table-header {
-  font-size: 1.7vh;
+  font-size: 17px;
   font-weight: bold;
 }
 
@@ -18,7 +17,7 @@
 }
 
 .table-container.title {
-  font-size: 1.7vh;
+  font-size: 17px;
   font-weight: bold;
 }
 

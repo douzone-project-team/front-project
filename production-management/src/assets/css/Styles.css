@@ -1,0 +1,51 @@
+body {
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  body {
+    touch-action: none;
+  }
+}
+
+body {
+  touch-action: pan-x pan-y;
+  user-select: none;
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.delete-div {
+  width: 100%;
+  animation: fadeIn 0.5s ease-in-out forwards;
+  bottom: 0;
+  height: 7vh;
+  background-color: #50596c;
+  padding: 0 20px 0 27px;
+
+  font-size: 18px;
+  color: white;
+  font-weight: 550;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
