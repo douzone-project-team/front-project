@@ -15,16 +15,16 @@ class EditProduct extends Component<RouteComponentProps> {
             component="main"
             sx={{
               flexGrow: 1,
-              height: '100vh',
+              height: '1000px',
               overflow: 'auto',
             }}
         >
           <Box
               sx={{
-                width: '125vh',
-                height: '13vh',
-                ml: '10vh',
-                mt: '5vh',
+                width: '1250px',
+                height: '130px',
+                ml: '100px',
+                mt: '50px',
                 p: 0.5,
                 color: '#FFFFFF',
               }}
