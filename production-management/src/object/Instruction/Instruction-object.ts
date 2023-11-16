@@ -1,7 +1,11 @@
+import {
+  AddProductInstruction,
+  DeleteProductInstruction
+} from "../ProductInstruction/product-instruction-object"
+
 export type AddInstruction = {
   customerNo: number,
-  products: AddInstructionProduct[],
-  instructionData: string,
+  instructionDate: string,
   expirationDate: string,
   progressStatus: string
 }
@@ -15,8 +19,8 @@ export type InstructionSearch = {
   pageSize: number
 }
 
-type ProductInstruction = {
-  productNo: bigint,
+export type ProductInstruction = {
+  productNo: number,
   productCode: string,
   productName: string,
   amount: number,
@@ -27,14 +31,6 @@ export type AddInstructionProduct = {
   productNo: number,
   productCode: string,
   amount: number,
-  // status: string
-}
-
-export type UpdateInstruction = {
-  customerNo: bigint,
-  products: ProductInstruction[],
-  instructionData: string
-  expirationDate: string
 }
 
 export type InstructionPage = {
@@ -63,17 +59,27 @@ export type Instruction = {
   expirationDate: string,
   progressStatus: string
 }
+
+export type UpdateInstruction = {
+  instructionNo: string,
+  customerNo: number,
+  instructionDate: string
+  expirationDate: string
+}
+
 /* state - type */
 export type InstructionsState = {
   search: InstructionSearch,
   instructionPage: InstructionPage,
   instruction: Instruction,
+  cleanInstruction(): void,
   setSearch(employeeName: string, startDate: string, endDate: string): void,
   setSearchProgressStatus(progressStatus: string): void,
   setPage(page: number): void,
   getInstructionList(): void,
   getInstruction(instructionNo: string): void,
-  addInstruction: AddInstruction,
-  setAddInstruction(customerNo: number, instructionData: string, expirationDate: string, progressStatus: string): void,
-  setAddInstructionProducts(products: AddInstructionProduct): void,
+  addInstruction(addInstruction: AddInstruction): void,
+  updateInstruction(): void,
+  addProductInstruction(addProductInstruction: AddProductInstruction): void,
+  deleteProductInstruction(deleteProductInstruction: DeleteProductInstruction): void
 }

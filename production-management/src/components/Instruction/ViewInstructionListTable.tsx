@@ -17,12 +17,10 @@ import "./../../assets/css/Table.css";
 const boldCellStyle = {
   border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-  width: '10%',
 };
 
 const cellStyle = {
   border: '1px solid #D3D3D3',
-  width: '10%',
 };
 
 class ViewInstructionTable extends Component {
@@ -47,7 +45,7 @@ class ViewInstructionTable extends Component {
     return (
         <>
           <span className='table-header'>지시 목록</span>
-          <TableContainer className='table-container'>
+          <TableContainer className='table-container' style={{height: '325px'}}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
@@ -64,7 +62,7 @@ class ViewInstructionTable extends Component {
                 {list.map((row) => (
                     <TableRow key={row.instructionNo}>
                       <TableCell align="center" style={cellStyle}>{row.progressStatus}</TableCell>
-                      <TableCell align="center" style={cellStyle}
+                      <TableCell align="center" style={cellStyle} className='cellHoverEffect'
                                  onClick={() => state.getInstruction(row.instructionNo)}>{row.instructionNo}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.customerNo}</TableCell>

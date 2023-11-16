@@ -28,7 +28,7 @@ class ViewInstructionTable extends Component {
           <span className='table-header'>지시 상세 :
             <span style={{color: '#0C70F2'}}>{state.instruction.instructionNo}</span>
           </span>
-          <TableContainer className='table-container'>
+          <TableContainer className='table-container' style={{height:'170px'}}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
