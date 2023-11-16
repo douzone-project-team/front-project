@@ -42,8 +42,10 @@ export type ProductsState = {
   setProductCodeAndName: (productCode: string, productName: string) => void
   setPage: (page: number) => void
   getProductList: () => void
-  getProduct: (productNo: number) => void
+  getProduct: (productNo: number) => void  
+  regiProducts: (productCode: string, productName: string, standard: string, unit: string) => void;
 }
+
 
 /* path variables */
 export type ProductPath = {

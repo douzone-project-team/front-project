@@ -3,7 +3,7 @@ import {Component} from "react";
 import SearchInstructionBar from "../../components/Instruction/SearchInstructionBar";
 import ViewInstructionListTable from "../../components/Instruction/ViewInstructionListTable";
 import ViewInstructionTable from "../../components/Instruction/ViewInstructionTable";
-import Layout from "../../Layout"
+import Layout from "../../common/Layout";
 
 class ViewInstructions extends Component {
 

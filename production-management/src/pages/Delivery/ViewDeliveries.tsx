@@ -12,11 +12,13 @@ class ViewDeliveries extends Component {
         <Layout>
           <Box
               sx={{
-                width: '1450',
+                width: '95%',
                 height: '15px',
-                  marginTop: '100px',
+                mt: '100px',
+                ml: '50px',
                 pt: '10px',
-                p: '15px',
+                pl: '15px',
+                pb: '30px',
                 border: '1px solid #D3D3D3',
               }}
           >
@@ -24,8 +26,9 @@ class ViewDeliveries extends Component {
           </Box>
           <Box
               sx={{
-                width: '1450px',
+                width: '95%',
                 p: '15px',
+                ml: '50px',
                 border: '1px solid #D3D3D3'
               }}
           >

@@ -32,21 +32,26 @@ class ProductSearchBar extends Component<{}, SearchState> {
     return (
         <Box
             sx={{
-              width: '770x',
+              width: '100%',
               height: '40px',
               border: '1.4px solid #D3D3D3',
-              marginBottom: '10px',
+              marginBottom: '20px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center'
             }}
         >
+          <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
           <label>
               <span style={{
                 marginLeft: '50px',
                 marginRight: '5px',
-                fontSize: '15px',
+                fontSize: '14px',
                 fontWeight: 'bold'
               }}>상품 코드</span>
             <input type="text" placeholder="상품 코드"
-                   style={{height: '20px', marginTop: '6px'}}
+                   style={{height: '20px'}}
                    onChange={(e) => {
                      this.setState({productCode: e.target.value})
                    }}
@@ -56,20 +61,25 @@ class ProductSearchBar extends Component<{}, SearchState> {
               <span style={{
                 marginLeft: '50px',
                 marginRight: '5px',
-                fontSize: '15px',
+                fontSize: '14px',
                 fontWeight: 'bold'
               }}>상품 이름</span>
             <input type="text" placeholder="상품 이름"
-                   style={{height: '20px', marginTop: '6px', marginRight: '100px'}}
+                   style={{height: '20px'}}
                    onChange={(e) => {
                      this.setState({productName: e.target.value})
                    }}
             />
           </label>
+
+          </div>
+          <div style={{marginTop: '7px', marginBottom: '7px'}}>
           <button type="submit"
-                  style={{height: '27px', marginTop: '6px'}}
+                  style={{ height: '25px',
+                    marginRight: '10px'}}
                   onClick={this.handleSearchClick}>검색
           </button>
+          </div>
         </Box>
     )
   };

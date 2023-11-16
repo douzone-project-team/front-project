@@ -2,7 +2,7 @@ import {Component} from "react";
 import AddInstructionBar from "../../components/Instruction/AddInstructionBar";
 import AddInstructionTable from "../../components/Instruction/AddInstructionTable";
 import {Box, Button} from "@material-ui/core";
-import Layout from "../../Layout"
+import Layout from "../../common/Layout";
 import {InstructionsContext, Props} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
 import {DeleteProductInstruction} from "../../object/ProductInstruction/product-instruction-object";

@@ -2,28 +2,31 @@ import {Box} from "@material-ui/core";
 import React, {Component} from "react";
 import ViewProductListTable from "../../components/Product/ViewProductListTable";
 import ProductSearchBar from "../../components/Product/ProductSearchBar";
+import Layout from "../../common/Layout";
 
 class ViewProducts extends Component {
   render() {
     return (
-        <>
+        <Layout>
           <Box
               sx={{
-                width: '1250px',
-                height: '15px',
-                ml: '100px', // 왼쪽 마진
-                mt: '50px', // 상단 마진
-                pt: '10px',
-                p: '15px',
+                width: '95%',
+                height: '5vh',
+                ml: '50px',
+                mt: '10vh',
+                pt: '1vh',
+                pl: '15px',
+                pb: '30px',
                 border: '1px solid #D3D3D3',
               }}
           >
-            <span style={{fontSize: '17px', fontWeight: 'bold'}}>지시현황</span>
+            <span style={{fontSize: '17px', fontWeight: 'bold'}}>상품현황</span>
           </Box>
           <Box
               sx={{
-                width: '1250px',
-                ml: '100px', // 왼쪽 마진
+                width: '95%',
+                height: '78vh',
+                ml: '50px',
                 p: '15px',
                 border: '1px solid #D3D3D3'
               }}
@@ -31,7 +34,7 @@ class ViewProducts extends Component {
           <ProductSearchBar/>
           {/*<ViewProductListTable/>*/}
           </Box>
-        </>
+        </Layout>
     )
   }
 }
