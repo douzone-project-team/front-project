@@ -14,7 +14,7 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import logo from '../images/logo.png';
+import logo from './images/logo.png';
 import {Link} from "react-router-dom";
 import AccountMenu from "./AccountMenu";
 import {MainListItems, SecondaryListItems} from "./ListItem";
@@ -85,7 +85,7 @@ const styles = theme => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing.unit * 3,
-        height: '100%',
+        height: '100vh',
         overflow: 'auto',
     },
     chartContainer: {
@@ -179,12 +179,14 @@ class Layout extends React.Component {
                             <ChevronLeftIcon />
                         </IconButton>
                     </div>
-                    <Divider />
-                    <List><MainListItems open={this.state.open} isAccordionOpen={this.state.isAccordionOpen} onDrawerToggle={this.handleDrawerOpen}/></List>
-                    <Divider />
-                    <List><SecondaryListItems/></List>
+                    <div onMouseOver={this.handleDrawerOpen} style={{width:'100%',height:'100%'}}>
+                        <Divider/>
+                        <List ><MainListItems open={this.state.open} isAccordionOpen={this.state.isAccordionOpen} onDrawerToggle={this.handleDrawerOpen}/></List>
+                        <Divider />
+                        <List><SecondaryListItems/></List>
+                    </div>
                 </Drawer>
-                <main className={classes.content}>
+                <main className={classes.content} style={{margin:0, padding:0}}>
                     {this.props.children}
                 </main>
             </div>
