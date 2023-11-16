@@ -1,3 +1,5 @@
+export type IsSuccess = boolean;
+
 export type EmployeeSearch = {
     employeeNo: number,
     name: string,
@@ -42,6 +44,7 @@ export type Image = {
 }
 
 export type EmployeeState = {
+    isSuccess: IsSuccess,
     employeeSearch: EmployeeSearch,
     employeePage: EmployeePage,
     employee: Employee,
