@@ -26,7 +26,7 @@ export type UpdateAuthEmployee = {
 export type AuthState = {
     employee: Employee,
     updateAuthEmployee: UpdateAuthEmployee,
-    regiEmployee: (employee: Employee) => void,
+    addEmployee: (employee: Employee) => void,
     deleteEmployee: (employeeNo: number) => void,
     updateEmployee: (employeeNo: number, updateAuthEmployee1: UpdateAuthEmployee) => void,
     employeeNoCheck: (employeeNo: number) => void,
