@@ -2,8 +2,11 @@ import React, {Component, useContext} from 'react';
 import AuthAction from './auth-action'
 import {AuthState, Employee, UpdateAuthEmployee} from "../../object/Auth/auth-object";
 import {initialEmployeeState, initialUpdateAuthEmployeeState} from "../../state/authStateManagement";
+import CookieManager from "../../common/CookieManager";
+import AxiosCookie from "../../common/AxiosCookie";
 
 const authAction = new AuthAction;
+const cookieManager = new CookieManager;
 
 export type Props = {
     children?: React.ReactNode;
@@ -12,7 +15,7 @@ export type Props = {
 export const AuthContext = React.createContext<AuthState>({
     employee: initialEmployeeState,
     updateAuthEmployee: initialUpdateAuthEmployeeState,
-    regiEmployee(employee: Employee): void {},
+    addEmployee(employee: Employee): void {},
     deleteEmployee(employeeNo: number): void {},
     updateEmployee(employeeNo: number, updateAuthEmployee1: UpdateAuthEmployee): void {},
     employeeNoCheck(employeeNo: number): void {},
@@ -26,7 +29,7 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         this.state = {
             employee: initialEmployeeState,
             updateAuthEmployee: initialUpdateAuthEmployeeState,
-            regiEmployee: this.regiEmployee,
+            addEmployee: this.addEmployee,
             deleteEmployee: this.deleteEmployee,
             updateEmployee: this.updateEmployee,
             employeeNoCheck: this.employeeNoCheck,
@@ -34,10 +37,11 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         };
     }
 
-    regiEmployee = (object: Employee) => {
+    addEmployee = (object: Employee) => {
         authAction.regiEmployee(object)
             .then(result => {
                 let data = result?.data;
+
                 this.setState({employee: data});
             })
     };
@@ -82,3 +86,5 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         );
     }
 }
+
+export default AuthContext;
