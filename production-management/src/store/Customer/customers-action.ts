@@ -1,14 +1,14 @@
 import Fetcher from '../fetch-action'
 import {Search} from "../../object/Customer/customer-object";
+import {InsertCustomer} from "../../object/Customer/customer-object";
 
 const fetcher = new Fetcher();
 
 class CustomerAction{
     private baseUrl : string = '/customers';
 
-    public regiCustomers(customerCode : string, customerName : string, customerTel : string){
-        const regiCusObject = {customerCode, customerName, customerTel};
-        return fetcher.POST(this.baseUrl, regiCusObject);
+    public regiCustomers(object : InsertCustomer){
+        return fetcher.POST(this.baseUrl, object);
     }
 
     public getCustomer(customerNo : number){
