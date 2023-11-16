@@ -7,8 +7,6 @@ const authAction = new AuthAction;
 
 class EmployeeAction {
 
-
-
     private baseUrl: string = '/employees';
 
     /* 로그인 */

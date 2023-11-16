@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, createContext} from 'react';
 import EmployeeAction from "./employee-action";
 import {EmployeeState, UpdateEmployee} from "../../object/Employee/employee-object";
 import {
@@ -6,16 +6,20 @@ import {
     initialEmployeePageState,
     initialEmployeeState,
     initialUpdateEmployeeState,
-    initialImageState,
+    initialImageState, initialIsSuccessState,
 } from "../../state/employeeStateMangement";
+import AxiosCookie from "../../common/AxiosCookie";
+import CookieManager from "../../common/CookieManager";
 
 const employeeAction = new EmployeeAction;
+const cookieManager = new CookieManager;
 
 export type Props = {
     children?: React.ReactNode;
 }
 
 export const EmployeeContext = React.createContext<EmployeeState>({
+    isSuccess: initialIsSuccessState,
     employeeSearch: initialEmployeeSearchState,
     employeePage: initialEmployeePageState,
     employee: initialEmployeeState,
@@ -51,6 +55,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
         super(props);
 
         this.state = {
+            isSuccess: initialIsSuccessState,
             employeeSearch: initialEmployeeSearchState,
             employeePage: initialEmployeePageState,
             employee: initialEmployeeState,
@@ -73,8 +78,14 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
     login = (id: string, password: string) => {
         employeeAction.login(id, password)
             .then(result => {
-                let data = result?.data;
-                this.setState({employee: data});
+                const data = result?.data;
+                const accessToken = data?.accessToken;
+                cookieManager.setCookie('accessToken', accessToken);
+                AxiosCookie.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+                this.setState({
+                    isSuccess: true,
+                    employee: data
+                });
             })
     }
 
@@ -82,6 +93,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
         employeeAction.logout();
     }
 
+    // 이거 수정해야함 나중에 header에 있는 token 가져와야함
     getMe = (token: string) => {
         employeeAction.getMe(token)
             .then(result => {
@@ -161,4 +173,14 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 this.setState({image: data});
             });
     }
+
+    render() {
+        return (
+            <EmployeeContext.Provider value={this.state}>
+                {this.props.children}
+            </EmployeeContext.Provider>
+        )
+    }
 }
+
+export default EmployeeContext;
