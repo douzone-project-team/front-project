@@ -29,8 +29,8 @@ class InstructionAction {
   }
 
   // 지시 수정
-  public updateInstruction(upadateInstruction: UpdateInstruction, instructionNo: bigint) {
-    const URL = `${this.baseUrl}/` + instructionNo;
+  public updateInstruction(upadateInstruction: UpdateInstruction) {
+    const URL = `${this.baseUrl}/` + upadateInstruction.instructionNo;
     return fetcher.PUT(URL, upadateInstruction);
   }
 

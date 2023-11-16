@@ -14,6 +14,7 @@ import {AddProductInstruction} from "../../object/ProductInstruction/product-ins
 type State = {
   productModalOpen: boolean,
   customerModalOpen: boolean,
+  instructionModalOpen: boolean,
   product: {
     addInstructionProduct: AddInstructionProduct
   }[],
@@ -21,7 +22,7 @@ type State = {
 }
 
 type Props = {
-  addSelectedCheckBox : (productNo: number) => void
+  addSelectedCheckBox: (productNo: number) => void
 }
 
 const boldCellStyle = {
@@ -41,6 +42,7 @@ class ViewInstructionTable extends Component<Props, State> {
     this.state = {
       productModalOpen: false,
       customerModalOpen: false,
+      instructionModalOpen: false,
       product: [],
       customerNo: 0,
     } as State;
@@ -58,12 +60,22 @@ class ViewInstructionTable extends Component<Props, State> {
     state.addProductInstruction(instruction);
   }
 
+  updateInstruction = (date: string, type: string) => {
+    const state = this.context as InstructionsState;
+    const instructionNo = state.instruction.instructionNo;
+    if(type === 'instructionDate') {
+      state.instruction.instructionDate = date;
+    }else {
+      state.instruction.expirationDate = date;
+    }
+    state.updateInstruction();
+  }
 
   render() {
     const state = this.context as InstructionsState;
     const instruction = state.instruction;
     const {product} = this.state;
-    const { addSelectedCheckBox } = this.props;
+    const {addSelectedCheckBox} = this.props;
 
     return (
         <>
@@ -128,16 +140,46 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.instructionNo}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionDate}</TableCell>
+                                 style={cellStyle}><input type='date'
+                                                          style={{
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            textAlign: 'center',
+                                                            border: 0,
+                                                            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+                                                            fontWeight: 400,
+                                                            fontSize: '0.875rem',
+                                                            marginLeft: '9px'
+                                                          }}
+                                                          defaultValue={instruction.instructionDate}
+                                                          onChange={(event => {
+                                                            this.updateInstruction(event.target.value,'');
+                                                          })}></input></TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.expirationDate}</TableCell>
+                                 style={cellStyle}><input type='date'
+                                                          style={{
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            textAlign: 'center',
+                                                            border: 0,
+                                                            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+                                                            fontWeight: 400,
+                                                            fontSize: '0.875rem',
+                                                            marginLeft: '9px'
+                                                          }}
+                                                          defaultValue={instruction.expirationDate}
+                                                          onChange={(event => {
+                                                            instruction.expirationDate = event.target.value
+                                                          })}
+                      ></input></TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.progressStatus}</TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.customerName !== null ? instruction.customerName : ''}
                       </TableCell>
                       <TableCell align="center" style={cellStyle}>
-                        <img src={require(`../../images/add.png`)} style={{width: '10px'}}
+                        <img src={require(`../../images/add.png`)} className='cellHoverEffect'
+                             style={{width: '10px'}}
                              onClick={() => this.setState({productModalOpen: true})}/>
                         <React.Fragment>
                           {this.state.productModalOpen ? (

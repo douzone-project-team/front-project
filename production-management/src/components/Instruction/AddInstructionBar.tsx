@@ -19,7 +19,7 @@ class AddInstructionBar extends Component {
   static contextType = InstructionsContext;
 
 
-  handleAddClick = () => {
+  addInstructionClick = () => {
     if (!Instruction.customerNo) {
       alert("거래처를 입력하세요.");
       return;
@@ -37,6 +37,13 @@ class AddInstructionBar extends Component {
     Instruction.expirationDate = parsedExpirationDate.toLocaleDateString('en-CA');
     const state = this.context as InstructionsState;
     state.addInstruction(Instruction);
+  }
+
+  newAddInstructionClick = () => {
+    const state = this.context as InstructionsState;
+    state.cleanInstruction();
+
+    this.addInstructionClick();
   }
 
   render() {
@@ -112,20 +119,20 @@ class AddInstructionBar extends Component {
                 </select>
               </label>
             </div>
-            {state.instruction.instructionNo === '' && (
-                <div style={{marginTop: '7px', marginBottom: '7px'}}>
-                  <button
-                      type="submit"
-                      style={{
-                        height: '25px',
-                        marginRight: '10px'
-                      }}
-                      onClick={this.handleAddClick}
-                  >
-                    지시 추가
-                  </button>
-                </div>
-            )}
+            <div style={{marginTop: '7px', marginBottom: '7px'}}>
+              {/*{state.instruction.instructionNo === '' && (*/}
+              <button
+                  type="submit"
+                  style={{
+                    height: '25px',
+                    marginRight: '10px'
+                  }}
+                  onClick={state.instruction.instructionNo === '' ? this.addInstructionClick : this.newAddInstructionClick}
+              >
+                지시 추가
+              </button>
+              {/*)}*/}
+            </div>
           </Box>
         </>
     )

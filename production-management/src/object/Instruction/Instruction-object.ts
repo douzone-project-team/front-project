@@ -33,13 +33,6 @@ export type AddInstructionProduct = {
   amount: number,
 }
 
-export type UpdateInstruction = {
-  customerNo: bigint,
-  products: ProductInstruction[],
-  instructionData: string
-  expirationDate: string
-}
-
 export type InstructionPage = {
   instructions: InstructionList[],
   currentPage: number,
@@ -67,17 +60,26 @@ export type Instruction = {
   progressStatus: string
 }
 
+export type UpdateInstruction = {
+  instructionNo: string,
+  customerNo: number,
+  instructionDate: string
+  expirationDate: string
+}
+
 /* state - type */
 export type InstructionsState = {
   search: InstructionSearch,
   instructionPage: InstructionPage,
   instruction: Instruction,
+  cleanInstruction(): void,
   setSearch(employeeName: string, startDate: string, endDate: string): void,
   setSearchProgressStatus(progressStatus: string): void,
   setPage(page: number): void,
   getInstructionList(): void,
   getInstruction(instructionNo: string): void,
   addInstruction(addInstruction: AddInstruction): void,
+  updateInstruction(): void,
   addProductInstruction(addProductInstruction: AddProductInstruction): void,
   deleteProductInstruction(deleteProductInstruction: DeleteProductInstruction): void
 }

@@ -1,6 +1,10 @@
 import InstructionAction from "./instructions-action";
 import ProductInstructionAction from "../ProductInstruction/product-instruction-action";
-import {AddInstruction, InstructionsState} from "../../object/Instruction/Instruction-object";
+import {
+  AddInstruction,
+  InstructionsState,
+  UpdateInstruction
+} from "../../object/Instruction/Instruction-object";
 import React, {Component} from "react";
 import {
   initialInstruction,
@@ -23,6 +27,8 @@ export const InstructionsContext = React.createContext<InstructionsState>({
   search: initialInstructionSearchState,
   instructionPage: initialInstructionPageState,
   instruction: initialInstruction,
+  cleanInstruction(): void {
+  },
   setSearch(employeeName: string, startDate: string, endDate: string): void {
   },
   setSearchProgressStatus(progressStatus: string): void {
@@ -35,6 +41,8 @@ export const InstructionsContext = React.createContext<InstructionsState>({
   },
   addInstruction(): void {
   },
+  updateInstruction(): void {
+  },
   addProductInstruction(addProductInstruction: AddProductInstruction): void {
   },
   deleteProductInstruction(deleteProductInstruction: DeleteProductInstruction): void {
@@ -46,7 +54,9 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
     search: initialInstructionSearchState,
     instructionPage: initialInstructionPageState,
     instruction: initialInstruction,
-
+    cleanInstruction: () => {
+      this.setState({instruction: initialInstruction})
+    },
     /* Instruction 조회 메서드 */
     setSearch: (employeeName: string, startDate: string, endDate: string) => {
       this.setState((prevState) => ({
@@ -106,6 +116,8 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
           }
         }));
       });
+    },
+    updateInstruction: () => {
     },
     addProductInstruction: (addProductInstruction: AddProductInstruction) => {
       const isDuplicate = this.state.instruction.products.some(product => {

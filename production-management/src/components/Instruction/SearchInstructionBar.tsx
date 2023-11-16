@@ -21,6 +21,7 @@ class SearchInstructionBar extends Component {
 
   handleSearchProgressState = (progressStatus: string) => {
     const state = this.context as InstructionsState;
+    state.search.page = 1;
     state.setSearchProgressStatus(progressStatus);
   }
 
