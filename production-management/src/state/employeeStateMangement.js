@@ -1,3 +1,5 @@
+export const initialIsSuccessState = false
+
 export const initialEmployeeSearchState = {
     employeeNo: 0,
     name: '',
