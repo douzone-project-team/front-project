@@ -1,5 +1,5 @@
 import Fetcher from '../fetch-action'
-import {Search} from "../../object/Customer/customer-object";
+import {Search, UpdateCustomer} from "../../object/Customer/customer-object";
 import {InsertCustomer} from "../../object/Customer/customer-object";
 
 const fetcher = new Fetcher();
@@ -21,10 +21,10 @@ class CustomerAction{
         return fetcher.GET(URL, object);
     }
 
-    public updateCustomer(customerNo : number, customerName : string, customerTel : string){
+    public updateCustomer(customerNo : number, updateCustomer : UpdateCustomer){
         const URL = `${this.baseUrl}/${customerNo}`;
-        const updateCusObject = {customerName, customerTel};
-        return fetcher.PUT(URL, updateCusObject);
+        console.log(updateCustomer);
+        return fetcher.PUT(URL, updateCustomer);
     }
 
     public deleteCustomer(customerNo : number){

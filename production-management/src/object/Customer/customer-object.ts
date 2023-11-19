@@ -40,25 +40,24 @@ export type InsertCustomer = {
 
 export type UpdateCustomer = {
     customerName : string,
-    customerTel : string
+    customerTel : string,
+    ceo : string
 }
 
-export type InsertBar = {
-    insertBar : boolean
-}
 
 export type CustomersState = {
     search: Search,
     insertCustomer: InsertCustomer
     customerPage: CustomerPage
     customer: Customer
-    insertBar: InsertBar
-    setInsertBar: (insertBar: boolean) => void
+    updateCustomer: UpdateCustomer
     setSearch: (customerCode: string, customerName: string, sector : string) => void
-    setInsertCustomer: (customerCode: string, customerName: string, customerTel: string, ceo: string, sector : string) => void
+    setInsertCustomer: (insertCustomer: InsertCustomer) => void
+    setUpdateCustomer: (customerNo: number, updateCustomer: UpdateCustomer) => void
     setPage: (page: number) => void
     getCustomerList: () => void
     getCustomer: (customerNo: number) => void
+    deleteCustomer: (customerNo: number) => void
 }
 
 export type CustomerPath = {

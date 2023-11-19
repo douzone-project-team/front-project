@@ -30,11 +30,8 @@ export const initialCustomer = {
     sector: ''
 }
 
-export const updateCustomerState = {
+export const initialUpdateCustomerState = {
     customerName: '',
-    customerTel: ''
-}
-
-export const insertBarState = {
-    insertBar: false
+    customerTel: '',
+    ceo: ''
 }
