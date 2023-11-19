@@ -69,7 +69,8 @@ class ViewCustomerListTable extends Component {
                                 <TableRow key={row.customerNo}>
                                     <TableCell align="center" style={cellStyle} className='cellHoverEffect'
                                                onClick={() => state.getCustomer(row.customerNo)}>{row.customerNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.customerCode}</TableCell>
+                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'
+                                               onClick={() => state.getCustomer(row.customerNo)}>{row.customerCode}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{row.sector}</TableCell>
                                 </TableRow>
