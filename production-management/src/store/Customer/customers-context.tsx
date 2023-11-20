@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import CustomerAction from "./customers-action";
 import {CustomersState, InsertCustomer, UpdateCustomer} from "../../object/Customer/customer-object";
 import {
+    initialCheckCustomerCode,
     initialCustomer,
-    initialCustomerPageState,
+    initialCustomerPageState, initialDuplicateCustomerCodeResult,
     initialInsertCustomerState,
     initialSearchState, initialUpdateCustomerState
 } from "../../state/customerStateManagement";
@@ -20,7 +21,13 @@ export const CustomersContext = React.createContext<CustomersState>({
     customerPage : initialCustomerPageState,
     customer : initialCustomer,
     updateCustomer : initialUpdateCustomerState,
+    duplicateCustomerCodeResult : initialDuplicateCustomerCodeResult,
+    checkCustomerCode : initialCheckCustomerCode,
     setSearch() : void{
+    },
+    setCheckCustomerCode() : void{
+    },
+    setCheckCustomerCodeDefault() : void{
     },
     setInsertCustomer() : void{
     },
@@ -43,6 +50,8 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
         customerPage: initialCustomerPageState,
         customer: initialCustomer,
         updateCustomer : initialUpdateCustomerState,
+        duplicateCustomerCodeResult : initialDuplicateCustomerCodeResult,
+        checkCustomerCode : initialCheckCustomerCode,
         setSearch: (customerCode: string, customerName : string, sector : string) => {
             this.setState((prevState) => ({
                 search: {
@@ -56,6 +65,27 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
             }
             );
         },
+
+        setCheckCustomerCodeDefault: () => {
+            this.setState(() => ({
+                duplicateCustomerCodeResult: initialDuplicateCustomerCodeResult
+            }), () => {
+
+            });
+        },
+
+        setCheckCustomerCode: (customerCode:string) => {
+            this.setState((prevState) =>({
+                checkCustomerCode: {
+                    ...prevState.checkCustomerCode,
+                    customerCode: customerCode
+                }
+            }), () => {
+                    this.duplicateCheck()
+                }
+            );
+        },
+
         setInsertCustomer: (insertCustomer: InsertCustomer) => {
             this.setState(() =>({
                 insertCustomer: insertCustomer
@@ -103,6 +133,14 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                     alert(reason);
                 })
         }
+    }
+
+    duplicateCheck = () => {
+        customerAction.duplicateCustomerCodeCheck(this.state.checkCustomerCode)
+            .then((result) => {
+                let data = result?.data;
+                this.setState({duplicateCustomerCodeResult: data});
+            })
     }
 
     insertCustomer = () => {

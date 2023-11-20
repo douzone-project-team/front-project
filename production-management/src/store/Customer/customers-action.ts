@@ -1,11 +1,16 @@
 import Fetcher from '../fetch-action'
 import {Search, UpdateCustomer} from "../../object/Customer/customer-object";
-import {InsertCustomer} from "../../object/Customer/customer-object";
+import {InsertCustomer, CheckCustomerCode} from "../../object/Customer/customer-object";
 
 const fetcher = new Fetcher();
 
 class CustomerAction{
     private baseUrl : string = '/customers';
+
+    public duplicateCustomerCodeCheck(object : CheckCustomerCode){
+        const URL = `${this.baseUrl}/customer/code/check`;
+        return fetcher.POST(URL, object);
+    }
 
     public regiCustomers(object : InsertCustomer){
         return fetcher.POST(this.baseUrl, object);
@@ -23,7 +28,6 @@ class CustomerAction{
 
     public updateCustomer(customerNo : number, updateCustomer : UpdateCustomer){
         const URL = `${this.baseUrl}/${customerNo}`;
-        console.log(updateCustomer);
         return fetcher.PUT(URL, updateCustomer);
     }
 

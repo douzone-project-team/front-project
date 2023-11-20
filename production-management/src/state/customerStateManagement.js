@@ -35,3 +35,11 @@ export const initialUpdateCustomerState = {
     customerTel: '',
     ceo: ''
 }
+
+export const initialDuplicateCustomerCodeResult = {
+    duplicateResult : false
+}
+
+export const initialCheckCustomerCode = {
+    customerCode : ''
+}
