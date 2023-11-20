@@ -93,7 +93,7 @@ class ViewCustomerTable extends Component<Props, State> {
                         </button>}
                     </div>
                 </Box>
-                <TableContainer className='table-container'>
+                <TableContainer className='table-container' style={{height:'74px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
@@ -106,14 +106,14 @@ class ViewCustomerTable extends Component<Props, State> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                                <TableRow>
-                                    <TableCell align="center" style={cellStyle}>{state.customer.customerNo !== 0 && customer.customerNo}</TableCell>
+                            {state.customer.customerNo !== 0 && <TableRow>
+                                    <TableCell align="center" style={cellStyle}>{customer.customerNo}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.customerCode}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.customerName}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.ceo}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.customerTel}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.sector}</TableCell>
-                                </TableRow>
+                                </TableRow>}
                         </TableBody>
                     </Table>
                 </TableContainer>

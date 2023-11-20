@@ -119,8 +119,8 @@ class CustomerInputBar extends Component<Props, State> {
                     <React.Fragment>
                             {this.state.customerAddModalOpen ? (
                                 <CustomerAddModal onClose={() => this.setState({customerAddModalOpen: false})}
-                                                  status={this.state.customerAddModalOpen}
-                                                  insertCustomer = {this.insertCustomer}/>
+                                                  insertCustomer = {this.insertCustomer}
+                                                  />
                             ) : null}
                     </React.Fragment>
                 </Box>
