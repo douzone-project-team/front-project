@@ -44,6 +44,14 @@ export type UpdateCustomer = {
     ceo : string
 }
 
+export type DuplicateCustomerCodeResult = {
+    duplicateResult : boolean
+}
+
+export type CheckCustomerCode = {
+    customerCode : string
+}
+
 
 export type CustomersState = {
     search: Search,
@@ -51,7 +59,11 @@ export type CustomersState = {
     customerPage: CustomerPage
     customer: Customer
     updateCustomer: UpdateCustomer
+    checkCustomerCode: CheckCustomerCode
+    duplicateCustomerCodeResult: DuplicateCustomerCodeResult
     setSearch: (customerCode: string, customerName: string, sector : string) => void
+    setCheckCustomerCodeDefault: () => void
+    setCheckCustomerCode : (customerCode: string) => void
     setInsertCustomer: (insertCustomer: InsertCustomer) => void
     setUpdateCustomer: (customerNo: number, updateCustomer: UpdateCustomer) => void
     setPage: (page: number) => void
