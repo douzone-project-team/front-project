@@ -5,6 +5,7 @@ import {
 
 export type AddInstruction = {
   customerNo: number,
+  customerName: string,
   instructionDate: string,
   expirationDate: string,
   progressStatus: string
@@ -55,6 +56,7 @@ export type Instruction = {
   employeeName: string,
   products: ProductInstruction[],
   customerName: string,
+  customerNo: number,
   instructionDate: string,
   expirationDate: string,
   progressStatus: string
@@ -79,7 +81,9 @@ export type InstructionsState = {
   getInstructionList(): void,
   getInstruction(instructionNo: string): void,
   addInstruction(addInstruction: AddInstruction): void,
-  updateInstruction(): void,
+  updateInstruction(updateInstruction: UpdateInstruction): void,
   addProductInstruction(addProductInstruction: AddProductInstruction): void,
-  deleteProductInstruction(deleteProductInstruction: DeleteProductInstruction): void
+  deleteProductInstruction(deleteProductInstruction: DeleteProductInstruction): void,
+  deleteInstruction(instructionNo: string): void,
+  updateInstructionProduct(amount: number, productNo: number): void,
 }

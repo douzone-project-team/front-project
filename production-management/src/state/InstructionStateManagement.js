@@ -18,6 +18,7 @@ export const initialInstruction = {
   instructionNo: '',
   employeeName: '',
   customerName: '',
+  customerNo: 0,
   products: [],
   instructionDate: '',
   expirationDate: '',
@@ -30,5 +31,12 @@ export const initialAddInstruction = {
   instructionData: '',
   expirationDate: '',
   progressStatus: ''
+}
+
+export const initialUpdateInstruction = {
+  instructionNo: '',
+  customerNo: 0,
+  instructionData: '',
+  expirationDate: ''
 }
 

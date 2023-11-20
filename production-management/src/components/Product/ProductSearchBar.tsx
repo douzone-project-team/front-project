@@ -42,43 +42,43 @@ class ProductSearchBar extends Component<{}, SearchState> {
               alignItems: 'center'
             }}
         >
-          <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
-          <label>
+          <div style={{width: '80%', marginBottom: '7px', marginTop: '7px'}}>
+            <label>
               <span style={{
-                marginLeft: '50px',
                 marginRight: '5px',
                 fontSize: '14px',
                 fontWeight: 'bold'
               }}>상품 코드</span>
-            <input type="text" placeholder="상품 코드"
-                   style={{height: '20px'}}
-                   onChange={(e) => {
-                     this.setState({productCode: e.target.value})
-                   }}
-            />
-          </label>
-          <label>
+              <input type="text" placeholder="상품 코드"
+                     style={{height: '20px'}}
+                     onChange={(e) => {
+                       this.setState({productCode: e.target.value})
+                     }}/>
+            </label>
+            <label>
               <span style={{
-                marginLeft: '50px',
+                marginLeft: '10px',
                 marginRight: '5px',
                 fontSize: '14px',
                 fontWeight: 'bold'
               }}>상품 이름</span>
-            <input type="text" placeholder="상품 이름"
-                   style={{height: '20px'}}
-                   onChange={(e) => {
-                     this.setState({productName: e.target.value})
-                   }}
-            />
-          </label>
+              <input type="text" placeholder="상품 이름"
+                     style={{height: '20px'}}
+                     onChange={(e) => {
+                       this.setState({productName: e.target.value})
+                     }}
+              />
+            </label>
 
           </div>
-          <div style={{marginTop: '7px', marginBottom: '7px'}}>
-          <button type="submit"
-                  style={{ height: '25px',
-                    marginRight: '10px'}}
-                  onClick={this.handleSearchClick}>검색
-          </button>
+          <div style={{width: '20%', marginTop: '7px', marginBottom: '7px'}}>
+            <button type="submit"
+                    style={{
+                      height: '25px',
+                      marginRight: '10px'
+                    }}
+                    onClick={this.handleSearchClick}>검색
+            </button>
           </div>
         </Box>
     )

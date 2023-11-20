@@ -27,7 +27,6 @@ class ProductInstructionAction {
     const URL = `${this.baseUrl}/instruction/` + deleteProductInstruction.instructionNo + `/productNo/` + deleteProductInstruction.productNo;
     return fetcher.DELETE(URL);
   }
-  
 }
 
 export default ProductInstructionAction;
