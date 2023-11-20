@@ -4,25 +4,28 @@ import {InstructionsContext} from "../../store/Instruction/Instructions-context"
 import {
   AddInstructionProduct,
   InstructionsState,
-  ProductInstruction
+  ProductInstruction,
+  UpdateInstruction
 } from "../../object/Instruction/Instruction-object";
 import ProductModal from "../Modal/Product/ProductModal";
+import CustomerModal from "../Modal/Product/CustomerModal";
 
 import "./../../assets/css/Table.css";
 import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
 
 type State = {
-  productModalOpen: boolean,
-  customerModalOpen: boolean,
-  instructionModalOpen: boolean,
   product: {
     addInstructionProduct: AddInstructionProduct
   }[],
-  customerNo: number,
 }
 
 type Props = {
   addSelectedCheckBox: (productNo: number) => void
+  productModalOpen: boolean,
+  customerModalOpen: boolean,
+  changeProductModalStatus: () => void,
+  changeCustomerModalStatus: () => void,
+  existSelectedCheckBox: (productNo: number) => boolean,
 }
 
 const boldCellStyle = {
@@ -40,18 +43,13 @@ class ViewInstructionTable extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      productModalOpen: false,
-      customerModalOpen: false,
-      instructionModalOpen: false,
       product: [],
-      customerNo: 0,
     } as State;
   }
 
   addInstructionProduct = (productNo: number, amount: number) => {
     const state = this.context as InstructionsState;
     const instructionNo = state.instruction.instructionNo;
-
     const instruction: AddProductInstruction = {
       instructionNo,
       productNo,
@@ -60,26 +58,37 @@ class ViewInstructionTable extends Component<Props, State> {
     state.addProductInstruction(instruction);
   }
 
-  updateInstruction = (date: string, type: string) => {
+  updateInstruction = (
+      changes: { instructionDate?: string; expirationDate?: string; customerNo?: number }
+  ) => {
     const state = this.context as InstructionsState;
-    const instructionNo = state.instruction.instructionNo;
-    if(type === 'instructionDate') {
-      state.instruction.instructionDate = date;
-    }else {
-      state.instruction.expirationDate = date;
-    }
-    state.updateInstruction();
-  }
+    const instruction = state.instruction;
+
+    const updateInstruction = {
+      instructionNo: instruction.instructionNo,
+      instructionDate: changes.instructionDate !== undefined ? changes.instructionDate : instruction.instructionDate,
+      expirationDate: changes.expirationDate !== undefined ? changes.expirationDate : instruction.expirationDate,
+      customerNo: changes.customerNo !== undefined ? changes.customerNo : instruction.customerNo,
+    } as UpdateInstruction;
+
+    state.updateInstruction(updateInstruction);
+  };
 
   render() {
     const state = this.context as InstructionsState;
     const instruction = state.instruction;
     const {product} = this.state;
-    const {addSelectedCheckBox} = this.props;
+    const {
+      addSelectedCheckBox,
+      changeProductModalStatus,
+      changeCustomerModalStatus,
+      productModalOpen,
+      customerModalOpen
+    } = this.props;
 
     return (
         <>
-          <TableContainer className='table-container' style={{height: '300px'}}>
+          <TableContainer className='table-container' style={{height: '650px'}}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
@@ -109,6 +118,7 @@ class ViewInstructionTable extends Component<Props, State> {
                       }}>
                         <input
                             type="checkbox"
+                            checked={this.props.existSelectedCheckBox(row.productNo)}
                             onChange={() => addSelectedCheckBox(row.productNo)}
                         />
                       </TableCell>
@@ -121,7 +131,7 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.progressStatus}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.customerName !== null ? instruction.customerName : ''}
+                                 style={cellStyle}>{instruction.customerName}
                       </TableCell>
                       <TableCell align="center" style={cellStyle}>{row.productNo}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.productCode}</TableCell>
@@ -153,7 +163,8 @@ class ViewInstructionTable extends Component<Props, State> {
                                                           }}
                                                           defaultValue={instruction.instructionDate}
                                                           onChange={(event => {
-                                                            this.updateInstruction(event.target.value,'');
+                                                            console.log('onChange');
+                                                            this.updateInstruction({instructionDate: event.target.value});
                                                           })}></input></TableCell>
                       <TableCell align="center"
                                  style={cellStyle}><input type='date'
@@ -169,25 +180,35 @@ class ViewInstructionTable extends Component<Props, State> {
                                                           }}
                                                           defaultValue={instruction.expirationDate}
                                                           onChange={(event => {
-                                                            instruction.expirationDate = event.target.value
+                                                            console.log('onChange');
+                                                            this.updateInstruction({expirationDate: event.target.value});
                                                           })}
                       ></input></TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.progressStatus}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.customerName !== null ? instruction.customerName : ''}
+                                 style={cellStyle}>
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}>
+                          <div style={{width:'99%'}}>
+                            {instruction.customerName}
+                          </div>
+                          <div style={{width:'1%'}}>
+                            <img src={require(`../../images/button/modify-button-black.png`)}
+                                 className='cellHoverEffect'
+                                 style={{width: '15px', verticalAlign: 'middle'}}
+                                 onClick={changeCustomerModalStatus}/>
+                          </div>
+                        </div>
                       </TableCell>
                       <TableCell align="center" style={cellStyle}>
-                        <img src={require(`../../images/add.png`)} className='cellHoverEffect'
-                             style={{width: '10px'}}
-                             onClick={() => this.setState({productModalOpen: true})}/>
-                        <React.Fragment>
-                          {this.state.productModalOpen ? (
-                              <ProductModal onClose={() => this.setState({productModalOpen: false})}
-                                            status={this.state.productModalOpen}
-                                            addInstructionProduct={this.addInstructionProduct}/>
-                          ) : null}
-                        </React.Fragment>
+                        <img src={require(`../../images/button/add-item-button-black.png`)}
+                             className='cellHoverEffect'
+                             style={{width: '15px', verticalAlign: 'middle'}}
+                             onClick={changeProductModalStatus}/>
                       </TableCell>
                       <TableCell align="center" style={cellStyle}></TableCell>
                       <TableCell align="center" style={cellStyle}></TableCell>
@@ -198,6 +219,20 @@ class ViewInstructionTable extends Component<Props, State> {
               </TableBody>
             </Table>
           </TableContainer>
+          <div style={{textAlign: 'center'}}>
+            <React.Fragment>
+              {productModalOpen ? (
+                  <ProductModal onClose={changeProductModalStatus}
+                                addInstructionProduct={this.addInstructionProduct}/>
+              ) : null}
+              {customerModalOpen ? (
+                  <CustomerModal onClose={changeCustomerModalStatus}
+                                 setCustomer={(customerNo: number, customerName: string) => {
+                                   this.updateInstruction({customerNo: customerNo});
+                                 }}/>
+              ) : null}
+            </React.Fragment>
+          </div>
         </>
     );
   }

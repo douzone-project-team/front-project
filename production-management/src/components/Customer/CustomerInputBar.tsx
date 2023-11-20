@@ -36,7 +36,7 @@ class CustomerInputBar extends Component {
                 {/*</Box>*/}
                 <Box
                     sx={{
-                        width: '990px',
+                        width: '100%',
                         height: '45px',
                         border: '1.4px solid #D3D3D3',
                         marginBottom: '10px',
