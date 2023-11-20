@@ -35,7 +35,7 @@ export type AddInstructionProduct = {
 }
 
 export type InstructionPage = {
-  instructions: InstructionList[],
+  list: InstructionList[],
   currentPage: number,
   hasNextPage: boolean,
   hasPreviousPage: boolean

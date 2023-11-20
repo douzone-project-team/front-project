@@ -105,10 +105,11 @@ class ViewInstructionTable extends Component<Props, State> {
           </span>
             </div>
             <div style={{width: '5%', textAlign: 'right'}}>
-              <img src={require('../../images/button/delete-button.png')}
-                   style={{width: '20px', marginRight: '10px', marginTop: '6px'}}
-                   className='cellHoverEffect'
-                   onClick={() => deleteInstruction(instruction.instructionNo)}/>
+              {instruction.progressStatus == 'STANDBY' &&
+                  <img src={require('../../images/button/delete-button.png')}
+                       style={{width: '20px', marginRight: '10px', marginTop: '6px'}}
+                       className='cellHoverEffect'
+                       onClick={() => deleteInstruction(instruction.instructionNo)}/>}
             </div>
           </div>
           <TableContainer className='table-container' style={{

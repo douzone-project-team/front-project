@@ -8,7 +8,7 @@ export const initialInstructionSearchState = {
 };
 
 export const initialInstructionPageState = {
-  instructions: [],
+  list: [],
   currentPage: 0,
   hasNextPage: false,
   hasPreviousPage: false

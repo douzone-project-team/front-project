@@ -32,7 +32,7 @@ class ViewInstructionTable extends Component<Props> {
 
   render() {
     const state = this.context as InstructionsState;
-    const list = state.instructionPage.instructions;
+    const list = state.instructionPage.list;
 
     const handleNextPage = () => {
       if (state.instructionPage.hasNextPage) {
