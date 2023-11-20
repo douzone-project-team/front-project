@@ -22,10 +22,10 @@
 }
 
 .cellHoverEffect {
-  transition: background-color 0.5s ease;
+  transition: background-color 0.3s ease;
 }
 
 .cellHoverEffect:hover {
-  background-color: #f0f0f0;
+  background-color: rgba(224, 224, 224, 0.8);
   cursor: pointer;
 }
