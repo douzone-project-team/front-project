@@ -29,9 +29,10 @@ class EmployeeAction {
     }
 
     /* Employee 상세 조회 (본인) */
-    public getMe(token: string) {
+    // TODO : token 은 header 로 보내기 때문에 body 제거 : 적용 O
+    public getMe() {
         const URL = `${this.baseUrl}/me`;
-        return fetcher.GET(URL, authAction.createTokenHeader(token))
+        return fetcher.GET(URL);
     }
 
     /* EmployeeList 조회 */

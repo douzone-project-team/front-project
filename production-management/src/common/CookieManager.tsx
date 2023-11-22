@@ -12,7 +12,8 @@ class CookieManager{
      * @param {string} value
      */
     public setCookie(name: string, value: string){
-        this.cookies.set(name, value, { maxAge: 60 * 60 * 3, path: '/' });
+        // TODO : httpOnly 추가 : 적용 O
+        this.cookies.set(name, value, { maxAge: 60 * 60 * 3, path: '/', httpOnly: true });
     }
 
     /** Key를 받아 Value를 반환

@@ -77,15 +77,22 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
 
     login = (id: string, password: string) => {
         employeeAction.login(id, password)
-            .then(result => {
+            .then((result) => {
+                // 로그인 성공시 accessToken 은 로컬에 저장, refreshToken 은 cookie 로 저장
                 const data = result?.data;
-                const accessToken = data?.accessToken;
-                cookieManager.setCookie('accessToken', accessToken);
-                AxiosCookie.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-                this.setState({
-                    isSuccess: true,
-                    employee: data
-                });
+                const {accessToken, refreshToken} = data;
+                localStorage.setItem('accessToken', accessToken);
+                cookieManager.setCookie('refreshToken', refreshToken);
+
+                // 이후 employee /me 로 접근해서 정보를 얻어와 employee에 저장후 메인 페이지로 보냄
+                // TODO : localStorage employeeNo 저장 - 적용 O
+                // TODO : employee 조회 로직 - 적용 O
+                // TODO : F5 누를경우 사용자 정보는 어떤 방식으로 유지되도록 할 것인지. - 적용 X
+                // TODO : isSuccess 필요성 체크 이후 필요없으면 제거 - 적용 X
+                this.getMe();
+                localStorage.setItem('employeeNo', this.state.employee.employeeNo as unknown as string);
+                
+                window.location.href = '/';
             })
     }
 
@@ -94,8 +101,8 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
     }
 
     // 이거 수정해야함 나중에 header에 있는 token 가져와야함
-    getMe = (token: string) => {
-        employeeAction.getMe(token)
+    getMe = () => {
+        employeeAction.getMe()
             .then(result => {
                 let data = result?.data;
                 this.setState({employee: data});
