@@ -25,26 +25,13 @@ type Props = {
   customerModalOpen: boolean,
   changeProductModalStatus: () => void,
   changeCustomerModalStatus: () => void,
-}
-
-type State = {
   changeAmount: boolean,
   changeAmountStatus: () => void,
 }
 
-class ViewInstructionTable extends Component<Props, State> {
+class ViewInstructionTable extends Component<Props> {
 
   static contextType = InstructionsContext;
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      changeAmount: false,
-      changeAmountStatus: () => {
-        this.setState({changeAmount: !this.state.changeAmount})
-      }
-    }
-  }
 
   updateInstruction = (
       changes: { instructionDate?: string; expirationDate?: string; customerNo?: number }
@@ -79,15 +66,19 @@ class ViewInstructionTable extends Component<Props, State> {
   }
 
   render() {
-    const {instruction, deleteInstruction} = this.context as InstructionsState;
-    const {changeAmount, changeAmountStatus} = this.state;
+    const {
+      instruction,
+      deleteInstruction,
+    } = this.context as InstructionsState;
 
     const list = instruction.products;
     const {
       changeProductModalStatus,
       changeCustomerModalStatus,
       productModalOpen,
-      customerModalOpen
+      customerModalOpen,
+      changeAmount,
+      changeAmountStatus
     } = this.props;
 
     return (
@@ -130,7 +121,7 @@ class ViewInstructionTable extends Component<Props, State> {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {list.map((row) => (
+                {list && list.length > 0 && list.map((row) => (
                     <TableRow>
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.customerName}</TableCell>
@@ -152,10 +143,12 @@ class ViewInstructionTable extends Component<Props, State> {
                                 {row.amount}
                               </div>
                               <div style={{width: '1%'}}>
-                                <img src={require(`../../images/button/modify-button-black.png`)}
-                                     className='cellHoverEffect'
-                                     style={{width: '15px', verticalAlign: 'middle'}}
-                                     onClick={changeAmountStatus}/>
+                                {instruction.progressStatus == 'STANDBY' ?
+                                    <img
+                                        src={require(`../../images/button/modify-button-black.png`)}
+                                        className='cellHoverEffect'
+                                        style={{width: '15px', verticalAlign: 'middle'}}
+                                        onClick={changeAmountStatus}/> : null}
                               </div>
                             </div> :
                             <input type='number' defaultValue={row.amount}
@@ -168,7 +161,7 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center" style={cellStyle}>{row.remainAmount}</TableCell>
                     </TableRow>
                 ))}
-                {instruction.instructionNo ? (
+                {(instruction.instructionNo && (instruction.progressStatus == 'STANDBY')) ? (
                     <TableRow>
                       <TableCell align="center"
                                  style={cellStyle}>
@@ -202,7 +195,6 @@ class ViewInstructionTable extends Component<Props, State> {
                                                           }}
                                                           defaultValue={instruction.instructionDate}
                                                           onChange={(event => {
-                                                            console.log('onChange');
                                                             this.updateInstruction({instructionDate: event.target.value});
                                                           })}></input></TableCell>
                       <TableCell align="center"
@@ -219,7 +211,6 @@ class ViewInstructionTable extends Component<Props, State> {
                                                           }}
                                                           defaultValue={instruction.expirationDate}
                                                           onChange={(event => {
-                                                            console.log('onChange');
                                                             this.updateInstruction({expirationDate: event.target.value});
                                                           })}
                       ></input></TableCell>

@@ -14,6 +14,9 @@ type State = {
   customerModalOpen: boolean,
   changeProductModalStatus: () => void,
   changeCustomerModalStatus: () => void,
+  changeAmount: boolean,
+  changeAmountStatus: () => void,
+  changeAmountStatusFalse: () => void,
 }
 
 class ViewInstructions extends Component<Props, State> {
@@ -33,6 +36,13 @@ class ViewInstructions extends Component<Props, State> {
       },
       changeCustomerModalStatus: () => {
         this.setState({customerModalOpen: !this.state.customerModalOpen});
+      },
+      changeAmount: false,
+      changeAmountStatus: () => {
+        this.setState({changeAmount: !this.state.changeAmount});
+      },
+      changeAmountStatusFalse: () => {
+        this.setState({changeAmount: false});
       }
     }
   }
@@ -71,7 +81,8 @@ class ViewInstructions extends Component<Props, State> {
               }}
           >
             <SearchInstructionBar/>
-            <ViewInstructionListTable tableSize={this.state.tableSize}/>
+            <ViewInstructionListTable tableSize={this.state.tableSize}
+                                      changeAmountStatusFalse={this.state.changeAmountStatusFalse}/>
             <div style={{textAlign: 'center'}}>
               <img
                   src={require(this.state.tableSize ? './../../images/button/table-size-bar-up.png' : './../../images/button/table-size-bar-down.png')}
@@ -85,7 +96,10 @@ class ViewInstructions extends Component<Props, State> {
                                   productModalOpen={this.state.productModalOpen}
                                   customerModalOpen={this.state.customerModalOpen}
                                   changeProductModalStatus={this.state.changeProductModalStatus}
-                                  changeCustomerModalStatus={this.state.changeCustomerModalStatus}/>
+                                  changeCustomerModalStatus={this.state.changeCustomerModalStatus}
+                                  changeAmount={this.state.changeAmount}
+                                  changeAmountStatus={this.state.changeAmountStatus}
+            />
           </Box>
         </Layout>
     )

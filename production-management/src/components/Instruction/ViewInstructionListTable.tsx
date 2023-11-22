@@ -24,8 +24,15 @@ const cellStyle = {
 };
 
 type Props = {
-  tableSize: boolean
+  tableSize: boolean,
+  changeAmountStatusFalse: () => void;
 }
+
+const statusMap = new Map([
+  ['STANDBY', '준비'],
+  ['PROGRESS', '진행중'],
+  ['COMPLETED', '완료']
+]);
 
 class ViewInstructionTable extends Component<Props> {
   static contextType = InstructionsContext;
@@ -66,10 +73,14 @@ class ViewInstructionTable extends Component<Props> {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {list.map((row) => (
+                {list && list.length > 0 && list.map((row) => (
                     <TableRow key={row.instructionNo} className='cellHoverEffect'
-                              onClick={() => state.getInstruction(row.instructionNo)}>
-                      <TableCell align="center" style={cellStyle}>{row.progressStatus}</TableCell>
+                              onClick={() => {
+                                state.getInstruction(row.instructionNo);
+                                this.props.changeAmountStatusFalse();
+                              }}>
+                      <TableCell align="center"
+                                 style={cellStyle}>{statusMap.get(row.progressStatus)}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.instructionNo}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.customerNo}</TableCell>

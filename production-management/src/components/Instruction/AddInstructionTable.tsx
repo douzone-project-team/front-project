@@ -37,6 +37,12 @@ const cellStyle = {
   border: '1px solid #D3D3D3',
 };
 
+const statusMap = new Map([
+  ['STANDBY', '준비'],
+  ['PROGRESS', '진행중'],
+  ['COMPLETED', '완료']
+]);
+
 class ViewInstructionTable extends Component<Props, State> {
   static contextType = InstructionsContext;
 
@@ -129,7 +135,7 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.expirationDate}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.progressStatus}</TableCell>
+                                 style={cellStyle}>{statusMap.get(instruction.progressStatus)}</TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.customerName}
                       </TableCell>
@@ -185,7 +191,7 @@ class ViewInstructionTable extends Component<Props, State> {
                                                           })}
                       ></input></TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.progressStatus}</TableCell>
+                                 style={cellStyle}>{statusMap.get(instruction.progressStatus)}</TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>
                         <div style={{
