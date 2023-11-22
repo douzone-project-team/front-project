@@ -146,7 +146,7 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {list === undefined || list.map((row) => (
+                    {list && list.length > 0 && list.map((row) => (
                         <TableRow key={row.customerNo} className='cellHoverEffect' onClick={() => this.setCustomer(row.customerNo, row.customerName)}>
                           <TableCell align="center" style={cellStyle}>
                             {row.customerNo}</TableCell>

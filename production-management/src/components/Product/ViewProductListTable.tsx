@@ -65,7 +65,7 @@ class ViewProductListTable extends Component<Props> {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {list.map((row) => (
+                {list && list.length > 0 && list.map((row) => (
                     <TableRow className='cellHoverEffect'
                               onClick={() => setProduct({
                                 productNo: row.productNo,
