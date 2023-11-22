@@ -23,7 +23,7 @@ const cellStyle = {
   border: '1px solid #D3D3D3',
 };
 
-class ViewInstructionTable extends Component {
+class   ViewInstructionTable extends Component {
   static contextType = InstructionsContext;
 
   render() {

@@ -1,88 +1,152 @@
-// ProductSearchBar.tsx
-import React, {Component} from "react";
-import {Box} from "@material-ui/core";
-import {ProductsContext, Props} from "../../store/Product/products-context";
-import {ProductsState} from "../../object/Product/product-object";
+import React, { Component } from "react";
+import { Box, Paper, Modal, Fade } from "@material-ui/core";
+import { ProductsContext, Props } from "../../store/Product/products-context";
+import { ProductsState } from "../../object/Product/product-object";
+import ModalProduct from "../Modal/Product/RegiProduct";
 
 interface SearchState {
-  productCode: string;
-  productName: string;
+    productCode: string;
+    productName: string;
+    isModalOpen?: boolean;
 }
 
 class ProductSearchBar extends Component<{}, SearchState> {
-  static contextType = ProductsContext;
+    static contextType = ProductsContext;
 
-  constructor(props: Props) {
-    super(props);
+    constructor(props: Props) {
+        super(props);
 
-    this.state = {
-      productName: '',
-      productCode: '',
+        this.state = {
+            productName: "",
+            productCode: "",
+        };
     }
-  }
 
-  handleSearchClick = () => {
-    const state = this.context as ProductsState;
-    state.setProductCodeAndName(this.state.productCode, this.state.productName);
-  };
+    handleSearchClick = () => {
+        const state = this.context as ProductsState;
+        state.setProductCodeAndName(this.state.productCode, this.state.productName);
+    };
 
-  render() {
-    const state = this.context as ProductsState;
+    handleAddClick = () => {
+        console.log(`모달 클릭됨`);
+        this.setState({
+            isModalOpen: true,
+        });
+    };
 
-    return (
-        <Box
-            sx={{
-              width: '100%',
-              height: '40px',
-              border: '1.4px solid #D3D3D3',
-              marginBottom: '20px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}
-        >
-          <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
-          <label>
-              <span style={{
-                marginLeft: '50px',
-                marginRight: '5px',
-                fontSize: '14px',
-                fontWeight: 'bold'
-              }}>상품 코드</span>
-            <input type="text" placeholder="상품 코드"
-                   style={{height: '20px'}}
-                   onChange={(e) => {
-                     this.setState({productCode: e.target.value})
-                   }}
-            />
-          </label>
-          <label>
-              <span style={{
-                marginLeft: '50px',
-                marginRight: '5px',
-                fontSize: '14px',
-                fontWeight: 'bold'
-              }}>상품 이름</span>
-            <input type="text" placeholder="상품 이름"
-                   style={{height: '20px'}}
-                   onChange={(e) => {
-                     this.setState({productName: e.target.value})
-                   }}
-            />
-          </label>
+    handleCloseModal = () => {
+        this.setState({
+            isModalOpen: false,
+        }, () => {
+            window.location.reload(); // 강제로 페이지 리로드
+        });
+    };
 
-          </div>
-          <div style={{marginTop: '7px', marginBottom: '7px'}}>
-          <button type="submit"
-                  style={{ height: '25px',
-                    marginRight: '10px'}}
-                  onClick={this.handleSearchClick}>검색
-          </button>
-          </div>
-        </Box>
-    )
-  };
+
+    render() {
+        const state = this.context as ProductsState;
+
+        return (
+            <Box
+                sx={{
+                    width: "100%",
+                    height: "40px",
+                    border: "1.4px solid #D3D3D3",
+                    marginBottom: "20px",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                }}
+            >
+                <div style={{ width: "70vw", marginBottom: "7px", marginTop: "7px" }}>
+                    <label>
+                        <span
+                            style={{
+                                marginLeft: "50px",
+                                marginRight: "5px",
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                            }}
+                        >
+                            상품 코드
+                        </span>
+                        <input
+                            type="text"
+                            placeholder="상품 코드"
+                            style={{ height: "20px" }}
+                            onChange={(e) => {
+                                this.setState({ productCode: e.target.value });
+                            }}
+                        />
+                    </label>
+                    <label>
+                        <span
+                            style={{
+                                marginLeft: "50px",
+                                marginRight: "5px",
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                            }}
+                        >
+                            상품 이름
+                        </span>
+                        <input
+                            type="text"
+                            placeholder="상품 이름"
+                            style={{ height: "20px" }}
+                            onChange={(e) => {
+                                this.setState({ productName: e.target.value });
+                            }}
+                        />
+                    </label>
+                </div>
+                <div style={{ display: "flex", marginTop: "35px", marginBottom: "35px", float: "left" }}>
+                    <button
+                        type="submit"
+                        style={{ height: "25px", marginRight: "780px", width: "45px" }}
+                        onClick={this.handleSearchClick}
+                    >
+                        검색
+                    </button>
+                    <button
+                        type="submit"
+                        style={{ height: "25px", width: "80px", marginRight: "30px" }}
+                        onClick={() => this.handleAddClick()}
+                    >
+                        품목 추가
+                    </button>
+                </div>
+
+                <Modal
+                    open={this.state.isModalOpen ?? false}
+                    onClose={this.handleCloseModal}
+                    closeAfterTransition
+                    BackdropProps={{
+                        invisible: true,
+                        timeout: 500,
+                    }}
+                    key={this.state.isModalOpen ? 'modalOpen' : 'modalClosed'} // 문자열로 key 값 지정
+                >
+                    <Fade in={this.state.isModalOpen || false}>
+                        <Paper
+                            style={{
+                                width: "400px",
+                                maxHeight: "80%",
+                                margin: "auto",
+                                border: "5",
+                                borderRadius: 0,
+                                boxShadow: "10",
+                            }}
+                        >
+                            {/* ModalProduct 모달을 포함한 내용 */}
+                            {this.state.isModalOpen && <ModalProduct handleCloseModal={this.handleCloseModal} />}
+                        </Paper>
+                    </Fade>
+                </Modal>
+            </Box>
+        );
+    }
 }
 
 export default ProductSearchBar;

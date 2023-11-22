@@ -1,6 +1,5 @@
 import {Box} from '@material-ui/core';
 import {Component} from "react";
-import EditTable from "../../components/Product/EditTable";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {ProductPath} from "../../object/Product/product-object";
 
@@ -29,7 +28,6 @@ class EditProduct extends Component<RouteComponentProps> {
                 color: '#FFFFFF',
               }}
           >
-            <EditTable/>
           </Box>
         </Box>
     );

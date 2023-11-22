@@ -79,7 +79,7 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                   <ProductSearchBar/>
                   <ViewProductListTable setProduct={setProduct}/>
                 </main>
-                {product.productNo !== 0 && (
+                 {product.productNo !== 0 && (
                     <Box
                         sx={{
                           height: '40px',

@@ -1,0 +1,73 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+
+.modal-container {
+    background: white;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    padding: 10px;
+    background: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+
+footer {
+    background : #f0f0f0;
+}
+
+.close {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 18px;
+    color: #333;
+}
+
+main {
+    width: 100%;
+    padding: 20px;
+}
+
+.form-label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.form-input {
+    height: 30px;
+    width: 180px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.form-button {
+    background-color: rgba(52, 57, 71, 0.71);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 25px;
+    width: 100%;
+}
+
+.form-button:hover {
+    background-color: rgba(52, 57, 71, 0.89);
+}
