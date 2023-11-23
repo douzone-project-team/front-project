@@ -23,12 +23,23 @@ const cellStyle = {
   border: '1px solid #D3D3D3',
 };
 
-class ViewInstructionTable extends Component {
+type Props = {
+  tableSize: boolean,
+  changeAmountStatusFalse: () => void;
+}
+
+const statusMap = new Map([
+  ['STANDBY', '준비'],
+  ['PROGRESS', '진행중'],
+  ['COMPLETED', '완료']
+]);
+
+class ViewInstructionTable extends Component<Props> {
   static contextType = InstructionsContext;
 
   render() {
     const state = this.context as InstructionsState;
-    const list = state.instructionPage.instructions;
+    const list = state.instructionPage.list;
 
     const handleNextPage = () => {
       if (state.instructionPage.hasNextPage) {
@@ -45,7 +56,10 @@ class ViewInstructionTable extends Component {
     return (
         <>
           <span className='table-header'>지시 목록</span>
-          <TableContainer className='table-container' style={{height: '325px'}}>
+          <TableContainer className='table-container' style={{
+            height: this.props.tableSize ? '330px' : '90px',
+            transition: 'height 0.3s ease-in-out'
+          }}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
@@ -59,11 +73,15 @@ class ViewInstructionTable extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {list.map((row) => (
-                    <TableRow key={row.instructionNo}>
-                      <TableCell align="center" style={cellStyle}>{row.progressStatus}</TableCell>
-                      <TableCell align="center" style={cellStyle} className='cellHoverEffect'
-                                 onClick={() => state.getInstruction(row.instructionNo)}>{row.instructionNo}</TableCell>
+                {list && list.length > 0 && list.map((row) => (
+                    <TableRow key={row.instructionNo} className='cellHoverEffect'
+                              onClick={() => {
+                                state.getInstruction(row.instructionNo);
+                                this.props.changeAmountStatusFalse();
+                              }}>
+                      <TableCell align="center"
+                                 style={cellStyle}>{statusMap.get(row.progressStatus)}</TableCell>
+                      <TableCell align="center" style={cellStyle}>{row.instructionNo}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.customerNo}</TableCell>
                       <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
@@ -80,18 +98,8 @@ class ViewInstructionTable extends Component {
                   alignItems: 'center',
                 }}
             >
-              <KeyboardArrowLeft
-                  onClick={handlePrevPage}
-                  // disabled={!state.instructionPage.hasPreviousPage}
-              >
-                이전 페이지
-              </KeyboardArrowLeft>
-              <KeyboardArrowRight
-                  onClick={handleNextPage}
-                  // disabled={!state.instructionPage.hasNextPage}
-              >
-                다음 페이지
-              </KeyboardArrowRight>
+              <KeyboardArrowLeft onClick={handlePrevPage}/>
+              <KeyboardArrowRight onClick={handleNextPage}/>
             </Box>
           </TableContainer>
         </>

@@ -35,7 +35,7 @@ class InstructionAction {
   }
 
   // 지시 삭제
-  public deleteInstruction(instructionNo: bigint) {
+  public deleteInstruction(instructionNo: string) {
     const URL = `${this.baseUrl}/` + instructionNo;
     return fetcher.DELETE(URL);
   }

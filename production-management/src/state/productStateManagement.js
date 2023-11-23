@@ -19,3 +19,9 @@ export const initialProduct = {
   standard: '',
   unit: 0
 }
+
+export const initialProductInstruction = {
+  productNo: 0,
+  remain_amount: 0,
+  amount: 0
+}

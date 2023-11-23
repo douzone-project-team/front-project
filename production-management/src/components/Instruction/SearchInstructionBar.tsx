@@ -95,13 +95,7 @@ class SearchInstructionBar extends Component {
               </label>
             </div>
             <div style={{marginBottom: '7px', marginTop: '7px'}}>
-              <button type="submit"
-                      style={{
-                        height: '25px',
-                        marginRight: '10px'
-                      }}
-                      onClick={this.handleSearchClick}>검색
-              </button>
+              <img src={require('../../images/button/search-button.png')} style={{width:'30px',marginRight: '10px',marginTop:'6px'}} className='cellHoverEffect' onClick={this.handleSearchClick}/>
             </div>
           </Box>
           <Box
