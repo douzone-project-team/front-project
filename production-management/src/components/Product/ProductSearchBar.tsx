@@ -1,39 +1,39 @@
-import React, { Component } from "react";
-import { Box, Paper, Modal, Fade } from "@material-ui/core";
-import { ProductsContext, Props } from "../../store/Product/products-context";
-import { ProductsState } from "../../object/Product/product-object";
-import ModalProduct from "../Modal/Product/RegiProduct";
+import React, {Component} from "react";
+import {Box} from "@material-ui/core";
+import {ProductsContext, Props} from "../../store/Product/products-context";
+import {ProductsState} from "../../object/Product/product-object";
 
 interface SearchState {
-    productCode: string;
-    productName: string;
-    isModalOpen?: boolean;
+  productCode: string;
+  productName: string;
+  isModalOpen?: boolean;
 }
 
 class ProductSearchBar extends Component<{}, SearchState> {
-    static contextType = ProductsContext;
+  static contextType = ProductsContext;
 
-    constructor(props: Props) {
-        super(props);
+  constructor(props: Props) {
+    super(props);
 
-        this.state = {
-            productName: "",
-            productCode: "",
-        };
-    }
-
-    handleSearchClick = () => {
-        const state = this.context as ProductsState;
-        state.setProductCodeAndName(this.state.productCode, this.state.productName);
+    this.state = {
+      productName: "",
+      productCode: "",
     };
+  }
 
-    handleAddClick = () => {
-        console.log(`모달 클릭됨`);
-        this.setState({
-            isModalOpen: true,
-        });
-    };
+  handleSearchClick = () => {
+    const state = this.context as ProductsState;
+    state.setProductCodeAndName(this.state.productCode, this.state.productName);
+  };
 
+  handleAddClick = () => {
+    console.log(`모달 클릭됨`);
+    this.setState({
+      isModalOpen: true,
+    });
+  };
+
+  render() {
     return (
         <Box
             sx={{
