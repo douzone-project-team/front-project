@@ -10,7 +10,7 @@ let searchValue = {
     endDate: '',
 };
 
-class SearchDeliveryBar extends Component{
+class SearchDeliveryBar extends Component {
     static contextType = DeliveriesContext;
 
     handleSearchClick = () => {
@@ -45,15 +45,15 @@ class SearchDeliveryBar extends Component{
             <>
                 <Box
                     sx={{
-                      width: '100%',
-                      height: '40px',
-                      border: '1.5px solid #D3D3D3',
-                      marginBottom: '10px',
-                      marginLeft: '2px',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
+                        width: '100%',
+                        height: '40px',
+                        border: '1.5px solid #D3D3D3',
+                        marginBottom: '10px',
+                        marginLeft: '2px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
                     }}
                 >
                     <label>
@@ -72,11 +72,11 @@ class SearchDeliveryBar extends Component{
                     </label>
                     <label>
               <span style={{
-                marginLeft: '5px',
-                marginRight: '5px',
-                fontSize: '14px',
-                fontWeight: 'bold'
-              }}>지시일</span>
+                  marginLeft: '5px',
+                  marginRight: '5px',
+                  fontSize: '14px',
+                  fontWeight: 'bold'
+              }}>출고일</span>
                         <input type="date"
                                style={{height: '20px'}}
 
@@ -85,33 +85,29 @@ class SearchDeliveryBar extends Component{
                                }}/>
                         <input type="date"
                                style={{
-                                 height: '20px',
-                                 marginLeft: '20px'
+                                   height: '20px',
+                                   marginLeft: '20px'
                                }}
                                onChange={(e) => {
                                    searchValue.endDate = e.target.value
                                }}/>
                     </label>
 
-                  <div style={{marginBottom: '7px', marginTop: '7px'}}>
-                    <button type="submit"
-                            style={{
-                              height: '25px',
-                              marginRight: '10px'
-                            }}
-                            onClick={this.handleSearchClick}>검색
-                    </button>
-                  </div>
+                    <div style={{marginBottom: '7px', marginTop: '7px'}}>
+                        <img src={require('../../images/button/search-button.png')}
+                             style={{width: '30px', marginRight: '10px', marginTop: '6px'}}
+                             className='cellHoverEffect' onClick={this.handleSearchClick}/>
+                    </div>
                 </Box>
-              <Box
-                  sx={{
-                    mb: '20px',
-                    ml: '5px'
-                  }}
-              >
+                <Box
+                    sx={{
+                        mb: '20px',
+                        ml: '5px'
+                    }}
+                >
                     {this.renderProgressButton('전체', '', 'all.png', 'darkblue')}
-                    {this.renderProgressButton('미완료', 'STANDBY', 'standby.png', 'gray')}
-                    {this.renderProgressButton('완료', 'COMPLETED', 'completed.png', 'forestgreen')}
+                    {this.renderProgressButton('미완료', 'INCOMPLETE', 'standby.png', 'gray')}
+                    {this.renderProgressButton('완료', 'COMPLETE', 'completed.png', 'forestgreen')}
                 </Box>
             </>
         )

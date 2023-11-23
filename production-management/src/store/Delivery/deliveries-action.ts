@@ -25,13 +25,13 @@ class DeliveriesAction {
     }
 
     // 출고 수정
-    public updateDelivery(upadateDelivery: UpdateDelivery, deliveryNo: string) {
-        const URL = `${this.baseUrl}/` + deliveryNo;
+    public updateDelivery(upadateDelivery: UpdateDelivery) {
+        const URL = `${this.baseUrl}/` + upadateDelivery.deliveryNo;
         return fetcher.PUT(URL, upadateDelivery);
     }
 
     // 출고 삭제
-    public deleteInstruction(deliveryNo: string) {
+    public deleteDelivery(deliveryNo: string) {
         const URL = `${this.baseUrl}/` + deliveryNo;
         return fetcher.DELETE(URL);
     }

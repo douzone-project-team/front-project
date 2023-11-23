@@ -8,7 +8,7 @@ export const initialDeliverySearchState = {
 };
 
 export const initialDeliveryPageState = {
-    deliveries: [],
+    list: [],
     currentPage: 0,
     hasNextPage: false,
     hasPreviousPage: false
@@ -20,6 +20,7 @@ export const initialInstructions = {
     customerName: '',
     instructionDate: '',
     expirationDate: '',
+    progressStatus: '',
     productNo: 0,
     productCode: '',
     productName: '',
@@ -35,4 +36,11 @@ export const initialDelivery = {
 
 export const initialAddDeliveryObj = {
     deliveryDate: '',
+}
+
+export const initialNewDelivery = {
+    deliveryNo: '',
+    deliveryDate: '',
+    instructions: [],
+    products: []
 }

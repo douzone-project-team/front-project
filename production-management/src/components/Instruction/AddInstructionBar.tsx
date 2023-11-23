@@ -1,53 +1,82 @@
 import {Box} from "@material-ui/core";
-import {Component} from "react";
+import React, {Component} from "react";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
+import CustomerModal from "../Modal/Product/CustomerModal";
 
-let Instruction = {
-  customerNo: 0,
-  instructionDate: '',
-  expirationDate: '',
-  progressStatus: ''
+type AddInstructionBarProps = {
+  customerSearchModalOpen: boolean,
+  changeCustomerSearchModalStatus: () => void,
 };
 
-interface AddInstructionBarState {
-  showModal: boolean;
-  message: string;
+type AddInstructionBarState = {
+  customerNo: number,
+  customerName: string,
+  instructionDate: string,
+  expirationDate: string,
+  progressStatus: string
 }
 
-class AddInstructionBar extends Component {
+class AddInstructionBar extends Component<AddInstructionBarProps, AddInstructionBarState> {
+
+  constructor(props: AddInstructionBarProps) {
+    super(props);
+    this.state = {
+      customerNo: 0,
+      customerName: '',
+      instructionDate: '',
+      expirationDate: '',
+      progressStatus: 'STANDBY'
+    }
+  }
+
   static contextType = InstructionsContext;
 
 
   addInstructionClick = () => {
-    if (!Instruction.customerNo) {
+    const state = this.context as InstructionsState;
+    const {customerName, customerNo, instructionDate, expirationDate, progressStatus} = this.state;
+    let instruction = state.instruction;
+
+    if (!customerNo) {
       alert("거래처를 입력하세요.");
       return;
     }
-    const parsedInstructionData = Instruction.instructionDate
-        ? new Date(Instruction.instructionDate)
-        : new Date();
-    const parsedExpirationDate = Instruction.expirationDate
-        ? new Date(Instruction.expirationDate)
-        : new Date();
-    parsedExpirationDate.setDate(parsedExpirationDate.getDate() + 7);
 
-    Instruction.progressStatus = Instruction.progressStatus === '' ? 'STANDBY' : Instruction.progressStatus;
-    Instruction.instructionDate = parsedInstructionData.toLocaleDateString('en-CA');
-    Instruction.expirationDate = parsedExpirationDate.toLocaleDateString('en-CA');
-    const state = this.context as InstructionsState;
-    state.addInstruction(Instruction);
-  }
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    this.setState(
+        {
+          progressStatus: instruction.progressStatus === '' ? 'STANDBY' : instruction.progressStatus,
+          instructionDate: instructionDate === '' ? new Date().toISOString().split('T')[0] : instructionDate,
+          expirationDate: expirationDate === '' ? new Date().toISOString().split('T')[0] : expirationDate,
+        },
+        () => {
+          state.addInstruction(this.state);
+        }
+    );
+  };
+
 
   newAddInstructionClick = () => {
     const state = this.context as InstructionsState;
+
     state.cleanInstruction();
 
     this.addInstructionClick();
   }
 
+  getCustomer = (customerNo: number, customerName: string) => {
+    this.setState({customerName: customerName, customerNo: customerNo});
+  }
+
   render() {
     const state = this.context as InstructionsState;
+    const {customerSearchModalOpen, changeCustomerSearchModalStatus} = this.props;
+    const {customerName, customerNo, instructionDate, expirationDate, progressStatus} = this.state;
+
+    let instruction = state.instruction;
+
     return (
         <>
           <Box
@@ -59,7 +88,7 @@ class AddInstructionBar extends Component {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
           >
             <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
@@ -71,12 +100,14 @@ class AddInstructionBar extends Component {
                 fontWeight: 'bold'
               }}>거래처</span>
                 <input type="text" placeholder="거래처"
-                       style={{height: '20px'}}
-                       defaultValue={state.instruction.customerName}
-                       onChange={(e) => {
-                         Instruction.customerNo = e.target.value as unknown as number
-                       }}
+                       style={{height: '20px', marginRight: '10px'}}
+                       value={this.state.customerName}
+                       readOnly
                 />
+                <img src={require(`../../images/button/modify-button-black.png`)}
+                     className='cellHoverEffect'
+                     style={{width: '19px', verticalAlign: 'middle'}}
+                     onClick={changeCustomerSearchModalStatus}/>
               </label>
               <label>
               <span style={{
@@ -87,9 +118,8 @@ class AddInstructionBar extends Component {
               }}>지시일</span>
                 <input type="date"
                        style={{height: '20px'}}
-                       defaultValue={state.search.startDate}
                        onChange={(e) => {
-                         Instruction.instructionDate = e.target.value
+                         this.setState({instructionDate: e.target.value})
                        }}/>
                 <input type="date"
                        style={{
@@ -97,9 +127,8 @@ class AddInstructionBar extends Component {
                          marginLeft: '20px',
                          marginRight: '50px'
                        }}
-                       defaultValue={state.search.endDate}
                        onChange={(e) => {
-                         Instruction.expirationDate = e.target.value
+                         this.setState({expirationDate: e.target.value})
                        }}/>
               </label>
               <label><span style={{
@@ -111,7 +140,7 @@ class AddInstructionBar extends Component {
                 <select name="languages" id="lang" style={{height: '25px'}}
                         defaultValue={state.search.progressStatus}
                         onChange={(e) => {
-                          Instruction.progressStatus = e.target.value;
+                          this.setState({progressStatus: e.target.value})
                         }}>
                   <option value="STANDBY">준비</option>
                   <option value="PROGRESS">진행중</option>
@@ -120,20 +149,20 @@ class AddInstructionBar extends Component {
               </label>
             </div>
             <div style={{marginTop: '7px', marginBottom: '7px'}}>
-              {/*{state.instruction.instructionNo === '' && (*/}
-              <button
-                  type="submit"
-                  style={{
-                    height: '25px',
-                    marginRight: '10px'
-                  }}
-                  onClick={state.instruction.instructionNo === '' ? this.addInstructionClick : this.newAddInstructionClick}
-              >
-                지시 추가
-              </button>
-              {/*)}*/}
+              <img src={require('../../images/button/add-button.png')}
+                   style={{width: '30px', marginRight: '10px', marginTop: '6px'}}
+                   className='cellHoverEffect'
+                   onClick={state.instruction.instructionNo === '' ? this.addInstructionClick : this.newAddInstructionClick}/>
             </div>
           </Box>
+          <div style={{textAlign: 'center'}}>
+            <React.Fragment>
+              {customerSearchModalOpen ? (
+                  <CustomerModal onClose={changeCustomerSearchModalStatus}
+                                 setCustomer={this.getCustomer}/>
+              ) : null}
+            </React.Fragment>
+          </div>
         </>
     )
   }

@@ -54,7 +54,7 @@ class ViewCustomerListTable extends Component {
         return(
             <>
                 <span className='table-header'>거래처 목록</span>
-                <TableContainer className='table-container'>
+                <TableContainer className='table-container' style={{height:'395px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
@@ -66,12 +66,11 @@ class ViewCustomerListTable extends Component {
                         </TableHead>
                         <TableBody>
                             {list === undefined || list.map((row) => (
-                                <TableRow key={row.customerNo}>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'
-                                               onClick={() => state.getCustomer(row.customerNo)}>{row.customerNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.customerCode}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.sector}</TableCell>
+                                <TableRow key={row.customerNo} onClick={() => state.getCustomer(row.customerNo)}>
+                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerNo}</TableCell>
+                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerCode}</TableCell>
+                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerName}</TableCell>
+                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.sector}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

@@ -8,8 +8,15 @@ import {InstructionsState} from "../../object/Instruction/Instruction-object";
 import {DeleteProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
 import "../../assets/css/Styles.css";
 
+
 type State = {
   selectedCheckBoxs: number[],
+  productModalOpen: boolean,
+  customerModalOpen: boolean,
+  customerSearchModalOpen: boolean,
+  changeProductModalStatus: () => void,
+  changeCustomerModalStatus: () => void,
+  changeCustomerSearchModalStatus: () => void,
 }
 
 class AddInstructions extends Component<Props, State> {
@@ -19,8 +26,25 @@ class AddInstructions extends Component<Props, State> {
     super(props);
     this.state = {
       selectedCheckBoxs: [],
+      productModalOpen: false,
+      customerModalOpen: false,
+      customerSearchModalOpen: false,
+      changeProductModalStatus: () => {
+        this.setState({productModalOpen: !this.state.productModalOpen});
+      },
+      changeCustomerModalStatus: () => {
+        this.setState({customerModalOpen: !this.state.customerModalOpen});
+      },
+      changeCustomerSearchModalStatus: () => {
+        this.setState({customerSearchModalOpen: !this.state.customerSearchModalOpen});
+      }
     }
   }
+
+  componentDidMount() {
+    const state = this.context as InstructionsState;
+    state.cleanInstruction();
+  };
 
   deleteSelectedCheckBox = () => {
     const state = this.context as InstructionsState;
@@ -50,10 +74,14 @@ class AddInstructions extends Component<Props, State> {
         selectedCheckBoxs: updatedChecks,
       };
     });
+  };
+
+  existSelectedCheckBox = (productNo: number) => {
+    return this.state.selectedCheckBoxs.filter((num) => num == productNo).length > 0;
   }
 
   render() {
-    const {selectedCheckBoxs} = this.state;
+    const {selectedCheckBoxs, productModalOpen, customerModalOpen, customerSearchModalOpen} = this.state;
     let isChecksNotEmpty = selectedCheckBoxs.length != 0;
 
     return (
@@ -82,9 +110,15 @@ class AddInstructions extends Component<Props, State> {
                 border: '1px solid #D3D3D3'
               }}
           >
-            <AddInstructionBar/>
-            <AddInstructionTable addSelectedCheckBox={this.addSelectedCheckBox}/>
-            <div style={{height:'200px'}}></div>
+            <AddInstructionBar customerSearchModalOpen={customerSearchModalOpen}
+                               changeCustomerSearchModalStatus={this.state.changeCustomerSearchModalStatus}/>
+            <AddInstructionTable addSelectedCheckBox={this.addSelectedCheckBox}
+                                 productModalOpen={productModalOpen}
+                                 customerModalOpen={customerModalOpen}
+                                 changeProductModalStatus={this.state.changeProductModalStatus}
+                                 changeCustomerModalStatus={this.state.changeCustomerModalStatus}
+                                 existSelectedCheckBox={this.existSelectedCheckBox}
+            />
           </Box>
           {isChecksNotEmpty &&
               <div className='delete-div'>

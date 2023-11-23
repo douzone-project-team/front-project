@@ -1,9 +1,18 @@
 import React, {Component} from "react";
-import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 
 import "./../../assets/css/Table.css";
 import {CustomersContext} from "../../store/Customer/customers-context";
-import {CustomersState} from "../../object/Customer/customer-object";
+import {CustomersState, UpdateCustomer} from "../../object/Customer/customer-object";
+import CustomerModifyModal from "../Modal/Customer/CustomerModifyModal";
+
+type State = {
+    customerModifyModalOpen: boolean
+}
+
+type Props = {
+
+}
 
 const boldCellStyle = {
     border: '1px solid #D3D3D3',
@@ -16,19 +25,75 @@ const cellStyle = {
     width: '10%',
 };
 
-class ViewCustomerTable extends Component {
+class ViewCustomerTable extends Component<Props, State> {
     static contextType = CustomersContext;
+
+    handleDeleteClick = (customerNo:number) => {
+        const state = this.context as CustomersState;
+        state.deleteCustomer(customerNo);
+    }
+    constructor(Props: Props) {
+        super(Props);
+        this.state = {
+            customerModifyModalOpen: false
+        } as State;
+    }
+
+    updateCustomer = (customerNo: number, customerName: string, customerTel: string, ceo: string) => {
+        const state = this.context as CustomersState;
+        const updateCustomer : UpdateCustomer = {
+            customerName,
+            customerTel,
+            ceo,
+        }
+        state.setUpdateCustomer(customerNo, updateCustomer);
+    }
+
 
     render() {
         const state = this.context as CustomersState;
         const customer = state.customer;
 
+
         return (
             <>
-          <span className='table-header'>거래처 상세 :
-            <span style={{color: '#0C70F2'}}>{state.customer.customerNo}</span>
-          </span>
-                <TableContainer className='table-container'>
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: '30px',
+                        marginBottom: '10px',
+                        marginLeft: '2px',
+                        display: 'flex',
+                    }}
+                >
+                  <span className='table-header' style={{marginTop:'10px'}}>거래처 상세 :
+                      {state.customer.customerNo !== 0 && <span style={{color: '#0C70F2'}}>{state.customer.customerNo}</span>}
+                  </span>
+                    <div style={{ marginLeft: 'auto' }}>
+                        {state.customer.customerNo !== 0 &&<button className='customerBtn'
+                                style={{ marginRight: '10px', marginTop: '5px'}}
+                                onClick={() => this.setState({customerModifyModalOpen: true})}>
+                            수정
+                        </button>}
+                        <React.Fragment>
+                            {this.state.customerModifyModalOpen && state.customer.customerNo !== 0 ? (
+                                <CustomerModifyModal onClose={() => this.setState({customerModifyModalOpen: false})}
+                                                  status={this.state.customerModifyModalOpen}
+                                                  updateCustomer = {this.updateCustomer}
+                                                  customerNo = {state.customer.customerNo}/>
+                            ) : null}
+                        </React.Fragment>
+
+                        {state.customer.customerNo !== 0 &&<button className='customerBtn'
+                                type="submit"
+                                style={{ marginRight: '3px' }}
+                                onClick={()=>this.handleDeleteClick(state.customer.customerNo)}
+                        >
+                            삭제
+                        </button>}
+                    </div>
+                </Box>
+                <TableContainer className='table-container' style={{height:'74px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
@@ -41,14 +106,14 @@ class ViewCustomerTable extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                                <TableRow>
+                            {state.customer.customerNo !== 0 && <TableRow>
                                     <TableCell align="center" style={cellStyle}>{customer.customerNo}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.customerCode}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.customerName}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.ceo}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.customerTel}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{customer.sector}</TableCell>
-                                </TableRow>
+                                </TableRow>}
                         </TableBody>
                     </Table>
                 </TableContainer>

@@ -1,7 +1,8 @@
 import {
   AddProductInstruction,
   DeleteProductInstruction,
-  UpdateProductInstruction
+  UpdateProductInstruction,
+  GetProductInstruction
 } from "../../object/ProductInstruction/product-instruction-object";
 import Fetcher from "../fetch-action";
 
@@ -27,7 +28,12 @@ class ProductInstructionAction {
     const URL = `${this.baseUrl}/instruction/` + deleteProductInstruction.instructionNo + `/productNo/` + deleteProductInstruction.productNo;
     return fetcher.DELETE(URL);
   }
-  
+
+  // 물품 지시 조회
+  public getProductInstruction(getProductInstruction : GetProductInstruction) {
+    const URL = `${this.baseUrl}/instruction/` + getProductInstruction.instructionNo + `/productNo/` + getProductInstruction.productNo;
+    return fetcher.GET(URL);
+  }
 }
 
 export default ProductInstructionAction;

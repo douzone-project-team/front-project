@@ -30,11 +30,16 @@ export const initialCustomer = {
     sector: ''
 }
 
-export const updateCustomerState = {
+export const initialUpdateCustomerState = {
     customerName: '',
-    customerTel: ''
+    customerTel: '',
+    ceo: ''
 }
 
-export const insertBarState = {
-    insertBar: false
+export const initialDuplicateCustomerCodeResult = {
+    duplicateResult : false
+}
+
+export const initialCheckCustomerCode = {
+    customerCode : ''
 }
