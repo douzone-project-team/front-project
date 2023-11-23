@@ -5,7 +5,10 @@ import ViewCustomerListTable from "../../components/Customer/ViewCustomerListTab
 import ViewCustomerTable from "../../components/Customer/ViewCustomerTable";
 import Layout from '../../common/Layout';
 
+
+
 class CustomerPage extends Component {
+
     render () {
         return (
             <Layout>

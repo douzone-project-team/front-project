@@ -1,9 +1,12 @@
-import {DeleteDeliveryInstruction} from "../DeliveryInstruction/delivery-instruction-object";
+import {
+    AddDeliveryInstruction,
+    AddProduct,
+    DeleteDeliveryInstruction, UpdateDeliveryInstruction,
+} from "../DeliveryInstruction/delivery-instruction-object";
 
-export type AddDeliveryObj = {
-    deliveryDate: string,
-}
-
+/*
+ * 조회
+ */
 export type DeliverySearch = {
     progressStatus: string,
     employeeName: string,
@@ -13,19 +16,8 @@ export type DeliverySearch = {
     pageSize: number
 }
 
-export type AddDeliveryInstruction = {
-    instructionNo : string
-    productName:string,
-    remainAmount: number,
-    amount: number
-}
-
-export type UpdateDelivery = {
-    deliveryDate: string,
-}
-
 export type DeliveryPage = {
-    deliveries: DeliveryList[],
+    list: DeliveryList[],
     currentPage: number,
     hasNextPage: boolean,
     hasPreviousPage: boolean,
@@ -53,10 +45,39 @@ export type Instructions = {
     customerName: string,
     instructionDate: string,
     expirationDate: string,
+    progressStatus: string,
     productNo: number,
     productCode: string,
     productName: string,
     amount: number
+}
+
+/*
+ * 추가
+ */
+
+export type AddDeliveryObj = {
+    deliveryDate: string,
+}
+
+export type UpdateDelivery = {
+    deliveryNo: string,
+    deliveryDate: string,
+}
+
+export type NewDelivery = {
+    deliveryNo: string,
+    deliveryDate: string,
+    instructions: DeliveryInstruction[],
+}
+
+export type DeliveryInstruction = {
+    instructionNo: string,
+    instructionDate: string,
+    expirationDate: string,
+    customerName: string,
+    progressStatus: string,
+    products: AddProduct[],
 }
 
 /* state */
@@ -66,11 +87,17 @@ export type DeliveriesState = {
     delivery: Delivery,
     instructions: Instructions,
     addDeliveryObj: AddDeliveryObj,
+    newDelivery: NewDelivery,
+    cleanDelivery(): void,
     setSearch(employeeName: string, startDate: string, endDate: string): void,
     setSearchProgressStatus(progressStatus: string): void,
     setPage(page: number): void,
     getDeliveryList(): void,
     getDelivery(deliveryNo: string): void
     addDelivery(addDeliveryObj: AddDeliveryObj): void,
+    addDeliveryInstruction(deliveryNo: string, addDeliveryInstruction: AddDeliveryInstruction): void,
+    deleteDelivery(deliveryNo: string): void,
     deleteDeliveryInstruction(deleteDeliveryInstructionObj: DeleteDeliveryInstruction): void,
+    updateDelivery(updateDelivery: UpdateDelivery): void,
+    updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction): void
 }

@@ -7,20 +7,27 @@ class DeliveryInstructionAction {
     private baseUrl: string = '/delivery-instructions';
 
     // 출고 지시 등록
-    public addDeliveryInstruction(addDeliveryInstruction: AddDeliveryInstruction) {
-        const URL = `${this.baseUrl}` + addDeliveryInstruction.deliveryNo;
+    public addDeliveryInstruction(deliveryNo: string, addDeliveryInstruction: AddDeliveryInstruction) {
+        const URL = `${this.baseUrl}/${deliveryNo}`;
+        console.log(addDeliveryInstruction);
         return fetcher.POST(URL, addDeliveryInstruction);
     }
 
     // 출고 지시 수정
     public updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction) {
-        const URL = `${this.baseUrl}` + updateDeliveryInstruction.deliveryNo;
-        return fetcher.PUT(URL, updateDeliveryInstruction);
+        const URL = `${this.baseUrl}/` + updateDeliveryInstruction.deliveryNo;
+        const updateDeliveryInstructionObj = {
+            instructionNo: updateDeliveryInstruction.instructionNo,
+            productNo: updateDeliveryInstruction.productNo,
+            amount: updateDeliveryInstruction.amount
+        }
+        return fetcher.PUT(URL, updateDeliveryInstructionObj);
     }
 
     // 출고 지시 삭제
     public deleteDeliveryInstruction(deleteDeliveryInstruction: DeleteDeliveryInstruction) {
-        const URL = `${this.baseUrl}` + deleteDeliveryInstruction.deliveryNo;
+        const URL =
+            `${this.baseUrl}/${deleteDeliveryInstruction.deliveryNo}/${deleteDeliveryInstruction.instructionNo}/${deleteDeliveryInstruction.productNo}`;
         return fetcher.DELETE(URL);
     }
 }

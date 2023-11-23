@@ -1,7 +1,27 @@
 export type AddDeliveryInstruction = {
-    deliveryNo: string,
+    instructionNo: string,
+    products: AddDeliveryProduct[],
+}
+
+export type AddDeliveryProduct = {
+    productNo: number,
+    amount: number,
+}
+
+export type AddInstruction = {
+    instructionNo: string,
+    instructionDate: string,
+    expirationDate: string,
+    customerName: string,
+}
+
+//AddDeliveryProduct
+export type AddProduct = {
     instructionNo: string,
     productNo: number,
+    productCode: string,
+    amount: number,
+    remainAmount: number,
 }
 
 export type DeleteDeliveryInstruction = {

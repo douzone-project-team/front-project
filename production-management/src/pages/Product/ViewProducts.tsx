@@ -1,8 +1,9 @@
 import {Box} from "@material-ui/core";
 import React, {Component} from "react";
-import ViewProductListTable from "../../components/Product/ViewProductListTable";
+import DetailView from "../../components/Product/DetailView";
 import ProductSearchBar from "../../components/Product/ProductSearchBar";
 import Layout from "../../common/Layout";
+import ViewTable from "../../components/Product/ViewTable";
 
 class ViewProducts extends Component {
   render() {
@@ -32,7 +33,8 @@ class ViewProducts extends Component {
               }}
           >
           <ProductSearchBar/>
-          {/*<ViewProductListTable/>*/}
+          <ViewTable/>
+          <DetailView/>
           </Box>
         </Layout>
     )

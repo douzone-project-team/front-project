@@ -9,15 +9,17 @@ class ProductAction {
   private baseUrl: string = '/products';
 
   // 품목 등록
-  public regiProducts(designation: string, productCode: string, standard: string, unit: number) {
-    const URL = `${this.baseUrl}/products`;
-    const regiProObject = {designation, productCode, standard, unit};
+  public regiProducts(productCode: string, productName: string, standard: string, unit: number) {
+    const URL = `${this.baseUrl}`;
+    const regiProObject = {productCode, productName, standard, unit};
+    console.log(`${this.baseUrl}`);
+    console.log(regiProObject);
     return fetcher.POST(URL, regiProObject);
   }
 
   // 품목 조회
   public getProduct(productNo: number) {
-    const URL = `${this.baseUrl}/product/`+productNo;
+    const URL = `${this.baseUrl}/${productNo}`;
     return fetcher.GET(URL);
   }
 
@@ -28,9 +30,10 @@ class ProductAction {
   }
 
   // 품목 수정
-  public updateProduct(productNo: number, designation: string, productCode: string, standard: string, unit: number) {
+  public updateProduct(productNo: number, productCode: string, productName: string, standard: string, unit: number) {
     const URL = `${this.baseUrl}/${productNo}`;
-    const updateProObject = {designation, productCode, standard, unit};
+    const updateProObject = {productCode, productName, standard, unit};
+    console.log(updateProObject);
     return fetcher.PUT(URL, updateProObject);
   }
 

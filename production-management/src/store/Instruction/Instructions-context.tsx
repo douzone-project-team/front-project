@@ -41,12 +41,16 @@ export const InstructionsContext = React.createContext<InstructionsState>({
   },
   addInstruction(): void {
   },
-  updateInstruction(): void {
+  updateInstruction(updateInstruction: UpdateInstruction): void {
   },
   addProductInstruction(addProductInstruction: AddProductInstruction): void {
   },
   deleteProductInstruction(deleteProductInstruction: DeleteProductInstruction): void {
-  }
+  },
+  deleteInstruction(instructionNo: string): void {
+  },
+  updateInstructionProduct(amount: number, productNo: number): void {
+  },
 })
 
 export class InstrcutionsContextProvider extends Component<Props, InstructionsState> {
@@ -56,8 +60,9 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
     instruction: initialInstruction,
     cleanInstruction: () => {
       this.setState({instruction: initialInstruction})
+      this.setState({instructionPage: initialInstructionPageState})
+      this.setState({search: initialInstructionSearchState})
     },
-    /* Instruction 조회 메서드 */
     setSearch: (employeeName: string, startDate: string, endDate: string) => {
       this.setState((prevState) => ({
         search: {
@@ -67,7 +72,6 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
           endDate: endDate
         }
       }), () => {
-        console.log(this.state.search);
         this.getInstructionList();
       })
     },
@@ -78,7 +82,6 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
           progressStatus: progressStatus
         }
       }), () => {
-        console.log(this.state.search);
         this.getInstructionList();
       })
     },
@@ -86,7 +89,6 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
       this.setState((prevState) => ({
         search: {...prevState.search, page: page}
       }), () => {
-        console.log(this.state.search);
         this.getInstructionList();
       })
     },
@@ -97,7 +99,6 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
       instructionAction.getInstruction(instructionNo)
       .then((result) => {
         let data = result?.data;
-        console.log(data);
         this.setState({instruction: data});
       })
     },
@@ -109,16 +110,20 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
             ...prevState.instruction,
             instructionNo: result?.data.instructionNo,
             customerNo: addInstruction.customerNo,
+            customerName: addInstruction.customerName,
             instructionDate: addInstruction.instructionDate,
             expirationDate: addInstruction.expirationDate,
             progressStatus: addInstruction.progressStatus,
-            customerName: addInstruction.customerNo as unknown as string
           }
         }));
       });
     },
-    updateInstruction: () => {
+    updateInstruction: (updateInstruction: UpdateInstruction) => {
+      instructionAction.updateInstruction(updateInstruction).then((result) => {
+        this.getInstruction(updateInstruction.instructionNo);
+      })
     },
+
     addProductInstruction: (addProductInstruction: AddProductInstruction) => {
       const isDuplicate = this.state.instruction.products.some(product => {
         return product.productNo === addProductInstruction.productNo;
@@ -131,10 +136,7 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
 
       productInstructionAction.addProductInstruction(addProductInstruction)
       .then((result) => {
-        instructionAction.getInstruction(this.state.instruction.instructionNo)
-        .then((result) => {
-          this.setState({instruction: result?.data})
-        })
+        this.getInstruction(this.state.instruction.instructionNo);
       });
     },
 
@@ -146,6 +148,25 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
           this.setState({instruction: result?.data})
         })
       });
+    },
+    deleteInstruction: (instructionNo: string) => {
+      instructionAction.deleteInstruction(instructionNo)
+      .then((result) => {
+        this.getInstructionList();
+        this.setState({instruction: initialInstruction})
+      })
+    },
+    updateInstructionProduct: (amount: number, productNo: number) => {
+      let updateInstructionProduct = {
+        amount: amount,
+        productNo: productNo,
+        instructionNo: this.state.instruction.instructionNo
+      }
+      productInstructionAction.updateProductInstruction(updateInstructionProduct)
+      .then(() => {
+            this.getInstruction(this.state.instruction.instructionNo);
+          }
+      )
     }
   }
 
@@ -162,7 +183,6 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
     instructionAction.getInstruction(instructionNo)
     .then((result) => {
       let data = result?.data;
-      console.log(data);
       this.setState({instruction: data});
     })
 

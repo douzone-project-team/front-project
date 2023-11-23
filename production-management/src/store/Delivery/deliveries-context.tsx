@@ -6,13 +6,17 @@ import {
     initialDelivery,
     initialDeliveryPageState,
     initialDeliverySearchState,
-    initialInstructions
+    initialInstructions,
+    initialNewDelivery
 } from "../../state/deliveryStateManagement";
-import {AddDeliveryObj, DeliveriesState} from "../../object/Delivery/delivery-object";
-import {DeleteDeliveryInstruction} from "../../object/DeliveryInstruction/delivery-instruction-object";
+import {AddDeliveryObj, DeliveriesState, UpdateDelivery} from "../../object/Delivery/delivery-object";
+import {
+    AddDeliveryInstruction,
+    DeleteDeliveryInstruction, UpdateDeliveryInstruction,
+} from "../../object/DeliveryInstruction/delivery-instruction-object";
 
 const deliveryAction = new DeliveriesAction;
-const deliverInstructionAction = new DeliveryInstructionAction;
+const deliveryInstructionAction = new DeliveryInstructionAction;
 
 export type Props = {
   children?: React.ReactNode;
@@ -21,12 +25,12 @@ export type Props = {
 export const DeliveriesContext = React.createContext<DeliveriesState>({
     search: initialDeliverySearchState,
     deliveryPage: initialDeliveryPageState,
-    delivery: {
-        ...initialDelivery,
-        // employeeName: getEmployeeNameFromToken(),
-    },
+    delivery: initialDelivery,
+    newDelivery: initialNewDelivery,
     instructions: initialInstructions,
     addDeliveryObj: initialAddDeliveryObj,
+    cleanDelivery(): void{
+    },
     setSearch(employeeName: string, startDate: string, endDate: string): void {
     },
     setSearchProgressStatus(progressStatus: string): void {
@@ -39,9 +43,16 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
     },
     addDelivery(addDeliveryObj: AddDeliveryObj): void {
     },
+    addDeliveryInstruction(deliveryNo: string, addDeliveryInstruction: AddDeliveryInstruction): void {
+    },
     deleteDeliveryInstruction(deleteDeliveryInstruction: DeleteDeliveryInstruction): void {
-
-    }
+    },
+    deleteDelivery(deliveryNo: string): void{
+    },
+    updateDelivery(updateDelivery: UpdateDelivery): void {
+    },
+    updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction): void {
+    },
 })
 
     export class DeliveriesContextProvider extends Component<Props, DeliveriesState> {
@@ -51,6 +62,10 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
         delivery: initialDelivery,
         instructions: initialInstructions,
         addDeliveryObj: initialAddDeliveryObj,
+        newDelivery: initialNewDelivery,
+        cleanDelivery: () => {
+            this.setState({delivery: initialDelivery})
+        },
         /* Delivery 조회 메서드  */
         setSearch: (employeeName: string, startDate: string, endDate: string) => {
             this.setState((prevState) => ({
@@ -61,7 +76,7 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
                     endDate: endDate,
                 },
             }), () => {
-                console.log(this.state.search);
+                console.log("검색 조건 : " + this.state.search.startDate);
                 this.getDeliveryList();
             })
         },
@@ -94,7 +109,7 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
             deliveryAction.getDelivery(deliveryNo)
                 .then((result) => {
                     let data = result?.data;
-                    console.log(data);
+                    console.log('getDelivery: ' + data);
                     this.setState({delivery: data});
                 })
         },
@@ -103,25 +118,59 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
             deliveryAction.addDelivery(addDeliveryObj)
                 .then((result) => {
                     this.setState((prevState) => ({
-                        delivery: {
-                            ...prevState.delivery,
+                        newDelivery: {
+                            ...prevState.newDelivery,
                             deliveryNo: result?.data.deliveryNo,
-                            deliveryDate: addDeliveryObj.deliveryDate,
-                            employeeName: '',
-                            deliveryStatus: 'INCOMPLETE',
-                            instructions: [],
+                            deliveryDate: addDeliveryObj.deliveryDate
                         }
                     }));
                 });
         },
+
+        updateDelivery: (updateDelivery: UpdateDelivery) => {
+            deliveryAction.updateDelivery(updateDelivery).then((result) => {
+                this.getDelivery(updateDelivery.deliveryNo);
+            })
+        },
+
+        // 출고 껍데기에 지시 먼저 등록하기
+        addDeliveryInstruction: (deliveryNo, addDeliveryInstruction: AddDeliveryInstruction)=> {
+            deliveryInstructionAction.addDeliveryInstruction(deliveryNo, addDeliveryInstruction)
+                .then((result) => {
+                    const { instructionNo } = addDeliveryInstruction;
+
+                    this.setState((prevState) => ({
+                        newDelivery: {
+                            ...prevState.newDelivery,
+                            instructionNo: instructionNo,
+                        },
+                    }));
+                });
+        },
+
         deleteDeliveryInstruction: (deleteDeliveryInstructionObj: DeleteDeliveryInstruction) => {
-            deliverInstructionAction.deleteDeliveryInstruction(deleteDeliveryInstructionObj)
+            deliveryInstructionAction.deleteDeliveryInstruction(deleteDeliveryInstructionObj)
                .then((result) => {
                     deliveryAction.getDelivery(this.state.delivery.deliveryNo)
                         .then((result) => {
                             this.setState({delivery: result?.data})
                         })
                 });
+        },
+
+        deleteDelivery: (deliveryNo: string) => {
+            deliveryAction.deleteDelivery(deliveryNo)
+                .then((result) => {
+                    this.getDeliveryList();
+                    this.setState({delivery: initialDelivery})
+                })
+        },
+
+        updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction) {
+            deliveryInstructionAction.updateDeliveryInstruction(updateDeliveryInstruction)
+                .then(() => {
+                    this.getDelivery(updateDeliveryInstruction.deliveryNo);
+                })
         }
     }
 
@@ -132,13 +181,12 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
                 console.log(data);
                 this.setState({deliveryPage: data});
             })
-    }
+    };
 
     getDelivery = (deliveryNo: string) => {
         deliveryAction.getDelivery(deliveryNo)
-           .then((result) => {
+            .then((result) => {
                 let data = result?.data;
-                console.log(data);
                 this.setState({delivery: data});
             })
     }
