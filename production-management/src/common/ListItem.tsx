@@ -76,70 +76,26 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
 
     return (
         <React.Fragment>
-          <ListItem>
-            <Button onClick={() => this.toggleAccordion('isItemAccordionOpen')}>
-              <ListItemIcon style={iconAndTextStyles}>
-                <DashboardIcon/>
-              </ListItemIcon>
-              <ListItemText primary="품목" style={iconAndTextStyles}/>
-            </Button>
-          </ListItem>
-          {isItemAccordionOpen && (
-              <Accordion expanded={isItemAccordionOpen}
-                         onChange={() => this.toggleAccordion('isItemAccordionOpen')}
-                         style={accordionStyles}>
-                <AccordionDetails>
-                  <Link to="/product/add" style={{textDecoration: 'none'}}>
-                    <ListItem style={{marginBottom: -40}}>
-                      <Button>
-                        <ListItemText primary="품목 등록" style={iconAndTextStyles}/>
-                      </Button>
-                    </ListItem>
-                  </Link>
-                </AccordionDetails>
-                <AccordionDetails>
-                  <Link to="/product/list" style={{textDecoration: 'none'}}>
-                    <ListItem>
-                      <Button>
-                        <ListItemText primary="품목 조회" style={iconAndTextStyles}/>
-                      </Button>
-                    </ListItem>
-                  </Link>
-                </AccordionDetails>
-              </Accordion>
-          )}
-          <ListItem>
-            <Button onClick={() => this.toggleAccordion('isBusinessAccordionOpen')}>
-              <ListItemIcon style={iconAndTextStyles}>
-                <BusinessIcon/>
-              </ListItemIcon>
-              <ListItemText primary="거래처" style={iconAndTextStyles}/>
-            </Button>
-          </ListItem>
-          {isBusinessAccordionOpen && (
-              <Accordion expanded={isBusinessAccordionOpen}
-                         onChange={() => this.toggleAccordion('isBusinessAccordionOpen')}
-                         style={accordionStyles}>
-                <AccordionDetails>
-                  <Link to="/customer/add" style={{textDecoration:'none'}}>
-                    <ListItem style={{marginBottom: -40}}>
-                      <Button>
-                        <ListItemText primary="거래처 등록" style={iconAndTextStyles}/>
-                      </Button>
-                    </ListItem>
-                  </Link>
-                </AccordionDetails>
-                <AccordionDetails>
-                  <Link to="/customer/list" style={{textDecoration:'none'}}>
-                    <ListItem>
-                      <Button>
-                        <ListItemText primary="거래처 조회" style={iconAndTextStyles}/>
-                      </Button>
-                    </ListItem>
-                  </Link>
-                </AccordionDetails>
-              </Accordion>
-          )}
+          <Link to="/product/list" style={{textDecoration: 'none', color: 'black'}}>
+            <ListItem>
+              <Button onClick={() => this.toggleAccordion('isItemAccordionOpen')}>
+                <ListItemIcon style={iconAndTextStyles}>
+                  <DashboardIcon/>
+                </ListItemIcon>
+                <ListItemText primary="품목" style={iconAndTextStyles}/>
+              </Button>
+            </ListItem>
+          </Link>
+          <Link to="/customer/list" style={{textDecoration: 'none', color: 'black'}}>
+            <ListItem>
+              <Button onClick={() => this.toggleAccordion('isBusinessAccordionOpen')}>
+                <ListItemIcon style={iconAndTextStyles}>
+                  <BusinessIcon/>
+                </ListItemIcon>
+                <ListItemText primary="거래처" style={iconAndTextStyles}/>
+              </Button>
+            </ListItem>
+          </Link>
           <ListItem>
             <Button onClick={() => this.toggleAccordion('isOrderAccordionOpen')}>
               <ListItemIcon style={iconAndTextStyles}>
