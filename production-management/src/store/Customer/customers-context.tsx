@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import CustomerAction from "./customers-action";
-import {CustomersState} from "../../object/Customer/customer-object";
+import {CustomersState, InsertCustomer, UpdateCustomer} from "../../object/Customer/customer-object";
 import {
+    initialCheckCustomerCode,
     initialCustomer,
-    initialCustomerPageState,
+    initialCustomerPageState, initialDuplicateCustomerCodeResult,
     initialInsertCustomerState,
-    initialSearchState, insertBarState
+    initialSearchState, initialUpdateCustomerState
 } from "../../state/customerStateManagement";
 
 const customerAction = new CustomerAction();
@@ -19,18 +20,26 @@ export const CustomersContext = React.createContext<CustomersState>({
     insertCustomer : initialInsertCustomerState,
     customerPage : initialCustomerPageState,
     customer : initialCustomer,
-    insertBar : insertBarState,
-    setInsertBar() : void{
-    },
+    updateCustomer : initialUpdateCustomerState,
+    duplicateCustomerCodeResult : initialDuplicateCustomerCodeResult,
+    checkCustomerCode : initialCheckCustomerCode,
     setSearch() : void{
     },
+    setCheckCustomerCode() : void{
+    },
+    setCheckCustomerCodeDefault() : void{
+    },
     setInsertCustomer() : void{
+    },
+    setUpdateCustomer() : void{
     },
     getCustomer(): void {
     },
     getCustomerList(): void {
     },
     setPage(): void {
+    },
+    deleteCustomer() : void{
     }
 });
 
@@ -40,18 +49,9 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
         insertCustomer: initialInsertCustomerState,
         customerPage: initialCustomerPageState,
         customer: initialCustomer,
-        insertBar : insertBarState,
-        setInsertBar:(insertBar: boolean) => {
-            this.setState((prevState) => ({
-                insertBar: {
-                    ...prevState.insertBar,
-                    insertBar: insertBar
-                }
-            }), () => {
-                this.getCustomerList();
-            }
-            );
-        },
+        updateCustomer : initialUpdateCustomerState,
+        duplicateCustomerCodeResult : initialDuplicateCustomerCodeResult,
+        checkCustomerCode : initialCheckCustomerCode,
         setSearch: (customerCode: string, customerName : string, sector : string) => {
             this.setState((prevState) => ({
                 search: {
@@ -65,21 +65,41 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
             }
             );
         },
-        setInsertCustomer: (customerCode: string, customerName : string, customerTel: string, ceo: string, sector : string) => {
+
+        setCheckCustomerCodeDefault: () => {
+            this.setState(() => ({
+                duplicateCustomerCodeResult: initialDuplicateCustomerCodeResult
+            }), () => {
+
+            });
+        },
+
+        setCheckCustomerCode: (customerCode:string) => {
             this.setState((prevState) =>({
-                insertCustomer: {
-                    ...prevState.insertCustomer,
-                    customerCode: customerCode,
-                    customerName: customerName,
-                    customerTel: customerTel,
-                    ceo: ceo,
-                    sector: sector
+                checkCustomerCode: {
+                    ...prevState.checkCustomerCode,
+                    customerCode: customerCode
                 }
             }), () => {
+                    this.duplicateCheck()
+                }
+            );
+        },
+
+        setInsertCustomer: (insertCustomer: InsertCustomer) => {
+            this.setState(() =>({
+                insertCustomer: insertCustomer
+            }), () => {
                 this.insertCustomer();
-                this.getCustomerList();
             }
             );
+        },
+        setUpdateCustomer: (customerNo: number, updateCustomer: UpdateCustomer) => {
+            this.setState(() =>({
+                updateCustomer: updateCustomer
+            }), () => {
+                this.updateCustomer(customerNo);
+            });
         },
         setPage: (page: number) => {
             this.setState((prevState) => ({
@@ -101,19 +121,49 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                     let data = result?.data;
                     this.setState({customer: data});
                 })
+        },
+        deleteCustomer: (customerNo: number) => {
+            customerAction.deleteCustomer(customerNo)
+                .then(result => {
+                    alert("삭제하였습니다.");
+                    this.getCustomerList();
+                    this.setState({customer: initialCustomer});
+                })
+                .catch(reason => {
+                    alert(reason);
+                })
         }
+    }
 
+    duplicateCheck = () => {
+        customerAction.duplicateCustomerCodeCheck(this.state.checkCustomerCode)
+            .then((result) => {
+                let data = result?.data;
+                this.setState({duplicateCustomerCodeResult: data});
+            })
     }
 
     insertCustomer = () => {
-        try {
-            customerAction.regiCustomers(this.state.insertCustomer)
-                .then(result => {
-                    alert("등록을 성공하였습니다.")
-                });
-        } catch ({message}){
-            alert(message);
-        }
+        customerAction.regiCustomers(this.state.insertCustomer)
+            .then(result => {
+                alert("등록을 성공하였습니다.")
+                this.getCustomerList();
+            })
+            .catch(reason => {
+                alert(reason);
+            });
+    }
+
+    updateCustomer = (customerNo: number) => {
+        customerAction.updateCustomer(customerNo, this.state.updateCustomer)
+            .then(() => {
+                alert("수정을 성공하였습니다.");
+                this.state.getCustomer(customerNo);
+                this.getCustomerList();
+            })
+            .catch(error => {
+                // alert(reason);
+            });
     }
 
     getCustomerList = () => {
