@@ -231,10 +231,12 @@ class AddDeliveryTable extends Component<Props, State>{
                                                 <TableCell align="center" style={cellStyle}></TableCell>
                                                 <TableCell align="center" style={cellStyle}></TableCell>
                                                 <TableCell align="center" style={cellStyle}>
-                                                    <img src={require(`../../images/button/add-item-button-black.png`)}
-                                                         className='cellHoverEffect'
-                                                         style={{width: '15px', verticalAlign:'middle'}}
-                                                         onClick={changeDeliveryProductModalStatus}/>
+                                                    {this.state.selectedInstructionNo ?
+                                                        <img src={require(`../../images/button/add-item-button-black.png`)}
+                                                             className='cellHoverEffect'
+                                                             style={{width: '15px', verticalAlign:'middle'}}
+                                                             onClick={changeDeliveryProductModalStatus}/>
+                                                    : null }
                                                 </TableCell>
                                                 <TableCell align="center" style={cellStyle}></TableCell>
                                                 <TableCell align="center" style={cellStyle}></TableCell>
