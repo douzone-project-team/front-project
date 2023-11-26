@@ -131,6 +131,7 @@ class AddDeliveryTable extends Component<Props, State>{
         const newDelivery = state.newDelivery;
         const {instruction, product} = this.state;
         const {
+            addSelectedCheckBox,
             changeInstructionModalStatus,
             changeDeliveryProductModalStatus,
             instructionModalOpen,
@@ -143,6 +144,11 @@ class AddDeliveryTable extends Component<Props, State>{
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
+                                <TableCell align="center" style={{
+                                    border: '1px solid #D3D3D3',
+                                    fontWeight: 'bold'
+                                }}>
+                                </TableCell>
                                 <TableCell align='center' style={boldCellStyle}>출고 번호</TableCell>
                                 <TableCell align='center' style={boldCellStyle}>지시 번호</TableCell>
                                 <TableCell align='center' style={boldCellStyle}>지시일</TableCell>
@@ -150,12 +156,21 @@ class AddDeliveryTable extends Component<Props, State>{
                                 <TableCell align='center' style={boldCellStyle}>거래처</TableCell>
                                 <TableCell align='center' style={boldCellStyle}>품목 코드</TableCell>
                                 <TableCell align='center' style={boldCellStyle}>수량</TableCell>
-                                <TableCell align='center' style={boldCellStyle}></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {delivery.instructions.map((instruction, index) => (
                                 <TableRow key={index}>
+                                    <TableCell align="center" style={{
+                                        border: '1px solid #D3D3D3',
+                                        fontWeight: 'bold'
+                                    }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={this.props.existSelectedCheckBox(instruction.productNo)}
+                                            onChange={() => addSelectedCheckBox(instruction.productNo)}
+                                        />
+                                    </TableCell>
                                     <TableCell align="center" style={cellStyle}>{delivery.deliveryNo}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{instruction.instructionNo}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{instruction.instructionDate}</TableCell>
@@ -163,19 +178,17 @@ class AddDeliveryTable extends Component<Props, State>{
                                     <TableCell align="center" style={cellStyle}>{instruction.customerName}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{instruction.productCode}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{instruction.amount}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>
-                                        <img src={require(`../../images/button/delete-button.png`)}
-                                            style={{width: '15px', verticalAlign: 'middle'}}
-                                             onClick={() =>
-                                                this.deleteDeliveryInstruction(instruction.instructionNo, instruction.productNo)}
-                                        />
-                                    </TableCell>
                                 </TableRow>
                             ))}
                             {newDelivery.deliveryNo ? (
                                     this.state.selectedInstructionNo ? (
                                         instruction.map((item, index) => (
                                             <TableRow key={index}>
+                                                <TableCell align="center" style={{
+                                                    border: '1px solid #D3D3D3',
+                                                    fontWeight: 'bold'
+                                                }}>
+                                                </TableCell>
                                                 <TableCell align="center" style={cellStyle}>
                                                     {newDelivery.deliveryNo}
                                                 </TableCell>
@@ -212,12 +225,15 @@ class AddDeliveryTable extends Component<Props, State>{
                                                          onClick={changeDeliveryProductModalStatus}/>
                                                 </TableCell>
                                                 <TableCell align="center" style={cellStyle}></TableCell>
-                                                <TableCell align="center" style={cellStyle}></TableCell>
-
                                             </TableRow>
                                         ))
                                     ) : (
                                             <TableRow>
+                                                <TableCell align="center" style={{
+                                                    border: '1px solid #D3D3D3',
+                                                    fontWeight: 'bold'
+                                                }}>
+                                                </TableCell>
                                                 <TableCell align="center" style={cellStyle}>
                                                     {newDelivery.deliveryNo}
                                                 </TableCell>
@@ -238,7 +254,6 @@ class AddDeliveryTable extends Component<Props, State>{
                                                              onClick={changeDeliveryProductModalStatus}/>
                                                     : null }
                                                 </TableCell>
-                                                <TableCell align="center" style={cellStyle}></TableCell>
                                                 <TableCell align="center" style={cellStyle}></TableCell>
                                             </TableRow>
                                         )

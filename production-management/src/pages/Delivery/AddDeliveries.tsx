@@ -40,15 +40,19 @@ class AddDeliveries extends Component<Props, State> {
 
     deleteSelectedCheckBox = () => {
         const state = this.context as DeliveriesState;
-        this.state.selectedCheckBoxes.forEach(num => {
-            let deleteDeliveryInstruction = {
-                deliveryNo: state.delivery.deliveryNo,
-                instructionNo: state.delivery.instructions[num].instructionNo,
-                productNo: num,
-            } as DeleteDeliveryInstruction;
+        this.state.selectedCheckBoxes.forEach(productNo => {
+            const index = state.delivery.instructions.findIndex(instruction =>
+                instruction.productNo === productNo);
+            if(index !== -1){
+                const deleteDeliveryInstruction = {
+                    deliveryNo: state.delivery.deliveryNo,
+                    instructionNo: state.delivery.instructions[index].instructionNo,
+                    productNo: productNo,
+                } as DeleteDeliveryInstruction;
 
-            state.deleteDeliveryInstruction(deleteDeliveryInstruction);
-        })
+                state.deleteDeliveryInstruction(deleteDeliveryInstruction);
+            }
+        });
         this.setState({selectedCheckBoxes: []})
     };
 
