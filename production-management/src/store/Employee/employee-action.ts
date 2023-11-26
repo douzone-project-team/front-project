@@ -1,12 +1,9 @@
 import Fetcher from '../fetch-action';
-import {UpdateEmployee, EmployeeSearch} from "../../object/Employee/employee-object";
-import AuthAction from "../Auth/auth-action";
+import {Search, UpdateEmployee} from "../../object/Employee/employee-object";
 
 const fetcher = new Fetcher();
-const authAction = new AuthAction;
 
 class EmployeeAction {
-
     private baseUrl: string = '/employees';
 
     /* 로그인 */
@@ -18,8 +15,7 @@ class EmployeeAction {
 
     /* 로그아웃 */
     public logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('expirationTime');
+        localStorage.removeItem('accessToken');
     }
 
     /* Employee 상세 조회 */
@@ -36,7 +32,7 @@ class EmployeeAction {
     }
 
     /* EmployeeList 조회 */
-    public getEmployeeList(object: EmployeeSearch) {
+    public getEmployeeList(object: Search) {
         const URL = `${this.baseUrl}/list`;
         return fetcher.GET(URL, object);
     }
