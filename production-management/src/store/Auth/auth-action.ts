@@ -5,46 +5,6 @@ const fetcher = new Fetcher();
 
 class AuthAction {
 
-    createTokenHeader(token: string){
-        return{
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        }
-    }
-
-    calculateRemainingTime(expirationTime: number){
-        const currentTime = new Date().getTime();
-        const ajdExpirationTime = new Date(expirationTime).getTime();
-        const remainingDuration = ajdExpirationTime - currentTime;
-
-        return remainingDuration;
-    }
-
-    loginToken(token: string){
-        localStorage.setItem('token', token);
-        return;
-    }
-
-    retrieveStoredToken(){
-        const storedToken = localStorage.getItem('token');
-        const storedExpirationDate = localStorage.getItem('expirationTime') || 0;
-
-        const remainingTime = this.calculateRemainingTime(+ storedExpirationDate);
-
-        // 임의로 토큰 유효시간 1000으로 제한
-        if(remainingTime <= 1000){
-            localStorage.removeItem('token');
-            localStorage.removeItem('expirationTime');
-            return null;
-        }
-
-        return{
-            token: storedToken,
-            duration: remainingTime
-        }
-    }
-
     private baseUrl: string = '/auth/employees';
 
     /* Employee 등록 */

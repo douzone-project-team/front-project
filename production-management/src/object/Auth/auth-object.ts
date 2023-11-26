@@ -1,9 +1,3 @@
-export type LoginToken = {
-    grantType: string,
-    accessToken: string,
-    tokenExpiresIn: number
-}
-
 export type Employee = {
     employeeNo: number,
     id: string,
@@ -15,6 +9,7 @@ export type Employee = {
 }
 
 export type UpdateAuthEmployee = {
+    employeeNo: number
     id: string,
     password: string,
     name: string,

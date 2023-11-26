@@ -1,8 +1,4 @@
-export const initialTokenState = {
-    token: '',
-}
-
-export const initialEmployeeState = {
+export const initialEmployee = {
     employeeNo: 0,
     id: '',
     password: '',
@@ -12,7 +8,8 @@ export const initialEmployeeState = {
     email: '',
 };
 
-export const initialUpdateAuthEmployeeState = {
+export const initialUpdateAuthEmployee = {
+    employeeNo: 0,
     id: '',
     password: '',
     name: '',
