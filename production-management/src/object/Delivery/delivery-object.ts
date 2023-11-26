@@ -99,5 +99,6 @@ export type DeliveriesState = {
     deleteDelivery(deliveryNo: string): void,
     deleteDeliveryInstruction(deleteDeliveryInstructionObj: DeleteDeliveryInstruction): void,
     updateDelivery(updateDelivery: UpdateDelivery): void,
+    updateDeliveryStatus(deliveryNo: string):void,
     updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction): void
 }
