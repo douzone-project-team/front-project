@@ -16,7 +16,7 @@ const cellStyle = {
 };
 
 class ViewEmployeeListTable extends Component {
-    static contextTypes = EmployeeContext;
+    static contextType = EmployeeContext;
 
     componentDidMount() {
         console.log('여기가 오류니');
