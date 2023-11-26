@@ -19,7 +19,7 @@ const deliveryAction = new DeliveriesAction;
 const deliveryInstructionAction = new DeliveryInstructionAction;
 
 export type Props = {
-  children?: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 export const DeliveriesContext = React.createContext<DeliveriesState>({
@@ -29,7 +29,7 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
     newDelivery: initialNewDelivery,
     instructions: initialInstructions,
     addDeliveryObj: initialAddDeliveryObj,
-    cleanDelivery(): void{
+    cleanDelivery(): void {
     },
     setSearch(employeeName: string, startDate: string, endDate: string): void {
     },
@@ -47,15 +47,17 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
     },
     deleteDeliveryInstruction(deleteDeliveryInstruction: DeleteDeliveryInstruction): void {
     },
-    deleteDelivery(deliveryNo: string): void{
+    deleteDelivery(deliveryNo: string): void {
     },
     updateDelivery(updateDelivery: UpdateDelivery): void {
+    },
+    updateDeliveryStatus(deliveryNo: string): void {
     },
     updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction): void {
     },
 })
 
-    export class DeliveriesContextProvider extends Component<Props, DeliveriesState> {
+export class DeliveriesContextProvider extends Component<Props, DeliveriesState> {
     state: DeliveriesState = {
         search: initialDeliverySearchState,
         deliveryPage: initialDeliveryPageState,
@@ -83,8 +85,8 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
         setSearchProgressStatus: (progressStatus: string) => {
             this.setState((prevState) => ({
                 search: {
-                   ...prevState.search,
-                     progressStatus: progressStatus,
+                    ...prevState.search,
+                    progressStatus: progressStatus,
                 },
             }), () => {
                 console.log(this.state.search);
@@ -94,7 +96,7 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
         setPage: (page: number) => {
             this.setState((prevState) => ({
                 search: {
-                  ...prevState.search,
+                    ...prevState.search,
                     page: page,
                 },
             }), () => {
@@ -109,7 +111,6 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
             deliveryAction.getDelivery(deliveryNo)
                 .then((result) => {
                     let data = result?.data;
-                    console.log('getDelivery: ' + data);
                     this.setState({delivery: data});
                 })
         },
@@ -133,11 +134,17 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
             })
         },
 
+        updateDeliveryStatus: (deliveryNo: string) => {
+            deliveryAction.updateDeliveryStatus(deliveryNo).then((result) => {
+                this.getDelivery(deliveryNo);
+            })
+        },
+
         // 출고 껍데기에 지시 먼저 등록하기
-        addDeliveryInstruction: (deliveryNo, addDeliveryInstruction: AddDeliveryInstruction)=> {
+        addDeliveryInstruction: (deliveryNo, addDeliveryInstruction: AddDeliveryInstruction) => {
             deliveryInstructionAction.addDeliveryInstruction(deliveryNo, addDeliveryInstruction)
                 .then((result) => {
-                    const { instructionNo } = addDeliveryInstruction;
+                    const {instructionNo} = addDeliveryInstruction;
 
                     this.setState((prevState) => ({
                         newDelivery: {
@@ -150,7 +157,7 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
 
         deleteDeliveryInstruction: (deleteDeliveryInstructionObj: DeleteDeliveryInstruction) => {
             deliveryInstructionAction.deleteDeliveryInstruction(deleteDeliveryInstructionObj)
-               .then((result) => {
+                .then((result) => {
                     deliveryAction.getDelivery(this.state.delivery.deliveryNo)
                         .then((result) => {
                             this.setState({delivery: result?.data})
@@ -176,7 +183,7 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
 
     getDeliveryList = () => {
         deliveryAction.getDeliveryList(this.state.search)
-          .then((result) => {
+            .then((result) => {
                 let data = result?.data;
                 console.log(data);
                 this.setState({deliveryPage: data});
@@ -191,8 +198,8 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
             })
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <DeliveriesContext.Provider value={this.state}>
                 {this.props.children}
             </DeliveriesContext.Provider>

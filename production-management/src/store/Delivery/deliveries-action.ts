@@ -30,6 +30,12 @@ class DeliveriesAction {
         return fetcher.PUT(URL, upadateDelivery);
     }
 
+    //출고 상태 완료
+    public updateDeliveryStatus(deliveryNo: string){
+        const URL = `${this.baseUrl}/${deliveryNo}/complete`;
+        return fetcher.PUT(URL, deliveryNo);
+    }
+
     // 출고 삭제
     public deleteDelivery(deliveryNo: string) {
         const URL = `${this.baseUrl}/` + deliveryNo;

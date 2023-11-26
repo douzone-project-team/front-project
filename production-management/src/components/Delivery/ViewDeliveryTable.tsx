@@ -12,7 +12,6 @@ import {
 } from "../../object/DeliveryInstruction/delivery-instruction-object";
 import InstructionModal from "../Modal/Delivery/InstructionModal";
 import DeliveryProductModal from "../Modal/Delivery/DeliveryProductModal";
-import {InstructionsState} from "../../object/Instruction/Instruction-object";
 
 const boldCellStyle = {
     border: '1px solid #D3D3D3',
@@ -167,8 +166,9 @@ class ViewDeliveryTable extends Component<Props, State>{
         state.deleteDeliveryInstruction(deleteDeliveryInstruction);
     }
 
+
     render() {
-        const {delivery, deleteDelivery} = this.context as DeliveriesState;
+        const {delivery, updateDeliveryStatus, deleteDelivery} = this.context as DeliveriesState;
 
         const list = delivery.instructions;
         const {
@@ -194,7 +194,7 @@ class ViewDeliveryTable extends Component<Props, State>{
                         <span style={{color: '#0C70F2'}}>{delivery.deliveryNo}</span>
                       </span>
                     </div>
-                    <div style={{width: '78%'}}>
+                    <div style={{width: '73%'}}>
                         {delivery.deliveryStatus === 'INCOMPLETE' ? (
                         <span className='table-header'>출고일 :&nbsp;
                             <input type="date"
@@ -209,6 +209,13 @@ class ViewDeliveryTable extends Component<Props, State>{
                                 <span style={{color: '#0C70F2'}}>{delivery.deliveryDate}</span>
                             </span>
                             )}
+                    </div>
+                    <div style={{width: '5%', textAlign: 'right'}}>
+                        {delivery.deliveryStatus == 'INCOMPLETE' &&
+                            <img src={require('../../images/completed.png')}
+                                 style={{width: '20px', marginRight: '10px', marginTop: '6px'}}
+                                 className='cellHoverEffect'
+                                 onClick={() => updateDeliveryStatus(delivery.deliveryNo)}/>}
                     </div>
                     <div style={{width: '5%', textAlign: 'right'}}>
                         {delivery.deliveryStatus == 'INCOMPLETE' &&
