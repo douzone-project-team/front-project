@@ -89,6 +89,7 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                borderRadius: '5px'
               }}
           >
             <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>

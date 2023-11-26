@@ -2,6 +2,7 @@ import {Box, Button} from "@material-ui/core";
 import {Component} from "react";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
+import "./../../assets/css/Styles.css";
 
 let searchValue = {
   progressStatus: '',
@@ -54,7 +55,8 @@ class SearchInstructionBar extends Component {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                borderRadius: '5px'
               }}
           >
             <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>

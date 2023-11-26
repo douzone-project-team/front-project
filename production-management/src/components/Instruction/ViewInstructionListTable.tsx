@@ -15,24 +15,14 @@ import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 import "./../../assets/css/Table.css";
 
 const boldCellStyle = {
-  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-};
-
-const cellStyle = {
-  border: '1px solid #D3D3D3',
+  backgroundColor: '#f1f3f5'
 };
 
 type Props = {
   tableSize: boolean,
   changeAmountStatusFalse: () => void;
 }
-
-const statusMap = new Map([
-  ['STANDBY', '준비'],
-  ['PROGRESS', '진행중'],
-  ['COMPLETED', '완료']
-]);
 
 class ViewInstructionTable extends Component<Props> {
   static contextType = InstructionsContext;
@@ -55,21 +45,25 @@ class ViewInstructionTable extends Component<Props> {
 
     return (
         <>
-          <span className='table-header'>지시 목록</span>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
+            <span className='table-header'
+                  style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 목록</span>
+          </div>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '330px' : '90px',
-            transition: 'height 0.3s ease-in-out'
+            height: this.props.tableSize ? '65%' : '20%',
+            transition: 'height 0.3s ease-in-out',
           }}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" style={boldCellStyle}>지시 상태</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>등록자</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>거래처 코드</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>거래처 명</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>거래처 번호</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
                   <TableCell align="center" style={boldCellStyle}>시작일</TableCell>
                   <TableCell align="center" style={boldCellStyle}>종료일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>지시 상태</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -79,14 +73,15 @@ class ViewInstructionTable extends Component<Props> {
                                 state.getInstruction(row.instructionNo);
                                 this.props.changeAmountStatusFalse();
                               }}>
-                      <TableCell align="center"
-                                 style={cellStyle}>{statusMap.get(row.progressStatus)}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.instructionNo}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.customerNo}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.instructionDate}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.expirationDate}</TableCell>
+                      <TableCell align="center" style={{fontWeight: 'bold'}}>{row.instructionNo}</TableCell>
+                      <TableCell align="center">{row.employeeName}</TableCell>
+                      <TableCell align="center">{row.customerNo}</TableCell>
+                      <TableCell align="center">{row.customerName}</TableCell>
+                      <TableCell align="center">{row.instructionDate}</TableCell>
+                      <TableCell align="center">{row.expirationDate}</TableCell>
+                      <TableCell align="center" style={{width: '50px'}}>
+                        <div className={row.progressStatus}>{row.progressStatus}</div>
+                      </TableCell>
                     </TableRow>
                 ))}
               </TableBody>
