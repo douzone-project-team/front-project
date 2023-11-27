@@ -51,7 +51,7 @@ class ViewInstructionTable extends Component<Props> {
                   style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 목록</span>
           </div>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '65%' : '20%',
+            height: this.props.tableSize ? '67.2%' : '20%',
             transition: 'height 0.3s ease-in-out',
           }}>
             <Table size='small' className='table'>

@@ -104,7 +104,7 @@ class ViewInstructionTable extends Component<Props> {
             </div>
           </div>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '20%' : '65%',
+            height: this.props.tableSize ? '17.8%' : '65%',
             transition: 'height 0.3s ease-in-out'
           }}>
             <Table size='small' className='table'>
