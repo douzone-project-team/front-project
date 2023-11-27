@@ -67,8 +67,8 @@ class SearchInstructionBar extends Component {
                 fontSize: '15px',
                 fontWeight: 'bold'
               }}>등록자</span>
-                <input type="text" placeholder="등록자"
-                       style={{height: '20px', marginRight: '100px'}}
+                <input type="text"
+                       style={{marginLeft: '10px', height: '20px', marginRight: '100px'}}
                        onChange={(e) => {
                          searchValue.employeeName = e.target.value
                        }}
@@ -82,22 +82,33 @@ class SearchInstructionBar extends Component {
                 fontWeight: 'bold'
               }}>지시일</span>
                 <input type="date"
-                       style={{height: '20px'}}
+                       style={{height: '20px', marginLeft: '10px', width: '100px'}}
+                       data-placeholder="시작일"
+                       required
+                       aria-required="true"
                        onChange={(e) => {
                          searchValue.startDate = e.target.value
-                       }}/>
+                       }}
+                />
                 <input type="date"
                        style={{
                          height: '20px',
-                         marginLeft: '20px'
+                         marginLeft: '20px',
+                         width: '100px'
                        }}
+                       data-placeholder="종료일"
+                       required
+                       aria-required="true"
                        onChange={(e) => {
                          searchValue.endDate = e.target.value
-                       }}/>
+                       }}
+                />
               </label>
             </div>
             <div style={{marginBottom: '7px', marginTop: '7px'}}>
-              <img src={require('../../images/button/search-button.png')} style={{width:'30px',marginRight: '10px',marginTop:'6px'}} className='cellHoverEffect' onClick={this.handleSearchClick}/>
+              <img src={require('../../images/button/search-button.png')}
+                   style={{width: '30px', marginRight: '10px', marginTop: '6px'}}
+                   className='cellHoverEffect' onClick={this.handleSearchClick}/>
             </div>
           </Box>
           <Box

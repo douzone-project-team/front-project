@@ -89,7 +89,12 @@ class ViewInstructionTable extends Component<Props> {
                 <span className='table-header'
                       style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 상세 </span>
                 {instruction.instructionNo ?
-                    <span className={instruction.progressStatus} style={{width: '130px',marginLeft:'10px'}}>
+                    <span className={instruction.progressStatus} style={{
+                      width: '130px',
+                      marginLeft: '10px',
+                      marginTop: '0px',
+                      marginBottom: '0px'
+                    }}>
                         {instruction.instructionNo}
                       </span>
                     : null}

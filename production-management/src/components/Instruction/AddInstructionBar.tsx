@@ -101,7 +101,7 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
                 fontWeight: 'bold'
               }}>거래처</span>
                 <input type="text" placeholder="거래처"
-                       style={{height: '20px', marginRight: '10px'}}
+                       style={{marginLeft: '10px', height: '20px', marginRight: '10px'}}
                        value={this.state.customerName}
                        readOnly
                 />
@@ -118,19 +118,28 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
                 fontWeight: 'bold'
               }}>지시일</span>
                 <input type="date"
-                       style={{height: '20px'}}
+                       style={{height: '20px', marginLeft: '10px', width: '100px'}}
                        onChange={(e) => {
                          this.setState({instructionDate: e.target.value})
-                       }}/>
+                       }}
+                       data-placeholder="시작일"
+                       required
+                       aria-required="true"
+                />
                 <input type="date"
                        style={{
                          height: '20px',
                          marginLeft: '20px',
+                         width: '100px',
                          marginRight: '50px'
                        }}
                        onChange={(e) => {
                          this.setState({expirationDate: e.target.value})
-                       }}/>
+                       }}
+                       data-placeholder="종료일"
+                       required
+                       aria-required="true"
+                />
               </label>
               <label><span style={{
                 marginLeft: '50px',
