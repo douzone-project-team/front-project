@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import {EmployeeState} from "../../object/Employee/employee-object";
 import Box from "@material-ui/core/Box";
-import {EmployeeContext} from "../../store/Employee/employee-context";
+import {AuthContext} from "../../store/Auth/auth-context";
+import {AuthState} from "../../object/Auth/auth-object";
 
 let inputValue = {
     employeeNo: 0,
@@ -10,15 +10,15 @@ let inputValue = {
 }
 
 class EmployeeSearchBar extends Component {
-    static contextTypes = EmployeeContext;
+    static contextType = AuthContext;
 
     handleSearchClick = () => {
-        const state = this.context as EmployeeState;
+        const state = this.context as AuthState;
         state.setSearch(inputValue.employeeNo, inputValue.name);
     }
 
     handleSearchRoleState = (role: string) => {
-        const state = this.context as EmployeeState;
+        const state = this.context as AuthState;
         state.search.page = 1;
         state.setSearchRole(inputValue.role);
     }

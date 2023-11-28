@@ -3,6 +3,8 @@ import {EmployeeState} from "../../object/Employee/employee-object";
 import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
 import {EmployeeContext} from "../../store/Employee/employee-context";
+import {AuthContext} from "../../store/Auth/auth-context";
+import {AuthState} from "../../object/Auth/auth-object";
 
 const boldCellStyle = {
     border: '1px solid #D3D3D3',
@@ -16,16 +18,15 @@ const cellStyle = {
 };
 
 class ViewEmployeeListTable extends Component {
-    static contextType = EmployeeContext;
+    static contextType = AuthContext;
 
     componentDidMount() {
-        console.log('여기가 오류니');
-        const state = this.context as EmployeeState;
+        const state = this.context as AuthState;
         state.getEmployeeList();
     }
 
     render() {
-        const state = this.context as EmployeeState;
+        const state = this.context as AuthState;
         const list = state.employeePage?.list;
 
         const handleNextPage = () => {
@@ -55,7 +56,7 @@ class ViewEmployeeListTable extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list === undefined || list.map((row) => (
+                            {list && list.length > 0 ? list.map((row) => (
                                 <TableRow key={row.employeeNo}
                                         onClick={() => state.getEmployee(row.employeeNo)}>
                                     <TableCell align="center" style={cellStyle} className='cellHoverEffect'>
@@ -69,7 +70,7 @@ class ViewEmployeeListTable extends Component {
                                     <TableCell align="center" style={cellStyle} className='cellHoverEffect'>
                                         {row.role ? '관리자' : '사원' }</TableCell>
                                 </TableRow>
-                            ))}
+                            )) : null }
                         </TableBody>
                     </Table>
                     <Box

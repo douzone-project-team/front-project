@@ -1,9 +1,8 @@
 import React, {Component} from "react";
-import {EmployeeState} from "../../object/Employee/employee-object";
 import {AuthState, UpdateAuthEmployee} from "../../object/Auth/auth-object";
 import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import EmployeeModifyModal from "../Modal/Employee/EmployeeModifyModal";
-import {EmployeeContext} from "../../store/Employee/employee-context";
+import {AuthContext} from "../../store/Auth/auth-context";
 
 type State = {
     employeeModifyModalOpen: boolean
@@ -25,11 +24,11 @@ const cellStyle = {
 };
 
 class ViewEmployeeTable extends Component<Props, State> {
-    static contextType = EmployeeContext;
+    static contextType = AuthContext;
 
     handleDeleteClick = (employeeNo: number) => {
-        const authState = this.context as AuthState;
-        authState.deleteEmployee(employeeNo);
+        const state = this.context as AuthState;
+        state.deleteEmployee(employeeNo);
     }
 
     constructor(Props: Props) {
@@ -41,21 +40,24 @@ class ViewEmployeeTable extends Component<Props, State> {
 
     updateEmployee = (employeeNo: number, id: string, password: string, name: string,
                       role: string, tel: string, email: string) => {
-        const authState = this.context as AuthState;
-        const updateAuthEmployee: UpdateAuthEmployee = {
-            employeeNo: employeeNo,
-            id: id,
-            password: password,
-            name: name,
-            role: role,
-            tel: tel,
-            email: email
-        }
-        authState.updateEmployee(employeeNo, updateAuthEmployee);
+        const state = this.context as AuthState;
+
+        const updateAuthEmployee = {
+            employeeNo,
+            id,
+            password,
+            name,
+            role,
+            tel,
+            email
+        } as UpdateAuthEmployee
+        console.log('updateAuthEmployee : ' +  updateAuthEmployee);
+
+        state.updateEmployee(updateAuthEmployee);
     }
 
     render() {
-        const state = this.context as EmployeeState;
+        const state = this.context as AuthState;
         const employee = state.employee;
 
         return(

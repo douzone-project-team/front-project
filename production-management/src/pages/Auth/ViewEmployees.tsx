@@ -34,6 +34,7 @@ class ViewEmployees extends Component {
                 >
                     <EmployeeSearchBar />
                     <ViewEmployeeListTable />
+                    <ViewEmployeeTable />
                 </Box>
             </Layout>
         );
