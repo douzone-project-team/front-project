@@ -111,6 +111,7 @@ class ViewEmployeeTable extends Component<Props, State> {
                                 <TableCell align="center" style={boldCellStyle}>이름</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>연락처</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>이메일</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>역할</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -121,6 +122,8 @@ class ViewEmployeeTable extends Component<Props, State> {
                                 <TableCell align="center" style={cellStyle}>{employee.name}</TableCell>
                                 <TableCell align="center" style={cellStyle}>{employee.tel}</TableCell>
                                 <TableCell align="center" style={cellStyle}>{employee.email}</TableCell>
+                                <TableCell align="center" style={cellStyle}>
+                                    {employee.role === 'ROLE_ADMIN' ? '관리자' : '사원'}</TableCell>
                             </TableRow>}
                         </TableBody>
                     </Table>

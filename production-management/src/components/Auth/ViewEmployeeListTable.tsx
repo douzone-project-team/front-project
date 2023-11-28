@@ -68,7 +68,7 @@ class ViewEmployeeListTable extends Component {
                                     <TableCell align="center" style={cellStyle} className='cellHoverEffect'>
                                         {row.email}</TableCell>
                                     <TableCell align="center" style={cellStyle} className='cellHoverEffect'>
-                                        {row.role ? '관리자' : '사원' }</TableCell>
+                                        {row.role === 'ROLE_ADMIN' ? '관리자' : '사원' }</TableCell>
                                 </TableRow>
                             )) : null }
                         </TableBody>
