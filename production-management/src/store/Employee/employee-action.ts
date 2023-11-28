@@ -18,12 +18,6 @@ class EmployeeAction {
         localStorage.removeItem('accessToken');
     }
 
-    /* Employee 상세 조회 */
-    public getEmployee(employeeNo: number) {
-        const URL = `${this.baseUrl}/${employeeNo}`;
-        return fetcher.GET(URL);
-    }
-
     /* Employee 상세 조회 (본인) */
     // TODO : token 은 header 로 보내기 때문에 body 제거 : 적용 O
     public getMe() {
@@ -31,10 +25,9 @@ class EmployeeAction {
         return fetcher.GET(URL);
     }
 
-    /* EmployeeList 조회 */
-    public getEmployeeList(object: Search) {
-        const URL = `${this.baseUrl}/list`;
-        return fetcher.GET(URL, object);
+    public getEmployee(employeeNo: number) {
+        const URL = `${this.baseUrl}/${employeeNo}`;
+        return fetcher.GET(URL);
     }
 
     /* Employee 수정 */

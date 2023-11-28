@@ -47,18 +47,12 @@ export type Image = {
 
 export type EmployeeState = {
     isSuccess: IsSuccess,
-    search: Search,
-    employeePage: EmployeePage,
     employee: Employee,
     updateEmployeeObj: UpdateEmployee,
     image: Image,
     login: (id: string, password: string) => void,
     logout: () => void,
     cleanEmployee: () => void,
-    setSearch: (employeeNo: number, name: string) => void,
-    setSearchRole: (role: string) => void,
-    setPage: (page: number) => void,
-    getEmployeeList: () => void,
     getMe: () => void,
     getEmployee: (employeeNo: number) => void,
     updateEmployee: (employeeNo: number, object: UpdateEmployee) => void,

@@ -20,8 +20,6 @@ export type Props = {
 
 export const EmployeeContext = React.createContext<EmployeeState>({
     isSuccess: initialIsSuccess,
-    search: initialSearch,
-    employeePage: initialEmployeePage,
     employee: initialEmployee,
     updateEmployeeObj: initialUpdateEmployee,
     image: initialImage,
@@ -30,14 +28,6 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     logout(): void {
     },
     cleanEmployee(): void{
-    },
-    setSearch(employeeNo: number, name: string): void {
-    },
-    setSearchRole(role: string): void {
-    },
-    setPage(page: number): void {
-    },
-    getEmployeeList(): void {
     },
     getMe(): void {
     },
@@ -57,8 +47,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
 
     state: EmployeeState = {
         isSuccess: initialIsSuccess,
-        search: initialSearch,
-        employeePage: initialEmployeePage,
         employee: initialEmployee,
         updateEmployeeObj: initialUpdateEmployee,
         image: initialImage,
@@ -78,7 +66,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     // TODO : F5 누를경우 사용자 정보는 어떤 방식으로 유지되도록 할 것인지. - 적용 X
                     // TODO : isSuccess 필요성 체크 이후 필요없으면 제거 - 적용 X
 
-                    this.setState({ employee: data}, () => {
+                    this.setState({employee: data}, () => {
                         this.getMe();
                         window.location.href = '/';
                     })
@@ -88,49 +76,15 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
         logout: () => {
             employeeAction.logout();
             localStorage.removeItem('employee');
+            localStorage.removeItem('accessToken');
         },
 
         cleanEmployee: () => {
             this.setState({employee: initialEmployee });
         },
 
-        setSearch: (employeeNo: number, name: string) => {
-            this.setState((prevState) => ({
-                search: {
-                    ...prevState.search,
-                    employeeNo: employeeNo,
-                    name: name,
-                },
-            }), () => {
-                console.log("검색 조건 : " + this.state.search.employeeNo, this.state.search.name);
-                this.getEmployeeList();
-            });
-        },
-
-        setSearchRole: (role: string) => {
-            this.setState((prevState) => ({
-                search: {
-                    ...prevState.search,
-                    role: role,
-                },
-            }), () => {
-                this.getEmployeeList();
-            });
-        },
-
-        setPage: (page: number) => {
-            this.setState((prevState) => ({
-                search: {
-                    ...prevState.search,
-                    page: page,
-                },
-            }), () => {
-                this.getEmployeeList();
-            })
-        },
-
-        getEmployeeList: () => {
-            this.getEmployeeList();
+        getMe: () => {
+            this.getMe();
         },
 
         getEmployee: (employeeNo: number) => {
@@ -142,15 +96,13 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 })
         },
 
-        getMe: () => {
-            this.getMe();
-        },
-
         updateEmployee: (employeeNo: number, updateEmployee: UpdateEmployee) => {
             employeeAction.updateEmployee(employeeNo, updateEmployee)
                 .then(result => {
+                    alert('수정을 완료하였습니다.');
                     let data = result?.data;
                     this.setState({employee: data});
+                    this.getEmployee(employeeNo);
                 });
         },
 
@@ -179,14 +131,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
         }
     }
 
-    getEmployeeList = () => {
-        employeeAction.getEmployeeList(this.state.search)
-            .then((result) => {
-                let data = result?.data;
-                this.setState({employeePage: data});
-            })
-    };
-
     getMe = () => {
         employeeAction.getMe()
             .then(result => {
@@ -194,9 +138,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 const employeeData = {
                     employeeNo: data.employeeNo,
                     name: data.name,
-                    id: data.id,
-                    tel: data.tel,
-                    email: data.email
                 };
                 this.setState({employee: data}, () => {
                     localStorage.setItem('employee', JSON.stringify(employeeData));
@@ -204,6 +145,15 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 })
             });
     }
+
+    getEmployee =  (employeeNo: number) => {
+        employeeAction.getEmployee(employeeNo)
+            .then(result => {
+                let data = result?.data;
+                this.setState({employee: data});
+            })
+    }
+
 
     render() {
         return (
