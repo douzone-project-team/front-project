@@ -89,6 +89,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     const employeeData = {
                         employeeNo: data.employeeNo,
                         name: data.name,
+                        role: data.role
                     };
                     this.setState({employee: data}, () => {
                         localStorage.setItem('employee', JSON.stringify(employeeData));
