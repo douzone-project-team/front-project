@@ -28,14 +28,14 @@ class AuthAction {
 
     /* Employee No 중복 체크 */
     public employeeNoCheck(employeeNo: number) {
-        const URL = `${this.baseUrl}/no/check/${employeeNo}`;
-        return fetcher.GET(URL);
+        const URL = `${this.baseUrl}/no/check`;
+        return fetcher.GET(URL,{employeeNo: employeeNo});
     }
 
     /* Employee Id 중복 체크 */
     public idCheck(id: string) {
-        const URL = `${this.baseUrl}/id/check/${id}`;
-        return fetcher.GET(URL);
+        const URL = `${this.baseUrl}/id/check`;
+        return fetcher.GET(URL,{id: id});
     }
 
     /* Employee 상세 조회 */

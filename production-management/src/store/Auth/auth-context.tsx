@@ -81,13 +81,13 @@ export class AuthContextProvider extends Component<Props, AuthState> {
             authAction.employeeNoCheck(employeeNo)
                 .then(result => {
                     let data = result?.data;
-                    this.setState({availability : data});
-
-                    if(data){
-                        alert('사용 가능한 사번입니다.');
-                    }else{
-                        alert('이미 사용 중인 번호입니다. 다른 번호를 선택해주세요.');
-                    }
+                    this.setState({availability : data},() => {
+                        if(result?.data.availability){
+                            alert('사용 가능한 사번입니다.');
+                        }else{
+                            alert('이미 사용 중인 번호입니다. 다른 번호를 선택해주세요.');
+                        }
+                    });
                 })
         },
 
