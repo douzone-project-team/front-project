@@ -60,14 +60,13 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     localStorage.setItem('accessToken', accessToken);
                     cookieManager.setCookie('refreshToken', refreshToken);
 
-                    // 이후 employee /me 로 접근해서 정보를 얻어와 employee에 저장후 메인 페이지로 보냄
                     // TODO : localStorage employeeNo 저장 - 적용 O
                     // TODO : employee 조회 로직 - 적용 O
                     // TODO : F5 누를경우 사용자 정보는 어떤 방식으로 유지되도록 할 것인지. - 적용 X
                     // TODO : isSuccess 필요성 체크 이후 필요없으면 제거 - 적용 X
 
-                    this.setState({employee: data}, () => {
-                        this.getMe();
+                    this.setState({employee: data}, async () => {
+                        await this.state.getMe();
                         window.location.href = '/';
                     })
                 })
@@ -83,8 +82,19 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             this.setState({employee: initialEmployee });
         },
 
-        getMe: () => {
-            this.getMe();
+        getMe: async () => {
+            await employeeAction.getMe()
+                .then(result => {
+                    let data = result?.data;
+                    const employeeData = {
+                        employeeNo: data.employeeNo,
+                        name: data.name,
+                    };
+                    this.setState({employee: data}, () => {
+                        localStorage.setItem('employee', JSON.stringify(employeeData));
+                        console.log(localStorage.getItem('employee'));
+                    })
+                });
         },
 
         getEmployee: (employeeNo: number) => {
@@ -129,21 +139,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.setState({image: data});
                 });
         }
-    }
-
-    getMe = () => {
-        employeeAction.getMe()
-            .then(result => {
-                let data = result?.data;
-                const employeeData = {
-                    employeeNo: data.employeeNo,
-                    name: data.name,
-                };
-                this.setState({employee: data}, () => {
-                    localStorage.setItem('employee', JSON.stringify(employeeData));
-                    console.log(localStorage.getItem('employee'));
-                })
-            });
     }
 
     getEmployee =  (employeeNo: number) => {
