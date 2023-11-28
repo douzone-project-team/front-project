@@ -43,21 +43,22 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         state.getEmployee(employeeData.employeeNo);
     }
 
-    handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const state = this.context as EmployeeState;
+        const employee = state.employee;
+
         if(e.target.files && e.target.files.length > 0){
             const imageFile = e.target.files[0];
             this.setState({ selectedImage: imageFile});
+
+            await state.updateImage(employee.employeeNo, imageFile);
         }
+
     }
 
     handleUpdateClick = () => {
         const state = this.context as EmployeeState;
         const employee = state.employee;
-
-        // 바꿀 이미지가 있을 경우 이미지 변경 요청
-        if(this.state.selectedImage){
-            state.updateImage(employee.employeeNo, this.state.selectedImage);
-        }
 
         if(modifyValue.password !== modifyValue.passwordConfirm){
             alert('비밀번호를 다시 확인해주세요.');

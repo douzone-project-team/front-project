@@ -40,7 +40,7 @@ class EmployeeAction {
     public addImage(employeeNo: number, image: File) {
         const URL = `${this.baseUrl}/${employeeNo}/image`;
         const imageObject = new FormData();
-        imageObject.append('image', image);
+        imageObject.append('file', image);
 
         return fetcher.POST(URL, imageObject);
     }
@@ -48,7 +48,8 @@ class EmployeeAction {
     /* 이미지 수정 */
     public updateImage(employeeNo: number, image: File) {
         const URL = `${this.baseUrl}/${employeeNo}/image`;
-        const updateImageObject = { image };
+        const updateImageObject = new FormData();
+        updateImageObject.append('file', image);
 
         return fetcher.PUT(URL, updateImageObject);
     }
