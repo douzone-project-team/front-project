@@ -1,7 +1,7 @@
 import {AuthState, Employee, UpdateAuthEmployee} from "../../../object/Auth/auth-object";
 import {Component} from "react";
-import {EmployeeState} from "../../../object/Employee/employee-object";
 import {Box} from "@material-ui/core";
+import "./../../../assets/css/Modal.css"
 import {AuthContext} from "../../../store/Auth/auth-context";
 
 type EmployeeModalProps = {
@@ -12,16 +12,15 @@ type EmployeeModalProps = {
         id: string,
         password: string,
         name: string,
+        role: string,
         tel: string,
         email: string,
-        role: string
     ) => void
     employeeNo: number
 }
 
 type EmployeeModalState = {
-    employee: Employee
-    setEmployee: (employee: Employee) => void
+    employee: Employee,
     updateEmployee: () => void
 }
 
@@ -36,11 +35,11 @@ let modifyValue = {
     email: '',
 }
 
-export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeModalState>{
+class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeModalState>{
     static contextType = AuthContext;
 
     componentDidMount() {
-        const state = this.context as EmployeeState;
+        const state = this.context as AuthState;
         state.getEmployee(this.props.employeeNo);
     }
 
@@ -52,26 +51,25 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                 id: '',
                 password: '',
                 name: '',
+                role: '',
                 tel: '',
                 email: '',
-                role: '',
-            },
-
-            setEmployee: (employee: Employee) => {
-                this.setState({employee: employee});
             },
 
             updateEmployee: () => {
                 const {onClose, updateEmployee} = this.props as EmployeeModalProps;
+                const employee = this.state.employee;
                 updateEmployee(
                     this.props.employeeNo,
-                    modifyValue.id,
-                    modifyValue.password,
-                    modifyValue.name,
-                    modifyValue.tel1+"-"+modifyValue.tel2+"-"+modifyValue.tel3,
-                    modifyValue.email,
-                    modifyValue.role,
-                    );
+                    modifyValue.id || employee.id,
+                    modifyValue.password || employee.password,
+                    modifyValue.name || employee.name,
+                    modifyValue.role || 'ROLE_ADMIN', //나중에 변경해야함
+                    modifyValue.tel1+"-"+modifyValue.tel2+"-"+modifyValue.tel3 || employee.tel,
+                    modifyValue.email || employee.email,
+                )
+
+                console.log(updateEmployee);
                 onClose();
             }
         }
@@ -98,7 +96,7 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
             <div className='modal'>
                 {status ? (
                     <section className='modal-container'
-                             style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'35%'}}>
+                             style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'350px'}}>
                         <header>
                             <button className="close" onClick={onClose}>
                                 &times;
@@ -140,7 +138,7 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                                 <label className="form-label">
                                     비밀번호
                                     <input
-                                        type="text"
+                                        type="password"
                                         placeholder=""
                                         className="form-input"
                                         defaultValue={employee.password}
@@ -162,16 +160,29 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                                     />
                                 </label>
                                 <label className="form-label">
+                                    관리자 여부
+                                    <input
+                                        type="text"
+                                        placeholder=""
+                                        className="form-input"
+                                        defaultValue={employee.role}
+                                        onChange={event => {
+                                            modifyValue.role = event.target.value;
+                                        }}
+                                    />
+                                </label>
+                                <label className="form-label">
                                     연락처
                                     <input
                                         type="text"
                                         placeholder="010"
                                         className="form-input"
+                                        style={{width:'45px', marginLeft:'7px'}}
                                         defaultValue={telArray[0]}
                                         onChange = {event => {
                                             modifyValue.tel1 = event.target.value;
                                         }}
-                                    />
+                                    /> -
                                     <input
                                         type="text"
                                         placeholder="0000"
