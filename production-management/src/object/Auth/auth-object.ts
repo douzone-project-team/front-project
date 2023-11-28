@@ -1,3 +1,28 @@
+import {UpdateCustomer} from "../Customer/customer-object";
+
+export type Search = {
+    employeeNo: number,
+    name: string,
+    role: string,
+    size: number,
+    page: number
+}
+
+export type EmployeeList = {
+    employeeNo: number,
+    name: string,
+    role: string,
+    email: string
+    tel: string
+}
+
+export type EmployeePage = {
+    list: EmployeeList[],
+    currentPage: number,
+    hasNextPage: boolean,
+    hasPreviousPage: boolean
+}
+
 export type Employee = {
     employeeNo: number,
     id: string,
@@ -19,13 +44,21 @@ export type UpdateAuthEmployee = {
 }
 
 export type AuthState = {
+    search: Search,
+    employeePage: EmployeePage,
     employee: Employee,
     updateAuthEmployee: UpdateAuthEmployee,
     addEmployee: (employee: Employee) => void,
     deleteEmployee: (employeeNo: number) => void,
-    updateEmployee: (employeeNo: number, updateAuthEmployee1: UpdateAuthEmployee) => void,
+    updateEmployee: (updateAuthEmployee: UpdateAuthEmployee) => void,
     employeeNoCheck: (employeeNo: number) => void,
     idCheck: (id: string) => void,
+    cleanEmployee: () => void,
+    setSearch: (employeeNo: number, name: string) => void,
+    setSearchRole: (role: string) => void,
+    setPage: (page: number) => void,
+    getEmployeeList: () => void,
+    getEmployee: (employeeNo: number) => void,
 }
 
 export type AuthPath = {

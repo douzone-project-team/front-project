@@ -1,9 +1,24 @@
+export const initialSearch = {
+    employeeNo: 0,
+    name: '',
+    role: '',
+    size: 8,
+    page: 1
+}
+
+export const initialEmployeePage = {
+    list: [],
+    currentPage: 0,
+    hasNextPage: false,
+    hasPreviousPage: false
+}
+
 export const initialEmployee = {
     employeeNo: 0,
     id: '',
     password: '',
     name: '',
-    role: '',
+    role: 'ROLE_ADMIN',
     tel: '',
     email: '',
 };
