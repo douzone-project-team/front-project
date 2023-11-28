@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {ChangeEvent, Component} from "react";
 import {AuthContext} from "../../store/Auth/auth-context";
 import {Box, Button, Grid, InputAdornment, Paper, TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -18,6 +18,8 @@ import Badge from "@material-ui/core/Badge";
 import Numbers from '@material-ui/icons/AllInclusive';
 import Password from '@material-ui/icons/Lock';
 import {Switch} from "react-router-dom";
+import {EmployeeState} from "../../object/Employee/employee-object";
+import {AuthState} from "../../object/Auth/auth-object";
 
 interface AddEmployeeFormState {
     isAdmin: boolean;
@@ -62,10 +64,8 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
     }
 
     // admin 여부
-    handleAdminSwitchChange = () => {
-        this.setState((prevState) => ({
-            isAdmin: !prevState.isAdmin,
-        }));
+    handleAdminSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
+        this.setState({ isAdmin: event.target.checked });
     };
 
     // 입력시 펜아이콘 보이고 안보이고 설정
@@ -87,35 +87,36 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
 
     // 중복 검사
     checkDuplicate = async (fieldLabel: string) => {
+        const state = this.context as AuthState;
+
         this.setState({
             isSubmitDisabled: false,
         });
 
         if(fieldLabel === '아이디'){
             const enteredId = this.idInputRef.current?.value;
+            console.log(enteredId);
             if(enteredId){
-                await this.context.idCheck(enteredId);
+                await state.idCheck(enteredId);
                 this.setState({
                     isIdValid: true,
+                    isSubmitDisabled: !(this.state.isSubmitDisabled && this.state.isAdmin),
                 });
             }
         }else if(fieldLabel === '사번'){
             const enteredEmployeeNo = this.employeeNoInputRef.current?.value;
             const etEmployeeNo = Number(enteredEmployeeNo);
             if(enteredEmployeeNo){
-                await this.context.employeeNoCheck(enteredEmployeeNo);
+                await state.employeeNoCheck(etEmployeeNo);
                 this.setState({
                     isEmployeeNoValid: true,
+                    isSubmitDisabled: !(this.state.isSubmitDisabled && this.state.isAdmin),
                 });
             }
         }
-
-        this.setState({
-            isSubmitDisabled: !(this.state.isSubmitDisabled && this.state.isAdmin),
-        });
     };
 
-    // Validate 검사
+    /* Validate 검사 */
 
     validateId = (id: string) => {
         const idPattern = /^[a-zA-Z0-9]{4,}$/;
@@ -206,6 +207,7 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
     };
 
     handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        const state = this.context as AuthState;
         e.preventDefault();
 
         if(!this.state.isSubmitDisabled){
@@ -231,22 +233,11 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
             };
 
             if(this.state.selectedImage){
-                await this.context.uploadImage(userData.employeeNo, this.state.selectedImage);
+                state.addImage(userData.employeeNo, this.state.selectedImage);
             }
 
-            await this.context.addEmployee(
-                userData.employeeNo,
-                userData.id,
-                userData.password,
-                userData.name,
-                userData.role,
-                userData.tel,
-                userData.email,
-            );
+            await state.addEmployee(userData);
 
-            if (this.context.isSuccess) {
-                alert(`${userData.name} 님이 추가되었습니다.`);
-            }
         }catch (error) {
             console.log("Error: " + error);
         }
@@ -490,7 +481,7 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
                                 />
                             </Grid>
                         </Grid>
-                        <Divider></Divider>
+
                         <Grid container spacing={1} alignItems='center' style={{marginTop: 1, marginBottom: 2}}>
                             <Grid item>
                                 <VerifiedUser />
@@ -499,7 +490,43 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
                                 <Typography variant='body1'>Admin</Typography>
                             </Grid>
                             <Grid item style={{ marginLeft: 'auto' }}>
-                                {/*<Switch checked={isAdmin} onChange={this.handleAdminSwitchChange} />*/}
+                                <div>
+                                    <label style={{
+                                        position: 'relative',
+                                        cursor: 'pointer',
+                                        display: 'inline-block',
+                                        width: '58px',
+                                        height: '28px',
+                                        background: isAdmin ? '#aabadd' : '#fff',
+                                        border: isAdmin ? '2px solid #aabadd' : '2px solid #aabadd',
+                                        borderRadius: '20px',
+                                        transition: '0.2s',
+                                    }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={isAdmin}
+                                            onChange={this.handleAdminSwitchChange}
+                                            style={{
+                                                position: 'absolute',
+                                                appearance: 'none',
+                                                WebkitAppearance: 'none',
+                                                MozAppearance: 'none',
+                                            }}
+                                        />
+                                        <span style={{
+                                            position: 'absolute',
+                                            top: '4px',
+                                            left: isAdmin ? '34px' : '3px',
+                                            display: 'inline-block',
+                                            width: '20px',
+                                            height: '20px',
+                                            borderRadius: '20px',
+                                            background: isAdmin ? '#fff' : '#aabadd',
+                                            transition: '0.2s',
+                                            boxShadow: isAdmin ? '1px 2px 3px #00000020' : 'none',
+                                        }}></span>
+                                    </label>
+                                </div>
                             </Grid>
                         </Grid>
                         <Divider></Divider>
