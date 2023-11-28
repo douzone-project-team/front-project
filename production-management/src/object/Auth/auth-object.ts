@@ -1,5 +1,3 @@
-import {UpdateCustomer} from "../Customer/customer-object";
-
 export type Search = {
     employeeNo: number,
     name: string,
@@ -43,11 +41,17 @@ export type UpdateAuthEmployee = {
     email: string
 }
 
+export type Image = {
+    image: File | null;
+}
+
 export type AuthState = {
+    availability: boolean,
     search: Search,
     employeePage: EmployeePage,
     employee: Employee,
     updateAuthEmployee: UpdateAuthEmployee,
+    image: Image,
     addEmployee: (employee: Employee) => void,
     deleteEmployee: (employeeNo: number) => void,
     updateEmployee: (updateAuthEmployee: UpdateAuthEmployee) => void,
@@ -59,6 +63,9 @@ export type AuthState = {
     setPage: (page: number) => void,
     getEmployeeList: () => void,
     getEmployee: (employeeNo: number) => void,
+    addImage: (employeeNo: number, image: File) => void,
+    updateImage: (employeeNo: number, image: File) => void,
+    deleteImage: (employeeNo: number) => void
 }
 
 export type AuthPath = {

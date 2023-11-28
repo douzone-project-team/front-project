@@ -9,10 +9,9 @@ class AuthAction {
     private baseUrl2: string = '/employees';
 
     /* Employee 등록 */
-    public regiEmployee(object: Employee) {
+    public addEmployee(object: Employee) {
         const URL = `${this.baseUrl}/register`;
-        const regiEmpObject = {object};
-        return fetcher.POST(URL, regiEmpObject);
+        return fetcher.POST(URL, object);
     }
 
     /* Employee 삭제 */
@@ -29,20 +28,14 @@ class AuthAction {
 
     /* Employee No 중복 체크 */
     public employeeNoCheck(employeeNo: number) {
-        const URL = `${this.baseUrl}/no/check`;
-        const response = fetcher.GET(URL, {
-            params : { employeeNo }
-        });
-        return response;
+        const URL = `${this.baseUrl}/no/check/${employeeNo}`;
+        return fetcher.GET(URL);
     }
 
     /* Employee Id 중복 체크 */
     public idCheck(id: string) {
-        const URL = `${this.baseUrl}/id/check`;
-        const response = fetcher.GET(URL, {
-            params : { id }
-        });
-        return response;
+        const URL = `${this.baseUrl}/id/check/${id}`;
+        return fetcher.GET(URL);
     }
 
     /* Employee 상세 조회 */

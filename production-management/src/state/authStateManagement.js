@@ -33,3 +33,7 @@ export const initialUpdateAuthEmployee = {
     email: '',
 };
 
+export const initialImage = {
+    image: null,
+}
+
