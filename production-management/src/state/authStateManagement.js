@@ -18,7 +18,7 @@ export const initialEmployee = {
     id: '',
     password: '',
     name: '',
-    role: 'ROLE_ADMIN',
+    role: '',
     tel: '',
     email: '',
 };
