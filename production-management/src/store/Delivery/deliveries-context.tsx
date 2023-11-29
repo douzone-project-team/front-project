@@ -66,7 +66,7 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         addDeliveryObj: initialAddDeliveryObj,
         newDelivery: initialNewDelivery,
         cleanDelivery: () => {
-            this.setState({delivery: initialDelivery})
+            this.setState({delivery: initialDelivery, newDelivery: initialNewDelivery})
         },
         /* Delivery 조회 메서드  */
         setSearch: (employeeName: string, startDate: string, endDate: string) => {
