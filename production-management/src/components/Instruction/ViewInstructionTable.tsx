@@ -116,8 +116,8 @@ class ViewInstructionTable extends Component<Props> {
               <TableHead>
                 <TableRow>
                   <TableCell align="center" style={boldCellStyle}>거래처 명</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>시작일</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>종료일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>만료일</TableCell>
                   <TableCell align="center" style={boldCellStyle}>상품 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>상품 코드</TableCell>
                   <TableCell align="center" style={boldCellStyle}>상품 이름</TableCell>

@@ -48,7 +48,7 @@ class ViewInstructionTable extends Component<Props> {
           <div style={{display: 'flex', alignItems: 'center'}}>
             <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
             <span className='table-header'
-                  style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 목록</span>
+                  style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 목록 - <span style={{color:'rgb(60, 80, 194)'}}>{list.length}</span>건</span>
           </div>
           <TableContainer className='table-container' style={{
             height: this.props.tableSize ? '67.2%' : '20%',
@@ -61,8 +61,8 @@ class ViewInstructionTable extends Component<Props> {
                   <TableCell align="center" style={boldCellStyle}>등록자</TableCell>
                   <TableCell align="center" style={boldCellStyle}>거래처 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>시작일</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>종료일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>만료일</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 상태</TableCell>
                 </TableRow>
               </TableHead>
