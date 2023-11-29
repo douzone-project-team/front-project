@@ -15,14 +15,8 @@ import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
 import {DeliveriesState} from "../../object/Delivery/delivery-object";
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    width: '10%',
-};
-
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-    width: '10%',
+    backgroundColor: '#f1f3f5'
 };
 
 type Props = {
@@ -50,9 +44,13 @@ class ViewDeliveryListTable extends Component<Props>{
 
         return (
             <>
-                <span className='table-header'>출고 목록</span>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
+                    <span className='table-header'
+                      style={{fontWeight: 'bold', fontSize: '16px'}}> 출고 목록 - <span style={{color:'rgb(60, 80, 194)'}}>{list.length}</span>건</span>
+                </div>
                 <TableContainer className='table-container' style={{
-                    height: this.props.tableSize ? '330px' : '90px',
+                    height: this.props.tableSize ? '67.2%' : '20%',
                     transition: 'height 0.3s ease-in-out'
                 }}>
                     <Table size='small' className='table'>
@@ -69,13 +67,16 @@ class ViewDeliveryListTable extends Component<Props>{
                             {list && list.length > 0 && list.map((row) => (
                                 <TableRow key={row.deliveryNo} className='cellHoverEffect'
                                             onClick={() => state.getDelivery(row.deliveryNo)}>
-                                    <TableCell align="center" style={cellStyle}>
-                                        {row.deliveryStatus === 'COMPLETE' ? '완료' : '미완료'}
+                                    <TableCell align="center" style={{fontWeight: 'bold'}}>
+                                        {row.deliveryNo}</TableCell>
+                                    <TableCell align="center">{row.employeeName}</TableCell>
+                                    <TableCell align="center">{row.deliveryDate}</TableCell>
+                                    <TableCell align="center">{row.instructionCount}</TableCell>
+                                    <TableCell align="center" style={{width: '50px'}}>
+                                        <div className={row.deliveryStatus}>
+                                            {row.deliveryStatus === 'COMPLETE' ? '완료' : '미완료' }
+                                        </div>
                                     </TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.deliveryNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.deliveryDate}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.instructionCount}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
