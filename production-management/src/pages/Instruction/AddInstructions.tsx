@@ -81,7 +81,12 @@ class AddInstructions extends Component<Props, State> {
   }
 
   render() {
-    const {selectedCheckBoxs, productModalOpen, customerModalOpen, customerSearchModalOpen} = this.state;
+    const {
+      selectedCheckBoxs,
+      productModalOpen,
+      customerModalOpen,
+      customerSearchModalOpen
+    } = this.state;
     let isChecksNotEmpty = selectedCheckBoxs.length != 0;
 
     return (
@@ -89,14 +94,13 @@ class AddInstructions extends Component<Props, State> {
         <Layout>
           <Box
               sx={{
-                width: '95%',
-                height: '5vh',
-                ml: '50px',
-                mt: '10vh',
-                pt: '1vh',
+                width: '100%',
+                mb: '2vh',
+                pt: '80px',
                 pl: '15px',
-                pb: '30px',
-                border: '1px solid #D3D3D3',
+                bgcolor: '#3C50C2',
+                color: 'white',
+                height: '12.5vh',
               }}
           >
             <span style={{fontSize: '17px', fontWeight: 'bold'}}>지시등록</span>
@@ -104,14 +108,31 @@ class AddInstructions extends Component<Props, State> {
           <Box
               sx={{
                 width: '95%',
-                height: '78vh',
+                pl: '15px',
+                pt: '15px',
+                pr: '15px',
                 ml: '50px',
-                p: '15px',
-                border: '1px solid #D3D3D3'
+                mb: '3vh',
+                bgcolor: 'white',
+                boxShadow: '0px 0px 5px 1px #DDDDDD',
+                borderRadius: '10px',
+                height: '7.5vh'
               }}
           >
             <AddInstructionBar customerSearchModalOpen={customerSearchModalOpen}
                                changeCustomerSearchModalStatus={this.state.changeCustomerSearchModalStatus}/>
+          </Box>
+          <Box
+              sx={{
+                width: '95%',
+                p: '15px',
+                ml: '50px',
+                bgcolor: 'white',
+                boxShadow: '0px 0px 5px 1px #DDDDDD',
+                borderRadius: '10px',
+                height: '68vh'
+              }}
+          >
             <AddInstructionTable addSelectedCheckBox={this.addSelectedCheckBox}
                                  productModalOpen={productModalOpen}
                                  customerModalOpen={customerModalOpen}
@@ -121,7 +142,9 @@ class AddInstructions extends Component<Props, State> {
             />
           </Box>
           {isChecksNotEmpty &&
-              <div className='delete-div'>
+              <div className='delete-div' style={{
+                height: '7vh'
+              }}>
                 <div>
                   <span
                       style={{color: '#1ae0ed'}}>{selectedCheckBoxs.length}건 </span><span>선택됨</span>

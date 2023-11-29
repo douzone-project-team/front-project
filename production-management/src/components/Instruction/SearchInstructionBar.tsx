@@ -1,7 +1,8 @@
 import {Box, Button} from "@material-ui/core";
 import {Component} from "react";
-import {InstructionsContext} from "../../store/Instruction/Instructions-context";
+import {InstructionsContext, Props} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
+import "./../../assets/css/Styles.css";
 
 let searchValue = {
   progressStatus: '',
@@ -10,9 +11,36 @@ let searchValue = {
   endDate: '',
 };
 
-class SearchInstructionBar extends Component {
+type SearchState = {
+  all: boolean,
+  standby: boolean,
+  progress: boolean,
+  completed: boolean
+}
+
+class SearchInstructionBar extends Component<Props, SearchState> {
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      all: false,
+      standby: false,
+      progress: false,
+      completed: false
+    }
+  }
+
   static contextType = InstructionsContext;
 
+  setStateAllFalse = () => {
+    this.setState({
+      all : false,
+      standby : false,
+      progress: false,
+      completed: false
+    })
+  }
 
   handleSearchClick = () => {
     const state = this.context as InstructionsState;
@@ -25,23 +53,35 @@ class SearchInstructionBar extends Component {
     state.setSearchProgressStatus(progressStatus);
   }
 
-  renderProgressButton = (koreanStatus: string, status: string, image: string, color: string) => (
+  renderProgressButton = (koreanStatus: string, status: string, image: string, color: string, checked: boolean, changeFunc: () => void) => (
       <Button
           variant="outlined"
-          style={{width: '24.8%', marginLeft: '2px', border: '1px solid #D3D3D3'}}
-          onClick={() => this.handleSearchProgressState(status)}
+          style={{
+            width: '24.8%',
+            marginLeft: '2px',
+            border: '1px solid #D3D3D3',
+            backgroundColor: (checked ? color : 'white')
+          }}
+          onClick={() => {
+            this.handleSearchProgressState(status);
+            this.setStateAllFalse();
+            changeFunc();
+          }}
       >
         <img src={require(`../../images/${image}`)} style={{width: '50px'}} alt={koreanStatus}/>
-        <span style={{fontWeight: 'bold'}}> {koreanStatus}</span>
-        <br/>
+        <span style={{
+          fontWeight: 'bold',
+          color: (checked ? 'white' : 'black')
+        }}> {koreanStatus}</span>
         <span style={{fontWeight: 'bold', color: color, fontSize: '2vh'}}>
       </span>
-        건
       </Button>
   );
 
   render() {
     const state = this.context as InstructionsState;
+    const {all, standby, progress, completed} = this.state;
+
     return (
         <>
           <Box
@@ -54,7 +94,8 @@ class SearchInstructionBar extends Component {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                borderRadius: '5px'
               }}
           >
             <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
@@ -65,8 +106,8 @@ class SearchInstructionBar extends Component {
                 fontSize: '15px',
                 fontWeight: 'bold'
               }}>등록자</span>
-                <input type="text" placeholder="등록자"
-                       style={{height: '20px', marginRight: '100px'}}
+                <input type="text"
+                       style={{marginLeft: '10px', height: '20px'}}
                        onChange={(e) => {
                          searchValue.employeeName = e.target.value
                        }}
@@ -74,28 +115,73 @@ class SearchInstructionBar extends Component {
               </label>
               <label>
               <span style={{
-                marginLeft: '5px',
+                marginLeft: '60px',
                 marginRight: '5px',
                 fontSize: '14px',
                 fontWeight: 'bold'
               }}>지시일</span>
                 <input type="date"
-                       style={{height: '20px'}}
+                       style={{height: '20px', marginLeft: '10px', width: '100px'}}
+                       data-placeholder="시작일"
+                       required
+                       aria-required="true"
                        onChange={(e) => {
                          searchValue.startDate = e.target.value
-                       }}/>
+                       }}
+                />
                 <input type="date"
                        style={{
                          height: '20px',
-                         marginLeft: '20px'
+                         marginLeft: '20px',
+                         width: '100px'
                        }}
+                       data-placeholder="종료일"
+                       required
+                       aria-required="true"
                        onChange={(e) => {
                          searchValue.endDate = e.target.value
-                       }}/>
+                       }}
+                />
+              </label>
+              <label>
+               <span style={{
+                 marginLeft: '60px',
+                 marginRight: '5px',
+                 fontSize: '14px',
+                 fontWeight: 'bold'
+               }}>만료일</span>
+                <input type="date"
+                       style={{
+                         height: '20px',
+                         marginLeft: '20px',
+                         width: '100px'
+                       }}
+                       data-placeholder="시작일"
+                       required
+                       aria-required="true"
+                       onChange={(e) => {
+                         searchValue.endDate = e.target.value
+                       }}
+                />
+                <input type="date"
+                       style={{
+                         height: '20px',
+                         marginLeft: '20px',
+                         width: '100px'
+                       }}
+                       data-placeholder="종료일"
+                       required
+                       aria-required="true"
+                       onChange={(e) => {
+                         searchValue.endDate = e.target.value
+                       }}
+                />
               </label>
             </div>
             <div style={{marginBottom: '7px', marginTop: '7px'}}>
-              <img src={require('../../images/button/search-button.png')} style={{width:'30px',marginRight: '10px',marginTop:'6px'}} className='cellHoverEffect' onClick={this.handleSearchClick}/>
+              <img src={require('../../images/button/search-button.png')}
+                   style={{width: '30px', marginRight: '10px', marginTop: '6px'}}
+                   className='cellHoverEffect' onClick={this.handleSearchClick}/>
             </div>
           </Box>
           <Box
@@ -104,10 +190,10 @@ class SearchInstructionBar extends Component {
                 ml: '5px'
               }}
           >
-            {this.renderProgressButton('전체', '', 'all.png', 'darkblue')}
-            {this.renderProgressButton('준비', 'STANDBY', 'standby.png', 'gray')}
-            {this.renderProgressButton('진행중', 'PROGRESS', 'progress.png', 'dodgerblue')}
-            {this.renderProgressButton('완료', 'COMPLETED', 'completed.png', 'forestgreen')}
+            {this.renderProgressButton('전체', '', 'all.png', 'rgb(60,123,194)', all, () => this.setState({all: !all}))}
+            {this.renderProgressButton('준비', 'STANDBY', 'standby.png', 'rgb(60,123,194)', standby, () => this.setState({standby: !standby}))}
+            {this.renderProgressButton('진행중', 'PROGRESS', 'progress.png', 'rgb(60,123,194)', progress, () => this.setState({progress: !progress}))}
+            {this.renderProgressButton('완료', 'COMPLETED', 'completed.png', 'rgb(60,123,194)', completed, () => this.setState({completed: !completed}))}
           </Box>
         </>
     )

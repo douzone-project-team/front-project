@@ -60,14 +60,14 @@ class ViewInstructions extends Component<Props, State> {
         <Layout>
           <Box
               sx={{
-                width: '95%',
-                height: '15px',
-                mt: '100px',
-                ml: '50px',
-                pt: '10px',
+                width: '100%',
+                mt: '60px',
+                mb: '20px',
+                pt: '20px',
                 pl: '15px',
-                pb: '30px',
-                border: '1px solid #D3D3D3',
+                pb: '15px',
+                bgcolor: '#3C50C2',
+                color: 'white'
               }}
           >
             <span style={{fontSize: '17px', fontWeight: 'bold'}}>지시현황</span>
@@ -75,12 +75,30 @@ class ViewInstructions extends Component<Props, State> {
           <Box
               sx={{
                 width: '95%',
-                p: '15px',
+                pl: '15px',
+                pt: '15px',
+                pr: '15px',
+                pb: '1px',
                 ml: '50px',
-                border: '1px solid #D3D3D3',
+                bgcolor: 'white',
+                boxShadow: '0px 0px 5px 1px #DDDDDD',
+                borderRadius: '10px',
+                marginBottom: '20px'
               }}
           >
             <SearchInstructionBar/>
+          </Box>
+          <Box
+              sx={{
+                width: '95%',
+                height: '65%',
+                p: '15px',
+                ml: '50px',
+                bgcolor: 'white',
+                boxShadow: '0px 0px 5px 1px #DDDDDD',
+                borderRadius: '10px'
+              }}
+          >
             <ViewInstructionListTable tableSize={this.state.tableSize}
                                       changeAmountStatusFalse={this.state.changeAmountStatusFalse}/>
             <div style={{textAlign: 'center'}}>

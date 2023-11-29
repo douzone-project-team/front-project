@@ -307,7 +307,7 @@ class Layout extends React.Component {
                         <List><SecondaryListItems/></List>
                     </div>
                 </Drawer>
-                <main className={classes.content} style={{margin:0, padding:0}}>
+                <main className={classes.content} style={{margin:0, padding:0, backgroundColor:'#f1f3f5'}}>
                     {this.props.children}
                 </main>
             </div>

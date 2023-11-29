@@ -94,7 +94,7 @@ class ViewInstructionTable extends Component<Props, State> {
 
     return (
         <>
-          <TableContainer className='table-container' style={{height: '650px'}}>
+          <TableContainer className='table-container' style={{height: '100%'}}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
@@ -199,10 +199,10 @@ class ViewInstructionTable extends Component<Props, State> {
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                         }}>
-                          <div style={{width:'99%'}}>
+                          <div style={{width: '99%'}}>
                             {instruction.customerName}
                           </div>
-                          <div style={{width:'1%'}}>
+                          <div style={{width: '1%'}}>
                             <img src={require(`../../images/button/modify-button-black.png`)}
                                  className='cellHoverEffect'
                                  style={{width: '15px', verticalAlign: 'middle'}}
@@ -221,7 +221,10 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center" style={cellStyle}></TableCell>
                       <TableCell align="center" style={cellStyle}></TableCell>
                     </TableRow>
-                ) : null}
+                ) : <td colSpan={11} style={{textAlign: 'center'}}>
+                  <img src={require('./../../images/null/instruction-null-image.png')}
+                       style={{marginTop: '10%', width: '15%'}}/>
+                </td>}
               </TableBody>
             </Table>
           </TableContainer>
