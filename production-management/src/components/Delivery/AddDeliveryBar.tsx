@@ -46,8 +46,10 @@ class AddDeliveryBar extends Component{
                         border: '1.4px solid #D3D3D3',
                         marginBottom: '20px',
                         display: 'flex',
+                        flexDirection: 'row',
                         justifyContent:'space-between',
                         alignItems: 'center',
+                        borderRadius: '10px'
                     }}
                 >
                     <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
@@ -58,25 +60,21 @@ class AddDeliveryBar extends Component{
                             fontSize: '14px',
                             fontWeight: 'bold',
                         }}>등록일</span>
-                            <input type="date"
-                                   style={{height: '20px'}}
+                            <input type="date" placeholder='출고일'
+                                   style={{height: '20px', marginLeft: '10px', width: '125px'}}
                                    defaultValue={state.search.startDate}
+                                   data-placeholder='시작일'
+                                   required
                                    onChange={(e) => {
                                        Delivery.deliveryDate = e.target.value;
                                    }}/>
                         </label>
                     </div>
                     <div style={{marginTop: '7px', marginBottom: '7px'}}>
-                        <button
-                            type="submit"
-                            style={{
-                                height: '25px',
-                                marginRight: '10px'
-                            }}
-                            onClick={state.delivery.deliveryNo === '' ? this.addDeliveryClick : this.newAddDeliveryClick}
-                        >
-                            출고 추가
-                        </button>
+                        <img src={require('../../images/button/add-button.png')}
+                             style={{width: '30px', marginRight: '10px', marginTop: '6px'}}
+                             className='cellHoverEffect'
+                             onClick={state.delivery.deliveryNo === '' ? this.addDeliveryClick : this.newAddDeliveryClick} />
                     </div>
                 </Box>
             </>

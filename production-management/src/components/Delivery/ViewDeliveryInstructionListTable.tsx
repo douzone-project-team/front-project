@@ -21,12 +21,8 @@ type Props = {
 }
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-};
-
-const cellStyle = {
-    border: '1px solid #D3D3D3',
+    backgroundColor: '#f1f3f5'
 };
 
 class ViewDeliveryInstructionListTable extends Component<Props> {
@@ -52,10 +48,14 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
 
         return (
             <>
-                <span className='table-header'>지시 목록</span>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
+                    <span className='table-header'
+                          style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 목록 - <span style={{color:'rgb(60, 80, 194)'}}>{list.length}</span>건</span>
+                </div>
                 <TableContainer className='table-container' style={{
-                    height: this.props.tableSize ? '330px' : '90px',
-                    transition: 'height 0.3s ease-in-out'
+                    height: this.props.tableSize ? '67.2%' : '20%',
+                    transition: 'height 0.3s ease-in-out',
                 }}>
                     <Table size='small' className='table'>
                         <TableHead>
@@ -68,7 +68,7 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list.map((row) => (
+                            {list && list.length > 0 && list.map((row) => (
                                 <TableRow className='cellHoverEffect'
                                           onClick={() => setInstruction({
                                               instructionNo: row.instructionNo,
@@ -77,12 +77,12 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                                               customerName: row.customerName,
                                           })}
                                     key={row.instructionNo}>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'
+                                    <TableCell align="center" className='cellHoverEffect' style={{fontWeight: 'bold'}}
                                                onClick={() => state.getInstruction(row.instructionNo)}>{row.instructionNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.instructionDate}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.expirationDate}</TableCell>
+                                    <TableCell align="center">{row.employeeName}</TableCell>
+                                    <TableCell align="center">{row.customerName}</TableCell>
+                                    <TableCell align="center">{row.instructionDate}</TableCell>
+                                    <TableCell align="center">{row.expirationDate}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

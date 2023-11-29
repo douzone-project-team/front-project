@@ -36,7 +36,12 @@ const boldCellStyle = {
 
 const cellStyle = {
     border: '1px solid #D3D3D3',
-}
+};
+
+const statusMap = new Map([
+    ['INCOMPLETE', '미완료'],
+    ['COMPLETE', '완료'],
+]);
 
 class AddDeliveryTable extends Component<Props, State>{
     static contextType = DeliveriesContext;
@@ -109,7 +114,6 @@ class AddDeliveryTable extends Component<Props, State>{
         const delivery = state.delivery;
 
         state.getDelivery(deliveryNo);
-        console.log('GET성공?');
     }
 
     deleteDeliveryInstruction = (instructionNo: string, productNo: number) => {
@@ -140,7 +144,7 @@ class AddDeliveryTable extends Component<Props, State>{
 
         return(
             <>
-                <TableContainer className='table-container' style={{height: '300px'}}>
+                <TableContainer className='table-container' style={{height: '100%'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>

@@ -65,7 +65,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                 changeFunc();
             }}
         >
-            <img src={require(`../../images/${image}`)} style={{width: '5vh'}} alt={koreanStatus}/>
+            <img src={require(`../../images/${image}`)} style={{width: '50px'}} alt={koreanStatus}/>
             <span style={{
                 fontWeight: 'bold',
                 color: (checked ? 'white' : 'black')
@@ -78,6 +78,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
     render() {
         const state = this.context as DeliveriesState;
         const {all, incomplete, completed} = this.state;
+
         return (
             <>
                 <Box
@@ -102,8 +103,8 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                               fontSize: '15px',
                               fontWeight: 'bold'
                           }}>등록자</span>
-                            <input type="text" placeholder="담당자"
-                                   style={{height: '20px', marginTop: '100px'}}
+                            <input type="text"
+                                   style={{marginLeft: '10px', height: '20px'}}
                                    onChange={(e) => {
                                        searchValue.employeeName = e.target.value
                                    }}
@@ -111,23 +112,27 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                         </label>
                         <label>
                           <span style={{
-                              marginLeft: '5px',
+                              marginLeft: '30px',
                               marginRight: '5px',
                               fontSize: '14px',
                               fontWeight: 'bold'
                           }}>출고일</span>
                             <input type="date"
-                                   style={{height: '20px'}}
+                                   style={{height: '20px', marginLeft: '10px', width: '100px'}}
+                                   data-placeholder="시작일"
+                                   required
+                                   aria-required="true"
                                    onChange={(e) => {
                                        searchValue.startDate = e.target.value
-                                   }}/>
+                                   }}
+                            />
                             <input type="date"
                                    style={{
                                        height: '20px',
                                        marginLeft: '20px',
                                        width: '100px'
                                    }}
-                                   data-placeholder="출고일"
+                                   data-placeholder="종료일"
                                    required
                                    aria-required="true"
                                    onChange={(e) => {
@@ -135,7 +140,6 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                                    }}/>
                         </label>
                     </div>
-
                     <div style={{marginBottom: '7px', marginTop: '7px'}}>
                         <img src={require('../../images/button/search-button.png')}
                              style={{width: '30px', marginRight: '10px', marginTop: '6px'}}
