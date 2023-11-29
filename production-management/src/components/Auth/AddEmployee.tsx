@@ -530,7 +530,7 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
                             </Grid>
                         </Grid>
                         <Divider></Divider>
-                        <Grid container spacing={1} style={{ marginTop: 1, marginBottom: 5, width: '100%' }}>
+                        <Grid container spacing={1} style={{ marginTop: 5, marginBottom: 5, width: '100%' }}>
                             <Grid item>
                                 <Attachment />
                             </Grid>
