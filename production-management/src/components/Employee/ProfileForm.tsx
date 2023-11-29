@@ -1,12 +1,22 @@
-import React, { ChangeEvent, Component } from 'react';
-import { Table, TableCell, TableContainer, TableRow } from '@material-ui/core';
-import { EmployeeContext } from '../../store/Employee/employee-context';
-import { EmployeeState, UpdateEmployee } from '../../object/Employee/employee-object';
+import React, {ChangeEvent, Component} from 'react';
+import {Box, Table, TableCell, TableContainer, TableRow} from '@material-ui/core';
+import {EmployeeContext} from '../../store/Employee/employee-context';
+import {EmployeeState, UpdateEmployee} from '../../object/Employee/employee-object';
 import {initialUpdateEmployee} from "../../state/employeeStateMangement";
+import ProfileImage from "./ProfileImage";
 
-type ProfileFormProps = {
+const boldCellStyle = {
+    border: '1px solid #D3D3D3',
+    fontWeight: 'bold',
+    width: '15%',
+};
 
-}
+const cellStyle = {
+    border: '1px solid #D3D3D3',
+    width: '10%',
+};
+
+type ProfileFormProps = {}
 
 type ProfileFormState = {
     updateEmployeeObj: UpdateEmployee;
@@ -15,7 +25,7 @@ type ProfileFormState = {
 
 let modifyValue = {
     oldPassword: '',
-    password : '',
+    password: '',
     passwordConfirm: '',
     name: '',
     tel: '',
@@ -43,30 +53,17 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         state.getEmployee(employeeData.employeeNo);
     }
 
-    handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        const state = this.context as EmployeeState;
-        const employee = state.employee;
-
-        if(e.target.files && e.target.files.length > 0){
-            const imageFile = e.target.files[0];
-            this.setState({ selectedImage: imageFile});
-
-            await state.updateImage(employee.employeeNo, imageFile);
-        }
-
-    }
-
     handleUpdateClick = () => {
         const state = this.context as EmployeeState;
         const employee = state.employee;
 
-        if(modifyValue.password !== modifyValue.passwordConfirm){
+        if (modifyValue.password !== modifyValue.passwordConfirm) {
             alert('비밀번호를 다시 확인해주세요.');
             return;
         }
         const telWithoutHyphen = modifyValue.tel.replace(/-/g, '');
 
-        const updateEmployeeObj : UpdateEmployee = {
+        const updateEmployeeObj: UpdateEmployee = {
             oldPassword: modifyValue.oldPassword,
             password: modifyValue.password,
             name: modifyValue.name,
@@ -88,130 +85,100 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         modifyValue.email = employee.email;
 
         return (
-            <TableContainer>
-                <Table>
-                    <TableRow>
-                        <TableCell>사진</TableCell>
-                        <TableCell>{ this.state.selectedImage ? (
-                            <img
-                                src={URL.createObjectURL(this.state.selectedImage)}
-                                alt="새 이미지"
-                                style={{
-                                    maxWidth: '200px',
-                                    maxHeight: '250px',
-                                    marginTop: '10px',
-                                }}
-                            />
-                        ) : employee.employeeNo !==0 ? (
-                            <img
-                                src={`http://localhost:8080/employees/${employee.employeeNo}/image`}
-                                style={{
-                                    maxWidth: '200px',
-                                    maxHeight: '250px',
-                                    marginTop: '10px',
-                                }}
-                            />
-                        ) : (
-                            <div> 이미지 없음 </div>
-                        )}
-                        <button onClick={() => document.getElementById('fileInput')?.click()}>
-                            선택
-                            <input id='fileInput' type='file' accept='image/*' style={{ display: 'none' }}
-                                   onChange={this.handleImageChange} />
-                        </button>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>사번</TableCell>
-                        {employee.employeeNo !== 0 ? <TableCell>{employee.employeeNo}</TableCell> : null}
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>아이디</TableCell>
-                        <TableCell>{employee.id}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>이름</TableCell>
-                        <TableCell>
-                            <input
-                                type="text"
-                                placeholder="이름"
-                                defaultValue={employee.name}
-                                onChange={event => {
-                                    modifyValue.name = event.target.value;
-                                }}
-                            />
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>비밀번호</TableCell>
-                        <TableCell>
-                            <div>
-                                <label>
-                                    현재 비밀번호
-                                    <input
-                                        type="password"
-                                        placeholder="현재 비밀번호"
-                                        onChange={event => {
-                                            modifyValue.oldPassword = event.target.value;
-                                        }}
-                                    />
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    새 비밀번호
-                                    <input
-                                        type="password"
-                                        placeholder="새 비밀번호"
-                                        onChange={event => {
-                                            modifyValue.password = event.target.value;
-                                        }}
-                                    />
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    새 비밀번호 확인
-                                    <input
-                                        type="password"
-                                        placeholder="새 비밀번호 다시입력"
-                                        onChange={event => {
-                                            modifyValue.passwordConfirm = event.target.value;
-                                        }}
-                                    />
-                                </label>
-                            </div>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>연락처</TableCell>
-                        <TableCell>
-                            <input
-                                type="text"
-                                placeholder="010"
-                                defaultValue={employee.tel}
-                                onChange={event => {
-                                    modifyValue.tel = event.target.value;
-                                }}
-                            />
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>이메일</TableCell>
-                        <TableCell>
-                            <input
-                                type="text"
-                                placeholder="이메일"
-                                defaultValue={employee.email}
-                                onChange={event => {
-                                    modifyValue.email = event.target.value;
-                                }}
-                            />
-                        </TableCell>
-                    </TableRow>
-                </Table>
-                <button onClick={this.handleUpdateClick}>수정</button>
-            </TableContainer>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '70%'}}>
+                <TableContainer className='table-container'>
+                    <Table size='small' className='table'>
+                        <TableRow>
+                            <TableCell style={boldCellStyle}>사번</TableCell>
+                            {employee.employeeNo !== 0 ?
+                                <TableCell >{employee.employeeNo}</TableCell>
+                                : null}
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={boldCellStyle}>아이디</TableCell>
+                            <TableCell>{employee.id}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={boldCellStyle}>이름</TableCell>
+                            <TableCell>
+                                <input
+                                    type="text"
+                                    placeholder="이름"
+                                    defaultValue={employee.name}
+                                    onChange={event => {
+                                        modifyValue.name = event.target.value;
+                                    }}/>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={boldCellStyle}>현재 비밀번호</TableCell>
+                            <TableCell>
+                                <input
+                                    type="password"
+                                    placeholder="현재 비밀번호"
+                                    onChange={event => {
+                                        modifyValue.oldPassword = event.target.value;
+                                    }}/>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={boldCellStyle}>새 비밀번호</TableCell>
+                            <TableCell>
+                                <input
+                                    type="password"
+                                    placeholder="새 비밀번호"
+                                    onChange={event => {
+                                        modifyValue.password = event.target.value;
+                                    }}/>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={boldCellStyle}>새 비밀번호</TableCell>
+                            <TableCell>
+                                <input
+                                    type="password"
+                                    placeholder="새 비밀번호 다시입력"
+                                    onChange={event => {
+                                        modifyValue.passwordConfirm = event.target.value;
+                                    }}/>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={boldCellStyle}>연락처</TableCell>
+                            <TableCell>
+                                <input
+                                    type="text"
+                                    placeholder="010"
+                                    defaultValue={employee.tel}
+                                    onChange={event => {
+                                        modifyValue.tel = event.target.value;
+                                    }}/>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={boldCellStyle}>이메일</TableCell>
+                            <TableCell>
+                                <input
+                                    type="text"
+                                    placeholder="이메일"
+                                    defaultValue={employee.email}
+                                    onChange={event => {
+                                        modifyValue.email = event.target.value;
+                                    }}/>
+                            </TableCell>
+                        </TableRow>
+                    </Table>
+                </TableContainer>
+                <button onClick={this.handleUpdateClick}
+                        style={{
+                            bottom: 0,
+                            right: 0,
+                            margin: '10px'
+                        }}
+                >
+                    수정
+                </button>
+            </div>
         );
     }
 }
