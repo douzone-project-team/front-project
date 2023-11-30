@@ -15,6 +15,7 @@ type Props = {
 }
 
 const boldCellStyle = {
+    backgroundColor: '#f1f3f5',
     border: '1px solid #D3D3D3',
     fontWeight: 'bold',
     width: '10%',
@@ -28,10 +29,6 @@ const cellStyle = {
 class ViewCustomerTable extends Component<Props, State> {
     static contextType = CustomersContext;
 
-    handleDeleteClick = (customerNo:number) => {
-        const state = this.context as CustomersState;
-        state.deleteCustomer(customerNo);
-    }
     constructor(Props: Props) {
         super(Props);
         this.state = {
@@ -49,6 +46,14 @@ class ViewCustomerTable extends Component<Props, State> {
         state.setUpdateCustomer(customerNo, updateCustomer);
     }
 
+    handleDeleteClick = (customerNo:number) => {
+        if(window.confirm("거래처를 삭제하시겠습니까?")){
+            const state = this.context as CustomersState;
+            state.deleteCustomer(customerNo);
+        } else{
+            return;
+        }
+    }
 
     render() {
         const state = this.context as CustomersState;
@@ -66,15 +71,16 @@ class ViewCustomerTable extends Component<Props, State> {
                         display: 'flex',
                     }}
                 >
-                  <span className='table-header' style={{marginTop:'10px'}}>거래처 상세 :
+                    <img src={require('./../../images/icon/detail.png')} style={{width: '20px', height: '20px', marginTop: '9px'}}/>
+                  <span className='table-header' style={{marginTop:'10px', fontWeight: 'bold'}}>거래처 상세 :
                       {state.customer.customerNo !== 0 && <span style={{color: '#0C70F2'}}>{state.customer.customerNo}</span>}
                   </span>
                     <div style={{ marginLeft: 'auto' }}>
-                        {state.customer.customerNo !== 0 &&<button className='customerBtn'
-                                style={{ marginRight: '10px', marginTop: '5px'}}
-                                onClick={() => this.setState({customerModifyModalOpen: true})}>
-                            수정
-                        </button>}
+                        {state.customer.customerNo !== 0 &&
+                        <img src={require('../../images/button/modify-button.png')}
+                             style={{width : '25px', marginRight : '5px'}}
+                             onClick={() => this.setState({customerModifyModalOpen: true})}
+                        />}
                         <React.Fragment>
                             {this.state.customerModifyModalOpen && state.customer.customerNo !== 0 ? (
                                 <CustomerModifyModal onClose={() => this.setState({customerModifyModalOpen: false})}
@@ -84,13 +90,11 @@ class ViewCustomerTable extends Component<Props, State> {
                             ) : null}
                         </React.Fragment>
 
-                        {state.customer.customerNo !== 0 &&<button className='customerBtn'
-                                type="submit"
-                                style={{ marginRight: '3px' }}
-                                onClick={()=>this.handleDeleteClick(state.customer.customerNo)}
-                        >
-                            삭제
-                        </button>}
+                        {state.customer.customerNo !== 0 &&
+                        <img src={require('../../images/button/delete-button.png')}
+                             style={{width : '25px', marginRight : '5px'}}
+                             onClick={()=>this.handleDeleteClick(state.customer.customerNo)}
+                        />}
                     </div>
                 </Box>
                 <TableContainer className='table-container' style={{height:'74px'}}>
