@@ -48,9 +48,14 @@ export class CustomerModifyModal extends Component<CustomerModalProps, CustomerM
             },
 
             updateCustomer: () => {
+                const customerTel = modifyValue.customerTel1+"-"+modifyValue.customerTel2+"-"+modifyValue.customerTel3;
+                const state = this.context as CustomersState;
                 const {onClose, updateCustomer} = this.props as CustomerModalProps;
-                updateCustomer(this.props.customerNo, modifyValue.customerName,
-                    modifyValue.customerTel1+"-"+modifyValue.customerTel2+"-"+modifyValue.customerTel3, modifyValue.ceo);
+                if(modifyValue.customerName === state.customer.customerName && customerTel === state.customer.customerTel && modifyValue.ceo === state.customer.ceo){
+                    onClose();
+                    return;
+                }
+                updateCustomer(this.props.customerNo, modifyValue.customerName, customerTel, modifyValue.ceo);
                 onClose();
             }
         }
@@ -72,7 +77,7 @@ export class CustomerModifyModal extends Component<CustomerModalProps, CustomerM
         return (
             <div className='modal'>
                 {status ? (
-                    <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'35%'}}>
+                    <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'370px'}}>
                         <header>
                             <button className="close" onClick={onClose}>
                                 &times;
