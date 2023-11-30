@@ -261,8 +261,6 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
                 display='flex'
                 justifyContent='center'
                 alignItems='center'
-                maxHeight='100vh'
-                sx={{ mt: 13, mb: 5 }}
             >
                 <Paper
                     elevation={1}
@@ -272,11 +270,9 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
                         padding: '20px',
                     }}
                 >
-                    <Typography variant='h6' align='center' style={{ marginBottom: 2 }}>
-                        사원 등록
-                    </Typography>
-                    <Divider></Divider>
-                    <form onSubmit={this.handleSubmit}>
+                    <form
+                        onSubmit={this.handleSubmit}
+                    >
                         <Grid container spacing={1} alignItems='center'
                               style={{ marginTop: 1, marginBottom: 2, width: '100%' }}>
                             <Grid item>
@@ -489,7 +485,7 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
                             <Grid item style={{ marginLeft: 3}}>
                                 <Typography variant='body1'>Admin</Typography>
                             </Grid>
-                            <Grid item style={{ marginLeft: 'auto' }}>
+                            <Grid item style={{ marginLeft: 'auto'}}>
                                 <div>
                                     <label style={{
                                         position: 'relative',

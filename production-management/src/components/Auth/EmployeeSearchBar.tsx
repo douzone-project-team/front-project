@@ -24,71 +24,77 @@ class EmployeeSearchBar extends Component {
     }
 
     render() {
-        return(
+        return (
             <>
                 <Box
                     sx={{
                         width: '100%',
-                        height: '45px',
-                        border: '1.4px solid #D3D3D3',
+                        height: '40px',
+                        border: '1.5px solid #D3D3D3',
                         marginBottom: '10px',
-                        marginLeft: '2px'
+                        marginLeft: '2px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        borderRadius: '5px'
                     }}
                 >
-                    <label>
+                    <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
+                        <label>
+                        <span style={{
+                            marginLeft: '40px',
+                            marginRight: '7px',
+                            fontSize: '15px',
+                            fontWeight: 'bold'
+                        }}>사번</span>
+                            <input type="number" placeholder="사번"
+                                       style={{marginLeft: '10px', height: '20px'}}
+                                       onBlur={(e) => {
+                                           inputValue.employeeNo = parseInt(e.target.value)
+                                       }}
+                            />
+                        </label>
+                        <label>
+                        <span style={{
+                            marginLeft: '60px',
+                            marginRight: '5px',
+                            fontSize: '14px',
+                            fontWeight: 'bold'
+                        }}>이름</span>
+                            <input type="text" placeholder="이름"
+                                   style={{height: '20px', marginLeft: '10px'}}
+                                   onBlur={(e) => {
+                                       inputValue.name = e.target.value
+                                   }}
+                            />
+                        </label>
+                        <label>
                     <span style={{
-                        marginLeft: '40px',
-                        marginRight: '7px',
-                        fontSize: '15px',
-                        fontWeight: 'bold'
-                    }}>사번</span>
-                        <input type="number" placeholder="사번"
-                               style={{height: '25px', marginTop: '6px', width: '100px'}}
-                               onBlur={(e) => {
-                                   inputValue.employeeNo = parseInt(e.target.value)
-                               }}
-                        />
-                    </label>
-                    <label>
-                    <span style={{
-                        marginLeft: '30px',
-                        marginRight: '7px',
-                        fontSize: '15px',
-                        fontWeight: 'bold'
-                    }}>이름</span>
-                        <input type="text" placeholder="이름"
-                               style={{height: '25px', marginTop: '6px'}}
-                               onBlur={(e) => {
-                                   inputValue.name = e.target.value
-                               }}
-                        />
-                    </label>
-                    <label>
-                    <span style={{
-                        marginLeft: '30px',
-                        marginRight: '7px',
-                        fontSize: '15px',
+                        marginLeft: '60px',
+                        marginRight: '5px',
+                        fontSize: '14px',
                         fontWeight: 'bold'
                     }}>역할</span>
-                        <select
-                            style={{height: '20px', width: '120px', marginRight: '10px'}}
-                            value={inputValue.role}
-                            onChange={(e) => {
-                                inputValue.role = e.target.value;
-                                this.handleSearchRoleState(e.target.value);
-                            }}
-                        >
-                            <option value="">전체</option>
-                            <option value="ROLE_MEMBER">사원</option>
-                            <option value="ROLE_ADMIN">관리자</option>
-                        </select>
-                    </label>
-                    <button type="submit"
-                            style={{height: '31px', marginTop: '6px', marginLeft:'20px', marginRight:'10px'}}
-                            onClick={this.handleSearchClick}
-                    >
-                        조회
-                    </button>
+                            <select
+                                style={{height: '20px', marginLeft: '10px', borderRadius: '5px'}}
+                                value={inputValue.role}
+                                onChange={(e) => {
+                                    inputValue.role = e.target.value;
+                                    this.handleSearchRoleState(e.target.value);
+                                }}
+                            >
+                                <option value="">전체</option>
+                                <option value="ROLE_MEMBER">사원</option>
+                                <option value="ROLE_ADMIN">관리자</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div style={{marginBottom: '7px', marginTop: '7px'}}>
+                        <img src={require('../../images/button/search-button.png')}
+                             style={{width: '30px', marginRight: '10px', marginTop: '6px'}}
+                             className='cellHoverEffect' onClick={this.handleSearchClick}/>
+                    </div>
                 </Box>
             </>
         );

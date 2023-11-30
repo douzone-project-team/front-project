@@ -46,13 +46,13 @@ class ViewDeliveryInstructionTable extends Component<Props> {
                         </div>
                     </div>
                 </div>
-                <TableContainer className='table-container' style={{height: '170px'}}>
+                <TableContainer className='table-container'>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center" style={boldCellStyle}>상품 번호</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>상품 코드</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>상품 이름</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>갯수</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>잔량</TableCell>
                             </TableRow>

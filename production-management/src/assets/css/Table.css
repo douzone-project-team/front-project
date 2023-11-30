@@ -58,6 +58,15 @@
   text-align: center;
 }
 
+.COMPLETE {
+  margin: 3px;
+  width: 100px;
+  border-radius: 10px;
+  background-color: #3C50C2;
+  color: white;
+  text-align: center;
+}
+
 .INCOMPLETE {
   margin: 3px;
   width: 100px;

@@ -13,15 +13,10 @@ type Props = {
 }
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    width: '10%',
+    backgroundColor: '#f1f3f5'
 };
 
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-    width: '10%',
-};
 
 class ViewEmployeeTable extends Component<Props, State> {
     static contextType = AuthContext;
@@ -62,26 +57,26 @@ class ViewEmployeeTable extends Component<Props, State> {
 
         return(
             <>
-                <Box
-                    sx={{
-                        width: '100%',
-                        height: '30px',
-                        marginBottom: '10px',
-                        marginLeft: '2px',
-                        display: 'flex',
-                    }}
-                >
-                    <span className='table-header' style={{marginTop:'10px'}}>사원 상세 :
-                        {state.employee.employeeNo !== 0 &&
-                            <span style={{color: '#0C70F2'}}>{state.employee.employeeNo}</span>}
-                    </span>
+                <div style={{
+                    width: '100%',
+                    height: '30px',
+                    marginLeft: '2px',
+                    display: 'flex',
+                }}>
+                    <div style={{display: 'flex', alignItems: 'center'}}>
+                        <img src={require('./../../images/icon/detail.png')} style={{width: '20px'}}/>
+                        <span className='table-header'
+                              style={{fontWeight: 'bold', fontSize: '16px'}}> 사원 상세 : &nbsp;
+                            {state.employee.employeeNo !== 0 &&
+                                <span style={{color: '#0C70F2'}}>{state.employee.employeeNo}</span>}
+                        </span>
+                    </div>
                     <div style={{ marginLeft: 'auto' }}>
                         {state.employee.employeeNo !== 0 &&
-                            <button className='employeeBtn'
-                                    style={{ marginRight: '10px', marginTop: '5px'}}
-                                    onClick={() => this.setState({employeeModifyModalOpen: true})}>
-                            수정
-                        </button>}
+                            <img src={require('../../images/button/modify-button.png')}
+                                 style={{width : '20px', marginRight : '5px', marginTop: '3px'}}
+                                 onClick={() => this.setState({employeeModifyModalOpen: true})}/>
+                        }
                         <React.Fragment>
                             {this.state.employeeModifyModalOpen && state.employee.employeeNo !== 0 ? (
                                 <EmployeeModifyModal onClose={() => this.setState({employeeModifyModalOpen: false})}
@@ -92,16 +87,13 @@ class ViewEmployeeTable extends Component<Props, State> {
                         </React.Fragment>
 
                         {state.employee.employeeNo !== 0 &&
-                            <button className='employeeBtn'
-                                    type="submit"
-                                    style={{ marginRight: '3px' }}
-                                    onClick={()=>this.handleDeleteClick(state.employee.employeeNo)}
-                        >
-                            삭제
-                        </button>}
+                            <img src={require('../../images/button/delete-button.png')}
+                            style={{width : '20px', marginRight : '5px', marginTop: '3px'}}
+                            onClick={()=>this.handleDeleteClick(state.employee.employeeNo)}
+                            />}
                     </div>
-                </Box>
-                <TableContainer className='table-container' style={{height:'74px'}}>
+                </div>
+                <TableContainer className='table-container'>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
@@ -116,13 +108,13 @@ class ViewEmployeeTable extends Component<Props, State> {
                         </TableHead>
                         <TableBody>
                             {state.employee.employeeNo !== 0 && <TableRow>
-                                <TableCell align="center" style={cellStyle}>{employee.employeeNo}</TableCell>
-                                <TableCell align="center" style={cellStyle}>{employee.id}</TableCell>
-                                <TableCell align="center" style={cellStyle}>{employee.password}</TableCell>
-                                <TableCell align="center" style={cellStyle}>{employee.name}</TableCell>
-                                <TableCell align="center" style={cellStyle}>{employee.tel}</TableCell>
-                                <TableCell align="center" style={cellStyle}>{employee.email}</TableCell>
-                                <TableCell align="center" style={cellStyle}>
+                                <TableCell align="center">{employee.employeeNo}</TableCell>
+                                <TableCell align="center">{employee.id}</TableCell>
+                                <TableCell align="center">{employee.password}</TableCell>
+                                <TableCell align="center">{employee.name}</TableCell>
+                                <TableCell align="center">{employee.tel}</TableCell>
+                                <TableCell align="center">{employee.email}</TableCell>
+                                <TableCell align="center">
                                     {employee.role === 'ROLE_ADMIN' ? '관리자' : '사원'}</TableCell>
                             </TableRow>}
                         </TableBody>

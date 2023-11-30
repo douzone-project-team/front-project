@@ -39,7 +39,7 @@ class ViewDeliveries extends Component<Props, State> {
             },
             changeAmount: false,
             changeAmountStatus: () => {
-                this.setState({changeAmount: !this.state.changeAmountStatus});
+                this.setState({changeAmount: !this.state.changeAmount});
             },
             changeAmountStatusFalse: () => {
                 this.setState({changeAmount: false});
@@ -90,7 +90,7 @@ class ViewDeliveries extends Component<Props, State> {
             <Box
                 sx={{
                     width: '95%',
-                    height: '65%',
+                    height: '60%',
                     p: '15px',
                     ml: '50px',
                     bgcolor: 'white',

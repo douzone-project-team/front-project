@@ -59,11 +59,11 @@ class AddDeliveryBar extends Component{
                             marginRight: '5px',
                             fontSize: '14px',
                             fontWeight: 'bold',
-                        }}>등록일</span>
-                            <input type="date" placeholder='출고일'
+                        }}>출고일</span>
+                            <input type="date"
                                    style={{height: '20px', marginLeft: '10px', width: '125px'}}
                                    defaultValue={state.search.startDate}
-                                   data-placeholder='시작일'
+                                   data-placeholder='출고일'
                                    required
                                    onChange={(e) => {
                                        Delivery.deliveryDate = e.target.value;

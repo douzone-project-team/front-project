@@ -57,11 +57,11 @@ class ViewDeliveryListTable extends Component<Props>{
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center" style={boldCellStyle}>출고 상태</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>출고 번호</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>담당자</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>출고일</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>지시 개수</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>출고 상태</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -78,7 +78,7 @@ class ViewDeliveryListTable extends Component<Props>{
                                     <TableCell align="center">{row.instructionCount}</TableCell>
                                     <TableCell align="center" style={{width: '50px'}}>
                                         <div className={row.deliveryStatus}>
-                                            {row.deliveryStatus === 'COMPLETE' ? '완료' : '미완료' }
+                                            {row.deliveryStatus}
                                         </div>
                                     </TableCell>
                                 </TableRow>
