@@ -49,7 +49,7 @@ export type Instructions = {
     productNo: number,
     productCode: string,
     productName: string,
-    amount: number
+    amount: number,
 }
 
 /*
@@ -80,12 +80,17 @@ export type DeliveryInstruction = {
     products: AddProduct[],
 }
 
+export type RemainAmount = {
+    remainAmount: number,
+}
+
 /* state */
 export type DeliveriesState = {
     search: DeliverySearch,
     deliveryPage: DeliveryPage,
     delivery: Delivery,
     instructions: Instructions,
+    remainAmount: RemainAmount,
     addDeliveryObj: AddDeliveryObj,
     newDelivery: NewDelivery,
     cleanDelivery(): void,
@@ -93,7 +98,8 @@ export type DeliveriesState = {
     setSearchProgressStatus(progressStatus: string): void,
     setPage(page: number): void,
     getDeliveryList(): void,
-    getDelivery(deliveryNo: string): void
+    getDelivery(deliveryNo: string): void,
+    getRemainAmount(instructionNo: string, productNo: number): void,
     addDelivery(addDeliveryObj: AddDeliveryObj): void,
     addDeliveryInstruction(deliveryNo: string, addDeliveryInstruction: AddDeliveryInstruction): void,
     deleteDelivery(deliveryNo: string): void,

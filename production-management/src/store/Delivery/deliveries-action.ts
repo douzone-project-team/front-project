@@ -41,6 +41,13 @@ class DeliveriesAction {
         const URL = `${this.baseUrl}/` + deliveryNo;
         return fetcher.DELETE(URL);
     }
+
+    // 잔량 구하기
+    public getRemainAmount(instructionNo: string, productNo: number) {
+        const URL = `/product-instruction/${instructionNo}/${productNo}`;
+        console.log('잔량 :' + URL);
+        return fetcher.GET(URL);
+    }
 }
 
 export default DeliveriesAction;

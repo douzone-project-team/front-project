@@ -7,7 +7,7 @@ import {
     initialDeliveryPageState,
     initialDeliverySearchState,
     initialInstructions,
-    initialNewDelivery
+    initialNewDelivery, initialRemainAmount,
 } from "../../state/deliveryStateManagement";
 import {AddDeliveryObj, DeliveriesState, UpdateDelivery} from "../../object/Delivery/delivery-object";
 import {
@@ -28,6 +28,7 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
     delivery: initialDelivery,
     newDelivery: initialNewDelivery,
     instructions: initialInstructions,
+    remainAmount: initialRemainAmount,
     addDeliveryObj: initialAddDeliveryObj,
     cleanDelivery(): void {
     },
@@ -40,6 +41,8 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
     getDeliveryList(): void {
     },
     getDelivery(deliveryNo: string): void {
+    },
+    getRemainAmount(instructionNo: string, productNo: number) {
     },
     addDelivery(addDeliveryObj: AddDeliveryObj): void {
     },
@@ -63,6 +66,7 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         deliveryPage: initialDeliveryPageState,
         delivery: initialDelivery,
         instructions: initialInstructions,
+        remainAmount: initialRemainAmount,
         addDeliveryObj: initialAddDeliveryObj,
         newDelivery: initialNewDelivery,
         cleanDelivery: () => {
@@ -112,6 +116,14 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                 .then((result) => {
                     let data = result?.data;
                     this.setState({delivery: data});
+                })
+        },
+        getRemainAmount: (instructionNo: string, productNo: number) => {
+            deliveryAction.getRemainAmount(instructionNo, productNo)
+                .then((result) => {
+                    let data = result?.data;
+                    this.setState({remainAmount: data});
+                    console.log(this.state.remainAmount);
                 })
         },
         /* Delivery 껍데기 추가 메서드 */
@@ -168,8 +180,8 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         deleteDelivery: (deliveryNo: string) => {
             deliveryAction.deleteDelivery(deliveryNo)
                 .then((result) => {
-                    this.getDeliveryList();
                     this.setState({delivery: initialDelivery})
+                    this.getDeliveryList();
                 })
         },
 

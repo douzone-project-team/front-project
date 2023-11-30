@@ -58,10 +58,21 @@ class ViewDeliveryTable extends Component<Props, State> {
         state.updateDelivery({deliveryNo, deliveryDate: newDeliveryDate});
     };
 
+    getRemainAmount = async (instructionNo: string, productNo: number) => {
+        const state = this.context as DeliveriesState;
+        await state.getRemainAmount(instructionNo, productNo);
+    }
+
     // 한 가지 지시의 품목 amount 수정
     updateProductAmount = (instructionNo: string, amount: number, productNo: number) => {
         const state = this.context as DeliveriesState;
         const delivery = state.delivery;
+
+
+        if(amount > state.remainAmount.remainAmount) {
+            alert('수량이 잔량보다 많습니다. \n현재 잔량 : ' + state.remainAmount.remainAmount);
+            return;
+        }
 
         if (amount <= 0) {
             alert('수량을 올바르게 입력해주세요.');
@@ -177,7 +188,8 @@ class ViewDeliveryTable extends Component<Props, State> {
                     <div style={{width: '30%'}}>
                         <div style={{display: 'flex', alignItems: 'center'}}>
                             <img src={require('./../../images/icon/detail.png')} style={{width: '20px'}}/>
-                            <span className='table-header'>출고 상세 </span>
+                            <span className='table-header'
+                                  style={{fontWeight: 'bold', fontSize: '16px'}}>출고 상세 </span>
                             {delivery.deliveryNo ?
                                 <span className={delivery.deliveryStatus} style={{
                                     width: '130px',
@@ -192,7 +204,8 @@ class ViewDeliveryTable extends Component<Props, State> {
                     </div>
                     <div style={{width: '68%'}}>
                         {delivery.deliveryStatus === 'INCOMPLETE' ? (
-                            <span className='table-header'>출고일 :&nbsp;
+                            <span className='table-header'
+                                  style={{fontWeight: 'bold', fontSize: '16px'}}>출고일 :&nbsp;
                                 <input type="date"
                                        style={{height: '20px', color: '#0C70F2'}}
                                        defaultValue={delivery.deliveryDate}
@@ -207,12 +220,12 @@ class ViewDeliveryTable extends Component<Props, State> {
                             </span>
                         )}
                     </div>
-                    <div style={{width: '5%', textAlign: 'right'}}>
-                        {delivery.deliveryStatus == 'INCOMPLETE' &&
-                            <img src={require('../../images/icon/checked.png')}
-                                 style={{width: '20px', marginRight: '10px', marginTop: '6px'}}
-                                 className='cellHoverEffect'
-                                 onClick={() => updateDeliveryStatus(delivery.deliveryNo)}/>}
+                    <div style={{width: '4%', textAlign: 'right'}}>
+                            {delivery.deliveryStatus == 'INCOMPLETE' &&
+                                <img src={require('../../images/icon/checked.png')}
+                                     style={{width: '22px', marginTop: '6px'}}
+                                     className='cellHoverEffect'
+                                     onClick={() => updateDeliveryStatus(delivery.deliveryNo)}/>}
                     </div>
                     <div style={{width: '5%', textAlign: 'right'}}>
                         {delivery.deliveryStatus == 'INCOMPLETE' &&
@@ -266,7 +279,10 @@ class ViewDeliveryTable extends Component<Props, State> {
                                                             src={require(`../../images/button/modify-button-black.png`)}
                                                             className='cellHoverEffect'
                                                             style={{width: '15px', verticalAlign: 'middle'}}
-                                                            onClick={changeAmountStatus}/> : null}
+                                                            onClick={() => {
+                                                                changeAmountStatus();
+                                                                this.getRemainAmount(row.instructionNo, row.productNo);
+                                                            }}/> : null}
                                                 </div>
                                             </div> :
                                             <input type="number" defaultValue={row.amount}
