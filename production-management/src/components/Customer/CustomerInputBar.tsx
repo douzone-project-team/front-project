@@ -70,8 +70,8 @@ class CustomerInputBar extends Component<Props, State> {
                       fontSize: '15px',
                       fontWeight: 'bold'
                     }}>거래처 코드</span>
-                        <input type="text" placeholder="거래처 코드"
-                               style={{height: '25px', marginTop: '6px', width: '100px'}}
+                        <input type="text" placeholder=""
+                               style={{height: '25px', marginTop: '6px', width: '100px', borderRadius: '5px'}}
                                onBlur={(e) => {
                                    inputValue.customerCode = e.target.value
                                }}
@@ -84,8 +84,8 @@ class CustomerInputBar extends Component<Props, State> {
                       fontSize: '15px',
                       fontWeight: 'bold'
                     }}>거래처 명칭</span>
-                    <input type="text" placeholder="거래처 명칭"
-                               style={{height: '25px', marginTop: '6px'}}
+                    <input type="text" placeholder=""
+                               style={{height: '25px', marginTop: '6px', borderRadius: '5px'}}
                                onBlur={(e) => {
                                    inputValue.customerName = e.target.value
                                }}
@@ -98,23 +98,21 @@ class CustomerInputBar extends Component<Props, State> {
                         fontSize: '15px',
                         fontWeight: 'bold'
                     }}>업종</span>
-                            <input type="text" placeholder="업종"
-                                   style={{height: '25px', marginTop: '6px'}}
+                            <input type="text" placeholder=""
+                                   style={{height: '25px', marginTop: '6px', borderRadius: '5px'}}
                                    onBlur={(e) => {
                                        inputValue.sector = e.target.value
                                    }}
                             />
                     </label>
-                    <button type="submit"
-                            style={{height: '31px', marginTop: '6px', marginLeft:'20px', marginRight:'10px'}}
-                            onClick={this.handleSearchClick}
-                    >조회
-                    </button>
-                    <button type="submit"
-                            style={{height: '31px', marginTop: '6px', float: 'right', marginRight: '6px'}}
-                            onClick={() => this.setState((prevState) => ({ customerAddModalOpen: !prevState.customerAddModalOpen }))}
-                    >거래처 추가
-                    </button>
+
+                    <img src={require('../../images/button/add-button.png')}
+                         style={{height: '31px', marginTop: '6px', float: 'right', marginRight: '6px'}}
+                         onClick={() => this.setState((prevState) => ({ customerAddModalOpen: !prevState.customerAddModalOpen }))}
+                    />
+                    <img src={require('../../images/button/search-button.png')}
+                         style={{width : '30px', height: '31px', marginTop: '6px', float: 'right', marginRight: '6px'}}
+                         onClick={this.handleSearchClick}/>
 
                     <React.Fragment>
                             {this.state.customerAddModalOpen ? (

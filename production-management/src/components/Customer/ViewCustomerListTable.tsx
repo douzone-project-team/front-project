@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import "./../../assets/css/Table.css";
 import {CustomersContext} from "../../store/Customer/customers-context";
 import {CustomersState} from "../../object/Customer/customer-object";
@@ -15,6 +15,7 @@ import {
 
 
 const boldCellStyle = {
+    backgroundColor: '#f1f3f5',
     border: '1px solid #D3D3D3',
     fontWeight: 'bold',
     width: '10%',
@@ -53,7 +54,11 @@ class ViewCustomerListTable extends Component {
 
         return(
             <>
-                <span className='table-header'>거래처 목록</span>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
+                    <span className='table-header'
+                          style={{fontWeight: 'bold', fontSize: '16px'}}> 거래처 목록</span>
+                </div>
                 <TableContainer className='table-container' style={{height:'395px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
@@ -61,6 +66,7 @@ class ViewCustomerListTable extends Component {
                                 <TableCell align="center" style={boldCellStyle}>거래처 번호</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>거래처 코드</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>거래처 명칭</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>대표자</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>업종</TableCell>
                             </TableRow>
                         </TableHead>
@@ -70,6 +76,7 @@ class ViewCustomerListTable extends Component {
                                     <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerNo}</TableCell>
                                     <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerCode}</TableCell>
                                     <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerName}</TableCell>
+                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.ceo}</TableCell>
                                     <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.sector}</TableCell>
                                 </TableRow>
                             ))}
@@ -84,13 +91,13 @@ class ViewCustomerListTable extends Component {
                     >
                         <KeyboardArrowLeft
                             onClick={handlePrevPage}
-                            // disabled={!state.instructionPage.hasPreviousPage}
+                            // disabled={!state.customerPage.hasPreviousPage}
                         >
                             이전 페이지
                         </KeyboardArrowLeft>
                         <KeyboardArrowRight
                             onClick={handleNextPage}
-                            // disabled={!state.instructionPage.hasNextPage}
+                            // disabled={!state.customerPage.hasNextPage}
                         >
                             다음 페이지
                         </KeyboardArrowRight>

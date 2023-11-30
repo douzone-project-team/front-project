@@ -9,14 +9,8 @@ import CustomerModal from "../Modal/Product/CustomerModal";
 import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
 
 const boldCellStyle = {
-  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-  width: '10%',
-};
-
-const cellStyle = {
-  border: '1px solid #D3D3D3',
-  width: '10%',
+  backgroundColor: '#f1f3f5'
 };
 
 type Props = {
@@ -86,14 +80,25 @@ class ViewInstructionTable extends Component<Props> {
           <div style={{
             width: '100%',
             height: '30px',
-            marginBottom: '10px',
             marginLeft: '2px',
             display: 'flex',
           }}>
             <div style={{width: '95%'}}>
-          <span className='table-header'>지시 상세 :
-            <span style={{color: '#0C70F2'}}>{instruction.instructionNo}</span>
-          </span>
+              <div style={{display: 'flex', alignItems: 'center'}}>
+                <img src={require('./../../images/icon/detail.png')} style={{width: '20px'}}/>
+                <span className='table-header'
+                      style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 상세 </span>
+                {instruction.instructionNo ?
+                    <span className={instruction.progressStatus} style={{
+                      width: '130px',
+                      marginLeft: '10px',
+                      marginTop: '0px',
+                      marginBottom: '0px'
+                    }}>
+                        {instruction.instructionNo}
+                      </span>
+                    : null}
+              </div>
             </div>
             <div style={{width: '5%', textAlign: 'right'}}>
               {instruction.progressStatus == 'STANDBY' &&
@@ -104,15 +109,15 @@ class ViewInstructionTable extends Component<Props> {
             </div>
           </div>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '220px' : '460px',
+            height: this.props.tableSize ? '17.8%' : '65%',
             transition: 'height 0.3s ease-in-out'
           }}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
                   <TableCell align="center" style={boldCellStyle}>거래처 명</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>시작일</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>종료일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>만료일</TableCell>
                   <TableCell align="center" style={boldCellStyle}>상품 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>상품 코드</TableCell>
                   <TableCell align="center" style={boldCellStyle}>상품 이름</TableCell>
@@ -123,16 +128,13 @@ class ViewInstructionTable extends Component<Props> {
               <TableBody>
                 {list && list.length > 0 && list.map((row) => (
                     <TableRow>
-                      <TableCell align="center"
-                                 style={cellStyle}>{instruction.customerName}</TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionDate}</TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}>{instruction.expirationDate}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.productNo}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.productCode}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.productName} </TableCell>
-                      <TableCell align="center" style={cellStyle}>
+                      <TableCell align="center">{instruction.customerName}</TableCell>
+                      <TableCell align="center">{instruction.instructionDate}</TableCell>
+                      <TableCell align="center">{instruction.expirationDate}</TableCell>
+                      <TableCell align="center">{row.productNo}</TableCell>
+                      <TableCell align="center">{row.productCode}</TableCell>
+                      <TableCell align="center">{row.productName} </TableCell>
+                      <TableCell align="center">
                         {!changeAmount ?
                             <div style={{
                               display: 'flex',
@@ -158,13 +160,12 @@ class ViewInstructionTable extends Component<Props> {
                                    }}/>
                         }
                       </TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.remainAmount}</TableCell>
+                      <TableCell align="center">{row.remainAmount}</TableCell>
                     </TableRow>
                 ))}
                 {(instruction.instructionNo && (instruction.progressStatus == 'STANDBY')) ? (
                     <TableRow>
-                      <TableCell align="center"
-                                 style={cellStyle}>
+                      <TableCell align="center">
                         <div style={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -181,49 +182,47 @@ class ViewInstructionTable extends Component<Props> {
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}><input type='date'
-                                                          style={{
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            textAlign: 'center',
-                                                            border: 0,
-                                                            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                                                            fontWeight: 400,
-                                                            fontSize: '0.875rem',
-                                                            marginLeft: '9px'
-                                                          }}
-                                                          defaultValue={instruction.instructionDate}
-                                                          onChange={(event => {
-                                                            this.updateInstruction({instructionDate: event.target.value});
-                                                          })}></input></TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}><input type='date'
-                                                          style={{
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            textAlign: 'center',
-                                                            border: 0,
-                                                            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                                                            fontWeight: 400,
-                                                            fontSize: '0.875rem',
-                                                            marginLeft: '9px'
-                                                          }}
-                                                          defaultValue={instruction.expirationDate}
-                                                          onChange={(event => {
-                                                            this.updateInstruction({expirationDate: event.target.value});
-                                                          })}
-                      ></input></TableCell>
-                      <TableCell align="center" style={cellStyle}>
+                      <TableCell align="center"><input type='date'
+                                                       style={{
+                                                         width: '100%',
+                                                         height: '100%',
+                                                         textAlign: 'center',
+                                                         border: 0,
+                                                         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+                                                         fontWeight: 400,
+                                                         fontSize: '0.875rem',
+                                                         marginLeft: '9px'
+                                                       }}
+                                                       defaultValue={instruction.instructionDate}
+                                                       onChange={(event => {
+                                                         this.updateInstruction({instructionDate: event.target.value});
+                                                       })}></input></TableCell>
+                      <TableCell align="center"><input type='date'
+                                                       style={{
+                                                         width: '100%',
+                                                         height: '100%',
+                                                         textAlign: 'center',
+                                                         border: 0,
+                                                         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+                                                         fontWeight: 400,
+                                                         fontSize: '0.875rem',
+                                                         marginLeft: '9px'
+                                                       }}
+                                                       defaultValue={instruction.expirationDate}
+                                                       onChange={(event => {
+                                                         this.updateInstruction({expirationDate: event.target.value});
+                                                       })}/>
+                      </TableCell>
+                      <TableCell align="center">
                         <img src={require(`../../images/button/add-item-button-black.png`)}
                              className='cellHoverEffect'
                              style={{width: '15px', verticalAlign: 'middle'}}
                              onClick={changeProductModalStatus}/>
                       </TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center"></TableCell>
                     </TableRow>
                 ) : null}
               </TableBody>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+// import Swal from 'sweetalert2'
 import CustomerAction from "./customers-action";
 import {CustomersState, InsertCustomer, UpdateCustomer} from "../../object/Customer/customer-object";
 import {
@@ -139,7 +140,14 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
         customerAction.duplicateCustomerCodeCheck(this.state.checkCustomerCode)
             .then((result) => {
                 let data = result?.data;
-                this.setState({duplicateCustomerCodeResult: data});
+                this.setState({duplicateCustomerCodeResult: data},
+                    () => {
+                    if(data.duplicateResult){
+                        alert("사용 가능한 거래처 코드입니다.")
+                    }else{
+                        alert("사용 불가능한 거래처 코드입니다.")
+                    }
+                    });
             })
     }
 
@@ -158,6 +166,11 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
         customerAction.updateCustomer(customerNo, this.state.updateCustomer)
             .then(() => {
                 alert("수정을 성공하였습니다.");
+                // Swal.fire({
+                //     icon: "success",
+                //     title: "확인",
+                //     text: "수정 하였습니다!",
+                // });
                 this.state.getCustomer(customerNo);
                 this.getCustomerList();
             })

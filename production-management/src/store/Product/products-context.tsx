@@ -23,8 +23,9 @@ export const ProductsContext = React.createContext<ProductsState>({
   setPage(page: number): void {},
   getProductList(): void {},
   getProduct(productNo: number): void {},
-  regiProducts(productCode: string, productName: string, standard: string, unit: number): void {},
-  updateProduct(productNo: number, productCode: string, productName: string, standard: string, unit: number): void{},
+  regiProducts(productCode: string, productName: string, standard: string, unit: number,weight: number, price: number): void {},
+  updateProduct(productNo: number, productCode: string, productName: string, standard: string,
+                unit: number, weight: number, price: number): void{},
     deleteProduct(productNo: number): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             // 비동기 작업 수행 (예: 서버 요청 등)
@@ -74,9 +75,9 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
               });
       },
 
-      regiProducts: (productCode: string, productName: string, standard: string, unit: number) => {
+      regiProducts: (productCode: string, productName: string, standard: string, unit: number, weight: number, price: number) => {
           // productAction을 이용하여 제품 등록 요청을 보냅니다.
-          productAction.regiProducts(productCode, productName, standard, unit)
+          productAction.regiProducts(productCode, productName, standard, unit ,weight, price)
               .then((result) => {
                   alert(productCode);
               })
@@ -85,15 +86,18 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
                   console.error("Error registering product:", error);
               });
       },
-      updateProduct: function (productNo: number, productCode: string, productName: string, standard: string, unit: number): void {
+      updateProduct: function (productNo: number, productCode: string, productName: string, standard: string,
+                               unit: number, weight: number, price: number): void {
           productAction
-              .updateProduct(productNo, productCode, productName, standard, unit)
+              .updateProduct(productNo, productCode, productName, standard, unit, weight, price)
               .then((result) => {
                   const updatedProduct = {
                       productNo,
                       productCode,
                       productName,
+                      price,
                       standard,
+                      weight,
                       unit,
                   };
 
