@@ -7,7 +7,7 @@ import CustomerPage from './pages/Customer/CustomerPage';
 import MainPage from './pages/Main/MainPage';
 import Login from './pages/Auth/Login';
 import ViewDeliveries from './pages/Delivery/ViewDeliveries';
-import AddDeliveries from './pages/Delivery/AddDeliveries';
+import AddDeliveries from './pages/Delivery/AddDeliveries';import currentSituationpage from "./pages/CurrentSituation/CurrentSituationpage";
 
 class App extends Component {
   render() {
@@ -22,6 +22,7 @@ class App extends Component {
             <Route exact path="/customer/list" component={CustomerPage}/>
             <Route exact path="/delivery/list" component={ViewDeliveries}/>
             <Route exact path="/delivery/add" component={AddDeliveries}/>
+              <Route exact path="/current/page" component={currentSituationpage}/>
           </Switch>
         </Router>
     );
