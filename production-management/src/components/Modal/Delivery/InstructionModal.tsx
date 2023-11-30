@@ -75,23 +75,37 @@ export class InstructionModal extends Component<InstructionModalProps, Instructi
                                 marginTop: '10px',
                                 marginBottom: '10px',
                                 marginLeft: '20px',
-                                marginRight: '20px'
+                                marginRight: '20px',
+                                borderRadius: '10px'
                             }}
                         >
                             <label>
                                     <span style={{
-                                        marginRight: '5px',
+                                        marginRight: '15px',
                                         fontSize: '15px',
-                                        fontWeight: 'bold'
+                                        fontWeight: 'bold',
                                     }}>지시 번호</span>
-                                <input type="text" placeholder="지시 번호"
-                                       style={{height: '20px', marginTop: '6px', marginRight: '50px', width: '120px'}}
+                                <input type="text"
+                                       style={{
+                                           height: '20px',
+                                           marginTop: '6px',
+                                           marginRight: '25px',
+                                           width: '120px',
+                                           textAlign: 'center'
+                                       }}
                                        readOnly
                                        value={this.state.instruction.instructionNo}
                                 />
                             </label>
                             <button type="submit"
-                                    style={{height: '27px', marginTop: '6px'}}
+                                    style={{
+                                        width: '50px',
+                                        height: '27px',
+                                        marginTop: '6px',
+                                        borderRadius: '10px',
+                                        backgroundColor: '#0C70F2',
+                                        color: '#FFFFFF'
+                                    }}
                                     onClick={this.addDeliveryInstruction}>
                                 등록
                             </button>

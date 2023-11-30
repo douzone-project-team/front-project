@@ -11,14 +11,8 @@ type Props = {
 }
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    width: '10%',
-};
-
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-    width: '10%',
+    backgroundColor: '#f1f3f5'
 };
 
 class ViewDeliveryInstructionTable extends Component<Props> {
@@ -37,16 +31,28 @@ class ViewDeliveryInstructionTable extends Component<Props> {
 
         return (
             <>
-          <span className='table-header'>지시 상세 :
-            <span style={{color: '#0C70F2'}}>{this.props.instructionNo}</span>
-          </span>
-                <TableContainer className='table-container' style={{height: '170px'}}>
+                <div style={{
+                    width: '100%',
+                    height: '30px',
+                    marginLeft: '2px',
+                    display: 'flex',
+                }}>
+                    <div style={{width: '95%'}}>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <img src={require('./../../images/icon/detail.png')} style={{width: '20px'}}/>
+                            <span className='table-header'
+                                  style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 상세 : &nbsp; </span>
+                                <span style={{color: '#0C70F2'}}>{this.props.instructionNo}</span>
+                        </div>
+                    </div>
+                </div>
+                <TableContainer className='table-container'>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center" style={boldCellStyle}>상품 번호</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>상품 코드</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>상품 이름</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>갯수</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>잔량</TableCell>
                             </TableRow>
@@ -64,20 +70,14 @@ class ViewDeliveryInstructionTable extends Component<Props> {
                                             remainAmount: row.remainAmount,
                                         })}
                                         key={row.productNo}>
-                                        <TableCell align="center" style={cellStyle}>{row.productNo}</TableCell>
-                                        <TableCell align="center" style={cellStyle}>{row.productCode}</TableCell>
-                                        <TableCell align="center" style={cellStyle}>{row.productName}</TableCell>
-                                        <TableCell align="center" style={cellStyle}>{row.amount}</TableCell>
-                                        <TableCell align="center" style={cellStyle}>{row.remainAmount}</TableCell>
+                                        <TableCell align="center">{row.productNo}</TableCell>
+                                        <TableCell align="center">{row.productCode}</TableCell>
+                                        <TableCell align="center">{row.productName}</TableCell>
+                                        <TableCell align="center">{row.amount}</TableCell>
+                                        <TableCell align="center">{row.remainAmount}</TableCell>
                                     </TableRow>
                                 ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell align="center" style={cellStyle}>
-                                        No data available
-                                    </TableCell>
-                                </TableRow>
-                            )}
+                            ) : null}
                         </TableBody>
                     </Table>
                 </TableContainer>

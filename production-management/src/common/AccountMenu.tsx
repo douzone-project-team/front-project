@@ -12,6 +12,7 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 import { Link as RouterLink } from 'react-router-dom';
 import {EmployeeContext} from '../store/Employee/employee-context';
 import Typography from "@material-ui/core/Typography";
+import {EmployeeState} from "../object/Employee/employee-object";
 
 interface AccountMenuState {
     anchorEl: HTMLElement | null;
@@ -29,7 +30,8 @@ class AccountMenu extends Component<{}, AccountMenuState> {
     }
 
     handleLogout = () => {
-        this.context.logout();
+        const state = this.context as EmployeeState;
+        state.logout();
     };
 
     handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,6 +45,14 @@ class AccountMenu extends Component<{}, AccountMenuState> {
     render() {
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
+
+        const storedEmployeeData = localStorage.getItem('employee');
+        const employeeData = storedEmployeeData ? JSON.parse(storedEmployeeData) : {};
+        const name = employeeData.name;
+        const role = employeeData.role === 'ROLE_ADMIN' ? '관리자' : '사원';
+        const employeeNo = employeeData.employeeNo;
+
+        /* avatarIcon 자리 사원 이미지 띄워줄건지 말건지 고민해야함 */
 
         return (
             <React.Fragment>
@@ -59,10 +69,10 @@ class AccountMenu extends Component<{}, AccountMenuState> {
                             <Avatar style={{ width: 32, height: 32, marginRight: 5}}></Avatar>
                             <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: 5 }}>
                                 <Typography variant="caption" color="inherit" style={{ marginBottom: -4, fontWeight: 'bold' }}>
-                                    오수민
+                                    {name}
                                 </Typography>
                                 <Typography variant="caption" color="inherit">
-                                    DZ Company
+                                    {role} | {employeeNo}
                                 </Typography>
                             </Box>
                         </IconButton>

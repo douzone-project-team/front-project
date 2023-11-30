@@ -1,21 +1,21 @@
-export const initialIsSuccessState = false
+export const initialIsSuccess = false
 
-export const initialEmployeeSearchState = {
+export const initialSearch = {
     employeeNo: 0,
     name: '',
     role: '',
-    pageSize: 8,
+    size: 8,
     page: 1
 }
 
-export const initialEmployeePageState = {
+export const initialEmployeePage = {
     list: [],
     currentPage: 0,
     hasNextPage: false,
     hasPreviousPage: false
 }
 
-export const initialEmployeeState = {
+export const initialEmployee = {
     employeeNo: 0,
     id: '',
     password: '',
@@ -25,14 +25,15 @@ export const initialEmployeeState = {
     email: '',
 }
 
-export const initialUpdateEmployeeState = {
+export const initialUpdateEmployee = {
     oldPassword: '',
     password: '',
+    name: '',
     tel: '',
     email: '',
 }
 
-export const initialImageState = {
+export const initialImage = {
     image: null,
 }
 

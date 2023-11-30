@@ -5,6 +5,8 @@ import {Box} from "@material-ui/core";
 import ViewDeliveryInstructionTable from "../../Delivery/ViewDeliveryInstructionTable";
 import {DeliveriesContext} from "../../../store/Delivery/deliveries-context";
 
+import './DeliveryProductModal.css';
+
 type DeliveryProductModalProps = {
     onClose: () => void,
     addDeliveryProduct: (instructionNo: string, productNo: number, productCode: string, amount: number, remainAmount: number) => void,
@@ -15,7 +17,8 @@ type DeliveryProductModalState = {
     product: AddProduct,
     instructionNo: string,
 };
-class DeliveryProductModal extends Component<DeliveryProductModalProps, DeliveryProductModalState>{
+
+class DeliveryProductModal extends Component<DeliveryProductModalProps, DeliveryProductModalState> {
     static deliveriesContextType = DeliveriesContext
     static contextType = InstructionsContext;
 
@@ -34,19 +37,19 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
     }
 
     setProduct = (product: AddProduct) => {
-        this.setState({ product: { ...product, instructionNo: this.state.instructionNo } });
+        this.setState({product: {...product, instructionNo: this.state.instructionNo}});
     }
 
     addDeliveryProduct = () => {
         const {onClose, addDeliveryProduct} = this.props
         const {product, instructionNo} = this.state;
 
-        if(product.amount <= 0){
+        if (product.amount <= 0) {
             alert('수량을 올바르게 입력해주세요.');
             return;
         }
 
-        if(product.amount > product.remainAmount){
+        if (product.amount > product.remainAmount) {
             alert('선택한 상품의 수량이 잔량보다 많습니다.')
             return;
         }
@@ -62,12 +65,12 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
         }));
     }
 
-    render(){
-        const {onClose, instructionNo } = this.props;
+    render() {
+        const {onClose, instructionNo} = this.props;
         const {product} = this.state;
 
-        return(
-            <div className='modal'>
+        return (
+            <div className='dpModal'>
                 <section>
                     <header>
                         <button className="close" onClick={onClose}>
@@ -75,72 +78,84 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
                         </button>
                     </header>
                     <main>
-                        <ViewDeliveryInstructionTable  instructionNo={instructionNo}
-                                                       setProduct={this.setProduct}/>
+                        <ViewDeliveryInstructionTable instructionNo={instructionNo}
+                                                      setProduct={this.setProduct}/>
                     </main>
                     {product.productNo !== 0 && (
                         <Box
                             sx={{
-                                height: '40px',
+                                height: '100px',
                                 border: '1.4px solid #D3D3D3',
                                 marginTop: '10px',
                                 marginBottom: '10px',
                                 marginLeft: '20px',
-                                marginRight: '20px'
+                                marginRight: '20px',
+                                borderRadius: '10px',
                             }}
                         >
-                            <label>
+                            <Box sx={{mt: '20px'}}>
+                                <label>
                                 <span style={{
-                                    marginRight: '5px',
+                                    marginRight: '10px',
                                     fontSize: '15px',
                                     fontWeight: 'bold'
                                 }}>상품 번호</span>
-                                <input type="text" placeholder="상품 번호"
-                                       style={{
-                                           height: '20px',
-                                           marginTop: '6px',
-                                           marginRight: '50px',
-                                           width: '120px'
-                                       }}
-                                       readOnly
-                                       value={this.state.product.productNo}
-                                />
-                            </label>
-                            <label>
+                                    <input type="text"
+                                           style={{
+                                               height: '20px',
+                                               marginTop: '6px',
+                                               marginRight: '10px',
+                                               width: '50px',
+                                               textAlign: 'center'
+                                           }}
+                                           readOnly
+                                           value={this.state.product.productNo}
+                                    />
+                                </label>
+                                <label>
                                 <span style={{
-                                    marginRight: '5px',
+                                    marginRight: '10px',
                                     fontSize: '15px',
                                     fontWeight: 'bold'
                                 }}>상품 코드</span>
-                                <input type="text" placeholder="상품 코드"
-                                       style={{
-                                           height: '20px',
-                                           marginTop: '6px',
-                                           marginRight: '50px',
-                                           width: '120px'
-                                       }}
-                                       readOnly
-                                       value={this.state.product.productCode}
-                                />
-                            </label>
-                            <label>
+                                    <input type="text"
+                                           style={{
+                                               height: '20px',
+                                               marginTop: '6px',
+                                               marginRight: '10px',
+                                               width: '80px',
+                                               textAlign: 'center'
+                                           }}
+                                           readOnly
+                                           value={this.state.product.productCode}
+                                    />
+                                </label>
+                                <label>
                                 <span style={{
-                                    marginRight: '5px',
+                                    marginRight: '10px',
                                     fontSize: '15px',
                                     fontWeight: 'bold'
                                 }}>수량</span>
-                                <input type="text" placeholder="수량"
-                                       style={{
-                                           height: '20px',
-                                           marginTop: '6px',
-                                           marginRight: '50px',
-                                           width: '120px'
-                                       }}
-                                       onBlur={this.handleAmountBlur}
-                                />
-                            </label>
+                                    <input type="number" placeholder="수량"
+                                           style={{
+                                               height: '20px',
+                                               marginTop: '6px',
+                                               width: '50px',
+                                               textAlign: 'center'
+                                           }}
+                                           onBlur={this.handleAmountBlur}
+                                    />
+                                </label>
+                            </Box>
                             <button type='submit'
-                                    style={{height: '27px', marginTop: '6px'}}
+                                    style={{
+                                        width: '50px',
+                                        height: '27px',
+                                        marginTop: '15px',
+                                        borderRadius: '10px',
+                                        backgroundColor: '#0C70F2',
+                                        color: '#FFFFFF'
+                                    }}
                                     onClick={this.addDeliveryProduct}>
                                 등록
                             </button>

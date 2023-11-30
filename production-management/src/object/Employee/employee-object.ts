@@ -1,18 +1,19 @@
 export type IsSuccess = boolean;
 
-export type EmployeeSearch = {
+export type Search = {
     employeeNo: number,
     name: string,
     role: string,
-    pageSize: number,
+    size: number,
     page: number
 }
 
 export type EmployeeList = {
     employeeNo: number,
     name: string,
-    tel: string,
+    role: string,
     email: string
+    tel: string
 }
 
 export type EmployeePage = {
@@ -25,6 +26,7 @@ export type EmployeePage = {
 export type UpdateEmployee = {
     oldPassword: string,
     password: string,
+    name: string,
     tel : string,
     email: string,
 }
@@ -45,18 +47,14 @@ export type Image = {
 
 export type EmployeeState = {
     isSuccess: IsSuccess,
-    employeeSearch: EmployeeSearch,
-    employeePage: EmployeePage,
     employee: Employee,
     updateEmployeeObj: UpdateEmployee,
     image: Image,
     login: (id: string, password: string) => void,
     logout: () => void,
-    getMe: (token: string) => void,
+    cleanEmployee: () => void,
+    getMe: () => void,
     getEmployee: (employeeNo: number) => void,
-    setEmployeeNoAndNameAndRole: (employeeNo: number, name: string, role: string) => void,
-    setPage: (page: number) => void,
-    getEmployeeList: () => void,
     updateEmployee: (employeeNo: number, object: UpdateEmployee) => void,
     addImage: (employeeNo: number, image: File) => void,
     updateImage: (employeeNo: number, image: File) => void,

@@ -4,12 +4,6 @@ import CookieManager from '../common/CookieManager';
 // TODO : custom axios 위치 변경 : 적용 O
 const cookieManager = new CookieManager();
 
-const tokenAxios: AxiosInstance = axios.create({
-  headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
-  },
-});
-
 type ServerError = { errorMessage: string };
 
 interface FetchData {
@@ -22,16 +16,33 @@ interface FetchData {
 
 class Fetcher {
   private async fetch(fetchData: FetchData): Promise<AxiosResponse<any, any> | null> {
-    const {method, url, data, header, param} = fetchData;
-
+    const {method, url, data, param} = fetchData;
+    console.log(url);
+    console.log(localStorage.getItem('accessToken'));
     try {
       const response: AxiosResponse<any, any> | false =
-          (method === 'get' && (await tokenAxios.get(url, {
-            params: param
+          (method === 'get' && (await axios.get(url, {
+                headers: {
+                  Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+                },
+                params: param
+              })
+          )) ||
+          (method === 'post' && (await axios.post(url, data,{
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+            }
           }))) ||
-          (method === 'post' && (await tokenAxios.post(url, data, header))) ||
-          (method === 'put' && (await tokenAxios.put(url, data, header))) ||
-          (method === 'delete' && (await tokenAxios.delete(url, header)));
+          (method === 'put' && (await axios.put(url, data,{
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+            }
+          }))) ||
+          (method === 'delete' && (await axios.delete(url, {
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+            }
+          })));
 
       if (!response) {
         alert('false!');
@@ -43,7 +54,6 @@ class Fetcher {
       if (axios.isAxiosError(err)) {
         const serverError = err as AxiosError<ServerError>;
         if (serverError && serverError.response) {
-          console.log(url);
           console.log(serverError.response.data);
           const status = serverError.response.status;
           if (url === '/employees/login' && status !== 200) {
@@ -59,11 +69,11 @@ class Fetcher {
                 // TODO : employeeNo 를 어디서 얻어 와서 넣을 것인가. 만료이후 요청이기 때문에 서버로 부터 받아올 수 없음, 그렇기 때문에 로컬 스토리지에 저장해서 가지고 오는 방법이 좋아보임
                 // 그러면 로그인 성공이후 로컬 스토리지에 refresh 토큰 을 추가할때 서버로 부터 /me 를 통해 얻어온 employeeNo를 로컬 스토리지에 저장. : 적용 O
               })
-              .then((result) => {
-                const accessToken = result?.data.accessToken;
-                localStorage.setItem('accessToken', accessToken);
-                // TODO : 다시 전의 요청을 실행하도록 해야함. : 적용 X
-              })
+                  .then((result) => {
+                    const accessToken = result?.data.accessToken;
+                    localStorage.setItem('accessToken', accessToken);
+                    // TODO : 다시 전의 요청을 실행하도록 해야함. : 적용 X
+                  })
             }
             alert('로그인 이후 접근 가능합니다.');
             window.location.href = '/login';

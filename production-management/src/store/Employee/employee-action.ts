@@ -1,12 +1,9 @@
 import Fetcher from '../fetch-action';
-import {UpdateEmployee, EmployeeSearch} from "../../object/Employee/employee-object";
-import AuthAction from "../Auth/auth-action";
+import {Search, UpdateEmployee} from "../../object/Employee/employee-object";
 
 const fetcher = new Fetcher();
-const authAction = new AuthAction;
 
 class EmployeeAction {
-
     private baseUrl: string = '/employees';
 
     /* 로그인 */
@@ -18,14 +15,7 @@ class EmployeeAction {
 
     /* 로그아웃 */
     public logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('expirationTime');
-    }
-
-    /* Employee 상세 조회 */
-    public getEmployee(employeeNo: number) {
-        const URL = `${this.baseUrl}/${employeeNo}`;
-        return fetcher.GET(URL);
+        localStorage.removeItem('accessToken');
     }
 
     /* Employee 상세 조회 (본인) */
@@ -35,10 +25,9 @@ class EmployeeAction {
         return fetcher.GET(URL);
     }
 
-    /* EmployeeList 조회 */
-    public getEmployeeList(object: EmployeeSearch) {
-        const URL = `${this.baseUrl}/list`;
-        return fetcher.GET(URL, object);
+    public getEmployee(employeeNo: number) {
+        const URL = `${this.baseUrl}/${employeeNo}`;
+        return fetcher.GET(URL);
     }
 
     /* Employee 수정 */
@@ -51,7 +40,7 @@ class EmployeeAction {
     public addImage(employeeNo: number, image: File) {
         const URL = `${this.baseUrl}/${employeeNo}/image`;
         const imageObject = new FormData();
-        imageObject.append('image', image);
+        imageObject.append('file', image);
 
         return fetcher.POST(URL, imageObject);
     }
@@ -59,7 +48,8 @@ class EmployeeAction {
     /* 이미지 수정 */
     public updateImage(employeeNo: number, image: File) {
         const URL = `${this.baseUrl}/${employeeNo}/image`;
-        const updateImageObject = { image };
+        const updateImageObject = new FormData();
+        updateImageObject.append('file', image);
 
         return fetcher.PUT(URL, updateImageObject);
     }

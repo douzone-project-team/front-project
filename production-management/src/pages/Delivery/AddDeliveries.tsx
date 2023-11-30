@@ -40,15 +40,19 @@ class AddDeliveries extends Component<Props, State> {
 
     deleteSelectedCheckBox = () => {
         const state = this.context as DeliveriesState;
-        this.state.selectedCheckBoxes.forEach(num => {
-            let deleteDeliveryInstruction = {
-                deliveryNo: state.delivery.deliveryNo,
-                instructionNo: state.delivery.instructions[num].instructionNo,
-                productNo: num,
-            } as DeleteDeliveryInstruction;
+        this.state.selectedCheckBoxes.forEach(productNo => {
+            const index = state.delivery.instructions.findIndex(instruction =>
+                instruction.productNo === productNo);
+            if(index !== -1){
+                const deleteDeliveryInstruction = {
+                    deliveryNo: state.delivery.deliveryNo,
+                    instructionNo: state.delivery.instructions[index].instructionNo,
+                    productNo: productNo,
+                } as DeleteDeliveryInstruction;
 
-            state.deleteDeliveryInstruction(deleteDeliveryInstruction);
-        })
+                state.deleteDeliveryInstruction(deleteDeliveryInstruction);
+            }
+        });
         this.setState({selectedCheckBoxes: []})
     };
 
@@ -81,14 +85,14 @@ class AddDeliveries extends Component<Props, State> {
             <Layout>
                 <Box
                     sx={{
-                        width: '95%',
-                        height: '5vh',
-                        ml: '50px',
-                        mt: '10vh',
-                        pt: '1vh',
+                        width: '100%',
+                        mt: '60px',
+                        mb: '20px',
+                        pt: '20px',
                         pl: '15px',
-                        pb: '30px',
-                        border: '1px solid #D3D3D3',
+                        pb: '15px',
+                        bgcolor: '#3C50C2',
+                        color: 'white'
                     }}
                 >
                     <span style={{fontSize: '17px', fontWeight: 'bold'}}>출고등록</span>
@@ -96,13 +100,30 @@ class AddDeliveries extends Component<Props, State> {
                 <Box
                     sx={{
                         width: '95%',
-                        height: '78vh',
+                        pl: '15px',
+                        pt: '15px',
+                        pr: '15px',
                         ml: '50px',
-                        p: '15px',
-                        border: '1px solid #D3D3D3',
+                        mb: '3vh',
+                        bgcolor: 'white',
+                        boxShadow: '0px 0px 5px 1px #DDDDDD',
+                        borderRadius: '10px',
+                        height: '7.5vh'
                     }}
                 >
                     <AddDeliveryBar />
+                </Box>
+                <Box
+                    sx={{
+                        width: '95%',
+                        p: '15px',
+                        ml: '50px',
+                        bgcolor: 'white',
+                        boxShadow: '0px 0px 5px 1px #DDDDDD',
+                        borderRadius: '10px',
+                        height: '68vh'
+                    }}
+                >
                     <AddDeliveryTable addSelectedCheckBox={this.addSelectedCheckBox}
                                       instructionModalOpen={instructionModalOpen}
                                       deliveryProductModalOpen={deliveryProductModalOpen}
