@@ -98,7 +98,8 @@ class ViewDeliveries extends Component<Props, State> {
                     borderRadius: '10px'
                 }}
             >
-                <ViewDeliveryListTable tableSize={this.state.tableSize}/>
+                <ViewDeliveryListTable tableSize={this.state.tableSize}
+                                       changeAmountStatusFalse={this.state.changeAmountStatusFalse}/>
                 <div style={{textAlign: 'center'}}>
                     <img
                         src={require(this.state.tableSize ? './../../images/button/table-size-bar-up.png' : './../../images/button/table-size-bar-down.png')}

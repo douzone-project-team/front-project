@@ -171,7 +171,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                 <div style={{
                     width: '100%',
                     height: '30px',
-                    marginBottom: '10px',
+                    marginLeft: '2px',
                     display: 'flex',
                 }}>
                     <div style={{width: '30%'}}>

@@ -20,7 +20,8 @@ const boldCellStyle = {
 };
 
 type Props = {
-    tableSize: boolean
+    tableSize: boolean,
+    changeAmountStatusFalse: () => void,
 }
 
 class ViewDeliveryListTable extends Component<Props>{
@@ -66,7 +67,10 @@ class ViewDeliveryListTable extends Component<Props>{
                         <TableBody>
                             {list && list.length > 0 && list.map((row) => (
                                 <TableRow key={row.deliveryNo} className='cellHoverEffect'
-                                            onClick={() => state.getDelivery(row.deliveryNo)}>
+                                            onClick={() => {
+                                                state.getDelivery(row.deliveryNo);
+                                                this.props.changeAmountStatusFalse();
+                                            }}>
                                     <TableCell align="center" style={{fontWeight: 'bold'}}>
                                         {row.deliveryNo}</TableCell>
                                     <TableCell align="center">{row.employeeName}</TableCell>

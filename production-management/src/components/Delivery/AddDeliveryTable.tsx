@@ -38,11 +38,6 @@ const cellStyle = {
     border: '1px solid #D3D3D3',
 };
 
-const statusMap = new Map([
-    ['INCOMPLETE', '미완료'],
-    ['COMPLETE', '완료'],
-]);
-
 class AddDeliveryTable extends Component<Props, State>{
     static contextType = DeliveriesContext;
     constructor(props: Props) {
@@ -261,7 +256,10 @@ class AddDeliveryTable extends Component<Props, State>{
                                                 <TableCell align="center" style={cellStyle}></TableCell>
                                             </TableRow>
                                         )
-                            ) : null }
+                            ) : <td colSpan={11} style={{textAlign: 'center'}}>
+                                <img src={require('./../../images/null/delivery-null-image.png')}
+                                     style={{marginTop: '10%', width: '15%'}}/>
+                            </td> }
                         </TableBody>
                     </Table>
                 </TableContainer>
