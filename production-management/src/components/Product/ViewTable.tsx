@@ -29,6 +29,7 @@ export type ProductList = {
     productNo: number;
     productCode: string;
     productName: string;
+    price:number;
     unit: number;
 };
 
@@ -69,13 +70,14 @@ class ViewTable extends Component<{}, ViewTableState> {  // 수정
 
         return (
             <Box >
-                <TableContainer className='table-container' style={{height:'350px'}}>
+                <TableContainer className='table-container' style={{height:'330px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>품명</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>가격</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>단위</TableCell>
                             </TableRow>
                         </TableHead>
@@ -83,11 +85,13 @@ class ViewTable extends Component<{}, ViewTableState> {  // 수정
                             {list.map((row: ProductList) => (
                                 <TableRow
                                     key={row.productNo}
+                                    className='cellHoverEffect'
+                                    onClick={() => state.getProduct(row.productNo)}
                                 >
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'
-                                               onClick={() => state.getProduct(row.productNo)}>{row.productNo}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.productNo}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{row.productCode}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{row.productName}</TableCell>
+                                    <TableCell align="right" style={{ ...cellStyle, paddingRight: '7.2%' }}>{row.price.toLocaleString() + '원'}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{row.unit}</TableCell>
                                 </TableRow>
                             ))}

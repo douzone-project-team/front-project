@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+    import React, { Component } from "react";
 import {Fade, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
     import { ProductsContext } from "../../store/Product/products-context";
 import { ProductsState } from "../../object/Product/product-object";
@@ -50,7 +50,9 @@ class DetailProduct extends Component<{}, DetailState> {
         product.productNo=0;
         product.productCode='';
         product.productName='';
+        product.price=0;
         product.standard='';
+        product.weight=0;
         product.unit=0;
 
     }
@@ -100,30 +102,34 @@ class DetailProduct extends Component<{}, DetailState> {
             <>
                 <div style={{ width: "", marginBottom: "7px", marginTop: "7px", display: "flex", justifyContent: "space-between" }}>
                     <label>
-                        <span style={{ fontSize: "14px", fontWeight: "bold" }}>
-                            제품 상세 : <span style={{ color: '#0C70F2', marginRight: "0" }}>{product.productNo}</span>
+                       <span style={{ fontSize: "14px", fontWeight: "bold" }}>
+                            품목 상세 {product.productNo !== 0 && `: `}
+                           {product.productNo !== 0 && <span style={{ color: '#0C70F2', marginRight: "0" }}>{product.productNo}</span>}
                         </span>
+
                     </label>
                     <div style={{ display: "flex", justifyContent: "flex-end", width: "50%" }}>
-                        <button type="submit" onClick={this.handlerModify}>
-                            수정
-                        </button>
-                        <button type="submit"
-                                style={{marginLeft:'5px'}}
-                                onClick={() => this.handlerDelete(product.productNo)}>
-                            삭제
-                        </button>
+                            <img src={require('../../images/button/modify-button.png')}
+                                 style={{width: '25px', marginRight: '10px', marginTop: '6px'}}
+                                 className='cellHoverEffect' onClick={this.handlerModify}/>
+
+                        <img src={require('../../images/button/delete-button.png')}
+                             style={{width: '25px', marginRight: '10px', marginTop: '6px'}}
+                             className='cellHoverEffect'
+                             onClick={() => this.handlerDelete(product.productNo)}/>
                     </div>
                 </div>
 
-                <TableContainer className='table-container' style={{ height: '170px' }}>
+                <TableContainer className='table-container' style={{ height: '73px' }}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>가격</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>규격</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>무게</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>단위</TableCell>
                             </TableRow>
                         </TableHead>
@@ -133,7 +139,9 @@ class DetailProduct extends Component<{}, DetailState> {
                                     <TableCell align="center" style={cellStyle}>{product.productNo}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{product.productCode}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{product.productName}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{product.price.toLocaleString()+'원'}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{product.standard}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{product.weight+'g'}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{product.unit}</TableCell>
                                 </TableRow>
                             )}

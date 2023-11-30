@@ -12,6 +12,8 @@ interface regiProduct {
     productCode: string;
     productName: string;
     productStandard: string;
+    productPrice:number;
+    productWeight: number;
     productUnit: number;
     temCode:string;
 }
@@ -22,6 +24,8 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
         productCode: '',
         productName: '',
         productStandard: '',
+        productPrice:0,
+        productWeight:0,
         productUnit: 0,
         temCode:'',
     });
@@ -66,31 +70,36 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
             alert("규격을 작성해주세요.");
             return;
         }
-        if (!productInfo.productUnit && productInfo.productUnit === 0) {
+        if (!productInfo.productUnit || productInfo.productUnit === 0) {  // 수정된 부분
             alert("단위를 입력해주세요.");
             return;
         }
         if (productInfo.productCode !== productInfo.temCode) {
             alert("코드 조회를 다시해주세요.");
+            state.regiProducts(
+                productInfo.productCode,
+                productInfo.productName,
+                productInfo.productStandard,
+                productInfo.productUnit,
+                productInfo.productPrice,
+                productInfo.productWeight,
+            );
             return;
-        }
 
-        state.regiProducts(
-            productInfo.productCode,
-            productInfo.productName,
-            productInfo.productStandard,
-            productInfo.productUnit
-        );
+        }
 
         handleCloseModal();
         setProductInfo({
             productCode: '',
             productName: '',
             productStandard: '',
+            productPrice: 0,  // 수정된 부분
+            productWeight: 0,  // 수정된 부분
             productUnit: 0,
-            temCode:'',
+            temCode: '',
         });
     };
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof regiProduct) => {
         setProductInfo({
@@ -139,6 +148,16 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
                                 코드 조회
                             </button>
                         </label>
+
+                        <label className="form-label">
+                            품목 가격
+                            <input
+                                value={productInfo.productPrice}
+                                type="number"
+                                className="form-input"
+                                onChange={(e) => handleInputChange(e, 'productPrice')}
+                            />
+                        </label>
                         <label className="form-label">
                             품목 규격
                             <input
@@ -150,11 +169,19 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
                             />
                         </label>
                         <label className="form-label">
+                            품목 무게
+                            <input
+                                value={productInfo.productWeight}
+                                type="number"
+                                className="form-input"
+                                onChange={(e) => handleInputChange(e, 'productWeight')}
+                            />
+                        </label>
+                        <label className="form-label">
                             품목 단위
                             <input
                                 value={productInfo.productUnit}
                                 type="text"
-                                placeholder="ex) C0001"
                                 className="form-input"
                                 onChange={(e) => handleInputChange(e, 'productUnit')}
                             />

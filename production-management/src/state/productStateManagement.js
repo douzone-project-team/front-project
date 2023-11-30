@@ -16,7 +16,9 @@ export const initialProduct = {
   productNo: 0,
   productCode: '',
   productName: '',
+  price:0,
   standard: '',
+  weight:0,
   unit: 0
 }
 

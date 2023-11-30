@@ -15,7 +15,9 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
         productNo: product.productNo,
         productCode: product.productCode,
         productName: product.productName,
+        price: product.price,
         standard: product.standard,
+        weight: product.weight,
         unit: product.unit,
     });
 
@@ -31,7 +33,9 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
         if (
             updatedProduct.productName.trim() === '' ||
             updatedProduct.standard.trim() === '' ||
-            updatedProduct.unit === 0
+            updatedProduct.unit === 0 ||
+            updatedProduct.weight=== 0||
+            updatedProduct.price===0
         ) {
             alert("모두 기재해주세요.");
             return;
@@ -43,7 +47,9 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
             updatedProduct.productCode,
             updatedProduct.productName,
             updatedProduct.standard,
-            updatedProduct.unit
+            updatedProduct.unit,
+            updatedProduct.weight,
+            updatedProduct.price
         );
         window.location.reload();
         handleCloseModal();
@@ -72,6 +78,7 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <p style={{ marginRight: '10px' }}>품목 코드</p>
                             <input
+                                className="form-input"
                                 type="text"
                                 name="productCode"
                                 value={updatedProduct.productCode}
@@ -82,15 +89,28 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <p style={{ marginRight: '10px' }}>품목 이름</p>
                             <input
+                                className="form-input"
                                 type="text"
                                 name="productName"
                                 value={updatedProduct.productName}
                                 onChange={handleInputChange}
                             />
                         </div>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <p style={{ marginRight: '10px' }}>품목 가격</p>
+                                <input
+                                    className="form-input"
+                                    type="text"
+                                    name="price"
+                                    value={updatedProduct.price.toLocaleString()}
+                                    onChange={handleInputChange}
+                                />
+                                <span style={{ marginLeft: '5px' }}>원</span>
+                            </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <p style={{ marginRight: '10px' }}>품목 규격</p>
                             <input
+                                className="form-input"
                                 type="text"
                                 name="standard"
                                 value={updatedProduct.standard}
@@ -98,8 +118,20 @@ const ModalProduct: React.FC<ModalProductProps> = ({ handleCloseModal }) => {
                             />
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <p style={{ marginRight: '10px' }}>품목 무게</p>
+                            <input
+                                className="form-input"
+                                type="text"
+                                name="weight"
+                                value={updatedProduct.weight}
+                                onChange={handleInputChange}
+                            />
+                            <span style={{ marginLeft: '5px' }}>g</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
                             <p style={{ marginRight: '10px' }}>품목 단위</p>
                             <input
+                                className="form-input"
                                 type="text"
                                 name="unit"
                                 value={updatedProduct.unit}

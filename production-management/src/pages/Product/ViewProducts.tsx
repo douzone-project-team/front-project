@@ -9,33 +9,53 @@ class ViewProducts extends Component {
   render() {
     return (
         <Layout>
-          <Box
-              sx={{
-                width: '95%',
-                height: '5vh',
-                ml: '50px',
-                mt: '10vh',
-                pt: '1vh',
-                pl: '15px',
-                pb: '30px',
-                border: '1px solid #D3D3D3',
-              }}
-          >
-            <span style={{fontSize: '17px', fontWeight: 'bold'}}>상품현황</span>
+            <Box
+                sx={{
+                    width: '100%',
+                    mt: '60px',
+                    mb: '20px',
+                    pt: '20px',
+                    pl: '15px',
+                    pb: '15px',
+                    bgcolor: '#3C50C2',
+                    color: 'white'
+                }}
+            >
+            <span style={{fontSize: '17px', fontWeight: 'bold'}}>품목현황</span>
           </Box>
-          <Box
-              sx={{
-                width: '95%',
-                height: '78vh',
-                ml: '50px',
-                p: '15px',
-                border: '1px solid #D3D3D3'
-              }}
-          >
+            <Box
+                sx={{
+                    width: '95%',
+                    pl: '15px',
+                    pt: '15px',
+                    pr: '15px',
+                    pb: '1px',
+                    ml: '50px',
+                    bgcolor: 'white',
+                    boxShadow: '0px 0px 5px 1px #DDDDDD',
+                    borderRadius: '10px',
+                    marginBottom: '20px'
+                }}
+            >
           <ProductTopBar/>
+          </Box>
+            <Box
+                sx={{
+                    width: '95%',
+                    pl: '15px',
+                    pt: '15px',
+                    pr: '15px',
+                    pb: '1px',
+                    ml: '50px',
+                    bgcolor: 'white',
+                    boxShadow: '0px 0px 5px 1px #DDDDDD',
+                    borderRadius: '10px',
+                    marginBottom: '20px'
+                }}
+            >
           <ViewTable/>
           <DetailView/>
-          </Box>
+            </Box>
         </Layout>
     )
   }
