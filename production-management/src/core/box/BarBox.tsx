@@ -30,7 +30,7 @@ export class BarLeftBox extends Component<BarLeftBoxProps> {
 export class BarRightBox extends Component {
   render() {
     return (
-        <div style={{marginRight: '6px', marginTop: '7px'}}>
+        <div style={{marginRight: '1.5%', marginTop: '7px'}}>
           {this.props.children}
         </div>
     );

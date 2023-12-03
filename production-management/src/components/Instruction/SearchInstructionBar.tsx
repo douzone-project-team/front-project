@@ -112,10 +112,11 @@ class SearchInstructionBar extends Component<Props, SearchState> {
                 mt: '10px',
               }}
           >
+            &nbsp;
             <ProgressButton options={{
               koreanStatus: '전체',
               checked: all,
-              width: '24.8%',
+              width: '23.3%',
               changeFunc: () => this.setState({all: !all}),
               handleSearchProgressState: this.handleSearchProgressState,
               setStateAllFalse: this.setStateAllFalse,
@@ -123,15 +124,15 @@ class SearchInstructionBar extends Component<Props, SearchState> {
             <ProgressButton options={{
               koreanStatus: '준비',
               checked: standby,
-              width: '24.8%',
+              width: '23.3%',
               changeFunc: () => this.setState({standby: !standby}),
               handleSearchProgressState: this.handleSearchProgressState,
               setStateAllFalse: this.setStateAllFalse,
             }}/>
             <ProgressButton options={{
-              koreanStatus: '진행중',
+              koreanStatus: '진행',
               checked: progress,
-              width: '24.8%',
+              width: '23.3%',
               changeFunc: () => this.setState({progress: !progress}),
               handleSearchProgressState: this.handleSearchProgressState,
               setStateAllFalse: this.setStateAllFalse,
@@ -139,7 +140,7 @@ class SearchInstructionBar extends Component<Props, SearchState> {
             <ProgressButton options={{
               koreanStatus: '완료',
               checked: completed,
-              width: '24.8%',
+              width: '23.3%',
               changeFunc: () => this.setState({completed: !completed}),
               handleSearchProgressState: this.handleSearchProgressState,
               setStateAllFalse: this.setStateAllFalse,

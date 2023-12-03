@@ -23,7 +23,7 @@ type StatusType = {
 const statusMap: StatusType[] = [
   {전체: ''},
   {준비: 'standby'},
-  {진행중: 'progress'},
+  {진행: 'progress'},
   {완료: 'completed'},
   {미완료: 'incomplete'}
 ];
@@ -71,9 +71,10 @@ export class ProgressButton extends Component<ProgressButtonProps, ProgressButto
             variant="outlined"
             style={{
               width: width,
-              marginLeft: '2px',
-              border: '2px solid #D3D3D3',
-              borderColor: (checked ? 'rgb(60,123,194)' : 'rgb(211, 211, 211)')
+              marginLeft: '1.3%',
+              border: ('2px solid #D3D3D3'),
+              borderColor: (checked ? 'rgb(60,123,194)' : 'rgba(211,211,211,0.19)'),
+              backgroundColor: (checked ? '' : 'rgba(211,211,211,0.19)')
             }}
             onClick={() => {
               handleSearchProgressState(this.state.getKey(koreanStatus).toLocaleUpperCase());
@@ -86,7 +87,7 @@ export class ProgressButton extends Component<ProgressButtonProps, ProgressButto
               style={{width: '50px'}} alt={koreanStatus}/>
           <span style={{
             fontWeight: 'bold',
-            color: (checked ? 'rgb(60,123,194)' : 'black')
+            color: (checked ? 'rgb(60,123,194)' : 'rgba(0,0,0,0.49)')
           }}>{koreanStatus}</span>
         </Button>
     );

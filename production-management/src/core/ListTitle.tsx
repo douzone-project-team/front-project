@@ -22,7 +22,7 @@ const spanTitle = {
 
 const spanCount = {
   color: 'rgb(60, 80, 194)',
-  fontSize: '16px',
+  fontSize: '13px',
   lineHeight: '16px',
 };
 
@@ -45,8 +45,8 @@ export class ListTitle extends Component<ListTitleProps> {
     return (
         <div style={div}>
           <img src={require('../images/icon/list.png')} style={img}/>
-          <span style={spanTitle}> {title}
-            <span style={spanCount}>&nbsp;{count}&nbsp;</span>건
+          <span style={spanTitle}> {title}&nbsp;&nbsp;
+            <span style={spanCount}>&nbsp;{count}&nbsp;<span style={{color: 'gray'}}>건</span></span>
           </span>
         </div>
     );

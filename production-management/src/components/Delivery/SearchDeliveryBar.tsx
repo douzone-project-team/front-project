@@ -117,10 +117,11 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                 mt: '10px',
               }}
           >
+            &nbsp;
             <ProgressButton options={{
               koreanStatus: '전체',
               checked: all,
-              width:'33%',
+              width:'31.5%',
               changeFunc: () => this.setState({all: !all}),
               handleSearchProgressState: this.handleSearchProgressState,
               setStateAllFalse: this.setStateAllFalse,
@@ -128,7 +129,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
             <ProgressButton options={{
               koreanStatus: '미완료',
               checked: incomplete,
-              width:'33%',
+              width:'31.5%',
               changeFunc: () => this.setState({incomplete: !incomplete}),
               handleSearchProgressState: this.handleSearchProgressState,
               setStateAllFalse: this.setStateAllFalse,
@@ -136,7 +137,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
             <ProgressButton options={{
               koreanStatus: '완료',
               checked: completed,
-              width:'33%',
+              width:'31.5%',
               changeFunc: () => this.setState({completed: !completed}),
               handleSearchProgressState: this.handleSearchProgressState,
               setStateAllFalse: this.setStateAllFalse,
