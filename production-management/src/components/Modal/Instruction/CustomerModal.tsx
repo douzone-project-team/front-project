@@ -8,7 +8,7 @@ import {TextInput} from "../../../core/input/TextInput";
 import {SearchButton} from "../../../core/button/SearchButton";
 import {TableBox} from "../../../core/box/TableBox";
 import {PageButton} from "../../../core/button/PageButton";
-import {BarBox} from "../../../core/BarBox";
+import {BarBox, BarLeftBox, BarRightBox} from "../../../core/box/BarBox";
 import { ListTitle } from "../../../core/ListTitle";
 
 type CustomerModalProps = {
@@ -84,7 +84,7 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
             <main>
               <SearchBox>
                 <BarBox>
-                  <div style={{width: '70%', marginBottom: '7px', marginTop: '7px'}}>
+                  <BarLeftBox width='70vw'>
                     <TextInput title='코드' onBlur={(e) => {
                       this.setState({customerCode: e.target.value})
                     }}
@@ -96,10 +96,10 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
                                label={{ml: '10px'}}
                                input={{width: '100px'}}
                     />
-                  </div>
-                  <div style={{marginTop: '6px', marginRight: '7px'}}>
+                  </BarLeftBox>
+                  <BarRightBox>
                     <SearchButton size={25} onClick={this.handleSearchClick}/>
-                  </div>
+                  </BarRightBox>
                 </BarBox>
               </SearchBox>
               <TableBox>

@@ -1,7 +1,7 @@
 import {Component} from "react";
 import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
 import {DeliveriesState} from "../../object/Delivery/delivery-object";
-import {BarBox} from "../../core/BarBox";
+import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {AddButton} from "../../core/button/AddButton";
 import {DateInput} from "../../core/input/DateInput";
 
@@ -42,7 +42,7 @@ class AddDeliveryBar extends Component {
     return (
         <>
           <BarBox>
-            <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
+            <BarLeftBox width='70vw'>
               <DateInput title='출고일'
                          startDate={{
                            datalaceholder: '출고일',
@@ -51,12 +51,12 @@ class AddDeliveryBar extends Component {
                            },
                            required: true
                          }}/>
-            </div>
-            <div style={{marginTop: '6px', marginRight: '7px'}}>
+            </BarLeftBox>
+            <BarRightBox>
               <AddButton
                   size={30}
                   onClick={state.delivery.deliveryNo === '' ? this.addDeliveryClick : this.newAddDeliveryClick}/>
-            </div>
+            </BarRightBox>
           </BarBox>
         </>
     )

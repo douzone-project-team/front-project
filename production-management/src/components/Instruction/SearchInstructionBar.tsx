@@ -5,7 +5,7 @@ import {InstructionsState} from "../../object/Instruction/Instruction-object";
 import "./../../assets/css/Styles.css";
 import {ProgressButton} from "../../core/button/ProgressButton";
 import {SearchButton} from "../../core/button/SearchButton";
-import {BarBox} from "../../core/BarBox";
+import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {TextInput} from '../../core/input/TextInput';
 import {DateInput} from "../../core/input/DateInput";
 
@@ -66,7 +66,7 @@ class SearchInstructionBar extends Component<Props, SearchState> {
     return (
         <>
           <BarBox>
-            <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
+            <BarLeftBox width='80%'>
               <TextInput title='등록자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value;
               }}/>
@@ -102,10 +102,10 @@ class SearchInstructionBar extends Component<Props, SearchState> {
                            required: true
                          }}
               />
-            </div>
-            <div style={{marginTop: '6px', marginRight: '7px'}}>
+            </BarLeftBox>
+            <BarRightBox>
               <SearchButton size={30} onClick={this.handleSearchClick}/>
-            </div>
+            </BarRightBox>
           </BarBox>
           <Box
               sx={{

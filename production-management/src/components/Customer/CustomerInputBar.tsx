@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {CustomersContext} from "../../store/Customer/customers-context";
 import {CustomersState, InsertCustomer} from "../../object/Customer/customer-object";
 import CustomerAddModal from "../Modal/Customer/CustomerAddModal";
-import {BarBox} from '../../core/BarBox';
+import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {SearchButton} from '../../core/button/SearchButton';
 import { TextInput } from '../../core/input/TextInput';
 import { AddItemButton } from '../../core/button/AddItemButton';
@@ -50,7 +50,7 @@ class CustomerInputBar extends Component<Props, State> {
     return (
         <>
           <BarBox>
-            <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
+            <BarLeftBox width='70vw'>
               <TextInput title='거래처 코드' onBlur={(e) => {
                 inputValue.customerCode = e.target.value
               }} input={{width:'100px'}}/>
@@ -60,8 +60,8 @@ class CustomerInputBar extends Component<Props, State> {
               <TextInput title='업종' onBlur={(e) => {
                 inputValue.sector = e.target.value
               }}/>
-            </div>
-            <div style={{marginTop: '6px', marginRight: '7px'}}>
+            </BarLeftBox>
+            <BarRightBox>
               <SearchButton
                   size={30} onClick={this.handleSearchClick}
               />
@@ -70,7 +70,7 @@ class CustomerInputBar extends Component<Props, State> {
                   size={30}
                   onClick={() => this.setState((prevState) => ({customerAddModalOpen: !prevState.customerAddModalOpen}))}
               />
-            </div>
+            </BarRightBox>
           </BarBox>
           <React.Fragment>
             {this.state.customerAddModalOpen ? (

@@ -3,7 +3,7 @@ import {Fade, Modal, Paper} from "@material-ui/core";
 import {ProductsContext, Props} from "../../store/Product/products-context";
 import {ProductsState} from "../../object/Product/product-object";
 import ModalProduct from "../Modal/Product/RegiProduct";
-import {BarBox} from "../../core/BarBox";
+import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {AddItemButton} from "../../core/button/AddItemButton";
 import {SearchButton} from "../../core/button/SearchButton";
 import { TextInput } from '../../core/input/TextInput';
@@ -54,20 +54,19 @@ class ProductTopBar extends Component<{}, SearchState> {
 
     return (
         <BarBox>
-          <div style={{marginBottom: "7px", marginTop: "7px"}}>
+          <BarLeftBox width='70vw'>
             <TextInput title='품목 코드' onBlur={(e) => {
               this.setState({productCode: e.target.value});
             }}/>
             <TextInput title='품목 이름' onBlur={(e) => {
               this.setState({productName: e.target.value});
             }}/>
-          </div>
-          <div style={{marginTop: '6px', marginRight: '7px'}}>
+          </BarLeftBox>
+          <BarRightBox>
             <SearchButton size={30} onClick={this.handleSearchClick}/>
             &nbsp;&nbsp;
             <AddItemButton size={30} onClick={this.handleAddClick}/>
-          </div>
-
+          </BarRightBox>
           <Modal
               open={this.state.isModalOpen ?? false}
               onClose={this.handleCloseModal}

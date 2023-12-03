@@ -4,7 +4,7 @@ import {InstructionsState} from "../../object/Instruction/Instruction-object";
 import {Box} from "@material-ui/core";
 import {TextInput} from "../../core/input/TextInput";
 import {DateInput} from "../../core/input/DateInput";
-import { BarBox } from "../../core/BarBox";
+import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import { SearchButton } from "../../core/button/SearchButton";
 
 let searchValue = {
@@ -33,7 +33,7 @@ class DeliverySearchInstructionBar extends Component {
     return (
         <>
           <BarBox>
-            <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
+            <BarLeftBox width='70vw'>
               <TextInput title='등록자'
                          onBlur={(e) => {
                            searchValue.employeeName = e.target.value
@@ -76,13 +76,13 @@ class DeliverySearchInstructionBar extends Component {
                            required: true
                          }}
               />
-            </div>
-            <div style={{marginTop: '6px', marginRight: '7px'}}>
+            </BarLeftBox>
+            <BarRightBox>
               <SearchButton
                   size={25}
                   onClick={this.handleSearchClick}
                 />
-            </div>
+            </BarRightBox>
           </BarBox>
         </>
     )

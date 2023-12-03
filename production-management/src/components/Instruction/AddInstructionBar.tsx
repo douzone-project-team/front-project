@@ -4,7 +4,7 @@ import {InstructionsState} from "../../object/Instruction/Instruction-object";
 import CustomerModal from "../Modal/Instruction/CustomerModal";
 import {AddButton} from "../../core/button/AddButton";
 import {EditButton} from "../../core/button/EditButton";
-import {BarBox} from "../../core/BarBox";
+import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {TextInput} from '../../core/input/TextInput';
 import {DateInput} from "../../core/input/DateInput";
 
@@ -96,8 +96,8 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
     return (
         <>
           <BarBox>
-            <div style={{width: '70vw'}}>
-              <TextInput title='거래처' value={this.state.customerName} readOnly/>
+            <BarLeftBox width='80%'>
+            <TextInput title='거래처' value={this.state.customerName} readOnly/>
               <EditButton
                   color='black'
                   onClick={changeCustomerSearchModalStatus}
@@ -118,12 +118,12 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
                            required: true
                          }}
               />
-            </div>
-            <div style={{marginTop: '6px', marginRight: '7px'}}>
+            </BarLeftBox>
+            <BarRightBox>
               <AddButton
                   size={30}
                   onClick={state.instruction.instructionNo === '' ? this.addInstructionClick : this.newAddInstructionClick}/>
-            </div>
+            </BarRightBox>
           </BarBox>
           <div style={{textAlign: 'center'}}>
             <React.Fragment>

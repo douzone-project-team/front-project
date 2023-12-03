@@ -15,7 +15,7 @@ import {TableBox} from "../../../core/box/TableBox";
 import {SearchBox} from "../../../core/box/SearchBox";
 import {TextInput} from "../../../core/input/TextInput";
 import {ProductsState} from "../../../object/Product/product-object";
-import {BarBox} from "../../../core/BarBox";
+import {BarBox, BarLeftBox, BarRightBox} from "../../../core/box/BarBox";
 import {SearchButton} from "../../../core/button/SearchButton";
 import {ListTitle} from "../../../core/ListTitle";
 import {PageButton} from "../../../core/button/PageButton";
@@ -123,7 +123,7 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
             <main>
               <SearchBox>
                 <BarBox>
-                  <div style={{width: '60%', marginBottom: '7px', marginTop: '7px'}}>
+                  <BarLeftBox width='60%'>
                     <TextInput
                         title='상품 코드'
                         onChange={(e) => {
@@ -140,10 +140,10 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                         label={{ml: '10px'}}
                         input={{width: '80px'}}
                     />
-                  </div>
-                  <div style={{marginTop: '6px', marginRight: '7px'}}>
+                  </BarLeftBox>
+                  <BarRightBox>
                     <SearchButton size={25} onClick={this.handleSearchClick}/>
-                  </div>
+                  </BarRightBox>
                 </BarBox>
               </SearchBox>
               <TableBox>

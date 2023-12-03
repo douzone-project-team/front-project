@@ -3,7 +3,7 @@ import {DeliveriesContext, Props} from "../../store/Delivery/deliveries-context"
 import {DeliveriesState} from "../../object/Delivery/delivery-object";
 import {Box, Button} from "@material-ui/core";
 import {SearchButton} from "../../core/button/SearchButton";
-import {BarBox} from "../../core/BarBox";
+import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import { ProgressButton } from "../../core/button/ProgressButton";
 import { TextInput } from '../../core/input/TextInput';
 import { DateInput } from "../../core/input/DateInput";
@@ -87,8 +87,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
     return (
         <>
           <BarBox>
-
-            <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
+            <BarLeftBox width='70vw'>
               <TextInput title='등록자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value
               }}/>
@@ -108,10 +107,10 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                            required: true
                          }}
               />
-            </div>
-            <div style={{marginTop: '6px', marginRight: '7px'}}>
+            </BarLeftBox>
+            <BarRightBox>
               <SearchButton size={30} onClick={this.handleSearchClick}/>
-            </div>
+            </BarRightBox>
           </BarBox>
           <Box
               sx={{
