@@ -12,6 +12,9 @@ import CustomerModal from "../Modal/Product/CustomerModal";
 
 import "./../../assets/css/Table.css";
 import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
+import { AddButton } from "../../core/button/AddButton";
+import { AddItemButton } from "../../core/button/AddItemButton";
+import { EditButton } from "../../core/button/EditButton";
 
 type State = {
   product: {
@@ -203,18 +206,12 @@ class ViewInstructionTable extends Component<Props, State> {
                             {instruction.customerName}
                           </div>
                           <div style={{width: '1%'}}>
-                            <img src={require(`../../images/button/modify-button-black.png`)}
-                                 className='cellHoverEffect'
-                                 style={{width: '15px', verticalAlign: 'middle'}}
-                                 onClick={changeCustomerModalStatus}/>
+                            <EditButton onClick={changeCustomerModalStatus}/>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell align="center" style={cellStyle}>
-                        <img src={require(`../../images/button/add-item-button-black.png`)}
-                             className='cellHoverEffect'
-                             style={{width: '15px', verticalAlign: 'middle'}}
-                             onClick={changeProductModalStatus}/>
+                        <AddItemButton onClick={changeProductModalStatus}/>
                       </TableCell>
                       <TableCell align="center" style={cellStyle}></TableCell>
                       <TableCell align="center" style={cellStyle}></TableCell>

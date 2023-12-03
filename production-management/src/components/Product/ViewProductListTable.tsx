@@ -14,6 +14,7 @@ import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 import {AddInstructionProduct} from "../../object/Instruction/Instruction-object";
 
 import "./../../assets/css/Table.css";
+import { ListTitle } from "../../core/ListTitle";
 
 const boldCellStyle = {
   border: '1px solid #D3D3D3',
@@ -54,6 +55,7 @@ class ViewProductListTable extends Component<Props> {
 
     return (
         <Box>
+          <ListTitle options={{title: '품목 목록', count: list.length}}/>
           <TableContainer className='table-container' style={{height:'350px'}}>
             <Table size='small' className='table'>
               <TableHead>

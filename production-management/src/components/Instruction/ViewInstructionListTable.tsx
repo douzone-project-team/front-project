@@ -1,18 +1,12 @@
 import React, {Component} from "react";
-import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
-} from "@material-ui/core";
-import {InstructionsContext} from "../../store/Instruction/Instructions-context";
-import {InstructionsState} from "../../object/Instruction/Instruction-object";
-import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 
 import "./../../assets/css/Table.css";
+
+import {InstructionsContext} from "../../store/Instruction/Instructions-context";
+import {InstructionsState} from "../../object/Instruction/Instruction-object";
+import {PageButton} from "../../core/button/PageButton";
+import {ListTitle} from "../../core/ListTitle";
 
 const boldCellStyle = {
   fontWeight: 'bold',
@@ -45,11 +39,7 @@ class ViewInstructionTable extends Component<Props> {
 
     return (
         <>
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
-            <span className='table-header'
-                  style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 목록 - <span style={{color:'rgb(60, 80, 194)'}}>{list.length}</span>건</span>
-          </div>
+          <ListTitle options={{title: '지시 목록', count: list.length}}/>
           <TableContainer className='table-container' style={{
             height: this.props.tableSize ? '67.2%' : '20%',
             transition: 'height 0.3s ease-in-out',
@@ -68,12 +58,13 @@ class ViewInstructionTable extends Component<Props> {
               </TableHead>
               <TableBody>
                 {list && list.length > 0 && list.map((row) => (
-                    <TableRow key={row.instructionNo} className='cellHoverEffect'
+                    <TableRow className='cellHoverEffect'
                               onClick={() => {
                                 state.getInstruction(row.instructionNo);
                                 this.props.changeAmountStatusFalse();
                               }}>
-                      <TableCell align="center" style={{fontWeight: 'bold'}}>{row.instructionNo}</TableCell>
+                      <TableCell align="center"
+                                 style={{fontWeight: 'bold'}}>{row.instructionNo}</TableCell>
                       <TableCell align="center">{row.employeeName}</TableCell>
                       <TableCell align="center">{row.customerNo}</TableCell>
                       <TableCell align="center">{row.customerName}</TableCell>
@@ -86,16 +77,14 @@ class ViewInstructionTable extends Component<Props> {
                 ))}
               </TableBody>
             </Table>
-            <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-            >
-              <KeyboardArrowLeft onClick={handlePrevPage}/>
-              <KeyboardArrowRight onClick={handleNextPage}/>
-            </Box>
+            <PageButton options={{
+              currentPage: state.instructionPage.currentPage,
+              handleNextPage: handleNextPage,
+              handlePrevPage: handlePrevPage,
+              hasNextPage: state.instructionPage.hasNextPage,
+              hasPreviousPage: state.instructionPage.hasPreviousPage
+            }}
+            />
           </TableContainer>
         </>
     );

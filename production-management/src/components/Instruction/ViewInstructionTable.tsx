@@ -7,6 +7,10 @@ import "./../../assets/css/Table.css";
 import ProductModal from "../Modal/Product/ProductModal";
 import CustomerModal from "../Modal/Product/CustomerModal";
 import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
+import {DetailTitle} from "../../core/DetailTitle";
+import {DeleteButton} from "../../core/button/DeleteButton";
+import { AddItemButton } from "../../core/button/AddItemButton";
+import { EditButton } from "../../core/button/EditButton";
 
 const boldCellStyle = {
   fontWeight: 'bold',
@@ -78,34 +82,19 @@ class ViewInstructionTable extends Component<Props> {
     return (
         <>
           <div style={{
-            width: '100%',
-            height: '30px',
-            marginLeft: '2px',
             display: 'flex',
+            height: '20px'
           }}>
             <div style={{width: '95%'}}>
-              <div style={{display: 'flex', alignItems: 'center'}}>
-                <img src={require('./../../images/icon/detail.png')} style={{width: '20px'}}/>
-                <span className='table-header'
-                      style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 상세 </span>
-                {instruction.instructionNo ?
-                    <span className={instruction.progressStatus} style={{
-                      width: '130px',
-                      marginLeft: '10px',
-                      marginTop: '0px',
-                      marginBottom: '0px'
-                    }}>
-                        {instruction.instructionNo}
-                      </span>
-                    : null}
-              </div>
+              <DetailTitle options={{
+                status: instruction.progressStatus,
+                targetName: instruction.instructionNo as string,
+                title: '지시 상세'
+              }}/>
             </div>
             <div style={{width: '5%', textAlign: 'right'}}>
               {instruction.progressStatus == 'STANDBY' &&
-                  <img src={require('../../images/button/delete-button.png')}
-                       style={{width: '20px', marginRight: '10px', marginTop: '6px'}}
-                       className='cellHoverEffect'
-                       onClick={() => deleteInstruction(instruction.instructionNo)}/>}
+                  <DeleteButton onClick={() => deleteInstruction(instruction.instructionNo)}/>}
             </div>
           </div>
           <TableContainer className='table-container' style={{
@@ -118,9 +107,9 @@ class ViewInstructionTable extends Component<Props> {
                   <TableCell align="center" style={boldCellStyle}>거래처 명</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
                   <TableCell align="center" style={boldCellStyle}>만료일</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>상품 번호</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>상품 코드</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>상품 이름</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
                   <TableCell align="center" style={boldCellStyle}>갯수</TableCell>
                   <TableCell align="center" style={boldCellStyle}>잔량</TableCell>
                 </TableRow>
@@ -146,11 +135,7 @@ class ViewInstructionTable extends Component<Props> {
                               </div>
                               <div style={{width: '1%'}}>
                                 {instruction.progressStatus == 'STANDBY' ?
-                                    <img
-                                        src={require(`../../images/button/modify-button-black.png`)}
-                                        className='cellHoverEffect'
-                                        style={{width: '15px', verticalAlign: 'middle'}}
-                                        onClick={changeAmountStatus}/> : null}
+                                    <EditButton onClick={changeAmountStatus}/> : null}
                               </div>
                             </div> :
                             <input type='number' defaultValue={row.amount}
@@ -175,10 +160,7 @@ class ViewInstructionTable extends Component<Props> {
                             {instruction.customerName}
                           </div>
                           <div style={{width: '1%'}}>
-                            <img src={require(`../../images/button/modify-button-black.png`)}
-                                 className='cellHoverEffect'
-                                 style={{width: '15px', verticalAlign: 'middle'}}
-                                 onClick={changeCustomerModalStatus}/>
+                            <EditButton onClick={changeCustomerModalStatus}/>
                           </div>
                         </div>
                       </TableCell>
@@ -214,10 +196,7 @@ class ViewInstructionTable extends Component<Props> {
                                                        })}/>
                       </TableCell>
                       <TableCell align="center">
-                        <img src={require(`../../images/button/add-item-button-black.png`)}
-                             className='cellHoverEffect'
-                             style={{width: '15px', verticalAlign: 'middle'}}
-                             onClick={changeProductModalStatus}/>
+                       <AddItemButton onClick={changeProductModalStatus}/>
                       </TableCell>
                       <TableCell align="center"></TableCell>
                       <TableCell align="center"></TableCell>

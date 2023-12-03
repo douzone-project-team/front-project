@@ -14,6 +14,7 @@ import { ProductsContext } from "../../store/Product/products-context";
 import { ProductsState } from "../../object/Product/product-object";
 import "./../../assets/css/Table.css";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
+import { ListTitle } from "../../core/ListTitle";
 
 const boldCellStyle = {
     border: '1px solid #D3D3D3',
@@ -70,6 +71,7 @@ class ViewTable extends Component<{}, ViewTableState> {  // 수정
 
         return (
             <Box >
+                <ListTitle options={{title: '품목 목록', count: list.length}}/>
                 <TableContainer className='table-container' style={{height:'330px'}}>
                     <Table size='small' className='table'>
                         <TableHead>

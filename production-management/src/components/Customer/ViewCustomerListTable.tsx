@@ -12,6 +12,8 @@ import {
     TableHead,
     TableRow,
 } from "@material-ui/core";
+import { ListTitle } from '../../core/ListTitle';
+import { PageButton } from '../../core/button/PageButton';
 
 
 const boldCellStyle = {
@@ -54,11 +56,7 @@ class ViewCustomerListTable extends Component {
 
         return(
             <>
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
-                    <span className='table-header'
-                          style={{fontWeight: 'bold', fontSize: '16px'}}> 거래처 목록</span>
-                </div>
+                <ListTitle options={{title: '거래처 목록', count: list.length}}/>
                 <TableContainer className='table-container' style={{height:'395px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
@@ -72,36 +70,23 @@ class ViewCustomerListTable extends Component {
                         </TableHead>
                         <TableBody>
                             {list === undefined || list.map((row) => (
-                                <TableRow key={row.customerNo} onClick={() => state.getCustomer(row.customerNo)}>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerCode}</TableCell>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerName}</TableCell>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.ceo}</TableCell>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.sector}</TableCell>
+                                <TableRow key={row.customerNo} className='cellHoverEffect' onClick={() => state.getCustomer(row.customerNo)}>
+                                    <TableCell align="center" style={cellStyle}>{row.customerNo}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.customerCode}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.ceo}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.sector}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <KeyboardArrowLeft
-                            onClick={handlePrevPage}
-                            // disabled={!state.customerPage.hasPreviousPage}
-                        >
-                            이전 페이지
-                        </KeyboardArrowLeft>
-                        <KeyboardArrowRight
-                            onClick={handleNextPage}
-                            // disabled={!state.customerPage.hasNextPage}
-                        >
-                            다음 페이지
-                        </KeyboardArrowRight>
-                    </Box>
+                    <PageButton options={{
+                        currentPage: state.customerPage.currentPage,
+                        handleNextPage: handleNextPage,
+                        handlePrevPage: handlePrevPage,
+                        hasNextPage: state.customerPage.hasNextPage,
+                        hasPreviousPage: state.customerPage.hasPreviousPage
+                    }}/>
                 </TableContainer>
             </>
         );

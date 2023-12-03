@@ -1,8 +1,13 @@
-import {Box} from "@material-ui/core";
 import React, {Component} from "react";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
 import CustomerModal from "../Modal/Product/CustomerModal";
+import {AddButton} from "../../core/button/AddButton";
+import {EditButton} from "../../core/button/EditButton";
+import {BarBox} from "../../core/BarBox";
+import {TextInput} from '../../core/input/TextInput';
+import {DateInput} from "../../core/input/DateInput";
+
 
 type AddInstructionBarProps = {
   customerSearchModalOpen: boolean,
@@ -49,14 +54,25 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
         {
           progressStatus: instruction.progressStatus === '' ? 'STANDBY' : instruction.progressStatus,
           instructionDate: instructionDate === '' ? new Date().toISOString().split('T')[0] : instructionDate,
-          expirationDate: expirationDate === '' ? new Date().toISOString().split('T')[0] : expirationDate,
+          expirationDate: expirationDate === '' ? this.getOneMonthAfterInstructionDate(this.state.instructionDate) : expirationDate,
         },
         () => {
           state.addInstruction(this.state);
         }
     );
   };
-
+  getOneMonthAfterInstructionDate = (instructionDate: string) => {
+    console.log('instructionDate' + instructionDate);
+    if (instructionDate !== '') {
+      const date = new Date(instructionDate);
+      date.setMonth(date.getMonth() + 1);
+      return date.toISOString().split('T')[0];
+    } else {
+      const currentDate = new Date();
+      const oneMonthLater = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
+      return oneMonthLater.toISOString().split('T')[0];
+    }
+  };
 
   newAddInstructionClick = () => {
     const state = this.context as InstructionsState;
@@ -79,92 +95,34 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
 
     return (
         <>
-          <Box
-              sx={{
-                width: '100%',
-                height: '40px',
-                border: '1.4px solid #D3D3D3',
-                marginBottom: '20px',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                borderRadius: '5px'
-              }}
-          >
-            <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
-              <label>
-              <span style={{
-                marginLeft: '50px',
-                marginRight: '5px',
-                fontSize: '15px',
-                fontWeight: 'bold'
-              }}>거래처</span>
-                <input type="text" placeholder="거래처"
-                       style={{marginLeft: '10px', height: '20px', marginRight: '10px'}}
-                       value={this.state.customerName}
-                       readOnly
-                />
-                <img src={require(`../../images/button/modify-button-black.png`)}
-                     className='cellHoverEffect'
-                     style={{width: '19px', verticalAlign: 'middle'}}
-                     onClick={changeCustomerSearchModalStatus}/>
-              </label>
-              <label>
-              <span style={{
-                marginLeft: '50px',
-                marginRight: '5px',
-                fontSize: '14px',
-                fontWeight: 'bold'
-              }}>지시일</span>
-                <input type="date"
-                       style={{height: '20px', marginLeft: '10px', width: '100px'}}
-                       onChange={(e) => {
-                         this.setState({instructionDate: e.target.value})
-                       }}
-                       data-placeholder="시작일"
-                       required
-                       aria-required="true"
-                />
-                <input type="date"
-                       style={{
-                         height: '20px',
-                         marginLeft: '20px',
-                         width: '100px',
-                         marginRight: '50px'
-                       }}
-                       onChange={(e) => {
-                         this.setState({expirationDate: e.target.value})
-                       }}
-                       data-placeholder="종료일"
-                       required
-                       aria-required="true"
-                />
-              </label>
-              <label><span style={{
-                marginLeft: '50px',
-                marginRight: '5px',
-                fontSize: '14px',
-                fontWeight: 'bold'
-              }}>지시 상태</span>
-                <select name="languages" id="lang" style={{height: '25px'}}
-                        defaultValue={state.search.progressStatus}
-                        onChange={(e) => {
-                          this.setState({progressStatus: e.target.value})
-                        }}>
-                  <option value="STANDBY">준비</option>
-                  <option value="PROGRESS">진행중</option>
-                  <option value="COMPLETED">완료</option>
-                </select>
-              </label>
+          <BarBox>
+            <div style={{width: '70vw'}}>
+              <TextInput title='거래처' value={this.state.customerName} readOnly/>
+              <EditButton
+                  color='black'
+                  onClick={changeCustomerSearchModalStatus}
+              />
+              <DateInput title='지시일'
+                         startDate={{
+                           datalaceholder: '시작일',
+                           onChange: (e) => {
+                             this.setState({instructionDate: e.target.value})
+                           }
+                         }}
+                         endDate={{
+                           datalaceholder: '종료일',
+                           onChange: (e) => {
+                             this.setState({expirationDate: e.target.value})
+                           }
+                         }}
+              />
             </div>
-            <div style={{marginTop: '7px', marginBottom: '7px'}}>
-              <img src={require('../../images/button/add-button.png')}
-                   style={{width: '30px', marginRight: '10px', marginTop: '6px'}}
-                   className='cellHoverEffect'
-                   onClick={state.instruction.instructionNo === '' ? this.addInstructionClick : this.newAddInstructionClick}/>
+            <div style={{marginTop: '6px', marginRight: '7px'}}>
+              <AddButton
+                  size={30}
+                  onClick={state.instruction.instructionNo === '' ? this.addInstructionClick : this.newAddInstructionClick}/>
             </div>
-          </Box>
+          </BarBox>
           <div style={{textAlign: 'center'}}>
             <React.Fragment>
               {customerSearchModalOpen ? (
