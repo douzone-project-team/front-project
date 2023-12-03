@@ -4,13 +4,14 @@ import {InstructionsContext} from "../../store/Instruction/Instructions-context"
 import {InstructionsState, UpdateInstruction} from "../../object/Instruction/Instruction-object";
 
 import "./../../assets/css/Table.css";
-import ProductModal from "../Modal/Product/ProductModal";
-import CustomerModal from "../Modal/Product/CustomerModal";
+import ProductModal from "../Modal/Instruction/ProductModal";
+import CustomerModal from "../Modal/Instruction/CustomerModal";
 import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
 import {DetailTitle} from "../../core/DetailTitle";
 import {DeleteButton} from "../../core/button/DeleteButton";
-import { AddItemButton } from "../../core/button/AddItemButton";
-import { EditButton } from "../../core/button/EditButton";
+import {AddItemButton} from "../../core/button/AddItemButton";
+import {EditButton} from "../../core/button/EditButton";
+import {EditInput} from "../../core/input/EditInput";
 
 const boldCellStyle = {
   fontWeight: 'bold',
@@ -164,39 +165,20 @@ class ViewInstructionTable extends Component<Props> {
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell align="center"><input type='date'
-                                                       style={{
-                                                         width: '100%',
-                                                         height: '100%',
-                                                         textAlign: 'center',
-                                                         border: 0,
-                                                         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                                                         fontWeight: 400,
-                                                         fontSize: '0.875rem',
-                                                         marginLeft: '9px'
-                                                       }}
-                                                       defaultValue={instruction.instructionDate}
-                                                       onChange={(event => {
-                                                         this.updateInstruction({instructionDate: event.target.value});
-                                                       })}></input></TableCell>
-                      <TableCell align="center"><input type='date'
-                                                       style={{
-                                                         width: '100%',
-                                                         height: '100%',
-                                                         textAlign: 'center',
-                                                         border: 0,
-                                                         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                                                         fontWeight: 400,
-                                                         fontSize: '0.875rem',
-                                                         marginLeft: '9px'
-                                                       }}
-                                                       defaultValue={instruction.expirationDate}
-                                                       onChange={(event => {
-                                                         this.updateInstruction({expirationDate: event.target.value});
-                                                       })}/>
+                      <TableCell align="center">
+                        <EditInput type='date' defaultValue={instruction.instructionDate}
+                                   onChange={(e) => {
+                                     this.updateInstruction({instructionDate: e.target.value});
+                                   }}/>
                       </TableCell>
                       <TableCell align="center">
-                       <AddItemButton onClick={changeProductModalStatus}/>
+                        <EditInput type='date' defaultValue={instruction.expirationDate}
+                                   onChange={(e) => {
+                                     this.updateInstruction({expirationDate: e.target.value});
+                                   }}/>
+                      </TableCell>
+                      <TableCell align="center">
+                        <AddItemButton onClick={changeProductModalStatus}/>
                       </TableCell>
                       <TableCell align="center"></TableCell>
                       <TableCell align="center"></TableCell>

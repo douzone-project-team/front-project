@@ -3,6 +3,7 @@ import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
 import {DeliveriesState} from "../../object/Delivery/delivery-object";
 import {BarBox} from "../../core/BarBox";
 import {AddButton} from "../../core/button/AddButton";
+import {DateInput} from "../../core/input/DateInput";
 
 let Delivery = {
   deliveryDate: '',
@@ -42,25 +43,18 @@ class AddDeliveryBar extends Component {
         <>
           <BarBox>
             <div style={{width: '70vw', marginBottom: '7px', marginTop: '7px'}}>
-              <label>
-                        <span style={{
-                          marginLeft: '50px',
-                          marginRight: '5px',
-                          fontSize: '14px',
-                          fontWeight: 'bold',
-                        }}>출고일</span>
-                <input type="date"
-                       style={{height: '20px', marginLeft: '10px', width: '125px'}}
-                       defaultValue={state.search.startDate}
-                       data-placeholder='출고일'
-                       required
-                       onChange={(e) => {
-                         Delivery.deliveryDate = e.target.value;
-                       }}/>
-              </label>
+              <DateInput title='출고일'
+                         startDate={{
+                           datalaceholder: '출고일',
+                           onChange: (e) => {
+                             Delivery.deliveryDate = e.target.value
+                           },
+                           required: true
+                         }}/>
             </div>
-            <div style={{marginTop: '7px', marginBottom: '7px'}}>
+            <div style={{marginTop: '6px', marginRight: '7px'}}>
               <AddButton
+                  size={30}
                   onClick={state.delivery.deliveryNo === '' ? this.addDeliveryClick : this.newAddDeliveryClick}/>
             </div>
           </BarBox>

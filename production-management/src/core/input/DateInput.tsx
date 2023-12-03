@@ -1,14 +1,19 @@
 import React, {Component, FocusEvent} from 'react';
+import './../../assets/css/Styles.css';
 
 type DateInputProps = {
   title: string
   startDate: {
-    datalaceholder: string
+    datalaceholder: string,
     onChange?: (evt: FocusEvent<HTMLInputElement>) => void,
+    onBlur?: (evt: FocusEvent<HTMLInputElement>) => void,
+    required?: boolean
   }
   endDate?: {
-    datalaceholder: string
+    datalaceholder: string,
     onChange?: (evt: FocusEvent<HTMLInputElement>) => void,
+    onBlur?: (evt: FocusEvent<HTMLInputElement>) => void,
+    required?: boolean
   }
 }
 
@@ -24,17 +29,19 @@ export class DateInput extends Component<DateInputProps> {
           <input type="date"
                  style={inputStyle}
                  data-placeholder={startDate.datalaceholder}
-                 required
+                 required={startDate.required}
                  aria-required="true"
                  onChange={startDate.onChange}
+                 onBlur={startDate.onBlur}
           />
           {endDate ?
               <input type="date"
                      style={inputStyle}
                      data-placeholder={endDate.datalaceholder}
-                     required
+                     required={endDate.required}
                      aria-required="true"
                      onChange={endDate.onChange}
+                     onBlur={endDate.onBlur}
               /> : null}
         </label>
     );

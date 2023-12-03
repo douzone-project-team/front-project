@@ -75,8 +75,9 @@ class ViewCustomerTable extends Component<Props, State> {
             <div style={{marginLeft: 'auto'}}>
               {state.customer.customerNo !== 0 &&
                   <div>
-                    <EditButton onClick={() => this.setState({customerModifyModalOpen: true})}/>
-                    <DeleteButton onClick={() => this.handleDeleteClick(state.customer.customerNo)}/>
+                    <EditButton size={20}  onClick={() => this.setState({customerModifyModalOpen: true})}/>
+                    &nbsp;&nbsp;
+                    <DeleteButton size={20}  onClick={() => this.handleDeleteClick(state.customer.customerNo)}/>
                   </div>}
             </div>
           </div>

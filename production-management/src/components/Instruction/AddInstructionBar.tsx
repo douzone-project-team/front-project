@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
-import CustomerModal from "../Modal/Product/CustomerModal";
+import CustomerModal from "../Modal/Instruction/CustomerModal";
 import {AddButton} from "../../core/button/AddButton";
 import {EditButton} from "../../core/button/EditButton";
 import {BarBox} from "../../core/BarBox";
@@ -107,13 +107,15 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
                            datalaceholder: '시작일',
                            onChange: (e) => {
                              this.setState({instructionDate: e.target.value})
-                           }
+                           },
+                           required: true
                          }}
                          endDate={{
                            datalaceholder: '종료일',
                            onChange: (e) => {
                              this.setState({expirationDate: e.target.value})
-                           }
+                           },
+                           required: true
                          }}
               />
             </div>

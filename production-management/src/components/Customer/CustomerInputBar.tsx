@@ -4,8 +4,8 @@ import {CustomersState, InsertCustomer} from "../../object/Customer/customer-obj
 import CustomerAddModal from "../Modal/Customer/CustomerAddModal";
 import {BarBox} from '../../core/BarBox';
 import {SearchButton} from '../../core/button/SearchButton';
-import {AddButton} from '../../core/button/AddButton';
 import { TextInput } from '../../core/input/TextInput';
+import { AddItemButton } from '../../core/button/AddItemButton';
 
 type State = {
   customerAddModalOpen: boolean
@@ -66,7 +66,7 @@ class CustomerInputBar extends Component<Props, State> {
                   size={30} onClick={this.handleSearchClick}
               />
               &nbsp;&nbsp;
-              <AddButton
+              <AddItemButton
                   size={30}
                   onClick={() => this.setState((prevState) => ({customerAddModalOpen: !prevState.customerAddModalOpen}))}
               />

@@ -75,13 +75,15 @@ class SearchInstructionBar extends Component<Props, SearchState> {
                            datalaceholder: '시작일',
                            onChange: (e) => {
                              searchValue.startDate = e.target.value
-                           }
+                           },
+                           required: true
                          }}
                          endDate={{
                            datalaceholder: '종료일',
                            onChange: (e) => {
                              searchValue.endDate = e.target.value
-                           }
+                           },
+                           required: true
                          }}
               />
               <DateInput title='만료일'
@@ -89,14 +91,15 @@ class SearchInstructionBar extends Component<Props, SearchState> {
                            datalaceholder: '시작일',
                            onChange: (e) => {
                              searchValue.endDate = e.target.value
-
-                           }
+                           },
+                           required: true
                          }}
                          endDate={{
                            datalaceholder: '종료일',
                            onChange: (e) => {
                              searchValue.endDate = e.target.value
-                           }
+                           },
+                           required: true
                          }}
               />
             </div>

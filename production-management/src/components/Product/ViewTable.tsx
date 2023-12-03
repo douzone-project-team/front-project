@@ -13,8 +13,8 @@ import {
 import { ProductsContext } from "../../store/Product/products-context";
 import { ProductsState } from "../../object/Product/product-object";
 import "./../../assets/css/Table.css";
-import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
 import { ListTitle } from "../../core/ListTitle";
+import { PageButton } from "../../core/button/PageButton";
 
 const boldCellStyle = {
     border: '1px solid #D3D3D3',
@@ -100,26 +100,14 @@ class ViewTable extends Component<{}, ViewTableState> {  // 수정
 
                         </TableBody>
                     </Table>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <KeyboardArrowLeft
-                            onClick={handlePrevPage}
-                            // disabled={!state.instructionPage.hasPreviousPage}
-                        >
-                            이전 페이지
-                        </KeyboardArrowLeft>
-                        <KeyboardArrowRight
-                            onClick={handleNextPage}
-                            // disabled={!state.instructionPage.hasNextPage}
-                        >
-                            다음 페이지
-                        </KeyboardArrowRight>
-                    </Box>
+                    <PageButton options={{
+                        currentPage: state.productPage.currentPage,
+                        handleNextPage: handleNextPage,
+                        handlePrevPage: handlePrevPage,
+                        hasNextPage: state.productPage.hasNextPage,
+                        hasPreviousPage: state.productPage.hasPreviousPage
+                    }}
+                    />
                 </TableContainer>
             </Box>
         );

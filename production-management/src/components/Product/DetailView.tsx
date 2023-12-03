@@ -115,7 +115,8 @@ class DetailProduct extends Component<{}, DetailState> {
         <>
           <div style={{
             display: 'flex',
-            height: '20px'
+            height: '20px',
+            marginTop: '20px'
           }}>
             <div style={{width: '95%'}}>
               <DetailTitle options={{

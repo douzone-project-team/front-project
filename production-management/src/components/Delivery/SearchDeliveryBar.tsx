@@ -6,6 +6,7 @@ import {SearchButton} from "../../core/button/SearchButton";
 import {BarBox} from "../../core/BarBox";
 import { ProgressButton } from "../../core/button/ProgressButton";
 import { TextInput } from '../../core/input/TextInput';
+import { DateInput } from "../../core/input/DateInput";
 
 let searchValue = {
   progressStatus: '',
@@ -91,35 +92,22 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
               <TextInput title='등록자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value
               }}/>
-              <label>
-                          <span style={{
-                            marginLeft: '30px',
-                            marginRight: '5px',
-                            fontSize: '14px',
-                            fontWeight: 'bold'
-                          }}>출고일</span>
-                <input type="date"
-                       style={{height: '20px', marginLeft: '10px', width: '100px'}}
-                       data-placeholder="시작일"
-                       required
-                       aria-required="true"
-                       onChange={(e) => {
-                         searchValue.startDate = e.target.value
-                       }}
-                />
-                <input type="date"
-                       style={{
-                         height: '20px',
-                         marginLeft: '20px',
-                         width: '100px'
-                       }}
-                       data-placeholder="종료일"
-                       required
-                       aria-required="true"
-                       onChange={(e) => {
-                         searchValue.endDate = e.target.value
-                       }}/>
-              </label>
+              <DateInput title='출고일'
+                         startDate={{
+                           datalaceholder: '시작일',
+                           onChange: (e) => {
+                             searchValue.startDate = e.target.value
+                           },
+                           required: true
+                         }}
+                         endDate={{
+                           datalaceholder: '종료일',
+                           onChange: (e) => {
+                             searchValue.endDate = e.target.value
+                           },
+                           required: true
+                         }}
+              />
             </div>
             <div style={{marginTop: '6px', marginRight: '7px'}}>
               <SearchButton size={30} onClick={this.handleSearchClick}/>

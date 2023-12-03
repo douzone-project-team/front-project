@@ -7,14 +7,14 @@ import {
   ProductInstruction,
   UpdateInstruction
 } from "../../object/Instruction/Instruction-object";
-import ProductModal from "../Modal/Product/ProductModal";
-import CustomerModal from "../Modal/Product/CustomerModal";
+import ProductModal from "../Modal/Instruction/ProductModal";
+import CustomerModal from "../Modal/Instruction/CustomerModal";
 
 import "./../../assets/css/Table.css";
 import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
-import { AddButton } from "../../core/button/AddButton";
-import { AddItemButton } from "../../core/button/AddItemButton";
-import { EditButton } from "../../core/button/EditButton";
+import {AddItemButton} from "../../core/button/AddItemButton";
+import {EditButton} from "../../core/button/EditButton";
+import {EditInput} from "../../core/input/EditInput";
 
 type State = {
   product: {
@@ -159,40 +159,18 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center"
                                  style={cellStyle}>{instruction.instructionNo}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}><input type='date'
-                                                          style={{
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            textAlign: 'center',
-                                                            border: 0,
-                                                            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                                                            fontWeight: 400,
-                                                            fontSize: '0.875rem',
-                                                            marginLeft: '9px'
-                                                          }}
-                                                          defaultValue={instruction.instructionDate}
-                                                          onChange={(event => {
-                                                            console.log('onChange');
-                                                            this.updateInstruction({instructionDate: event.target.value});
-                                                          })}></input></TableCell>
+                                 style={cellStyle}>
+                        <EditInput type='date'
+                                   defaultValue={instruction.instructionDate}
+                                   onChange={(e) => this.updateInstruction({instructionDate: e.target.value})}/>
+                      </TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}><input type='date'
-                                                          style={{
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            textAlign: 'center',
-                                                            border: 0,
-                                                            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                                                            fontWeight: 400,
-                                                            fontSize: '0.875rem',
-                                                            marginLeft: '9px'
-                                                          }}
-                                                          defaultValue={instruction.expirationDate}
-                                                          onChange={(event => {
-                                                            console.log('onChange');
-                                                            this.updateInstruction({expirationDate: event.target.value});
-                                                          })}
-                      ></input></TableCell>
+                                 style={cellStyle}>
+                        <EditInput type='date'
+                                   defaultValue={instruction.expirationDate}
+                                   onChange={(e) => this.updateInstruction({expirationDate: e.target.value})
+                                   }/>
+                      </TableCell>
                       <TableCell align="center"
                                  style={cellStyle}>{statusMap.get(instruction.progressStatus)}</TableCell>
                       <TableCell align="center"
@@ -206,12 +184,12 @@ class ViewInstructionTable extends Component<Props, State> {
                             {instruction.customerName}
                           </div>
                           <div style={{width: '1%'}}>
-                            <EditButton onClick={changeCustomerModalStatus}/>
+                            <EditButton color='black' size={15} onClick={changeCustomerModalStatus}/>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell align="center" style={cellStyle}>
-                        <AddItemButton onClick={changeProductModalStatus}/>
+                        <AddItemButton color='black' onClick={changeProductModalStatus}/>
                       </TableCell>
                       <TableCell align="center" style={cellStyle}></TableCell>
                       <TableCell align="center" style={cellStyle}></TableCell>
