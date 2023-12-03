@@ -14,7 +14,7 @@ interface SearchState {
   isModalOpen?: boolean;
 }
 
-class ProductTopBar extends Component<{}, SearchState> {
+class SearchProductBar extends Component<{}, SearchState> {
   static contextType = ProductsContext;
 
   constructor(props: Props) {
@@ -98,4 +98,4 @@ class ProductTopBar extends Component<{}, SearchState> {
   }
 }
 
-export default ProductTopBar;
+export default SearchProductBar;

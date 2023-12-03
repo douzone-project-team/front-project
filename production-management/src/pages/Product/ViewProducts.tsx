@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import DetailView from "../../components/Product/DetailView";
+import ViewProductListTable from "../../components/Product/ViewProductListTable";
 import Layout from "../../common/Layout";
-import ViewTable from "../../components/Product/ViewTable";
-import ProductTopBar from "../../components/Product/ProductTopBar";
+import ViewProductTable from "../../components/Product/ViewProductTable";
+import SearchProductBar from "../../components/Product/SearchProductBar";
 import {Title} from "../../core/Title";
 import {SearchBox} from "../../core/box/SearchBox";
 import {Body} from "../../core/Body";
@@ -15,11 +15,11 @@ class ViewProducts extends Component {
           <Title title='품목 현황'/>
           <Body>
             <SearchBox>
-              <ProductTopBar/>
+              <SearchProductBar/>
             </SearchBox>
             <TableBox>
-              <ViewTable/>
-              <DetailView/>
+              <ViewProductListTable/>
+              <ViewProductTable/>
             </TableBox>
           </Body>
         </Layout>

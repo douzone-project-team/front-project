@@ -35,7 +35,7 @@ interface DetailState {
   history: any;
 }
 
-class DetailProduct extends Component<{}, DetailState> {
+class ViewProductTable extends Component<{}, DetailState> {
   static contextType = ProductsContext;
 
   constructor(props: {}) {
@@ -192,4 +192,4 @@ class DetailProduct extends Component<{}, DetailState> {
   }
 }
 
-export default DetailProduct;
+export default ViewProductTable;

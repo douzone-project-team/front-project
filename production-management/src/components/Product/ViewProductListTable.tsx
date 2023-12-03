@@ -39,7 +39,7 @@ interface ViewTableState {  // 추가
     selectedProductNo: number | null;
 }
 
-class ViewTable extends Component<{}, ViewTableState> {  // 수정
+class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
     static contextType = ProductsContext;
 
     state: ViewTableState = {  // 수정
@@ -114,4 +114,4 @@ class ViewTable extends Component<{}, ViewTableState> {  // 수정
     }
 }
 
-export default ViewTable;
+export default ViewProductListTable;
