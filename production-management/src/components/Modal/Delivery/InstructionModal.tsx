@@ -59,14 +59,14 @@ export class InstructionModal extends Component<InstructionModalProps, Instructi
 
     return (
         <div className='modal'>
-          <section style={{height:'600px'}}>
+          <section style={{height: '600px'}}>
             <header>
               <button className="close" onClick={onClose}>
                 &times;
               </button>
             </header>
             <main>
-              <SearchBox>
+              <SearchBox p='0px'>
                 <DeliverySearchInstructionBar/>
               </SearchBox>
               <TableBox>

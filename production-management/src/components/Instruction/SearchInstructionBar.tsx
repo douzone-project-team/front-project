@@ -59,6 +59,11 @@ class SearchInstructionBar extends Component<Props, SearchState> {
     state.setSearchProgressStatus(progressStatus);
   }
 
+  componentDidMount() {
+    this.handleSearchProgressState('');
+    this.setState({all: true});
+  }
+
   render() {
     const state = this.context as InstructionsState;
     const {all, standby, progress, completed} = this.state;
@@ -69,7 +74,7 @@ class SearchInstructionBar extends Component<Props, SearchState> {
             <BarLeftBox width='80%'>
               <TextInput title='등록자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value;
-              }}/>
+              }} label={{ml: '22px'}}/>
               <DateInput title='지시일'
                          startDate={{
                            datalaceholder: '시작일',

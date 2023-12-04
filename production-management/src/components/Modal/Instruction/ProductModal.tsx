@@ -114,14 +114,14 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
 
     return (
         <div className='modal'>
-          <section style={{height: '500px', width: '700px'}}>
+          <section style={{height: '520px', width: '700px'}}>
             <header>
               <button className="close" onClick={onClose}>
                 &times;
               </button>
             </header>
             <main>
-              <SearchBox>
+              <SearchBox p='0px'>
                 <BarBox>
                   <BarLeftBox width='60%'>
                     <TextInput
@@ -146,7 +146,7 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                   </BarRightBox>
                 </BarBox>
               </SearchBox>
-              <TableBox>
+              <TableBox p='15px'>
                 <Box>
                   <ListTitle options={{title: '품목 목록', count: list.length}}/>
                   <TableContainer className='table-container' style={{height: '250px'}}>

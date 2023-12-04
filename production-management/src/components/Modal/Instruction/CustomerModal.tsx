@@ -82,13 +82,13 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
               </button>
             </header>
             <main>
-              <SearchBox>
+              <SearchBox p='0px'>
                 <BarBox>
-                  <BarLeftBox width='70vw'>
+                  <BarLeftBox width='60%'>
                     <TextInput title='코드' onBlur={(e) => {
                       this.setState({customerCode: e.target.value})
                     }}
-                               label={{ml: '0px'}}
+                               label={{ml: '10px'}}
                                input={{width: '100px'}}/>
                     <TextInput title='명칭' onBlur={(e) => {
                       this.setState({customerName: e.target.value})
@@ -102,7 +102,7 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
                   </BarRightBox>
                 </BarBox>
               </SearchBox>
-              <TableBox>
+              <TableBox p='15px'>
                 <ListTitle options={{title: '거래처 목록', count: list.length}}/>
                 <TableContainer className='table-container' style={{height: '410px'}}>
                   <Table size='small' className='table'>
