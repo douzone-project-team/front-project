@@ -11,11 +11,6 @@ const boldCellStyle = {
     width: '15%',
 };
 
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-    width: '10%',
-};
-
 type ProfileFormProps = {}
 
 type ProfileFormState = {
@@ -85,7 +80,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         modifyValue.email = employee.email;
 
         return (
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '70%'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '60%'}}>
                 <TableContainer className='table-container'>
                     <Table size='small' className='table'>
                         <TableRow>
@@ -148,7 +143,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                             <TableCell>
                                 <input
                                     type="text"
-                                    placeholder="010"
+                                    placeholder="'-'제외 11자리 입력"
                                     defaultValue={employee.tel}
                                     onChange={event => {
                                         modifyValue.tel = event.target.value;
@@ -171,9 +166,13 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                 </TableContainer>
                 <button onClick={this.handleUpdateClick}
                         style={{
-                            bottom: 0,
-                            right: 0,
-                            margin: '10px'
+                            backgroundColor: '#546ae8',
+                            width: '50px',
+                            height: '30px',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            marginTop: '5px'
                         }}
                 >
                     수정
