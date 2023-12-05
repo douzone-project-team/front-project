@@ -82,7 +82,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         return (
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '60%'}}>
                 <TableContainer className='table-container'>
-                    <Table size='small' className='table'>
+                    <Table size='small' className='table' style={{backgroundColor: '#FDFDFD'}}>
                         <TableRow>
                             <TableCell style={boldCellStyle}>사번</TableCell>
                             {employee.employeeNo !== 0 ?
@@ -102,7 +102,9 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     defaultValue={employee.name}
                                     onChange={event => {
                                         modifyValue.name = event.target.value;
-                                    }}/>
+                                    }}
+                                    style={{ height: '25px'}}
+                                />
                             </TableCell>
                         </TableRow>
                         <TableRow>
@@ -113,7 +115,9 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     placeholder="현재 비밀번호"
                                     onChange={event => {
                                         modifyValue.oldPassword = event.target.value;
-                                    }}/>
+                                    }}
+                                    style={{ height: '25px'}}
+                                />
                             </TableCell>
                         </TableRow>
                         <TableRow>
@@ -124,7 +128,9 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     placeholder="새 비밀번호"
                                     onChange={event => {
                                         modifyValue.password = event.target.value;
-                                    }}/>
+                                    }}
+                                    style={{ height: '25px'}}
+                                />
                             </TableCell>
                         </TableRow>
                         <TableRow>
@@ -135,7 +141,9 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     placeholder="새 비밀번호 다시입력"
                                     onChange={event => {
                                         modifyValue.passwordConfirm = event.target.value;
-                                    }}/>
+                                    }}
+                                    style={{ height: '25px'}}
+                                />
                             </TableCell>
                         </TableRow>
                         <TableRow>
@@ -147,7 +155,9 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     defaultValue={employee.tel}
                                     onChange={event => {
                                         modifyValue.tel = event.target.value;
-                                    }}/>
+                                    }}
+                                    style={{ height: '25px'}}
+                                />
                             </TableCell>
                         </TableRow>
                         <TableRow>
@@ -159,7 +169,9 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     defaultValue={employee.email}
                                     onChange={event => {
                                         modifyValue.email = event.target.value;
-                                    }}/>
+                                    }}
+                                    style={{ height: '25px'}}
+                                />
                             </TableCell>
                         </TableRow>
                     </Table>

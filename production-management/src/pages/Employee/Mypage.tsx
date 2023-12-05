@@ -43,7 +43,7 @@ class Mypage extends Component {
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
-                        marginTop: '50px'
+                        marginTop: '30px'
                     }}
                 >
                     <MyInstruction />

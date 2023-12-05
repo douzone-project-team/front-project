@@ -23,7 +23,7 @@ class MyInstruction extends Component {
                     <span>&nbsp; 나의 지시목록</span>
                 </div>
             <TableContainer style={{border: '1px solid #ccc', borderRadius: '10px'}}>
-                <Table size='small'>
+                <Table size='small' style={{backgroundColor: '#FDFDFD'}}>
                     <TableHead>
                         <TableRow>
                                 <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
@@ -37,25 +37,42 @@ class MyInstruction extends Component {
                             <TableCell align="center">WO2311000001</TableCell>
                             <TableCell align="center">2023-10-22</TableCell>
                             <TableCell align="center">2023-11-21</TableCell>
-                            <TableCell align="center">진행</TableCell>
+                            <TableCell align="center" style={{width: '50px'}}>
+                                <div className='PROGRESS'>
+                                    PROGRESS
+                                </div>
+                            </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell align="center">WO2311000001</TableCell>
                             <TableCell align="center">2023-10-22</TableCell>
                             <TableCell align="center">2023-11-21</TableCell>
-                            <TableCell align="center">진행</TableCell>
+                            <TableCell align="center" style={{width: '50px'}}>
+                                <div className='STANDBY'>
+                                    STANDBY
+                                </div>
+                            </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell align="center">WO2311000001</TableCell>
                             <TableCell align="center">2023-10-22</TableCell>
                             <TableCell align="center">2023-11-21</TableCell>
-                            <TableCell align="center">진행</TableCell>
+                            <TableCell align="center" style={{width: '50px'}}>
+                                <div className='COMPLETED'>
+                                    COMPLETED
+                                </div>
+                            </TableCell>
+
                         </TableRow>
                         <TableRow>
                             <TableCell align="center">WO2311000001</TableCell>
                             <TableCell align="center">2023-10-22</TableCell>
                             <TableCell align="center">2023-11-21</TableCell>
-                            <TableCell align="center">진행</TableCell>
+                            <TableCell align="center" style={{width: '50px'}}>
+                                <div className='PROGRESS'>
+                                    PROGRESS
+                                </div>
+                            </TableCell>
                         </TableRow>
 
                         {list && list.length > 0 && list.map((row) => (
@@ -63,7 +80,11 @@ class MyInstruction extends Component {
                                 <TableCell align="center">{row.instructionNo}</TableCell>
                                 <TableCell align="center">{row.instructionDate}</TableCell>
                                 <TableCell align="center">{row.expirationDate}</TableCell>
-                                <TableCell align="center">{row.progressStatus}</TableCell>
+                                <TableCell align="center" style={{width: '50px'}}>
+                                    <div className={row.progressStatus}>
+                                        {row.progressStatus}
+                                    </div>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
