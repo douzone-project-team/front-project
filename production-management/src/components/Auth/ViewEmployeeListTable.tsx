@@ -46,6 +46,7 @@ class ViewEmployeeListTable extends Component {
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
+                                <TableCell align="center" style={boldCellStyle}>사진</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>사번</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>이름</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>연락처</TableCell>
@@ -55,17 +56,25 @@ class ViewEmployeeListTable extends Component {
                         </TableHead>
                         <TableBody>
                             {list && list.length > 0 ? list.map((row) => (
-                                <TableRow key={row.employeeNo}
+                                <TableRow key={row.employeeNo} className='cellHoverEffect'
                                         onClick={() => state.getEmployee(row.employeeNo)}>
-                                    <TableCell align="center" style={{fontWeight: 'bold'}} className='cellHoverEffect'>
+                                    <TableCell align="center">
+                                        <img src={('http://localhost:8080/employees/'+row.employeeNo+'/image')}
+                                             style={{
+                                                 maxWidth: '25px',
+                                                 maxHeight: '25px',
+                                                 borderRadius: '50%',                                             }}
+                                        />
+                                    </TableCell>
+                                    <TableCell align="center" style={{fontWeight: 'bold'}}>
                                         {row.employeeNo}</TableCell>
-                                    <TableCell align="center"  className='cellHoverEffect'>
+                                    <TableCell align="center">
                                         {row.name}</TableCell>
-                                    <TableCell align="center"  className='cellHoverEffect'>
+                                    <TableCell align="center">
                                         {row.tel}</TableCell>
-                                    <TableCell align="center"  className='cellHoverEffect'>
+                                    <TableCell align="center">
                                         {row.email}</TableCell>
-                                    <TableCell align="center"  className='cellHoverEffect'>
+                                    <TableCell align="center">
                                         {row.role === 'ROLE_ADMIN' ? '관리자' : '사원' }</TableCell>
                                 </TableRow>
                             )) : null }

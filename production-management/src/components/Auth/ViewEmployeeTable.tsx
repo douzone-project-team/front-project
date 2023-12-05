@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {AuthState, UpdateAuthEmployee} from "../../object/Auth/auth-object";
 import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
-import EmployeeModifyModal from "../Modal/Employee/EmployeeModifyModal";
+import EmployeeModifyModal from "../Modal/Auth/EmployeeModifyModal";
 import {AuthContext} from "../../store/Auth/auth-context";
 
 type State = {
@@ -97,6 +97,7 @@ class ViewEmployeeTable extends Component<Props, State> {
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
+                                <TableCell align="center" style={boldCellStyle}>사진</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>사번</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>아이디</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>비밀번호</TableCell>
@@ -108,6 +109,14 @@ class ViewEmployeeTable extends Component<Props, State> {
                         </TableHead>
                         <TableBody>
                             {state.employee.employeeNo !== 0 && <TableRow>
+                                <TableCell align="center">
+                                    <img src={('http://localhost:8080/employees/'+employee.employeeNo+'/image')}
+                                         style={{
+                                             maxWidth: '25px',
+                                             maxHeight: '25px',
+                                             borderRadius: '50%',                                             }}
+                                    />
+                                </TableCell>
                                 <TableCell align="center">{employee.employeeNo}</TableCell>
                                 <TableCell align="center">{employee.id}</TableCell>
                                 <TableCell align="center">{employee.password}</TableCell>
