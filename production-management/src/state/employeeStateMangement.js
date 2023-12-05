@@ -37,3 +37,24 @@ export const initialImage = {
     image: null,
 }
 
+export const initialInstructionList = {
+    list: []
+}
+
+export const initialDeliveryList = {
+    list: []
+}
+
+export const initialInstruction = {
+    instructionNo: '',
+    instructionDate: '',
+    expirationDate: '',
+    progressStatus: '',
+}
+
+export const initialDelivery = {
+    deliveryNo: '',
+    deliveryDate: '',
+    progressStatus: '',
+}
+
