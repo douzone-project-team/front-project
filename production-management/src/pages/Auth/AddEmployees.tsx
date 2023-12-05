@@ -22,7 +22,9 @@ class AddEmployees extends Component {
                 >
                     <span style={{fontSize: '17px', fontWeight: 'bold'}}>사원 등록</span>
                 </Box>
-                <AddEmployee />
+                <Box style={{marginTop: '50px'}}>
+                    <AddEmployee />
+                </Box>
             </Layout>
         )
     }

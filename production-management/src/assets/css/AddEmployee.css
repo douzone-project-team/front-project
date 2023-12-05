@@ -1,0 +1,76 @@
+/* 이미지 박스 */
+.box-image {
+    width: 250px;
+    height: 250px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* 폼 박스 */
+.paper-box {
+    width: 55%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.box {
+    margin-bottom: 25px;
+}
+
+.box-input {
+    width: 85%;
+    margin-right: 0.5%;
+}
+
+.box button {
+    width: 14.5%;
+    height: 40px;
+    background-color: #546ae8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* 필수 사항 */
+.redAsterisk {
+    color: red;
+}
+
+.customLabel {
+    display: flex;
+    align-items: center;
+}
+
+.admin label {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: 100px;
+    height: 35px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.admin label input {
+    position: absolute;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.admin label span {
+    position: absolute;
+    display: flex; /* Added */
+    align-items: center; /* Added */
+    justify-content: center; /* Added */
+    width: 50px;
+    height: 26px;
+    border-radius: 10px;
+    transition: 0.2s;
+}

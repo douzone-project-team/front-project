@@ -1,25 +1,12 @@
 import React, {ChangeEvent, Component} from "react";
 import {AuthContext} from "../../store/Auth/auth-context";
-import {Box, Button, Grid, InputAdornment, Paper, TextField} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import {Box, Button, Grid, Paper, TextField} from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
-import {
-    Attachment,
-    BusinessCenter,
-    CloudUploadOutlined,
-    Edit,
-    Email, Fingerprint,
-    Person,
-    Phone,
-    VerifiedUser
-} from "@material-ui/icons";
-import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-import Numbers from '@material-ui/icons/AllInclusive';
-import Password from '@material-ui/icons/Lock';
-import {Switch} from "react-router-dom";
-import {EmployeeState} from "../../object/Employee/employee-object";
 import {AuthState} from "../../object/Auth/auth-object";
+import '../../assets/css/AddEmployee.css'
+
+// @ts-ignore
+import defaultImage from '../../images/default-image.jpg';
 
 interface AddEmployeeFormState {
     isAdmin: boolean;
@@ -27,23 +14,23 @@ interface AddEmployeeFormState {
     isIdValid: boolean;
     isEmployeeNoValid: boolean;
     isSubmitDisabled: boolean;
-    showEditIcons: boolean[];
     idError: string;
     employeeNoError: string;
     pwError: string;
-    telError: string;
-    emailError: string;
 }
 
-class AddEmployee extends Component<{}, AddEmployeeFormState>{
+class AddEmployee extends Component<{}, AddEmployeeFormState> {
     static contextType = AuthContext;
 
     private nameInputRef = React.createRef<HTMLInputElement>();
     private employeeNoInputRef = React.createRef<HTMLInputElement>();
     private idInputRef = React.createRef<HTMLInputElement>();
     private passwordInputRef = React.createRef<HTMLInputElement>();
-    private telInputRef = React.createRef<HTMLInputElement>();
-    private emailInputRef = React.createRef<HTMLInputElement>();
+    private tel1InputRef = React.createRef<HTMLInputElement>();
+    private tel2InputRef = React.createRef<HTMLInputElement>();
+    private tel3InputRef = React.createRef<HTMLInputElement>();
+    private email1InputRef = React.createRef<HTMLInputElement>();
+    private email2InputRef = React.createRef<HTMLInputElement>();
 
     constructor(props: {}) {
         super(props);
@@ -53,66 +40,44 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
             selectedImage: null,
             isIdValid: false,
             isEmployeeNoValid: false,
-            isSubmitDisabled: true,
-            showEditIcons: Array(7).fill(true),
+            isSubmitDisabled: false,
             idError: '',
             employeeNoError: '',
             pwError: '',
-            telError: '',
-            emailError: '',
         };
     }
 
     // admin 여부
     handleAdminSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
-        this.setState({ isAdmin: event.target.checked });
-    };
-
-    // 입력시 펜아이콘 보이고 안보이고 설정
-    handleInputClick = (index: number) => {
-        const updatedIcons = [...this.state.showEditIcons];
-        updatedIcons[index] = false;
-        this.setState({
-            showEditIcons: updatedIcons,
-        });
-    };
-
-    handleInputBlur = (index: number) => {
-        const updatedIcons = [...this.state.showEditIcons];
-        updatedIcons[index] = true;
-        this.setState({
-            showEditIcons: updatedIcons,
-        });
+        this.setState({isAdmin: event.target.checked});
     };
 
     // 중복 검사
-    checkDuplicate = async (fieldLabel: string) => {
+    checkIdDuplicate = async () => {
+        const state = this.context as AuthState;
+        const enteredId = this.idInputRef.current?.value;
+
+        if (enteredId) {
+            await state.idCheck(enteredId);
+
+            this.setState({
+                isIdValid: true
+            });
+        }
+    };
+
+    checkEmployeeNoDuplicate = async () => {
         const state = this.context as AuthState;
 
-        this.setState({
-            isSubmitDisabled: false,
-        });
+        const enteredEmployeeNo = this.employeeNoInputRef.current?.value;
+        const etEmployeeNo = Number(enteredEmployeeNo);
+        if (enteredEmployeeNo) {
+            await state.employeeNoCheck(etEmployeeNo);
 
-        if(fieldLabel === '아이디'){
-            const enteredId = this.idInputRef.current?.value;
-            console.log(enteredId);
-            if(enteredId){
-                await state.idCheck(enteredId);
-                this.setState({
-                    isIdValid: true,
-                    isSubmitDisabled: !(this.state.isSubmitDisabled && this.state.isAdmin),
-                });
-            }
-        }else if(fieldLabel === '사번'){
-            const enteredEmployeeNo = this.employeeNoInputRef.current?.value;
-            const etEmployeeNo = Number(enteredEmployeeNo);
-            if(enteredEmployeeNo){
-                await state.employeeNoCheck(etEmployeeNo);
-                this.setState({
-                    isEmployeeNoValid: true,
-                    isSubmitDisabled: !(this.state.isSubmitDisabled && this.state.isAdmin),
-                });
-            }
+            this.setState({
+                isEmployeeNoValid: true,
+            });
+
         }
     };
 
@@ -120,11 +85,11 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
 
     validateId = (id: string) => {
         const idPattern = /^[a-zA-Z0-9]{4,}$/;
-        if(!idPattern.test(id)){
+        if (!idPattern.test(id)) {
             this.setState({
                 idError: '아이디는 최소 4자리 문자 또는 숫자여야 합니다.',
             });
-        }else {
+        } else {
             this.setState({
                 idError: '',
             });
@@ -133,11 +98,11 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
 
     validateEmployeeNo = (no: number) => {
         const employeeNoPattern = /^[0-9]{6}$/;
-        if(!employeeNoPattern.test(String(no))){
+        if (!employeeNoPattern.test(String(no))) {
             this.setState({
                 employeeNoError: '사번은 입사연도(2) + 무작위 4자리여야 합니다.  ex)230001',
             });
-        }else{
+        } else {
             this.setState({
                 employeeNoError: '',
             });
@@ -157,36 +122,9 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
         }
     };
 
-    validateTel = (tel: string) => {
-        const telPattern = /^[0-9]{11}$/;
-        if (!telPattern.test(tel)) {
-            this.setState({
-                telError: "'-'없이 숫자만 입력해주세요.",
-            });
-        } else {
-            this.setState({
-                telError: '',
-            });
-        }
-    };
-
-    validateEmail = (email: string) => {
-        const emailPattern = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-        if (!emailPattern.test(email)) {
-            this.setState({
-                emailError: '아이디@도메인 형식으로 입력해주세요.',
-            });
-        } else {
-            this.setState({
-                emailError: '',
-            });
-        }
-    };
-
-
     // 이미지
     handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(e.target.files && e.target.files.length > 0) {
+        if (e.target.files && e.target.files.length > 0) {
             const imageFile = e.target.files[0];
             this.setState({
                 selectedImage: imageFile,
@@ -198,7 +136,7 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
         e.preventDefault();
         const droppedFiles = e.dataTransfer.files;
 
-        if(droppedFiles && droppedFiles.length > 0) {
+        if (droppedFiles && droppedFiles.length > 0) {
             const imageFile = droppedFiles[0];
             this.setState({
                 selectedImage: imageFile,
@@ -210,35 +148,67 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
         const state = this.context as AuthState;
         e.preventDefault();
 
-        if(!this.state.isSubmitDisabled){
-            alert('아이디와 사번 중복 확인을 진행해야 합니다.');
+        const {
+            idError,
+            employeeNoError,
+            pwError,
+            isIdValid,
+            isEmployeeNoValid,
+        } = this.state;
+
+        if (
+            !this.nameInputRef.current?.value ||
+            !this.passwordInputRef.current?.value ||
+            idError ||
+            employeeNoError ||
+            pwError ||
+            !isIdValid ||
+            !isEmployeeNoValid
+        ) {
+            if (idError || employeeNoError || pwError) {
+                alert('올바르지 않은 입력값이 존재하거나 중복 확인이 필요합니다!');
+            }
             return;
         }
 
-        if(this.state.idError || this.state.employeeNoError || this.state.pwError || this.state.telError ||
-            this.state.emailError){
-            alert('올바르지 않은 입력값이 존재합니다!');
-            return;
-        }
+        try {
+            const tel1 = this.tel1InputRef.current?.value || '';
+            const tel2 = this.tel2InputRef.current?.value || '';
+            const tel3 = this.tel3InputRef.current?.value || '';
 
-        try{
+            const email1 = this.email1InputRef.current?.value || '';
+            const email2 = this.email2InputRef.current?.value || '';
+
             const userData = {
                 name: this.nameInputRef.current?.value || '',
                 employeeNo: Number(this.employeeNoInputRef.current?.value) || 0,
                 id: this.idInputRef.current?.value || '',
                 password: this.passwordInputRef.current?.value || '',
-                tel: this.telInputRef.current?.value || '',
-                email: this.emailInputRef.current?.value || '',
+                tel: tel1 + tel2 + tel3,
+                email: email1 + email2,
                 role: this.state.isAdmin ? 'ROLE_ADMIN' : 'ROLE_MEMBER',
             };
 
-            if(this.state.selectedImage){
+            if (this.state.selectedImage) {
                 state.addImage(userData.employeeNo, this.state.selectedImage);
             }
 
             await state.addEmployee(userData);
 
-        }catch (error) {
+            // 등록 성공 후 각 TextField의 값 초기화
+            this.nameInputRef.current!.value = '';
+            this.employeeNoInputRef.current!.value = '';
+            this.idInputRef.current!.value = '';
+            this.passwordInputRef.current!.value = '';
+            this.tel1InputRef.current!.value = '';
+            this.tel2InputRef.current!.value = '';
+            this.tel3InputRef.current!.value = '';
+            this.email1InputRef.current!.value = '';
+            this.email2InputRef.current!.value = '';
+
+
+
+        } catch (error) {
             console.log("Error: " + error);
         }
     }
@@ -247,334 +217,230 @@ class AddEmployee extends Component<{}, AddEmployeeFormState>{
         const {
             isAdmin,
             selectedImage,
-            showEditIcons,
             isSubmitDisabled,
             idError,
             employeeNoError,
             pwError,
-            telError,
-            emailError
         } = this.state;
 
-        return(
-            <Box
-                display='flex'
-                justifyContent='center'
-                alignItems='center'
-            >
-                <Paper
-                    elevation={1}
+        return (
+            <Box width='70%' display='flex' ml='auto' mr="auto">
+                <Grid
                     style={{
-                        width: '80%',
-                        margin: '0 auto',
-                        padding: '20px',
-                    }}
-                >
-                    <form
-                        onSubmit={this.handleSubmit}
-                    >
-                        <Grid container spacing={1} alignItems='center'
-                              style={{ marginTop: 1, marginBottom: 2, width: '100%' }}>
-                            <Grid item>
-                                <Person />
-                            </Grid>
-                            <Grid item style={{marginLeft: 3, width: '93%' }}>
-                                <TextField
-                                    placeholder = '이름을 입력해주세요.'
-                                    fullWidth
-                                    variant = 'standard'
-                                    name='name'
-                                    type='text'
-                                    InputProps={{
-                                        endAdornment: showEditIcons[0] ? (
-                                            <InputAdornment position='end'>
-                                                <IconButton onClick={() => this.handleInputClick(0)}>
-                                                    <Edit />
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ) : null,
-                                    }}
-                                    InputLabelProps = {{
-                                        shrink: true,
-                                    }}
-                                    label='이름'
-                                    onFocus={() => this.handleInputClick(0)}
-                                    onBlur={() => this.handleInputBlur(0)}
-                                    inputRef={this.nameInputRef}
-                                />
-                            </Grid>
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginRight: '50px',
+                    }}>
+                    <Box className="box-image">
+                        <img
+                            src={selectedImage ? URL.createObjectURL(selectedImage) : defaultImage}
+                            alt=''
+                            style={{
+                                maxWidth: '200px',
+                                maxHeight: '250px',
+                                objectFit: 'cover',
+                            }}
+                        />
+                    </Box>
+                    <button style={{
+                        backgroundColor: '#546ae8',
+                        width: '60px',
+                        height: '30px',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px'
+                    }}>
+                        업로드
+                        <input type='file' accept='image/*' style={{display: 'none'}}
+                               onChange={this.handleImageChange}/>
+                    </button>
+                </Grid>
+                <Paper elevation={1} style={{margin: '0 auto', padding: '20px'}}>
+                    <form onSubmit={this.handleSubmit}>
+                        <Grid className="box">
+                            <TextField className="box-input"
+                                       fullWidth size="small"
+                                       variant='outlined'
+                                       name='employeeNo'
+                                       type='number'
+                                       InputLabelProps={{
+                                           shrink: true,
+                                           classes: {
+                                               asterisk: 'redAsterisk',
+                                           },
+                                       }}
+                                       label={<span className="customLabel">사번 <span
+                                           style={{color: 'red'}}>&nbsp;*</span></span>}
+                                       inputRef={this.employeeNoInputRef}
+                                       onChange={(e) => this.validateEmployeeNo(Number(e.target.value))}
+                                       error={Boolean(employeeNoError)}
+                                       helperText={employeeNoError}
+                            />
+                            <button onClick={this.checkEmployeeNoDuplicate}>
+                                중복 확인
+                            </button>
                         </Grid>
-                        <Grid container spacing={1} alignItems='center' style={{marginTop: 1, marginBottom: 2, width: '100%'}}>
-                            <Grid item>
-                                <BusinessCenter />
-                            </Grid>
-                            <Grid item style={{marginLeft: 3, width: '93%'}}>
-                                <TextField
-                                    placeholder='사번을 입력해주세요.'
-                                    fullWidth
-                                    variant='standard'
-                                    name='employeeNo'
-                                    type='number'
-                                    InputProps = {{
-                                        endAdornment: showEditIcons[1] ? (
-                                            <InputAdornment position='end'>
-                                                <IconButton onClick={() => this.handleInputClick(1)}>
-                                                    <Edit />
-                                                </IconButton>
-                                                <IconButton onClick={() => this.checkDuplicate('사번')}
-                                                            style={{ padding: 1, fontSize: '0.75rem'}}>
-                                                    중복 확인
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ) : null
-                                    }}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    label='사번'
-                                    onFocus={() => this.handleInputClick(1)}
-                                    onBlur={() => this.handleInputBlur(1)}
-                                    inputRef={this.employeeNoInputRef}
-                                    onChange={(e) => this.validateEmployeeNo(Number(e.target.value))}
-                                    error={Boolean(employeeNoError)}
-                                    helperText={employeeNoError}
+                        <Grid className="box">
+                            <TextField className="box-input"
+                                       fullWidth size="small"
+                                       variant='outlined'
+                                       name='id'
+                                       type='text'
+                                       InputLabelProps={{
+                                           shrink: true,
+                                           classes: {
+                                               asterisk: 'redAsterisk',
+                                           },
+                                       }}
+                                       label={<span className="customLabel">아이디 <span
+                                           style={{color: 'red'}}>&nbsp;*</span></span>}
+                                       inputRef={this.idInputRef}
+                                       onChange={(e) => this.validateId(e.target.value)}
+                                       error={Boolean(idError)}
+                                       helperText={idError}
+                            />
+                            <button onClick={this.checkIdDuplicate}>
+                                중복 확인
+                            </button>
+                        </Grid>
+                        <TextField className="box"
+                                   fullWidth size="small"
+                                   variant='outlined'
+                                   name='password'
+                                   type='password'
+                                   InputLabelProps={{
+                                       shrink: true,
+                                       classes: {
+                                           asterisk: 'redAsterisk',
+                                       },
+                                   }}
+                                   label={<span className="customLabel">비밀번호 <span style={{color: 'red'}}>&nbsp;*</span></span>}
+                                   inputRef={this.passwordInputRef}
+                                   onChange={(e) => this.validatePassword(e.target.value)}
+                                   error={Boolean(pwError)}
+                                   helperText={pwError}
+                        />
+                        <TextField className="box"
+                                   fullWidth size="small"
+                                   variant='outlined'
+                                   name='name'
+                                   type='text'
+                                   InputLabelProps={{
+                                       shrink: true,
+                                       classes: {
+                                           asterisk: 'redAsterisk',
+                                       },
+                                   }}
+                                   label={<span className="customLabel">이름 <span
+                                       style={{color: 'red'}}>&nbsp;*</span></span>}
+                                   inputRef={this.nameInputRef}
+                        />
+                        <Box style={{ display: 'flex', }}>
+                            <TextField className="box"
+                                       size="small"
+                                       variant='outlined'
+                                       name='tel1'
+                                       type='number'
+                                       InputLabelProps={{
+                                           shrink: true,
+                                       }}
+                                       label='연락처'
+                                       inputRef={this.tel1InputRef}
+                                       style={{width: '30%', marginRight: '5px'}}
+                            />
+                            <span style={{marginTop: '10px'}}>-</span>
+                            <TextField className="box"
+                                       size="small"
+                                       variant='outlined'
+                                       name='tel2'
+                                       type='number'
+                                       inputRef={this.tel2InputRef}
+                                       style={{width: '35%', marginLeft: '5px', marginRight: '5px'}}
+                            />
+                            <span style={{marginTop: '10px'}}>-</span>
+                            <TextField className="box"
+                                       fullWidth size="small"
+                                       variant='outlined'
+                                       name='tel3'
+                                       type='number'
+                                       inputRef={this.tel3InputRef}
+                                       style={{width: '35%', marginLeft: '5px'}}
+                            />
+                        </Box>
+                        <Box style={{display: 'flex'}}>
+                            <TextField className="box"
+                                       fullWidth size="small"
+                                       variant='outlined'
+                                       name='email1'
+                                       type='text'
+                                       InputLabelProps={{
+                                           shrink: true,
+                                       }}
+                                       label='이메일'
+                                       inputRef={this.email1InputRef}
+                                       style={{width: '35%', marginRight: '6px'}}
+                            />
+                            <span style={{marginTop: '10px'}}>@</span>
+                            <TextField className="box"
+                                       fullWidth size="small"
+                                       variant='outlined'
+                                       name='email1'
+                                       type='text'
+                                       inputRef={this.email2InputRef}
+                                       style={{width: '60%', marginLeft: '7px'}}
+                            />
+                        </Box>
+                        <Box
+                             display="flex" alignItems="center" justifyContent="space-between"
+                             style={{marginBottom: '10px'}}
+                        >
+                            <span style={{color: '#646464'}}>권한 <span style={{color: 'red'}}>*</span></span>
+                            <Box className="admin">
+                                <label style={{
+                                    background: isAdmin ? '#5f8cff' : '#fff',
+                                    border: isAdmin ? '2px solid #5f8cff' : '2px solid #5f8cff',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    padding: '5px',
+                                }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={isAdmin}
+                                        onChange={this.handleAdminSwitchChange}
+                                        style={{display: 'none'}}
                                     />
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={1} alignItems='center' style={{marginTop: 1, marginBottom: 2, width: '100%'}}>
-                            <Grid item>
-                                <Fingerprint />
-                            </Grid>
-                            <Grid item style={{ marginLeft: 3, width: '93%' }}>
-                                <TextField
-                                    placeholder='아이디를 입력해주세요.'
-                                    fullWidth
-                                    variant='standard'
-                                    name='id'
-                                    type='text'
-                                    InputProps={{
-                                        endAdornment: showEditIcons[2] ? (
-                                            <InputAdornment position='end'>
-                                                <IconButton onClick={() => this.handleInputClick(2)}>
-                                                    <Edit />
-                                                </IconButton>
-                                                <IconButton onClick={() => this.checkDuplicate('아이디')}
-                                                            style={{ padding: 1, fontSize: '0.75rem' }}>
-                                                    중복 확인
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ) : null,
-                                    }}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    label='아이디'
-                                    onFocus={() => this.handleInputClick(2)}
-                                    onBlur={() => this.handleInputBlur(2)}
-                                    inputRef={this.idInputRef}
-                                    onChange={(e) => this.validateId(e.target.value)}
-                                    error={Boolean(idError)}
-                                    helperText={idError}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={1} alignItems='center' style={{ marginTop: 1, marginBottom: 2, width: '100%' }}>
-                            <Grid item>
-                                <Password />
-                            </Grid>
-                            <Grid item style={{ marginLeft: 3, width: '93%' }}>
-                                <TextField
-                                    placeholder='비밀번호를 입력해주세요.'
-                                    fullWidth
-                                    variant='standard'
-                                    name='password'
-                                    type='password'
-                                    InputProps={{
-                                        endAdornment: showEditIcons[3] ? (
-                                            <InputAdornment position='end'>
-                                                <IconButton onClick={() => this.handleInputClick(3)}>
-                                                    <Edit />
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ) : null,
-                                    }}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    label='비밀번호'
-                                    onFocus={() => this.handleInputClick(3)}
-                                    onBlur={() => this.handleInputBlur(3)}
-                                    inputRef={this.passwordInputRef}
-                                    onChange={(e) => this.validatePassword(e.target.value)}
-                                    error={Boolean(pwError)}
-                                    helperText={pwError}
-                                />
-                            </Grid>
-                        </Grid>
-                    <Grid container spacing={1} alignItems='center' style={{ marginTop: 1, marginBottom: 2, width: '100%' }}>
-                        <Grid item>
-                            <Phone />
-                        </Grid>
-                        <Grid item style={{ marginLeft: 3, width: '93%' }}>
-                            <TextField
-                                placeholder='연락처를 입력해주세요.'
-                                fullWidth
-                                variant='standard'
-                                name='tel'
-                                type='text'
-                                InputProps={{
-                                    endAdornment: showEditIcons[4] ? (
-                                        <InputAdornment position='end'>
-                                            <IconButton onClick={() => this.handleInputClick(4)}>
-                                                <Edit />
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ) : null,
-                                }}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                label='연락처'
-                                onFocus={() => this.handleInputClick(4)}
-                                onBlur={() => this.handleInputBlur(4)}
-                                inputRef={this.telInputRef}
-                                onChange={(e) => this.validateTel(e.target.value)}
-                                error={Boolean(telError)}
-                                helperText={telError}
-                                />
-                        </Grid>
-                    </Grid>
-                        <Grid container spacing={1} alignItems='center' style={{ marginTop: 1, marginBottom: 2, width: '100%' }}>
-                            <Grid item>
-                                <Email />
-                            </Grid>
-                            <Grid item style={{ marginLeft: 3, width: '93%' }}>
-                                <TextField
-                                    placeholder='이메일을 입력해주세요.'
-                                    fullWidth
-                                    variant='standard'
-                                    name='email'
-                                    type='text'
-                                    InputProps={{
-                                        endAdornment: showEditIcons[5] ? (
-                                            <InputAdornment position='end'>
-                                                <IconButton onClick={() => this.handleInputClick(5)}>
-                                                    <Edit />
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ) : null,
-                                    }}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    label='이메일'
-                                    onFocus={() => this.handleInputClick(5)}
-                                    onBlur={() => this.handleInputBlur(5)}
-                                    inputRef={this.emailInputRef}
-                                    onChange={(e) => this.validateEmail(e.target.value)}
-                                    error={Boolean(emailError)}
-                                    helperText={emailError}
-                                />
-                            </Grid>
-                        </Grid>
+                                    <span style={{
+                                        left: isAdmin ? '45px' : '3px',
+                                        background: isAdmin ? '#FFF' : '#5f8cff',
+                                        boxShadow: isAdmin ? '1px 2px 3px #00000020' : 'none',
+                                        color: isAdmin ? 'black' : 'white',
+                                    }}>{isAdmin ? '관리자' : '사원'}</span>
+                                </label>
+                            </Box>
+                        </Box>
 
-                        <Grid container spacing={1} alignItems='center' style={{marginTop: 1, marginBottom: 2}}>
-                            <Grid item>
-                                <VerifiedUser />
-                            </Grid>
-                            <Grid item style={{ marginLeft: 3}}>
-                                <Typography variant='body1'>Admin</Typography>
-                            </Grid>
-                            <Grid item style={{ marginLeft: 'auto'}}>
-                                <div>
-                                    <label style={{
-                                        position: 'relative',
-                                        cursor: 'pointer',
-                                        display: 'inline-block',
-                                        width: '58px',
-                                        height: '28px',
-                                        background: isAdmin ? '#aabadd' : '#fff',
-                                        border: isAdmin ? '2px solid #aabadd' : '2px solid #aabadd',
-                                        borderRadius: '20px',
-                                        transition: '0.2s',
-                                    }}>
-                                        <input
-                                            type="checkbox"
-                                            checked={isAdmin}
-                                            onChange={this.handleAdminSwitchChange}
-                                            style={{
-                                                position: 'absolute',
-                                                appearance: 'none',
-                                                WebkitAppearance: 'none',
-                                                MozAppearance: 'none',
-                                            }}
-                                        />
-                                        <span style={{
-                                            position: 'absolute',
-                                            top: '4px',
-                                            left: isAdmin ? '34px' : '3px',
-                                            display: 'inline-block',
-                                            width: '20px',
-                                            height: '20px',
-                                            borderRadius: '20px',
-                                            background: isAdmin ? '#fff' : '#aabadd',
-                                            transition: '0.2s',
-                                            boxShadow: isAdmin ? '1px 2px 3px #00000020' : 'none',
-                                        }}></span>
-                                    </label>
-                                </div>
-                            </Grid>
-                        </Grid>
                         <Divider></Divider>
-                        <Grid container spacing={1} style={{ marginTop: 5, marginBottom: 5, width: '100%' }}>
-                            <Grid item>
-                                <Attachment />
-                            </Grid>
-                            <Grid item style={{ marginLeft: 3, width: '90%' }}>
-                                <Box
-                                    display='flex'
-                                    flexDirection='column'
-                                    alignItems='center'
-                                    border='2px dashed #bdbdbd'
-                                    borderRadius='4px'
-                                    width='100%'
-                                    padding='20px'
-                                    onDrop={this.handleDropImage}
-                                    onDragOver={(e) => e.preventDefault()}
-                                >
-                                    <img
-                                        src={selectedImage ? URL.createObjectURL(selectedImage) : ''}
-                                        alt=''
-                                        style={{
-                                            maxWidth: '200px',
-                                            maxHeight: '250px',
-                                            objectFit: 'cover',
-                                        }}
-                                    />
-                                    <CloudUploadOutlined style={{ fontSize: 48 }} />
-                                    <Typography variant='caption' align='center'>
-                                        Drag the file here
-                                    </Typography>
-                                    <Button variant='contained' color='primary' component='label' style={{ cursor: 'pointer' }}>
-                                        Click Here
-                                        <input type='file' accept='image/*' style={{ display: 'none' }} onChange={this.handleImageChange} />
-                                    </Button>
-                                </Box>
-                            </Grid>
-                        </Grid>
-                        <Box display='flex' justifyContent='center' alignItems='center'>
-                            <Button variant='contained' color='secondary' style={{ width: '50' }}>
-                                Cancel
-                            </Button>
-                            <Box sx={{ width: 5 }}></Box>
-                            <Button type='submit' variant='contained' color='primary' style={{ width: '50' }}>
-                                Submit
-                            </Button>
+
+                        <Box display='flex' justifyContent='center' alignItems='center' style={{marginTop: '20px'}}>
+                            <button type='submit' style={{
+                                width: '12%',
+                                height: '40px',
+                                backgroundColor: '#546ae8',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '5px',
+                                fontSize: '14px'}}
+                            >
+                                등록
+                            </button>
                         </Box>
                     </form>
                 </Paper>
             </Box>
-        );
+        )
+            ;
     }
 }
 
