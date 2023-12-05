@@ -1,8 +1,11 @@
 import React, {Component} from "react";
 import {AuthState, UpdateAuthEmployee} from "../../object/Auth/auth-object";
 import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
-import EmployeeModifyModal from "../Modal/Auth/EmployeeModifyModal";
+import EmployeeModifyModal from "../Modal/Employee/EmployeeModifyModal";
 import {AuthContext} from "../../store/Auth/auth-context";
+import {DetailTitle} from "../../core/DetailTitle";
+import {EditButton} from "../../core/button/EditButton";
+import {DeleteButton} from "../../core/button/DeleteButton";
 
 type State = {
     employeeModifyModalOpen: boolean
@@ -13,10 +16,16 @@ type Props = {
 }
 
 const boldCellStyle = {
+    backgroundColor: '#f1f3f5',
+    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    backgroundColor: '#f1f3f5'
+    width: '10%',
 };
 
+const cellStyle = {
+    border: '1px solid #D3D3D3',
+    width: '10%',
+};
 
 class ViewEmployeeTable extends Component<Props, State> {
     static contextType = AuthContext;
@@ -58,46 +67,28 @@ class ViewEmployeeTable extends Component<Props, State> {
         return(
             <>
                 <div style={{
-                    width: '100%',
-                    height: '30px',
-                    marginLeft: '2px',
                     display: 'flex',
+                    height: '20px',
+                    marginTop: '20px'
                 }}>
-                    <div style={{display: 'flex', alignItems: 'center'}}>
-                        <img src={require('./../../images/icon/detail.png')} style={{width: '20px'}}/>
-                        <span className='table-header'
-                              style={{fontWeight: 'bold', fontSize: '16px'}}> 사원 상세 : &nbsp;
-                            {state.employee.employeeNo !== 0 &&
-                                <span style={{color: '#0C70F2'}}>{state.employee.employeeNo}</span>}
-                        </span>
-                    </div>
+                    <DetailTitle options={{
+                        targetName: (state.employee.employeeNo === 0 ? '' : state.employee.employeeNo) as unknown as string,
+                        title: '사원 상세'
+                    }}/>
                     <div style={{ marginLeft: 'auto' }}>
                         {state.employee.employeeNo !== 0 &&
-                            <img src={require('../../images/button/modify-button.png')}
-                                 style={{width : '20px', marginRight : '5px', marginTop: '3px'}}
-                                 onClick={() => this.setState({employeeModifyModalOpen: true})}/>
-                        }
-                        <React.Fragment>
-                            {this.state.employeeModifyModalOpen && state.employee.employeeNo !== 0 ? (
-                                <EmployeeModifyModal onClose={() => this.setState({employeeModifyModalOpen: false})}
-                                                     status={this.state.employeeModifyModalOpen}
-                                                     updateEmployee = {this.updateEmployee}
-                                                     employeeNo = {state.employee.employeeNo}/>
-                            ) : null}
-                        </React.Fragment>
-
-                        {state.employee.employeeNo !== 0 &&
-                            <img src={require('../../images/button/delete-button.png')}
-                            style={{width : '20px', marginRight : '5px', marginTop: '3px'}}
-                            onClick={()=>this.handleDeleteClick(state.employee.employeeNo)}
-                            />}
+                            <div>
+                                <EditButton size={20}
+                                            onClick={() => this.setState({employeeModifyModalOpen: true})} />
+                                &nbsp;&nbsp;
+                                <DeleteButton size={20}  onClick={() => this.handleDeleteClick(state.employee.employeeNo)}/>
+                            </div>}
                     </div>
                 </div>
                 <TableContainer className='table-container'>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center" style={boldCellStyle}>사진</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>사번</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>아이디</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>비밀번호</TableCell>
@@ -109,14 +100,6 @@ class ViewEmployeeTable extends Component<Props, State> {
                         </TableHead>
                         <TableBody>
                             {state.employee.employeeNo !== 0 && <TableRow>
-                                <TableCell align="center">
-                                    <img src={('http://localhost:8080/employees/'+employee.employeeNo+'/image')}
-                                         style={{
-                                             maxWidth: '25px',
-                                             maxHeight: '25px',
-                                             borderRadius: '50%',                                             }}
-                                    />
-                                </TableCell>
                                 <TableCell align="center">{employee.employeeNo}</TableCell>
                                 <TableCell align="center">{employee.id}</TableCell>
                                 <TableCell align="center">{employee.password}</TableCell>
@@ -129,8 +112,16 @@ class ViewEmployeeTable extends Component<Props, State> {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <React.Fragment>
+                    {this.state.employeeModifyModalOpen && state.employee.employeeNo !== 0 ? (
+                        <EmployeeModifyModal onClose={() => this.setState({employeeModifyModalOpen: false})}
+                                             status={this.state.employeeModifyModalOpen}
+                                             updateEmployee = {this.updateEmployee}
+                                             employeeNo = {state.employee.employeeNo}/>
+                    ) : null}
+                </React.Fragment>
             </>
-        )
+        );
     }
 
 }
