@@ -45,11 +45,36 @@ export type Image = {
     image: File | null;
 }
 
+export type Instruction = {
+    instructionNo: string,
+    instructionDate: string,
+    expirationDate: string,
+    progressStatus: string,
+}
+
+export type InstructionList = {
+    list: Instruction[]
+}
+
+export type Delivery = {
+    deliveryNo: string,
+    deliveryDate: string,
+    progressStatus: string,
+}
+
+export type DeliveryList = {
+    list: Delivery[]
+}
+
 export type EmployeeState = {
     isSuccess: IsSuccess,
     employee: Employee,
     updateEmployeeObj: UpdateEmployee,
     image: Image,
+    instructionList: InstructionList,
+    deliveryList: DeliveryList,
+    instruction: Instruction,
+    delivery: Delivery,
     login: (id: string, password: string) => void,
     logout: () => void,
     cleanEmployee: () => void,
@@ -58,7 +83,9 @@ export type EmployeeState = {
     updateEmployee: (employeeNo: number, object: UpdateEmployee) => void,
     addImage: (employeeNo: number, image: File) => void,
     updateImage: (employeeNo: number, image: File) => void,
-    deleteImage: (employeeNo: number) => void
+    deleteImage: (employeeNo: number) => void,
+    myInstruction: () => void,
+    myDelivery: () => void,
 }
 
 /* path variables */
