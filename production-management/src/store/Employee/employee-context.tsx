@@ -8,6 +8,9 @@ import {
     initialUpdateEmployee,
     initialImage,
     initialIsSuccess,
+    initialEmployee,
+    initialInstruction,
+    initialDelivery, initialInstructionList, initialDeliveryList,
     initialEmployee, initialMessage, initialMessages,
 } from "../../state/employeeStateMangement";
 import CookieManager from "../../common/CookieManager";
@@ -26,6 +29,10 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     employee: initialEmployee,
     updateEmployeeObj: initialUpdateEmployee,
     image: initialImage,
+    instructionList: initialInstructionList,
+    deliveryList: initialDeliveryList,
+    instruction: initialInstruction,
+    delivery: initialDelivery,
     messages: initialMessages,
     message: initialMessage,
     login(id: string, password: string): void {
@@ -46,6 +53,10 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     },
     deleteImage(employeeNo: number): void {
     },
+    myInstruction(): void {
+    },
+    myDelivery(): void{
+    },
     getMessages(): void {
     },
     sendMessage(sendId: number, targetId: number, message: string): void {
@@ -61,6 +72,10 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
         employee: initialEmployee,
         updateEmployeeObj: initialUpdateEmployee,
         image: initialImage,
+        instructionList: initialInstructionList,
+        deliveryList: initialDeliveryList,
+        instruction: initialInstruction,
+        delivery: initialDelivery,
         messages: initialMessages,
         message: initialMessage,
         login: (id: string, password: string) => {
@@ -105,6 +120,8 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             employeeAction.logout();
             localStorage.removeItem('employee');
             localStorage.removeItem('accessToken');
+            alert('로그아웃 되었습니다.');
+
         },
 
         cleanEmployee: () => {
@@ -139,9 +156,9 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
         updateEmployee: (employeeNo: number, updateEmployee: UpdateEmployee) => {
             employeeAction.updateEmployee(employeeNo, updateEmployee)
                 .then(result => {
-                    alert('수정을 완료하였습니다.');
                     let data = result?.data;
                     this.setState({employee: data});
+                    alert('정보가 업데이트되었습니다.');
                     this.getEmployee(employeeNo);
                 });
         },
@@ -151,6 +168,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
+                    alert('이미지가 성공적으로 추가되었습니다.');
                 });
         },
 
@@ -159,6 +177,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
+                    alert('이미지가 성공적으로 업데이트되었습니다.');
                 });
         },
 
@@ -167,9 +186,24 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
+                    alert('이미지가 성공적으로 삭제되었습니다.');
                 });
         },
 
+        myInstruction: () => {
+            employeeAction.myInstruction()
+                .then(result => {
+                    let data = result?.data;
+                    this.setState({instruction: data});
+                })
+        },
+
+        myDelivery: () => {
+            employeeAction.myDelivery()
+                .then(result => {
+                    let data = result?.data;
+                    this.setState({delivery: data});
+                })
         getMessages :  () => {
              this.getMessages();
         },

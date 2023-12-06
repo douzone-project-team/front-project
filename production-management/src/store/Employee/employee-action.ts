@@ -60,6 +60,15 @@ class EmployeeAction {
         return fetcher.DELETE(URL);
     }
 
+    public myInstruction() {
+        const URL = '/instructions/myInstruction'
+        return fetcher.GET(URL);
+    }
+
+    public myDelivery() {
+        const URL = '/deliveries/myDelivery'
+        return fetcher.GET(URL);
+      
     public getMessages() {
         const URL = `${this.baseUrl}/messages/getMessages`;
         return fetcher.GET(URL);

@@ -61,8 +61,7 @@ class ProfileImage extends Component<ProfileImageProps, ProfileImageState> {
                             borderRadius: '20%'
                         }}/>
                 ) : employeeData.employeeNo !== 0 ? (
-                    <img
-                        src={`http://localhost:8080/employees/${employeeData.employeeNo}/image`}
+                    <img src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}
                         style={{
                             maxWidth: '200px',
                             maxHeight: '250px',
@@ -74,7 +73,14 @@ class ProfileImage extends Component<ProfileImageProps, ProfileImageState> {
                     <div> 이미지 없음 </div>
                 )}
                 <button onClick={() => document.getElementById('fileInput')?.click()}
-                    style={{ marginBottom: "10px" }}
+                    style={{
+                        backgroundColor: '#546ae8',
+                        width: '50px',
+                        height: '30px',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px'
+                    }}
                 >
                     선택
                     <input id='fileInput' type='file' accept='image/*' style={{display: 'none'}}
