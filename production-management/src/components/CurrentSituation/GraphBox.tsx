@@ -5,7 +5,8 @@ import * as echarts from 'echarts';
 
 interface GraphBoxProps {
     data: { value: number; name: string }[];
-    graphValue: string;
+    labelText: string;
+    colors: string[]; // 새로운 프로퍼티: 그래프의 색상 배열
 }
 
 class GraphBox extends Component<GraphBoxProps> {
@@ -25,37 +26,46 @@ class GraphBox extends Component<GraphBoxProps> {
     }
 
     initializeChart() {
-        const { data, graphValue } = this.props;
+        const { data, labelText, colors } = this.props;
         const chartDom = this.chartRef.current;
 
         if (chartDom) {
             const myChart = echarts.init(chartDom);
 
             const option = {
-                    color: graphValue === 'delivery' ? ['#FFA500', '#FC6363', '#3C70F2'] : ['#3C70F2', '#7B9AEE', 'rgba(120,200,255,1)'],
+                color: colors, // 색상을 외부에서 전달받은 배열로 설정
+                title: {
+                    left: 'left',
+                    text: labelText
+                },
                 tooltip: {
                     trigger: 'item',
                 },
                 legend: {
-                    top: '5%',
-                    left: 'center',
+                    orient: 'vertical',
+                    top: 'bottom', // top 값을 조절하여 아래로 이동
+                    left: 'left'
                 },
                 series: [
                     {
                         name: 'Access From',
                         type: 'pie',
-                        radius: ['40%', '70%'],
+                        radius: ['65%', '85%'],
                         avoidLabelOverlap: false,
                         label: {
                             show: false,
                             position: 'center',
+                            formatter: labelText,
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            color: 'black',
                         },
                         emphasis: {
                             label: {
                                 show: true,
-                                fontSize: 16,
-                                fontWeight: 'bold',
-                            },
+                                fontSize: 40,
+                                fontWeight: 'bold'
+                            }
                         },
                         labelLine: {
                             show: false,
@@ -70,7 +80,7 @@ class GraphBox extends Component<GraphBoxProps> {
     }
 
     render(): ReactNode {
-        return <div ref={this.chartRef} style={{ width: '100%', height: '400px' }} />;
+        return <div ref={this.chartRef} style={{ width: '100%', height: '100%' }} />;
     }
 }
 

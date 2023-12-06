@@ -9,26 +9,12 @@ class CurrentSituationPage extends Component {
             <Layout>
                 <Box
                     sx={{
-                        width: '95%',
-                        height: '5vh',
-                        ml: '50px',
-                        mt: '70px',
-                        pt: '10px',
-                        pl: '15px',
-                        pb: '30px',
-/*                        border: '1px solid #D3D3D3',
-                        bgcolor:'#3C50C2',*/
-                    }}
-                >
-                    <span style={{ fontSize: '17px', fontWeight: 'bold', color:'#FFFFFF' }}>MainPage</span>
-                </Box>
-                <Box
-                    sx={{
-                        width: '%',
-                        height: '700px',
+                        width: '100%%',
+                        height: '90%',
                         ml: '40px',
+                        mt:'5.2%',
 /*                        border: '1px solid #D3D3D3',*/
-                        bgcolor: 'rgba(211, 211, 211,0.1)',
+                        bgcolor: '#FAF9F7'
                     }}
                 >
                     <SemiBox />

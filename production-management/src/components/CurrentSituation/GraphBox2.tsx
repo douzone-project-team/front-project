@@ -5,7 +5,6 @@ import * as echarts from 'echarts';
 
 interface GraphBoxProps {
     data: { value: number; name: string }[];
-    graphValue: string;
 }
 
 class GraphBox2 extends React.Component<GraphBoxProps> {
@@ -25,57 +24,60 @@ class GraphBox2 extends React.Component<GraphBoxProps> {
     }
 
     initializeChart() {
-        const { data, graphValue } = this.props;
+        const { data } = this.props;
         const chartDom = this.chartRef.current;
 
         if (chartDom) {
             const myChart = echarts.init(chartDom);
 
             const option: echarts.EChartsOption = {
-                color: {
-                    type: 'linear',
-                    x: 0,
-                    y: 0,
-                    x2: 0,
-                    y2: 1,
-                    colorStops: [
-                        {
-                            offset: 0, color: graphValue === 'delivery' ? '#FFA500' : '#3C50F2', // 시작 색상
-                        },
-                        {
-                            offset: 1, color: graphValue === 'delivery' ? '#FFD700' : '#84A5ED', // 종료 색상
-                        },
-                    ],
+                title: {
+                    left: 'left',
+                    text: '월별 현황'
                 },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow',
-                    },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    top:'bottom'
                 },
-                xAxis: {
-                    type: 'category',
-                    data: data.map((item) => item.name),
+                tooltip: {},
+                dataset: {
+                    dimensions: ['product', '지시', '출고' ],
+                    source: [
+                        { product: '2일  전', '지시': 43.3, '출고': 85.8 },
+                        { product: '어제', '지시': 83.1, '출고': 73.4},
+                        { product: '오늘', '지시': 86.4, '출고': 65.2},
+                        { product: '내일', '지시': 86.4, '출고': 65.2 },
+                        { product: '2일 후', '지시': 72.4, '출고': 53.9 }
+                    ]
                 },
-                yAxis: {
-                    type: 'value',
-                },
+
+                xAxis: { type: 'category' },
+                yAxis: {},
+                // Declare several bar series, each will be mapped
+                // to a column of dataset.source by default.
                 series: [
                     {
-                        name: 'Value',
                         type: 'bar',
-                        barWidth: 40,
-                        data: data.map((item) => item.value),
+                        itemStyle: {
+                            color: '#8FE3B7' // 원하는 색상으로 변경
+                        }
                     },
-                ],
-            };
-
-            myChart.setOption(option);
+                    {
+                        type: 'bar',
+                        itemStyle: {
+                            color: '#F77D93' // 다른 색상으로 변경
+                        }
+                    }
+                ]
+            }
+                myChart.setOption(option);
         }
     }
 
     render(): ReactNode {
-        return <div ref={this.chartRef} style={{ width: '100%', height: '400px' }} />;
+        return <div ref={this.chartRef} style={{ width: '100%', height: '100%' }} />;
+
     }
 }
 

@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Main from '../../components/CurrentSituation/Main'
+/*import SemiBox from '../../components/CurrentSituation/SemiBox'*/
 import Layout from '../../common/Layout';
 
 class MainPage extends Component {
@@ -6,7 +8,7 @@ class MainPage extends Component {
   render() {
     return (
         <Layout>
-          처음부터 새로운 마음으로..
+          <Main/>
         </Layout>
     );
   }

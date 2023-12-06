@@ -1,187 +1,230 @@
-import React, { Component } from 'react';
-import { Box, Grid,MenuItem,Select   } from '@material-ui/core';
+import React, {Component} from 'react';
+import {Avatar, Box, Grid} from '@material-ui/core';
 import GraphBox from './GraphBox';
 import GraphBox2 from './GraphBox2';
 import './../../assets/css/Main.css';
-import TodoList from './Todolist';
+import TodoList from './Todo/Todolist';
+import {Email, Phone, SupervisorAccount} from "@material-ui/icons";
+import BusinessIcon from '@material-ui/icons/Business';
+const userDiv = { // 유저 box div
+    width:'229.5%',
+    height:'18%s',
+    borderRadius: '5px',
+/*    backgroundColor: 'white',*/
+    marginTop: '5%',
+    marginLeft: '0%',
+    marginRight: '1%',
+/*    boxShadow: '0 0 3px 1px #DDDDDD',*/
+    display: 'flex',
+}
 
 class SemiBox extends Component {
     state = {
         selectedGraph: null,
-        status: '지시',
-        graphValue:'instruction',
-        graphData: [
-            { value: 1048, name: '지시 완료' },
-            { value: 735, name: '지시 진행중' },
-            { value: 580, name: '지시 준비중' }
+        instructionData: [
+            {value: 1048, name: '완료'},
+            {value: 735, name: '진행'},
+            {value: 580, name: '준비'}
         ],
+        deliveryData: [
+            {value: 1048, name: '완료'},
+            {value: 580, name: '미완료'}
+        ],
+
         graphData2: [
-            { value: 20, name: '7월' },
-            { value: 40, name: '8월' },
-            { value: 30, name: '9월' },
-            { value: 50, name: '10월' },
-            { value: 15, name: '11월' }
+            {value: 20, name: '7월'},
+            {value: 40, name: '8월'},
+            {value: 30, name: '9월'},
+            {value: 50, name: '10월'},
+            {value: 15, name: '11월'}
         ],
     };
 
     boxData = [
-        { number: 1, content: '입고 현황',
-            value: 'DX113243', anotherValue:'123',
-            semiTitle1:'금일 입고 건수',semiTitle2:'누적 입고 건수' },
-        { number: 2, content: '출고 현황',
-            value: 'AP112503',anotherValue:'123' ,
-            semiTitle1:'금일 입고 건수',semiTitle2:'누적 입고 건수' },
-        { number: 3, content: '만료일이 가까운 지시',
-            value: 'SS100201',anotherValue:'123',
-            semiTitle1:' 임박한 지시',semiTitle2:'임박한 지시'  },
-        { number: 4, content: '거래가 많은 거래처',
-            value: 'C0056',anotherValue:'123',
-            semiTitle1:'금일 입고 건수 ',semiTitle2:'누적 입고 건수'  },
+        {
+            number: 1,
+            content: '입출고 현황',
+            value: '14건',
+            anotherValue: '10건',
+            semiTitle1: '금일 입고 건수',
+            semiTitle2: '금일 출고 건수',
+            semiTitle3: '누적 입고 건수',
+            semiTitle4: '누적 출고 건수',
+            image: require(`../../images/instruction.png`)
+        },
+        {
+            number: 2,
+            content: '만료일에 가까운 지시',
+            value: 'DX2234',
+            anotherValue: 'DF2232',
+            semiTitle1: '1',
+            semiTitle2: '2',
+            semiTitle3: '',
+            semiTitle4: '',
+            image: require(`../../images/notime.png`)
+        },
+        {
+            number: 3,
+            content: '거래처 현황',
+            value: 'SS100201',
+            anotherValue: '123',
+            semiTitle1: ' 임박한 지시',
+            semiTitle2: '임박한 지시',
+            semiTitle3: '',
+            semiTitle4: '',
+            image: require(`../../images/customer.png`)
+        },
     ];
 
-    handleToggleClick = () => {
-        const newStatus = this.state.status === '지시' ? '출고' : '지시';
-
-        this.setState({
-            selectedGraph: null,
-            status: newStatus,
-            graphValue: newStatus === '지시' ? 'instruction' : 'delivery',
-            graphData: newStatus === '지시' ? [
-                { value: 1048, name: '지시 완료' },
-                { value: 735, name: '지시 진행중' },
-                { value: 580, name: '지시 준비중' }
-            ] : [
-                { value: 860, name: '출고 완료' },
-                { value: 735, name: '출고 미완료' },
-            ],
-            graphData2: newStatus === '지시' ? [
-                { value: 735, name: '7월' },
-                { value: 808, name: '8월' },
-                { value: 1048, name: '9월' },
-                { value: 735, name: '10월' },
-                { value: 580, name: '11월' }
-            ] : [
-                { value: 600, name: '7월' },
-                { value: 700, name: '8월' },
-                { value: 700, name: '9월' },
-                { value: 1100, name: '10월' },
-                { value: 330, name: '11월' }
-            ],
-        });
-    };
-
-
-    renderData = (index: number, data: { value: string; anotherValue: string; semiTitle1: string; semiTitle2: string }) => {
-        const { content } = this.boxData.find(data => data.number === (index + 1)) || { content: 'N/A' };
+    renderData = (index: number, data: {
+        value: string;
+        anotherValue: string;
+        semiTitle1: string;
+        semiTitle2: string
+        semiTitle3: string
+        semiTitle4: string
+        image: any;
+    }) => {
+        const { content, image } = this.boxData.find(data => data.number === (index + 1)) || { content: 'N/A', image: '' };
         let borderColor = '#ffffff';
-        let backgroundColor = '';
-        switch (index + 1) {
-            case 1:
-                backgroundColor = '#5C9DF2';
-                break;
-            case 2:
-                backgroundColor = ' #3C70F2';
-                break;
-            case 3:
-                backgroundColor = '#FC4343';
-                break;
-            case 4:
-                backgroundColor = '#FFA500';
-                break;
-            default:
-                backgroundColor = 'lightgray';
-        }
-
+        let backgroundColor = '#516377';
+        const iconComponent = content === '거래처 현황' ?
+            <BusinessIcon style={{ fontSize: '35px', marginLeft:'10px',marginRight: '10px' }} /> : <img src={data.image} style={{ width: '35px', height: '35px', verticalAlign: 'middle', marginLeft: '10px' }} />;
         return (
-            <Box style={{ width: '100%', marginBottom: '20px' }}>
+            <Box boxShadow={3} style={{
+                width: '93%',
+                marginTop: '5%',
+                borderBottomLeftRadius: '3px',
+                borderBottomRightRadius: '3px',
+                marginBottom: '4%',
+            }}>
                 <Box style={{
                     position: 'relative',
                     zIndex: '2',
                     backgroundColor,
-                    borderTopLeftRadius: '10px',
-                    borderTopRightRadius: '10px',
-                    height: '25%',
+                    borderTopLeftRadius: '3px',
+                    borderTopRightRadius: '3px',
+                    height: '45px',
                     marginBottom: '10px',
-                    marginLeft: '10px',
                     color: 'white',
+                    paddingTop: '1%',
+                    display: 'flex',
                 }}>
-                    <h4 style={{ fontSize: '15px', margin: '0%', paddingLeft: '5%', paddingTop: '5px' }}>{content}</h4>
+                    {iconComponent}
+                    <h4 style={{ fontSize: '15px', margin: '0%', paddingLeft: '2%', paddingTop: '8px' }}>{content}</h4>
                 </Box>
-                <Box boxShadow={3} style={{
+                <Box style={{
                     position: 'relative',
                     zIndex: '1',
-                    marginTop: '-20px',
-                    backgroundColor: '#FFFFFF',
-                    height: '100px',
-                    padding: '10px',
-                    borderBottomLeftRadius: '10px',
-                    borderBottomRightRadius: '10px',
+                    marginTop: '-27px',
+                    backgroundColor: '#F9FDFF',
+                    height: 'auto',
+                    padding: '5px',
                     marginLeft: '10px',
+                    borderBottomRightRadius: '5px',
+
                 }}>
-                    <h4 style={{ marginBottom: '1%' }}>{`${data.semiTitle1} : ${data.value}`}</h4>
-                    <hr style={{
-                        borderTop: '1px solid lightgray',
-                        marginLeft: 0,
-                        width: '95%',
-                        marginTop: '2px',
-                        marginBottom: '2px',
-                    }} />
-                    <h4 style={{ marginTop: '20px' }}>{`${data.semiTitle2} : ${data.anotherValue}`}</h4>
+                    <h4 style={{ marginLeft: '10px' }}>
+                        <span style={{ marginRight: '5px', color: '#8FE3B7', fontSize: '20px' }}>●</span>
+                        {`${data.semiTitle1} : ${data.value}`}
+                    </h4>
+                    <h4 style={{ marginLeft: '10px' }}>
+                        <span style={{ marginRight: '5px', color: '#F77D93', fontSize: '20px' }}>●</span>
+                        {`${data.semiTitle2} : ${data.anotherValue}`}
+                    </h4>
+                    {data.semiTitle3 && (
+                        <h4 style={{ marginLeft: '10px' }}>
+                            <span style={{ marginRight: '5px', color: '#67AED9', fontSize: '20px' }}>●</span>
+                            {`${data.semiTitle3} : ${data.anotherValue}`}
+                        </h4>
+                    )}
+                    {data.semiTitle4 && (
+                        <h4 style={{ marginLeft: '10px' }}>
+                            <span style={{ marginRight: '5px', color: 'Yellow', fontSize: '20px' }}>●</span>
+                            {`${data.semiTitle4} : ${data.anotherValue}`}
+                        </h4>
+                    )}
                 </Box>
             </Box>
         );
     };
 
     render() {
+        const instructionColors = ['#8FE3B7', '#8f9de3', '#c8dded']; // 지시 색상
+        const deliveryColors = ['#F77D93', '#dccbce', '#98FB98']; // 출고 색상
         return (
-            <Grid container spacing={3} style={{ display: 'flex', marginTop:'1%' }}>
-                <Grid item xs={9} style={{paddingLeft:'50px'}}>
-                    <Box style={{ display: 'flex', marginTop:'5px'}}>
-                        <Grid style={{display:'flex',width:'100%',marginLeft:'-10px'}}>
-                            {this.boxData.map((data, index) => this.renderData(index, { value: data.value, anotherValue: data.anotherValue, semiTitle1: data.semiTitle1, semiTitle2: data.semiTitle2 }))}
-                        </Grid>
-                    </Box>
-                    <Box borderRadius={10} boxShadow={3}  style={{ paddingTop: '1px', height: '520px', backgroundColor: '#FFFFFF',
-                    width:'99.15%'}}>
-                            <Select
-                                value={this.state.status}
-                                onChange={this.handleToggleClick}
-                                style={{
-                                    color: 'black', backgroundColor: '#F0F0F0', borderRadius: '10px', width: '10%',
-                                    boxShadow: '10px', textAlign: 'center',marginLeft:'88%'
-                                }}>
-                                <MenuItem value="지시">지시 현황</MenuItem>
-                                <MenuItem value="출고">출고 현황</MenuItem>
-                            </Select>
+            <Box style={{display: 'flex'}}>
+                <Grid container spacing={2} style={{width:'100%',height:'100%',display:'flex'}} >
+                    <Grid item xs={4} style={{width:'30%', marginLeft:'1%'}}>
+                        <div style={userDiv}>
+                            <div>
+                                <Avatar src="http://localhost:8080/employees/200001/image" style={{
+                                    width: '130px',
+                                    height: '130px',
+                                    border: '2px solid rgba(82,99,115,0.1)',
+                                    marginTop: '5px',
+                                    marginLeft: '10px'
+                                }} alt="사원사진"/>
+                            </div>
+                            <div style={{margin: '10px'}}>
+                    <span
+                        style={{color: '#444444', fontSize: '27px', fontWeight: 'bold'}}>이주빈 사원님&nbsp;
+                        <SupervisorAccount/></span><br/><br/>
+                                <span style={{
+                                    color: 'gray',
+                                    fontSize: '17px',
+                                    fontWeight: 'bold',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}><Email/>&nbsp;&nbsp;timeattacks2@naver.com</span><br/>
+                                <span style={{
+                                    color: 'gray',
+                                    fontSize: '17px',
+                                    fontWeight: 'bold',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}><Phone/>&nbsp;&nbsp;010-4596-5429</span>
+                            </div>
+                        </div>
+                        <Box style={{width: '80%', height: 'auto', marginTop:'-1.5%'}}>
+                            {this.boxData.map((data, index) =>
+                                this.renderData(index, {
+                                    value: data.value,
+                                    anotherValue: data.anotherValue,
+                                    semiTitle1: data.semiTitle1,
+                                    semiTitle2: data.semiTitle2,
+                                    semiTitle3: data.semiTitle3,
+                                    semiTitle4: data.semiTitle4,
+                                    image: data.image,
+                                })
+                            )}
+                        </Box>
+                    </Grid>
 
-                        <Box style={{ height: '3px', backgroundColor: this.state.status === '지시' ? '#3C70F2' : '#FFA500' }} />
-                        <Box style={{ display: 'flex', paddingLeft: '35px', paddingTop:'50px' }}>
-                            {this.state.selectedGraph || <GraphBox2 data={this.state.graphData2} graphValue={this.state.graphValue} />}
-                            {this.state.selectedGraph || <GraphBox data={this.state.graphData} graphValue={this.state.graphValue} />}
+                    <Grid item xs={6} style={{marginTop:'2%',paddingTop:'10%',marginLeft:'-7%'}}>
+                        <Box style={{ display: 'flex', width:'97.8%',height:'35%' }}>
+                            <Box boxShadow={3} style={{ width: '100%', height: '100%', backgroundColor: '#FFFFFF', borderRadius: '5px' }}>
+                                <GraphBox data={this.state.instructionData} labelText="지시 상태" colors={instructionColors} />
+                            </Box>
+                            <Box boxShadow={3} style={{ width: '100%', height: '100%', backgroundColor: '#FFFFFF', marginLeft: '2%', borderRadius: '5px' }}>
+                                <GraphBox data={this.state.deliveryData} labelText="출고 상태" colors={deliveryColors} />
+                            </Box>
                         </Box>
-                    </Box>
+                        <Box boxShadow={3} style={{height:'59%',width:'97.8%', marginTop:'2.5%', backgroundColor:'#FFFFFF',
+                            borderRadius:'5px'}}>
+                            <GraphBox2 data={this.state.graphData2} />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Box boxShadow={3} style={{ display: 'flex', width:'280%',height:'95%',
+                        backgroundColor:'#FFFFFF', marginTop:'21%', borderRadius:'5px'}}>
+                                <Box style={{marginTop:'5%'}}>
+                                    <TodoList></TodoList>
+                                </Box>
+                        </Box>
+                    </Grid>
                 </Grid>
-                <Box>
-                <Box borderRadius={10} boxShadow={3} style={{ marginTop: '15px', width: '330px', height: '450px', backgroundColor: '#FFFFFF', alignItems: 'center' }}>
-                    <Box style={{backgroundColor:'#5C9DF2', borderTopLeftRadius:'10px',borderTopRightRadius:'10px',height:'5%'}}>
-                    </Box>
-                    <img src={require("../../images/logo.png")} alt="Logo" style={{ width: '120px', height: '20px', marginLeft: '100px',marginTop:'40px' }} />
-                    <img src={require("../../images/pic.png")} alt="EmpPic" style={{ width: '100px', height: '100px', marginLeft: '110px',marginTop:'40px' }} />
-                    <Box style={{backgroundColor:'#5C9DF2',height:'45%',borderBottomLeftRadius:'10px',borderBottomRightRadius:'10px'}}>
-                        <h3 style={{ fontSize: '18px',  marginLeft: '40%', paddingTop:'20px'}}>황정민</h3>
-                        <Box style={{display:'flex'}}>
-                            <img src={require("../../images/email.png")} alt="email" style={{ width: '10%', height: '10%', marginLeft: '20%',marginTop:'3%' }} />
-                            <p style={{ fontSize: '16px', marginLeft: '5%' }}>asd@asd.com</p>
-                        </Box>
-                        <Box style={{display:'flex'}}>
-                            <img src={require("../../images/phone.png")} alt="phone" style={{ width: '10%', height: '10%', marginLeft: '20%',marginTop:'3%' }} />
-                            <p style={{ fontSize: '16px', marginLeft: '5%' }}>010-3213-4424</p>
-                        </Box>
-                    </Box>
-                </Box>
-                    <TodoList />
-                </Box>
-            </Grid>
+            </Box>
         );
     }
 }
