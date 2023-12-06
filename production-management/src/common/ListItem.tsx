@@ -67,7 +67,8 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
 
     // 색상
     const iconAndTextStyles = {
-      color: '#3252af',
+      color: 'rgba(255,255,255,0.75)',
+      fontFamily: 'S-CoreDream-3Light'
     };
     const accordionStyles = {
       backgroundColor: '#333948',
@@ -170,7 +171,8 @@ class SecondaryListItems extends Component {
 
     // 색상
     const iconAndTextStyles = {
-      color: '#858891',
+      color: 'rgba(255,255,255,0.75)',
+      fontFamily: 'S-CoreDream-3Light'
     }
 
     const storedEmployeeData = localStorage.getItem('employee');

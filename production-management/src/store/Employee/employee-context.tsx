@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import EmployeeAction from "./employee-action";
-import {EmployeeState, UpdateEmployee} from "../../object/Employee/employee-object";
+import {EmployeeState, Message, UpdateEmployee} from "../../object/Employee/employee-object";
+import Swal from "sweetalert2";
 import {
     initialSearch,
     initialEmployeePage,
@@ -10,8 +11,11 @@ import {
     initialEmployee,
     initialInstruction,
     initialDelivery, initialInstructionList, initialDeliveryList,
+    initialEmployee, initialMessage, initialMessages,
 } from "../../state/employeeStateMangement";
 import CookieManager from "../../common/CookieManager";
+// @ts-ignore
+import {EventSourcePolyfill, NativeEventSource} from "event-source-polyfill";
 
 const employeeAction = new EmployeeAction();
 const cookieManager = new CookieManager();
@@ -29,6 +33,8 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     deliveryList: initialDeliveryList,
     instruction: initialInstruction,
     delivery: initialDelivery,
+    messages: initialMessages,
+    message: initialMessage,
     login(id: string, password: string): void {
     },
     logout(): void {
@@ -51,6 +57,12 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     },
     myDelivery(): void{
     },
+    getMessages(): void {
+    },
+    sendMessage(sendId: number, targetId: number, message: string): void {
+    },
+    deleteMessage(messageNo: number): void {
+    },
 });
 
 export class EmployeeContextProvider extends Component<Props, EmployeeState> {
@@ -64,7 +76,8 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
         deliveryList: initialDeliveryList,
         instruction: initialInstruction,
         delivery: initialDelivery,
-
+        messages: initialMessages,
+        message: initialMessage,
         login: (id: string, password: string) => {
             employeeAction.login(id, password)
                 .then((result) => {
@@ -78,6 +91,23 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     // TODO : employee 조회 로직 - 적용 O
                     // TODO : F5 누를경우 사용자 정보는 어떤 방식으로 유지되도록 할 것인지. - 적용 X
                     // TODO : isSuccess 필요성 체크 이후 필요없으면 제거 - 적용 X
+                    let eventSource = null;
+                    const EventSource = EventSourcePolyfill || NativeEventSource;
+                    eventSource = new EventSource(
+                        `/sse/getMessage`,
+                        {
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+                            },
+                            withCredentials: true,
+                        }
+                    );
+
+                    // @ts-ignore
+                    eventSource.onmessage = (event) => {
+                        const eventData = event.data;
+
+                    };
 
                     this.setState({employee: data}, async () => {
                         await this.state.getMe();
@@ -174,7 +204,46 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     let data = result?.data;
                     this.setState({delivery: data});
                 })
+        getMessages :  () => {
+             this.getMessages();
+        },
+
+        sendMessage: (sendId: number, targetId: number, message: string) => {
+            console.log('context message = '+message)
+            employeeAction.sendMessage(sendId, targetId, message)
+                .then(result => {
+                    Swal.fire({
+                        icon: "success",
+                        text: "쪽지를 전송하였습니다!",
+                    });
+                    this.getMessages();
+                });
+        },
+
+        deleteMessage: (messageNo: number) => {
+            employeeAction.checkMessage(messageNo)
+                .then(result => {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "쪽지를 삭제하였습니다.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    this.getMessages();
+                });
         }
+
+    }
+
+    getMessages = async () => {
+        await employeeAction.getMessages()
+            .then(result => {
+                let data = result?.data;
+                this.setState({ messages: data }, () => {
+                    localStorage.setItem('messages', JSON.stringify(this.state.messages));
+                });
+            });
     }
 
     getEmployee =  (employeeNo: number) => {
@@ -184,6 +253,8 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 this.setState({employee: data});
             })
     }
+
+
 
 
     render() {

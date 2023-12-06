@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -20,12 +20,18 @@ import AccountMenu from "./AccountMenu";
 import {MainListItems, SecondaryListItems} from "./ListItem";
 import Notification from './Notification';
 import {Popover} from "@material-ui/core";
+import {EventSourcePolyfill, NativeEventSource} from "event-source-polyfill";
+import {EmployeeContext} from "../store/Employee/employee-context";
+import DraftsIcon from '@material-ui/icons/Drafts';
+import Message from "./Message";
+import message from "./Message";
 
 const drawerWidth = 240;
 
 const styles = theme => ({
     root: {
         display: 'flex',
+        fontFamily : 'S-CoreDream-3Light'
     },
     toolbar: {
         paddingRight: 24,
@@ -105,9 +111,16 @@ const styles = theme => ({
     paper: {
         padding: theme.spacing.unit,
     },
-    shakingIcon: {
+    overflowAuto: {
+        overflowY: 'auto',
+    },
+    shakingNotificationIcon: {
         animation: '$shake 0.5s',
     },
+    shakingMessageIcon: {
+        animation: '$shake 0.5s',
+    },
+
     '@keyframes shake': {
         '10%, 90%': {
             transform: 'translate3d(-1px, 0, 0)',
@@ -124,40 +137,102 @@ const styles = theme => ({
     },
 });
 
-
 class Layout extends React.Component {
+    static contextType = EmployeeContext;
+
     constructor(props) {
         super(props);
+
+        this.state = {
+            open: false,
+            isPopoverOpen: false,
+            isMessageOpen: false,
+            anchorEl: null,
+            notifications: [],
+            currentMessages: [],
+            isNotificationShaking: false,
+            isMessageShaking: false,
+            newNotification: {
+                employeeNo: 0,
+                employee: "",
+                notification: "",
+                date: ""
+            },
+            newMessage: {
+                sendId: "",
+                sendName: "",
+                targetId: "",
+                targetName: "",
+                message: "",
+                sendTime: "",
+            },
+        };
     }
-
-    state = {
-        open: false,
-        isPopoverOpen: false,
-        anchorEl: null,
-        notifications: [],
-        isShaking: false,
-    };
-
     eventSource = null;
 
     componentDidMount() {
+        const {getMessages, messages} = this.context;
+        getMessages();
         const storedNotifications = localStorage.getItem('notifications');
         if (storedNotifications) {
-            this.setState({ notifications: JSON.parse(storedNotifications) });
+            this.setState({notifications: JSON.parse(storedNotifications)});
         }
 
-        this.eventSource = new EventSource('/sse/subscribe');
+        const storedMessages = localStorage.getItem('messages');
+        if (storedMessages) {
+            this.setState({messages: JSON.parse(storedMessages).messages});
+        }
+
+        const EventSource = EventSourcePolyfill || NativeEventSource;
+
+        this.eventSource = new EventSource(
+            `/sse/subscribe`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+                },
+                withCredentials: true,
+            }
+        );
+
 
         this.eventSource.addEventListener('connect', (event) => {
             console.log('event = ', event.data);
         });
 
-        this.eventSource.onmessage = (event) => {
+        this.eventSource.addEventListener('crudEvent', (event) => {
             const eventData = event.data;
-            console.log('Received SSE event:', eventData);
+            const eventType = event.type;
+            console.log('Received SSE CRUD Event:' + eventData + "/eventType : " + eventType);
+            const notificationArray = eventData.split('(');
+            const notificationArray2 = eventData.split(',');
+            const newNotification = {
+                employeeNo: notificationArray[0],
+                employee: notificationArray2[0],
+                notification: notificationArray2[1],
+                date: notificationArray2[2]
+            }
 
-            this.addNotification(eventData);
-        };
+            this.addNotification(newNotification);
+        });
+
+        this.eventSource.addEventListener('messageEvent', (event) => {
+            getMessages();
+            const messageData = event.data;
+            console.log('Received SSE event:' + messageData);
+            const messageArray = messageData.split(',');
+            const newMessage = {
+                sendId: messageArray[0],
+                sendName: messageArray[1],
+                targetId: messageArray[2],
+                targetName: messageArray[3],
+                message: messageArray[4],
+                sendTime: messageArray[5]
+            };
+
+            this.addMessage(newMessage);
+        });
+
     }
 
     componentWillUnmount() {
@@ -168,17 +243,30 @@ class Layout extends React.Component {
         this.setState(
             (prevState) => ({
                 notifications: [...prevState.notifications, notification],
-                isShaking: true,
+                isNotificationShaking: true,
             }),
             () => {
-                console.log('this.state.notifications = ', this.state.notifications);
                 localStorage.setItem('notifications', JSON.stringify(this.state.notifications));
                 setTimeout(() => {
-                    this.setState({ isShaking: false });
+                    this.setState({isNotificationShaking: false});
                 }, 1000);
             }
         );
     };
+
+    onDeleteNotification = (index) => {
+        const {notifications} = this.state;
+
+        const updatedNotifications = [...notifications];
+        updatedNotifications.splice(index, 1);
+
+        // Update state
+        this.setState({
+            notifications: updatedNotifications,
+        }, () => {
+            localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+        });
+    };2
 
     clearNotifications = () => {
         localStorage.removeItem('notifications');
@@ -187,12 +275,43 @@ class Layout extends React.Component {
         }, () => {
             console.log('Notifications cleared');
         });
+        this.setState({
+            isPopoverOpen: false,
+        });
     };
 
+    sendMessage = (sendId, targetId, message) => {
+        const {sendMessage} = this.context;
+        sendMessage(sendId, targetId, message);
+        this.setState({
+            isMessageOpen: false,
+        });
+    }
 
+    addMessage = (message) => {
+        const {getMessages} = this.context;
+        getMessages();
+        this.setState(
+            (prevState) => ({
+                messages: [...prevState.messages, message],
+                isMessageShaking: true,
+            }),
+            () => {
+                localStorage.setItem('messages', JSON.stringify(this.state.messages));
+                setTimeout(() => {
+                    this.setState({isMessageShaking: false});
+                }, 1000);
+            }
+        );
+    };
+
+    onDeleteMessage = (messageNo) => {
+        const {deleteMessage} = this.context;
+        deleteMessage(messageNo);
+    };
 
     handleDrawerOpen = () => {
-        this.setState({ open: true });
+        this.setState({open: true});
     };
 
     handleDrawerClose = () => {
@@ -210,18 +329,31 @@ class Layout extends React.Component {
     };
 
     handlePopoverClose = () => {
-        this.clearNotifications();
         this.setState({
             isPopoverOpen: false,
         });
     };
 
+    handleMessageOpen = (event) => {
+        this.setState({
+            isMessageOpen: true,
+            anchorEl: event.currentTarget,
+        });
+    };
+
+    handleMessageClose = () => {
+        this.setState({
+            isMessageOpen: false,
+        });
+    };
+
     render() {
-        const { classes } = this.props;
-        const { isPopoverOpen, anchorEl, isShaking} = this.state;
+        const {classes} = this.props;
+        const {isPopoverOpen, isMessageOpen, anchorEl, isNotificationShaking, isMessageShaking} = this.state;
+        const messages = this.context.messages.messages;
         return (
             <div className={classes.root}>
-                <CssBaseline />
+                    <CssBaseline/>
                 <AppBar
                     position="absolute"
                     className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
@@ -237,54 +369,74 @@ class Layout extends React.Component {
                                 this.state.open && classes.menuButtonHidden,
                             )}
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Typography
                             component="div"
                             variant="h6"
                             color="inherit"
                             noWrap
-                            style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
+                            style={{flexGrow: 1, display: 'flex', alignItems: 'center'}}
                             className={classes.title}
                         >
                             <Link to='/'>
                                 <img
                                     src={logo}
                                     alt='logo'
-                                    style={{ height: '20px', marginRight: '10px' }}
+                                    style={{height: '20px', marginRight: '10px'}}
                                 />
                             </Link>
                         </Typography>
-                        <AccountMenu />
+                        <AccountMenu/>
                         <IconButton
                             color="#858891"
-                            style={{ marginLeft: '15px' }}
-                            onClick={this.state.notifications.length === 0 ? null :  this.handlePopoverOpen}
-                            className={isShaking ? classes.shakingIcon : null}
+                            style={{marginLeft: '15px'}}
+                            onClick={this.handleMessageOpen}
+                            className={isMessageShaking ? classes.shakingNotificationIcon : null}
+                        >
+                            <Badge badgeContent={messages.length} color="secondary">
+                                <DraftsIcon/>
+                            </Badge>
+                        </IconButton>
+                        <IconButton
+                            color="#858891"
+                            style={{marginLeft: '15px'}}
+                            onClick={this.handlePopoverOpen}
+                            className={isNotificationShaking ? classes.shakingNotificationIcon : null}
                         >
                             <Badge badgeContent={this.state.notifications.length} color="secondary">
-                                <NotificationsIcon />
+                                <NotificationsIcon/>
                             </Badge>
                         </IconButton>
                         <Popover
                             id="mouse-over-popover"
-                            classes={{
-                                paper: classes.popover,
-                            }}
                             open={isPopoverOpen}
                             anchorEl={anchorEl}
+                            onClose={this.handlePopoverClose}
                             anchorOrigin={{
                                 vertical: 'bottom',
                                 horizontal: 'left',
                             }}
-                            transformOrigin={{
-                                vertical: 'top',
+                        >
+                            <Notification notifications={this.state.notifications}
+                                          isClear={this.clearNotifications}
+                                          handlePopoverClose={this.handlePopoverClose}
+                                          onDeleteNotification={this.onDeleteNotification}
+                            />
+                        </Popover>
+                        <Popover
+                            id="mouse-over-popover"
+                            open={isMessageOpen}
+                            anchorEl={anchorEl}
+                            onClose={this.handleMessageClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
                                 horizontal: 'left',
                             }}
-                            onClose={this.handlePopoverClose}
-                            disableRestoreFocus
                         >
-                            <Notification notifications={this.state.notifications} />
+                            <Message messages={messages}
+                                     onDeleteMessage={this.onDeleteMessage}
+                                     sendMessage={this.sendMessage}/>
                         </Popover>
                     </Toolbar>
                 </AppBar>
@@ -297,17 +449,18 @@ class Layout extends React.Component {
                 >
                     <div className={classes.toolbarIcon}>
                         <IconButton onClick={this.handleDrawerClose}>
-                            <ChevronLeftIcon />
+                            <ChevronLeftIcon/>
                         </IconButton>
                     </div>
-                    <div onMouseOver={this.handleDrawerOpen} style={{width:'100%',height:'100%'}}>
+                    <div onMouseOver={this.handleDrawerOpen} style={{width: '100%', height: '100%'}}>
                         <Divider/>
-                        <List><MainListItems open={this.state.open} isAccordionOpen={this.state.isAccordionOpen} onDrawerToggle={this.handleDrawerOpen}/></List>
-                        <Divider />
+                        <List><MainListItems open={this.state.open} isAccordionOpen={this.state.isAccordionOpen}
+                                             onDrawerToggle={this.handleDrawerOpen}/></List>
+                        <Divider/>
                         <List><SecondaryListItems/></List>
                     </div>
                 </Drawer>
-                <main className={classes.content} style={{margin:0, padding:0, backgroundColor:'#f1f3f5'}}>
+                <main className={classes.content} style={{margin: 0, padding: 0, backgroundColor: '#f1f3f5'}}>
                     {this.props.children}
                 </main>
             </div>

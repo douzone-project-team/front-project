@@ -64,6 +64,19 @@ export type Delivery = {
 
 export type DeliveryList = {
     list: Delivery[]
+
+export type Messages = {
+    messages: Message[]
+}
+
+export type Message = {
+    messageNo: number
+    sendId: number
+    sendName: string
+    targetId: number
+    targetName: string
+    message: string
+    sendTime: string
 }
 
 export type EmployeeState = {
@@ -75,6 +88,8 @@ export type EmployeeState = {
     deliveryList: DeliveryList,
     instruction: Instruction,
     delivery: Delivery,
+    message: Message,
+    messages: Messages,
     login: (id: string, password: string) => void,
     logout: () => void,
     cleanEmployee: () => void,
@@ -86,6 +101,10 @@ export type EmployeeState = {
     deleteImage: (employeeNo: number) => void,
     myInstruction: () => void,
     myDelivery: () => void,
+    deleteImage: (employeeNo: number) => void
+    getMessages: () => void
+    sendMessage: (sendId: number, targetId: number, message: string) => void
+    deleteMessage: (messageNo: number) => void
 }
 
 /* path variables */
