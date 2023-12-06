@@ -1,0 +1,10 @@
+#main-semi-box::after {
+    content: "";
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background: rgb(69, 39, 160);
+    border-radius: 50%;
+    top: -85px;
+    right: -95px;
+}
