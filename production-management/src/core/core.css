@@ -3,7 +3,7 @@
   height: 120px;
   padding-top: 80px;
   padding-left: 15px;
-  background-color: #3C50C2;
+  background-color: rgb(50 95 211);
   color: white;
 }
 
@@ -48,9 +48,10 @@
   padding-right: 15px;
   margin-left: 50px;
   margin-bottom: 3vh;
-  background-color: white;
+  background-color: #3c3f41;
   box-shadow: 0 0 5px 1px #DDDDDD;
   border-radius: 10px;
   height: 7.5vh;
 }
+
 /* button 디자인 */
