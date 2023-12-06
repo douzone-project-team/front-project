@@ -8,7 +8,6 @@ import {
     initialUpdateEmployee,
     initialImage,
     initialIsSuccess,
-    initialEmployee,
     initialInstruction,
     initialDelivery, initialInstructionList, initialDeliveryList,
     initialEmployee, initialMessage, initialMessages,
@@ -203,7 +202,9 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({delivery: data});
-                })
+                });
+        },
+
         getMessages :  () => {
              this.getMessages();
         },

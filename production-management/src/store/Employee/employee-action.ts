@@ -68,7 +68,7 @@ class EmployeeAction {
     public myDelivery() {
         const URL = '/deliveries/myDelivery'
         return fetcher.GET(URL);
-      
+    }
     public getMessages() {
         const URL = `${this.baseUrl}/messages/getMessages`;
         return fetcher.GET(URL);
