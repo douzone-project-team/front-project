@@ -1,5 +1,5 @@
 import Fetcher from '../fetch-action';
-import {Search, UpdateEmployee} from "../../object/Employee/employee-object";
+import {Message, Search, UpdateEmployee} from "../../object/Employee/employee-object";
 
 const fetcher = new Fetcher();
 
@@ -58,6 +58,24 @@ class EmployeeAction {
     public deleteImage(employeeNo: number) {
         const URL = `${this.baseUrl}/${employeeNo}/image`;
         return fetcher.DELETE(URL);
+    }
+
+    public getMessages() {
+        const URL = `${this.baseUrl}/messages/getMessages`;
+        return fetcher.GET(URL);
+    }
+
+    public sendMessage(sendId: number, targetId: number, message: string){
+        const URL = `${this.baseUrl}/messages/${sendId}/${targetId}`;
+        console.log('sendMessage message = ' + message);
+        return fetcher.POST(URL, {
+            message:message
+        });
+    }
+
+    public checkMessage(messageNo: number){
+        const URL = `${this.baseUrl}/messages/${messageNo}`
+        return fetcher.PUT(URL,messageNo);
     }
 
 }

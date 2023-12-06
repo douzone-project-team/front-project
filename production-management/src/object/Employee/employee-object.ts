@@ -45,11 +45,27 @@ export type Image = {
     image: File | null;
 }
 
+export type Messages = {
+    messages: Message[]
+}
+
+export type Message = {
+    messageNo: number
+    sendId: number
+    sendName: string
+    targetId: number
+    targetName: string
+    message: string
+    sendTime: string
+}
+
 export type EmployeeState = {
     isSuccess: IsSuccess,
     employee: Employee,
     updateEmployeeObj: UpdateEmployee,
     image: Image,
+    message: Message,
+    messages: Messages,
     login: (id: string, password: string) => void,
     logout: () => void,
     cleanEmployee: () => void,
@@ -59,6 +75,9 @@ export type EmployeeState = {
     addImage: (employeeNo: number, image: File) => void,
     updateImage: (employeeNo: number, image: File) => void,
     deleteImage: (employeeNo: number) => void
+    getMessages: () => void
+    sendMessage: (sendId: number, targetId: number, message: string) => void
+    deleteMessage: (messageNo: number) => void
 }
 
 /* path variables */
