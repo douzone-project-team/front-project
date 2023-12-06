@@ -20,7 +20,7 @@ export class EditInput extends Component<EditInputProps> {
                  height: '100%',
                  textAlign: 'center',
                  border: 0,
-                 fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+                 fontFamily: 'S-CoreDream-3Light',
                  fontWeight: 400,
                  fontSize: '0.875rem',
                  marginLeft: '9px'

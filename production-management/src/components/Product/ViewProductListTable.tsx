@@ -17,14 +17,14 @@ import { ListTitle } from "../../core/ListTitle";
 import { PageButton } from "../../core/button/PageButton";
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    width: '10%',
-};
-const cellStyle = {
-    border: '1px solid #D3D3D3',
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light'
 };
 
+const tableCellStyle = {
+    fontFamily: 'S-CoreDream-3Light'
+}
 
 export type ProductList = {
     productNo: number;
@@ -79,7 +79,7 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
                                 <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>품명</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>가격</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>가격(원)</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>단위</TableCell>
                             </TableRow>
                         </TableHead>
@@ -90,11 +90,11 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
                                     className='cellHoverEffect'
                                     onClick={() => state.getProduct(row.productNo)}
                                 >
-                                    <TableCell align="center" style={cellStyle}>{row.productNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.productCode}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.productName}</TableCell>
-                                    <TableCell align="right" style={{ ...cellStyle, paddingRight: '7.2%' }}>{row.price.toLocaleString() + '원'}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.unit}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>
+                                    <TableCell align="right" style={{ ...tableCellStyle, paddingRight: '7.2%' }}>{row.price.toLocaleString()}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.unit}</TableCell>
                                 </TableRow>
                             ))}
 

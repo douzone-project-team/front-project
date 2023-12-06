@@ -62,7 +62,7 @@ export class PageButton extends Component<PageButtonProps, PageButtonState> {
                     fontSize: '35px'
                   }}
               />
-              : <KeyboardArrowLeft style={{color: 'gray', fontSize: '35px'}}/>}
+              : <KeyboardArrowLeft style={{color: 'lightgray', fontSize: '35px'}}/>}
           {currentPage}
           {hasNextPage ?
               <KeyboardArrowRight
@@ -78,7 +78,7 @@ export class PageButton extends Component<PageButtonProps, PageButtonState> {
                     fontSize: '35px'
                   }}
               />
-              : <KeyboardArrowRight style={{color: 'gray', fontSize: '35px'}}/>}
+              : <KeyboardArrowRight style={{color: 'lightgray', fontSize: '35px'}}/>}
         </Box>
     )
   }

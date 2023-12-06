@@ -16,16 +16,15 @@ type State = {
 type Props = {}
 
 const boldCellStyle = {
-  backgroundColor: '#f1f3f5',
-  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-  width: '10%',
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light'
 };
 
-const cellStyle = {
-  border: '1px solid #D3D3D3',
-  width: '10%',
-};
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light'
+}
+
 
 class ViewCustomerTable extends Component<Props, State> {
   static contextType = CustomersContext;
@@ -95,12 +94,12 @@ class ViewCustomerTable extends Component<Props, State> {
               </TableHead>
               <TableBody>
                 {state.customer.customerNo !== 0 && <TableRow>
-                  <TableCell align="center" style={cellStyle}>{customer.customerNo}</TableCell>
-                  <TableCell align="center" style={cellStyle}>{customer.customerCode}</TableCell>
-                  <TableCell align="center" style={cellStyle}>{customer.customerName}</TableCell>
-                  <TableCell align="center" style={cellStyle}>{customer.ceo}</TableCell>
-                  <TableCell align="center" style={cellStyle}>{customer.customerTel}</TableCell>
-                  <TableCell align="center" style={cellStyle}>{customer.sector}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.customerNo}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.customerCode}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.customerName}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.ceo}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.customerTel}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.sector}</TableCell>
                 </TableRow>}
               </TableBody>
             </Table>

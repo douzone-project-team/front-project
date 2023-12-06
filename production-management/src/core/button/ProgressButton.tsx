@@ -87,7 +87,8 @@ export class ProgressButton extends Component<ProgressButtonProps, ProgressButto
               style={{width: '50px'}} alt={koreanStatus}/>
           <span style={{
             fontWeight: 'bold',
-            color: (checked ? 'rgb(60,123,194)' : 'rgba(0,0,0,0.49)')
+            color: (checked ? 'rgb(60,123,194)' : 'rgba(0,0,0,0.7)'),
+            fontFamily: 'S-CoreDream-3Light'
           }}>{koreanStatus}</span>
         </Button>
     );

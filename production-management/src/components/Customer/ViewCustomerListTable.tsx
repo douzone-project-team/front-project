@@ -17,16 +17,15 @@ import { PageButton } from '../../core/button/PageButton';
 
 
 const boldCellStyle = {
-    backgroundColor: '#f1f3f5',
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    width: '10%',
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light'
 };
 
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-    width: '10%',
-};
+const tableCellStyle = {
+    fontFamily: 'S-CoreDream-3Light'
+}
+
 
 
 
@@ -71,11 +70,11 @@ class ViewCustomerListTable extends Component {
                         <TableBody>
                             {list === undefined || list.map((row) => (
                                 <TableRow key={row.customerNo} className='cellHoverEffect' onClick={() => state.getCustomer(row.customerNo)}>
-                                    <TableCell align="center" style={cellStyle}>{row.customerNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.customerCode}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.ceo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.sector}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.customerNo}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.customerCode}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.ceo}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.sector}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

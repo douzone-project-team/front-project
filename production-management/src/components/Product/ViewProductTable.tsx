@@ -20,15 +20,14 @@ import {EditButton} from "../../core/button/EditButton";
 import {DeleteButton} from "../../core/button/DeleteButton";
 
 const boldCellStyle = {
-  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-  width: '10%',
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light'
 };
 
-const cellStyle = {
-  border: '1px solid #D3D3D3',
-  width: '10%',
-};
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light'
+}
 
 interface DetailState {
   isModalOpen?: boolean;
@@ -147,14 +146,14 @@ class ViewProductTable extends Component<{}, DetailState> {
               <TableBody>
                 {product && product.productNo !== 0 && product.unit !== 0 && (
                     <TableRow>
-                      <TableCell align="center" style={cellStyle}>{product.productNo}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{product.productCode}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{product.productName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{product.productNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{product.productCode}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{product.productName}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{product.price.toLocaleString() + '원'}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{product.standard}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{product.weight + 'g'}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{product.unit}</TableCell>
+                                 style={tableCellStyle}>{product.price.toLocaleString() + '원'}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{product.standard}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{product.weight + 'g'}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{product.unit}</TableCell>
                     </TableRow>
                 )}
               </TableBody>

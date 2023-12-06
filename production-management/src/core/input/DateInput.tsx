@@ -17,8 +17,22 @@ type DateInputProps = {
   }
 }
 
-const inputStyle = {height: '20px', marginLeft: '10px', width: '100px'};
-const labelStyle = {marginLeft: '60px', marginRight: '5px', fontSize: '14px', fontWeight: 'bold'};
+const inputStyle = {
+  height: '20px',
+  marginLeft: '10px',
+  width: '100px',
+  fontFamily: 'S-CoreDream-3Light',
+  color: 'rgba(0,0,0,0.7)'
+};
+
+const labelStyle = {
+  marginLeft: '60px',
+  marginRight: '5px',
+  fontSize: '14px',
+  fontWeight: 'bold',
+  fontFamily: 'S-CoreDream-3Light',
+  color: 'rgba(0,0,0,0.7)'
+};
 
 export class DateInput extends Component<DateInputProps> {
   render() {
@@ -34,6 +48,7 @@ export class DateInput extends Component<DateInputProps> {
                  onChange={startDate.onChange}
                  onBlur={startDate.onBlur}
           />
+          {endDate ? <span>&nbsp;&nbsp;~</span> : null}
           {endDate ?
               <input type="date"
                      style={inputStyle}

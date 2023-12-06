@@ -15,8 +15,13 @@ import {EditInput} from "../../core/input/EditInput";
 
 const boldCellStyle = {
   fontWeight: 'bold',
-  backgroundColor: '#f1f3f5'
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light'
 };
+
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light'
+}
 
 type Props = {
   tableSize: boolean,
@@ -118,12 +123,12 @@ class ViewInstructionTable extends Component<Props> {
               <TableBody>
                 {list && list.length > 0 && list.map((row) => (
                     <TableRow>
-                      <TableCell align="center">{instruction.customerName}</TableCell>
-                      <TableCell align="center">{instruction.instructionDate}</TableCell>
-                      <TableCell align="center">{instruction.expirationDate}</TableCell>
-                      <TableCell align="center">{row.productNo}</TableCell>
-                      <TableCell align="center">{row.productCode}</TableCell>
-                      <TableCell align="center">{row.productName} </TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{instruction.customerName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{instruction.instructionDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{instruction.expirationDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productName} </TableCell>
                       <TableCell align="center">
                         {!changeAmount ?
                             <div style={{
@@ -165,25 +170,25 @@ class ViewInstructionTable extends Component<Props> {
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" style={tableCellStyle}>
                         <EditInput type='date' defaultValue={instruction.instructionDate}
                                    onChange={(e) => {
                                      this.updateInstruction({instructionDate: e.target.value});
                                    }}/>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" style={tableCellStyle}>
                         <EditInput type='date' defaultValue={instruction.expirationDate}
                                    onChange={(e) => {
                                      this.updateInstruction({expirationDate: e.target.value});
                                    }}/>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" style={tableCellStyle}>
                         <AddItemButton onClick={changeProductModalStatus}/>
                       </TableCell>
-                      <TableCell align="center"></TableCell>
-                      <TableCell align="center"></TableCell>
-                      <TableCell align="center"></TableCell>
-                      <TableCell align="center"></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
                     </TableRow>
                 ) : null}
               </TableBody>

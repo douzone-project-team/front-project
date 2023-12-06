@@ -10,8 +10,13 @@ import {ListTitle} from "../../core/ListTitle";
 
 const boldCellStyle = {
   fontWeight: 'bold',
-  backgroundColor: '#f1f3f5'
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light'
 };
+
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light'
+}
 
 type Props = {
   tableSize: boolean,
@@ -46,7 +51,7 @@ class ViewInstructionTable extends Component<Props> {
           }}>
             <Table size='small' className='table'>
               <TableHead>
-                <TableRow>
+                <TableRow style={{fontFamily: 'S-CoreDream-3Light'}}>
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>등록자</TableCell>
                   <TableCell align="center" style={boldCellStyle}>거래처 번호</TableCell>
@@ -63,15 +68,16 @@ class ViewInstructionTable extends Component<Props> {
                                 state.getInstruction(row.instructionNo);
                                 this.props.changeAmountStatusFalse();
                               }}>
-                      <TableCell align="center"
-                                 style={{fontWeight: 'bold'}}>{row.instructionNo}</TableCell>
-                      <TableCell align="center">{row.employeeName}</TableCell>
-                      <TableCell align="center">{row.customerNo}</TableCell>
-                      <TableCell align="center">{row.customerName}</TableCell>
-                      <TableCell align="center">{row.instructionDate}</TableCell>
-                      <TableCell align="center">{row.expirationDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.instructionNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.employeeName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.customerNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.instructionDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.expirationDate}</TableCell>
                       <TableCell align="center" style={{width: '50px'}}>
-                        <div className={row.progressStatus}>{row.progressStatus}</div>
+                        <div className={row.progressStatus}>
+                          {row.progressStatus}
+                        </div>
                       </TableCell>
                     </TableRow>
                 ))}
