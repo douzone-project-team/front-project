@@ -14,6 +14,8 @@ import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 
 import "./../../assets/css/Table.css";
 import {AddInstruction} from "../../object/DeliveryInstruction/delivery-instruction-object";
+import { ListTitle } from "../../core/ListTitle";
+import { PageButton } from "../../core/button/PageButton";
 
 type Props = {
     setInstruction: (addInstruction: AddInstruction) => void
@@ -48,14 +50,9 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
 
         return (
             <>
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
-                    <span className='table-header'
-                          style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 목록 - <span style={{color:'rgb(60, 80, 194)'}}>{list.length}</span>건</span>
-                </div>
+                <ListTitle options={{title: '지시 목록', count: list.length}}/>
                 <TableContainer className='table-container' style={{
-                    height: this.props.tableSize ? '67.2%' : '20%',
-                    transition: 'height 0.3s ease-in-out',
+                    height: '340px'
                 }}>
                     <Table size='small' className='table'>
                         <TableHead>
@@ -87,24 +84,13 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                             ))}
                         </TableBody>
                     </Table>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <KeyboardArrowLeft
-                            onClick={handlePrevPage}
-                        >
-                            이전 페이지
-                        </KeyboardArrowLeft>
-                        <KeyboardArrowRight
-                            onClick={handleNextPage}
-                        >
-                            다음 페이지
-                        </KeyboardArrowRight>
-                    </Box>
+                    <PageButton options={{
+                        currentPage: state.instructionPage.currentPage,
+                        handleNextPage: handleNextPage,
+                        handlePrevPage: handlePrevPage,
+                        hasNextPage: state.instructionPage.hasNextPage,
+                        hasPreviousPage: state.instructionPage.hasPreviousPage
+                    }}/>
                 </TableContainer>
             </>
         );

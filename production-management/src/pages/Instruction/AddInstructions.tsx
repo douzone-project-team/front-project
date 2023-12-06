@@ -1,12 +1,16 @@
 import {Component} from "react";
 import AddInstructionBar from "../../components/Instruction/AddInstructionBar";
 import AddInstructionTable from "../../components/Instruction/AddInstructionTable";
-import {Box, Button} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import Layout from "../../common/Layout";
 import {InstructionsContext, Props} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
 import {DeleteProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
 import "../../assets/css/Styles.css";
+import {Title} from "../../core/Title";
+import {SearchBox} from "../../core/box/SearchBox";
+import {TableBox} from "../../core/box/TableBox";
+import { Body } from "../../core/Body";
 
 
 type State = {
@@ -90,76 +94,42 @@ class AddInstructions extends Component<Props, State> {
     let isChecksNotEmpty = selectedCheckBoxs.length != 0;
 
     return (
-        // @ts-ignore
         <Layout>
-          <Box
-              sx={{
-                width: '100%',
-                mb: '2vh',
-                pt: '80px',
-                pl: '15px',
-                bgcolor: '#3C50C2',
-                color: 'white',
-                height: '12.5vh',
-              }}
-          >
-            <span style={{fontSize: '17px', fontWeight: 'bold'}}>지시등록</span>
-          </Box>
-          <Box
-              sx={{
-                width: '95%',
-                pl: '15px',
-                pt: '15px',
-                pr: '15px',
-                ml: '50px',
-                mb: '3vh',
-                bgcolor: 'white',
-                boxShadow: '0px 0px 5px 1px #DDDDDD',
-                borderRadius: '10px',
-                height: '7.5vh'
-              }}
-          >
-            <AddInstructionBar customerSearchModalOpen={customerSearchModalOpen}
-                               changeCustomerSearchModalStatus={this.state.changeCustomerSearchModalStatus}/>
-          </Box>
-          <Box
-              sx={{
-                width: '95%',
-                p: '15px',
-                ml: '50px',
-                bgcolor: 'white',
-                boxShadow: '0px 0px 5px 1px #DDDDDD',
-                borderRadius: '10px',
-                height: '68vh'
-              }}
-          >
-            <AddInstructionTable addSelectedCheckBox={this.addSelectedCheckBox}
-                                 productModalOpen={productModalOpen}
-                                 customerModalOpen={customerModalOpen}
-                                 changeProductModalStatus={this.state.changeProductModalStatus}
-                                 changeCustomerModalStatus={this.state.changeCustomerModalStatus}
-                                 existSelectedCheckBox={this.existSelectedCheckBox}
-            />
-          </Box>
-          {isChecksNotEmpty &&
-              <div className='delete-div' style={{
-                height: '7vh'
-              }}>
-                <div>
+          <Title title='지시등록'/>
+          <Body>
+            <SearchBox>
+              <AddInstructionBar customerSearchModalOpen={customerSearchModalOpen}
+                                 changeCustomerSearchModalStatus={this.state.changeCustomerSearchModalStatus}/>
+            </SearchBox>
+            <TableBox>
+              <AddInstructionTable addSelectedCheckBox={this.addSelectedCheckBox}
+                                   productModalOpen={productModalOpen}
+                                   customerModalOpen={customerModalOpen}
+                                   changeProductModalStatus={this.state.changeProductModalStatus}
+                                   changeCustomerModalStatus={this.state.changeCustomerModalStatus}
+                                   existSelectedCheckBox={this.existSelectedCheckBox}
+              />
+            </TableBox>
+            {isChecksNotEmpty &&
+                <div className='delete-div' style={{
+                  height: '7vh'
+                }}>
+                  <div>
                   <span
                       style={{color: '#1ae0ed'}}>{selectedCheckBoxs.length}건 </span><span>선택됨</span>
+                  </div>
+                  <div>
+                    <Button variant="outlined" style={{
+                      lineHeight: 'normal',
+                      background: '#50596c',
+                      borderColor: '#b5b5b5',
+                      color: '#fff',
+                    }} onClick={this.deleteSelectedCheckBox}>삭제
+                    </Button>
+                  </div>
                 </div>
-                <div>
-                  <Button variant="outlined" style={{
-                    lineHeight: 'normal',
-                    background: '#50596c',
-                    borderColor: '#b5b5b5',
-                    color: '#fff',
-                  }} onClick={this.deleteSelectedCheckBox}>삭제
-                  </Button>
-                </div>
-              </div>
-          }
+            }
+          </Body>
         </Layout>
     )
   }

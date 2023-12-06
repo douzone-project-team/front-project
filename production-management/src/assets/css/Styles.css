@@ -2,6 +2,13 @@ body {
   overflow: hidden;
 }
 
+@font-face { /* 킵 : 1*/
+  font-family: 'S-CoreDream-3Light';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @media (max-width: 768px) {
   body {
     touch-action: none;

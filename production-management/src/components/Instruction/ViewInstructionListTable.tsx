@@ -1,23 +1,22 @@
 import React, {Component} from "react";
-import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
-} from "@material-ui/core";
-import {InstructionsContext} from "../../store/Instruction/Instructions-context";
-import {InstructionsState} from "../../object/Instruction/Instruction-object";
-import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 
 import "./../../assets/css/Table.css";
 
+import {InstructionsContext} from "../../store/Instruction/Instructions-context";
+import {InstructionsState} from "../../object/Instruction/Instruction-object";
+import {PageButton} from "../../core/button/PageButton";
+import {ListTitle} from "../../core/ListTitle";
+
 const boldCellStyle = {
   fontWeight: 'bold',
-  backgroundColor: '#f1f3f5'
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light'
 };
+
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light'
+}
 
 type Props = {
   tableSize: boolean,
@@ -45,18 +44,14 @@ class ViewInstructionTable extends Component<Props> {
 
     return (
         <>
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
-            <span className='table-header'
-                  style={{fontWeight: 'bold', fontSize: '16px'}}> 지시 목록 - <span style={{color:'rgb(60, 80, 194)'}}>{list.length}</span>건</span>
-          </div>
+          <ListTitle options={{title: '지시 목록', count: list.length}}/>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '67.2%' : '20%',
+            height: this.props.tableSize ? '67.5%' : '20%',
             transition: 'height 0.3s ease-in-out',
           }}>
             <Table size='small' className='table'>
               <TableHead>
-                <TableRow>
+                <TableRow style={{fontFamily: 'S-CoreDream-3Light'}}>
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>등록자</TableCell>
                   <TableCell align="center" style={boldCellStyle}>거래처 번호</TableCell>
@@ -68,34 +63,34 @@ class ViewInstructionTable extends Component<Props> {
               </TableHead>
               <TableBody>
                 {list && list.length > 0 && list.map((row) => (
-                    <TableRow key={row.instructionNo} className='cellHoverEffect'
+                    <TableRow className='cellHoverEffect'
                               onClick={() => {
                                 state.getInstruction(row.instructionNo);
                                 this.props.changeAmountStatusFalse();
                               }}>
-                      <TableCell align="center" style={{fontWeight: 'bold'}}>{row.instructionNo}</TableCell>
-                      <TableCell align="center">{row.employeeName}</TableCell>
-                      <TableCell align="center">{row.customerNo}</TableCell>
-                      <TableCell align="center">{row.customerName}</TableCell>
-                      <TableCell align="center">{row.instructionDate}</TableCell>
-                      <TableCell align="center">{row.expirationDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.instructionNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.employeeName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.customerNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.instructionDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.expirationDate}</TableCell>
                       <TableCell align="center" style={{width: '50px'}}>
-                        <div className={row.progressStatus}>{row.progressStatus}</div>
+                        <div className={row.progressStatus}>
+                          {row.progressStatus}
+                        </div>
                       </TableCell>
                     </TableRow>
                 ))}
               </TableBody>
             </Table>
-            <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-            >
-              <KeyboardArrowLeft onClick={handlePrevPage}/>
-              <KeyboardArrowRight onClick={handleNextPage}/>
-            </Box>
+            <PageButton options={{
+              currentPage: state.instructionPage.currentPage,
+              handleNextPage: handleNextPage,
+              handlePrevPage: handlePrevPage,
+              hasNextPage: state.instructionPage.hasNextPage,
+              hasPreviousPage: state.instructionPage.hasPreviousPage
+            }}
+            />
           </TableContainer>
         </>
     );

@@ -13,6 +13,8 @@ import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 import "./../../assets/css/Table.css";
 import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
 import {DeliveriesState} from "../../object/Delivery/delivery-object";
+import { ListTitle } from "../../core/ListTitle";
+import { PageButton } from "../../core/button/PageButton";
 
 const boldCellStyle = {
     fontWeight: 'bold',
@@ -45,11 +47,7 @@ class ViewDeliveryListTable extends Component<Props>{
 
         return (
             <>
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
-                    <span className='table-header'
-                      style={{fontWeight: 'bold', fontSize: '16px'}}> 출고 목록 - <span style={{color:'rgb(60, 80, 194)'}}>{list.length}</span>건</span>
-                </div>
+                <ListTitle options={{title: '출고 목록', count: list.length}}/>
                 <TableContainer className='table-container' style={{
                     height: this.props.tableSize ? '67.2%' : '20%',
                     transition: 'height 0.3s ease-in-out'
@@ -85,16 +83,13 @@ class ViewDeliveryListTable extends Component<Props>{
                             ))}
                         </TableBody>
                     </Table>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <KeyboardArrowLeft onClick={handlePrevPage} />
-                        <KeyboardArrowRight onClick={handleNextPage} />
-                    </Box>
+                    <PageButton options={{
+                        currentPage: state.deliveryPage.currentPage,
+                        handleNextPage: handleNextPage,
+                        handlePrevPage: handlePrevPage,
+                        hasNextPage: state.deliveryPage.hasNextPage,
+                        hasPreviousPage: state.deliveryPage.hasPreviousPage
+                    }}/>
                 </TableContainer>
             </>
         );
