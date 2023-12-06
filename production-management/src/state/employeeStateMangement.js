@@ -37,3 +37,16 @@ export const initialImage = {
     image: null,
 }
 
+export const initialMessages = {
+    messages: []
+}
+
+export const initialMessage = {
+    messageNo: 0,
+    sendId: 0,
+    sendName: '',
+    targetId: 0,
+    targetName: '',
+    message: '',
+    sendTime: ''
+}
