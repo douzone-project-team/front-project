@@ -24,7 +24,6 @@ interface MainListItemsState {
   isShippingAccordionOpen: boolean;
 }
 
-
 class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
   constructor(props: MainListItemsProps) {
     super(props);
@@ -68,7 +67,8 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
 
     // 색상
     const iconAndTextStyles = {
-      color: '#858891',
+      color: 'rgba(255,255,255,0.75)',
+      fontFamily: 'S-CoreDream-3Light'
     };
     const accordionStyles = {
       backgroundColor: '#333948',
@@ -160,14 +160,6 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                 </AccordionDetails>
               </Accordion>
           )}
-          <ListItem>
-            <Button>
-              <ListItemIcon style={iconAndTextStyles}>
-                <BarChartIcon/>
-              </ListItemIcon>
-              <ListItemText primary="현황 조회" style={iconAndTextStyles}/>
-            </Button>
-          </ListItem>
         </React.Fragment>
     );
   }
@@ -179,14 +171,20 @@ class SecondaryListItems extends Component {
 
     // 색상
     const iconAndTextStyles = {
-      color: '#858891',
+      color: 'rgba(255,255,255,0.75)',
+      fontFamily: 'S-CoreDream-3Light'
+    }
+
+    const storedEmployeeData = localStorage.getItem('employee');
+    const employeeData = storedEmployeeData ? JSON.parse(storedEmployeeData) : {};
+    const isAdmin = employeeData.role;
+
+    if(isAdmin !== 'ROLE_ADMIN'){
+      return null;
     }
 
     return (
         <React.Fragment>
-          {/*<ListSubheader component="div" inset style={{ backgroundColor: 'white' }}>*/}
-          {/*    관리자 전용*/}
-          {/*</ListSubheader>*/}
           <Link to="/addEmployee" style={{textDecoration: 'none', color: 'black'}}>
             <ListItem>
               <Button>
@@ -197,7 +195,7 @@ class SecondaryListItems extends Component {
               </Button>
             </ListItem>
           </Link>
-          <Link to="/editEmployee" style={{textDecoration: 'none', color: 'black'}}>
+          <Link to="/employee/list" style={{textDecoration: 'none', color: 'black'}}>
             <ListItem>
               <Button>
                 <ListItemIcon style={iconAndTextStyles}>

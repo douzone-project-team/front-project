@@ -1,38 +1,27 @@
 import React, {Component} from "react";
-import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
-} from "@material-ui/core";
-import {InstructionsContext} from "../../store/Instruction/Instructions-context";
-import {InstructionsState} from "../../object/Instruction/Instruction-object";
-import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 
 import "./../../assets/css/Table.css";
 
+import {InstructionsContext} from "../../store/Instruction/Instructions-context";
+import {InstructionsState} from "../../object/Instruction/Instruction-object";
+import {PageButton} from "../../core/button/PageButton";
+import {ListTitle} from "../../core/ListTitle";
+
 const boldCellStyle = {
-  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light'
 };
 
-const cellStyle = {
-  border: '1px solid #D3D3D3',
-};
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light'
+}
 
 type Props = {
   tableSize: boolean,
   changeAmountStatusFalse: () => void;
 }
-
-const statusMap = new Map([
-  ['STANDBY', '준비'],
-  ['PROGRESS', '진행중'],
-  ['COMPLETED', '완료']
-]);
 
 class ViewInstructionTable extends Component<Props> {
   static contextType = InstructionsContext;
@@ -55,52 +44,53 @@ class ViewInstructionTable extends Component<Props> {
 
     return (
         <>
-          <span className='table-header'>지시 목록</span>
+          <ListTitle options={{title: '지시 목록', count: list.length}}/>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '330px' : '90px',
-            transition: 'height 0.3s ease-in-out'
+            height: this.props.tableSize ? '67.5%' : '20%',
+            transition: 'height 0.3s ease-in-out',
           }}>
             <Table size='small' className='table'>
               <TableHead>
-                <TableRow>
-                  <TableCell align="center" style={boldCellStyle}>지시 상태</TableCell>
+                <TableRow style={{fontFamily: 'S-CoreDream-3Light'}}>
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>등록자</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>거래처 코드</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>거래처 명</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>시작일</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>종료일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>거래처 번호</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>만료일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>지시 상태</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {list && list.length > 0 && list.map((row) => (
-                    <TableRow key={row.instructionNo} className='cellHoverEffect'
+                    <TableRow className='cellHoverEffect'
                               onClick={() => {
                                 state.getInstruction(row.instructionNo);
                                 this.props.changeAmountStatusFalse();
                               }}>
-                      <TableCell align="center"
-                                 style={cellStyle}>{statusMap.get(row.progressStatus)}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.instructionNo}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.customerNo}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.instructionDate}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.expirationDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.instructionNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.employeeName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.customerNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.instructionDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.expirationDate}</TableCell>
+                      <TableCell align="center" style={{width: '50px'}}>
+                        <div className={row.progressStatus}>
+                          {row.progressStatus}
+                        </div>
+                      </TableCell>
                     </TableRow>
                 ))}
               </TableBody>
             </Table>
-            <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-            >
-              <KeyboardArrowLeft onClick={handlePrevPage}/>
-              <KeyboardArrowRight onClick={handleNextPage}/>
-            </Box>
+            <PageButton options={{
+              currentPage: state.instructionPage.currentPage,
+              handleNextPage: handleNextPage,
+              handlePrevPage: handlePrevPage,
+              hasNextPage: state.instructionPage.hasNextPage,
+              hasPreviousPage: state.instructionPage.hasPreviousPage
+            }}
+            />
           </TableContainer>
         </>
     );

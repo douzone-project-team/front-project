@@ -4,20 +4,24 @@ import {InstructionsContext} from "../../store/Instruction/Instructions-context"
 import {InstructionsState, UpdateInstruction} from "../../object/Instruction/Instruction-object";
 
 import "./../../assets/css/Table.css";
-import ProductModal from "../Modal/Product/ProductModal";
-import CustomerModal from "../Modal/Product/CustomerModal";
+import ProductModal from "../Modal/Instruction/ProductModal";
+import CustomerModal from "../Modal/Instruction/CustomerModal";
 import {AddProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
+import {DetailTitle} from "../../core/DetailTitle";
+import {DeleteButton} from "../../core/button/DeleteButton";
+import {AddItemButton} from "../../core/button/AddItemButton";
+import {EditButton} from "../../core/button/EditButton";
+import {EditInput} from "../../core/input/EditInput";
 
 const boldCellStyle = {
-  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-  width: '10%',
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light'
 };
 
-const cellStyle = {
-  border: '1px solid #D3D3D3',
-  width: '10%',
-};
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light'
+}
 
 type Props = {
   tableSize: boolean,
@@ -84,38 +88,34 @@ class ViewInstructionTable extends Component<Props> {
     return (
         <>
           <div style={{
-            width: '100%',
-            height: '30px',
-            marginBottom: '10px',
-            marginLeft: '2px',
             display: 'flex',
+            height: '20px'
           }}>
             <div style={{width: '95%'}}>
-          <span className='table-header'>지시 상세 :
-            <span style={{color: '#0C70F2'}}>{instruction.instructionNo}</span>
-          </span>
+              <DetailTitle options={{
+                status: instruction.progressStatus,
+                targetName: instruction.instructionNo as string,
+                title: '지시 상세'
+              }}/>
             </div>
             <div style={{width: '5%', textAlign: 'right'}}>
               {instruction.progressStatus == 'STANDBY' &&
-                  <img src={require('../../images/button/delete-button.png')}
-                       style={{width: '20px', marginRight: '10px', marginTop: '6px'}}
-                       className='cellHoverEffect'
-                       onClick={() => deleteInstruction(instruction.instructionNo)}/>}
+                  <DeleteButton onClick={() => deleteInstruction(instruction.instructionNo)}/>}
             </div>
           </div>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '220px' : '460px',
+            height: this.props.tableSize ? '18.1%' : '65%',
             transition: 'height 0.3s ease-in-out'
           }}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
                   <TableCell align="center" style={boldCellStyle}>거래처 명</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>시작일</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>종료일</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>상품 번호</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>상품 코드</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>상품 이름</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>만료일</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
                   <TableCell align="center" style={boldCellStyle}>갯수</TableCell>
                   <TableCell align="center" style={boldCellStyle}>잔량</TableCell>
                 </TableRow>
@@ -123,16 +123,13 @@ class ViewInstructionTable extends Component<Props> {
               <TableBody>
                 {list && list.length > 0 && list.map((row) => (
                     <TableRow>
-                      <TableCell align="center"
-                                 style={cellStyle}>{instruction.customerName}</TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionDate}</TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}>{instruction.expirationDate}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.productNo}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.productCode}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.productName} </TableCell>
-                      <TableCell align="center" style={cellStyle}>
+                      <TableCell align="center" style={tableCellStyle}>{instruction.customerName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{instruction.instructionDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{instruction.expirationDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productName} </TableCell>
+                      <TableCell align="center">
                         {!changeAmount ?
                             <div style={{
                               display: 'flex',
@@ -144,11 +141,7 @@ class ViewInstructionTable extends Component<Props> {
                               </div>
                               <div style={{width: '1%'}}>
                                 {instruction.progressStatus == 'STANDBY' ?
-                                    <img
-                                        src={require(`../../images/button/modify-button-black.png`)}
-                                        className='cellHoverEffect'
-                                        style={{width: '15px', verticalAlign: 'middle'}}
-                                        onClick={changeAmountStatus}/> : null}
+                                    <EditButton onClick={changeAmountStatus}/> : null}
                               </div>
                             </div> :
                             <input type='number' defaultValue={row.amount}
@@ -158,13 +151,12 @@ class ViewInstructionTable extends Component<Props> {
                                    }}/>
                         }
                       </TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.remainAmount}</TableCell>
+                      <TableCell align="center">{row.remainAmount}</TableCell>
                     </TableRow>
                 ))}
                 {(instruction.instructionNo && (instruction.progressStatus == 'STANDBY')) ? (
                     <TableRow>
-                      <TableCell align="center"
-                                 style={cellStyle}>
+                      <TableCell align="center">
                         <div style={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -174,56 +166,29 @@ class ViewInstructionTable extends Component<Props> {
                             {instruction.customerName}
                           </div>
                           <div style={{width: '1%'}}>
-                            <img src={require(`../../images/button/modify-button-black.png`)}
-                                 className='cellHoverEffect'
-                                 style={{width: '15px', verticalAlign: 'middle'}}
-                                 onClick={changeCustomerModalStatus}/>
+                            <EditButton onClick={changeCustomerModalStatus}/>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}><input type='date'
-                                                          style={{
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            textAlign: 'center',
-                                                            border: 0,
-                                                            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                                                            fontWeight: 400,
-                                                            fontSize: '0.875rem',
-                                                            marginLeft: '9px'
-                                                          }}
-                                                          defaultValue={instruction.instructionDate}
-                                                          onChange={(event => {
-                                                            this.updateInstruction({instructionDate: event.target.value});
-                                                          })}></input></TableCell>
-                      <TableCell align="center"
-                                 style={cellStyle}><input type='date'
-                                                          style={{
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            textAlign: 'center',
-                                                            border: 0,
-                                                            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                                                            fontWeight: 400,
-                                                            fontSize: '0.875rem',
-                                                            marginLeft: '9px'
-                                                          }}
-                                                          defaultValue={instruction.expirationDate}
-                                                          onChange={(event => {
-                                                            this.updateInstruction({expirationDate: event.target.value});
-                                                          })}
-                      ></input></TableCell>
-                      <TableCell align="center" style={cellStyle}>
-                        <img src={require(`../../images/button/add-item-button-black.png`)}
-                             className='cellHoverEffect'
-                             style={{width: '15px', verticalAlign: 'middle'}}
-                             onClick={changeProductModalStatus}/>
+                      <TableCell align="center" style={tableCellStyle}>
+                        <EditInput type='date' defaultValue={instruction.instructionDate}
+                                   onChange={(e) => {
+                                     this.updateInstruction({instructionDate: e.target.value});
+                                   }}/>
                       </TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}>
+                        <EditInput type='date' defaultValue={instruction.expirationDate}
+                                   onChange={(e) => {
+                                     this.updateInstruction({expirationDate: e.target.value});
+                                   }}/>
+                      </TableCell>
+                      <TableCell align="center" style={tableCellStyle}>
+                        <AddItemButton onClick={changeProductModalStatus}/>
+                      </TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
                     </TableRow>
                 ) : null}
               </TableBody>

@@ -48,6 +48,13 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
                 const customerTel = addValue.customerTel1+"-"+addValue.customerTel2+"-"+addValue.customerTel3;
                 const customerCodePattern = /^[A-Z]\d{4}$/;
                 const customerTelPattern = /^010-\d{4}-\d{4}$/;
+
+                if (addValue.customerCode.length === 0 || addValue.customerName.length === 0 || addValue.customerTel1.length === 0 ||
+                    addValue.customerTel2.length === 0 || addValue.customerTel3.length === 0 || addValue.ceo.length === 0 || addValue.sector.length === 0){
+                    alert("빈칸이 존재합니다.");
+                    return;
+                }
+
                 if (!customerCodePattern.test(addValue.customerCode)) {
                     alert("거래처 코드의 형식이 잘못되었습니다. (예: Z0001)");
                     return;
@@ -85,9 +92,16 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
     }
 
     duplicateCustomerCode = () => {
+        const customerCodePattern = /^[A-Z]\d{4}$/;
+        if (!customerCodePattern.test(addValue.customerCode) || addValue.customerCode.length === 0) {
+            alert("거래처 코드의 형식이 잘못되었습니다. (예: Z0001)");
+            return;
+        }
         const state = this.context as CustomersState;
         state.setCheckCustomerCode(addValue.customerCode);
     }
+
+
 
     render() {
         const {onClose} = this.props as CustomerModalProps;
@@ -96,7 +110,7 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
 
         return (
             <div className='modal'>
-                    <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'35%'}}>
+                    <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'370px'}}>
                         <header>
                             <button className="close" onClick={onClose}>
                                 &times;
@@ -129,8 +143,9 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
                                         placeholder="ex) C0001"
                                         className="form-input"
                                         style={{width: '89px'}}
-                                        onBlur={(event => {
+                                        onChange={(event => {
                                             addValue.customerCode = event.target.value
+                                            state.duplicateCustomerCodeResult.duplicateResult = false
                                         })}
                                     />
                                     <button
@@ -142,7 +157,7 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
                                 </label>
                                 {duplicateResult?
                                     <span style={{color: 'green', marginBottom:'7px', marginLeft:'30px'}}>사용 가능한 거래처 코드입니다.</span>
-                                    : <span style={{color:'red', marginBottom:'7px', marginLeft:'30px'}}>사용 불가능한 거래처 코드입니다.</span>}
+                                    : null}
                                 <label className="form-label">
                                     거래처 명칭
                                     <input

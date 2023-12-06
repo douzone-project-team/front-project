@@ -2,10 +2,10 @@ import React, {Component, FormEvent, RefObject} from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme , Grid, Paper, Box, CssBaseline, TextField, Button } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import EmployeeContext from "../../store/Employee/employee-context";
+import {EmployeeState} from "../../object/Employee/employee-object";
+import {EmployeeContext} from "../../store/Employee/employee-context";
 // @ts-ignore
 import logo from '../../images/logo.png';
-import {EmployeeState} from "../../object/Employee/employee-object";
 
 const defaultTheme = createMuiTheme();
 

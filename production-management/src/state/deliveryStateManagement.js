@@ -24,7 +24,7 @@ export const initialInstructions = {
     productNo: 0,
     productCode: '',
     productName: '',
-    amount: 0
+    amount: 0,
 }
 export const initialDelivery = {
     deliveryNo: '',
@@ -43,4 +43,8 @@ export const initialNewDelivery = {
     deliveryDate: '',
     instructions: [],
     products: []
+}
+
+export const initialRemainAmount = {
+    remainAmount: 0,
 }

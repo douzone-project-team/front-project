@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import "./../../assets/css/Table.css";
 import {CustomersContext} from "../../store/Customer/customers-context";
 import {CustomersState} from "../../object/Customer/customer-object";
@@ -12,18 +12,20 @@ import {
     TableHead,
     TableRow,
 } from "@material-ui/core";
+import { ListTitle } from '../../core/ListTitle';
+import { PageButton } from '../../core/button/PageButton';
 
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    width: '10%',
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light'
 };
 
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-    width: '10%',
-};
+const tableCellStyle = {
+    fontFamily: 'S-CoreDream-3Light'
+}
+
 
 
 
@@ -53,7 +55,7 @@ class ViewCustomerListTable extends Component {
 
         return(
             <>
-                <span className='table-header'>거래처 목록</span>
+                <ListTitle options={{title: '거래처 목록', count: list.length}}/>
                 <TableContainer className='table-container' style={{height:'395px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
@@ -61,40 +63,29 @@ class ViewCustomerListTable extends Component {
                                 <TableCell align="center" style={boldCellStyle}>거래처 번호</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>거래처 코드</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>거래처 명칭</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>대표자</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>업종</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {list === undefined || list.map((row) => (
-                                <TableRow key={row.customerNo} onClick={() => state.getCustomer(row.customerNo)}>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerCode}</TableCell>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.customerName}</TableCell>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'>{row.sector}</TableCell>
+                                <TableRow key={row.customerNo} className='cellHoverEffect' onClick={() => state.getCustomer(row.customerNo)}>
+                                    <TableCell align="center" style={tableCellStyle}>{row.customerNo}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.customerCode}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.ceo}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.sector}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <KeyboardArrowLeft
-                            onClick={handlePrevPage}
-                            // disabled={!state.instructionPage.hasPreviousPage}
-                        >
-                            이전 페이지
-                        </KeyboardArrowLeft>
-                        <KeyboardArrowRight
-                            onClick={handleNextPage}
-                            // disabled={!state.instructionPage.hasNextPage}
-                        >
-                            다음 페이지
-                        </KeyboardArrowRight>
-                    </Box>
+                    <PageButton options={{
+                        currentPage: state.customerPage.currentPage,
+                        handleNextPage: handleNextPage,
+                        handlePrevPage: handlePrevPage,
+                        hasNextPage: state.customerPage.hasNextPage,
+                        hasPreviousPage: state.customerPage.hasPreviousPage
+                    }}/>
                 </TableContainer>
             </>
         );

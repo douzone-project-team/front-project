@@ -30,10 +30,23 @@ class DeliveriesAction {
         return fetcher.PUT(URL, upadateDelivery);
     }
 
+    //출고 상태 완료
+    public updateDeliveryStatus(deliveryNo: string){
+        const URL = `${this.baseUrl}/${deliveryNo}/complete`;
+        return fetcher.PUT(URL, deliveryNo);
+    }
+
     // 출고 삭제
     public deleteDelivery(deliveryNo: string) {
         const URL = `${this.baseUrl}/` + deliveryNo;
         return fetcher.DELETE(URL);
+    }
+
+    // 잔량 구하기
+    public getRemainAmount(instructionNo: string, productNo: number) {
+        const URL = `/product-instruction/${instructionNo}/${productNo}`;
+        console.log('잔량 :' + URL);
+        return fetcher.GET(URL);
     }
 }
 
