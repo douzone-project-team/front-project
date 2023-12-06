@@ -114,7 +114,7 @@ class AccountMenu extends Component<{}, AccountMenuState> {
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     <MenuItem onClick={this.handleClose}>
-                        <RouterLink to="/profile" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                        <RouterLink to="/my-page" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
                             <Avatar style={{ width: 20, height: 20, marginRight: 36}}/>
                             프로필
                         </RouterLink>

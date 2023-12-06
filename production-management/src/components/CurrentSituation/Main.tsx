@@ -89,7 +89,7 @@ class Main extends Component {
             anotherValue: 'DF2232',
             semiTitle1: '1',
             semiTitle2: '2',
-            image: require(`../../images/notime.png`)
+            // image: require(`../../images/notime.png`)
         },
         {
             number: 3,
@@ -98,7 +98,7 @@ class Main extends Component {
             anotherValue: '123',
             semiTitle1: ' 임박한 지시',
             semiTitle2: '임박한 지시',
-            image: require(`../../images/customer.png`)
+            // image: require(`../../images/customer.png`)
         },
     ];
 

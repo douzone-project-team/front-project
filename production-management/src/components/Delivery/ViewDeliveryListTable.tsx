@@ -18,8 +18,13 @@ import { PageButton } from "../../core/button/PageButton";
 
 const boldCellStyle = {
     fontWeight: 'bold',
-    backgroundColor: '#f1f3f5'
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light'
 };
+
+const tableCellStyle = {
+    fontFamily: 'S-CoreDream-3Light'
+}
 
 type Props = {
     tableSize: boolean,
@@ -69,12 +74,12 @@ class ViewDeliveryListTable extends Component<Props>{
                                                 state.getDelivery(row.deliveryNo);
                                                 this.props.changeAmountStatusFalse();
                                             }}>
-                                    <TableCell align="center" style={{fontWeight: 'bold'}}>
+                                    <TableCell align="center" style={{...tableCellStyle,fontWeight: 'bold'}}>
                                         {row.deliveryNo}</TableCell>
-                                    <TableCell align="center">{row.employeeName}</TableCell>
-                                    <TableCell align="center">{row.deliveryDate}</TableCell>
-                                    <TableCell align="center">{row.instructionCount}</TableCell>
-                                    <TableCell align="center" style={{width: '50px'}}>
+                                    <TableCell align="center" style={tableCellStyle}>{row.employeeName}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.deliveryDate}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.instructionCount}</TableCell>
+                                    <TableCell align="center" style={{...tableCellStyle,width: '50px'}}>
                                         <div className={row.deliveryStatus}>
                                             {row.deliveryStatus}
                                         </div>

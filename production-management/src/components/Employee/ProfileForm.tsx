@@ -6,10 +6,14 @@ import {initialUpdateEmployee} from "../../state/employeeStateMangement";
 import ProfileImage from "./ProfileImage";
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    width: '15%',
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light'
 };
+
+const tableCellStyle = {
+    fontFamily: 'S-CoreDream-3Light'
+}
 
 type ProfileFormProps = {}
 

@@ -15,7 +15,7 @@ const boldCellStyle = {
 };
 
 const tableCellStyle = {
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
 }
 
 type Props = {
@@ -46,7 +46,7 @@ class ViewInstructionTable extends Component<Props> {
         <>
           <ListTitle options={{title: '지시 목록', count: list.length}}/>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '67.5%' : '20%',
+            height: this.props.tableSize ? '68.5%' : '20%',
             transition: 'height 0.3s ease-in-out',
           }}>
             <Table size='small' className='table'>

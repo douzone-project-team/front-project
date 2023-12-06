@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {AuthState, UpdateAuthEmployee} from "../../object/Auth/auth-object";
 import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
-import EmployeeModifyModal from "../Modal/Employee/EmployeeModifyModal";
+import EmployeeModifyModal from "../Modal/Auth/EmployeeModifyModal";
 import {AuthContext} from "../../store/Auth/auth-context";
 import {DetailTitle} from "../../core/DetailTitle";
 import {EditButton} from "../../core/button/EditButton";

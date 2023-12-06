@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Box } from "@material-ui/core";
 import Layout from "../../common/Layout";
-import SemiBox from "../../components/CurrentSituation/SemiBox"; // 경로를 정확하게 수정
+// import SemiBox from "../../components/CurrentSituation/SemiBox"; // 경로를 정확하게 수정
 
 class CurrentSituationPage extends Component {
     render() {
@@ -17,7 +17,7 @@ class CurrentSituationPage extends Component {
                         bgcolor: '#FAF9F7'
                     }}
                 >
-                    <SemiBox />
+                    {/*<SemiBox />*/}
                 </Box>
             </Layout>
         );

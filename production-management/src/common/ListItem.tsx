@@ -72,6 +72,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
     };
     const accordionStyles = {
       backgroundColor: '#333948',
+      fontFamily: 'S-CoreDream-3Light'
     };
 
     return (
@@ -82,7 +83,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                 <ListItemIcon style={iconAndTextStyles}>
                   <DashboardIcon/>
                 </ListItemIcon>
-                <ListItemText primary="품목" style={iconAndTextStyles}/>
+                <ListItemText><span style={iconAndTextStyles}>품목</span></ListItemText>
               </Button>
             </ListItem>
           </Link>
@@ -92,7 +93,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                 <ListItemIcon style={iconAndTextStyles}>
                   <BusinessIcon/>
                 </ListItemIcon>
-                <ListItemText primary="거래처" style={iconAndTextStyles}/>
+                <ListItemText><span style={iconAndTextStyles}>거래처</span></ListItemText>
               </Button>
             </ListItem>
           </Link>
@@ -101,7 +102,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
               <ListItemIcon style={iconAndTextStyles}>
                 <AssignmentIcon/>
               </ListItemIcon>
-              <ListItemText primary="지시" style={iconAndTextStyles}/>
+              <ListItemText><span style={iconAndTextStyles}>지시</span></ListItemText>
             </Button>
           </ListItem>
           {isOrderAccordionOpen && (
@@ -112,7 +113,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                   <Link to="/instruction/add" style={{textDecoration:'none'}}>
                     <ListItem style={{marginBottom: -40}}>
                       <Button>
-                        <ListItemText primary="지시 등록" style={iconAndTextStyles}/>
+                        <ListItemText><span style={iconAndTextStyles}>지시 등록</span></ListItemText>
                       </Button>
                     </ListItem>
                   </Link>
@@ -121,7 +122,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                   <Link to="/instruction/list" style={{textDecoration:'none'}}>
                     <ListItem>
                       <Button>
-                        <ListItemText primary="지시 현황" style={iconAndTextStyles}/>
+                        <ListItemText><span style={iconAndTextStyles}>지시 현황</span></ListItemText>
                       </Button>
                     </ListItem>
                   </Link>
@@ -133,7 +134,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
               <ListItemIcon style={iconAndTextStyles}>
                 <LocalShippingIcon/>
               </ListItemIcon>
-              <ListItemText primary="출고" style={iconAndTextStyles}/>
+              <ListItemText><span style={iconAndTextStyles}>출고</span></ListItemText>
             </Button>
           </ListItem>
           {isShippingAccordionOpen && (
@@ -144,7 +145,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                   <Link to="/delivery/add" style={{textDecoration:'none'}}>
                     <ListItem style={{marginBottom: -40}}>
                       <Button>
-                        <ListItemText primary="출고 등록" style={iconAndTextStyles}/>
+                        <ListItemText><span style={iconAndTextStyles}>출고 등록</span></ListItemText>
                       </Button>
                     </ListItem>
                   </Link>
@@ -153,7 +154,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                   <Link to="/delivery/list" style={{textDecoration:'none'}}>
                     <ListItem>
                       <Button>
-                        <ListItemText primary="출고 현황" style={iconAndTextStyles}/>
+                        <ListItemText><span style={iconAndTextStyles}>출고 현황</span></ListItemText>
                       </Button>
                     </ListItem>
                   </Link>
@@ -185,23 +186,13 @@ class SecondaryListItems extends Component {
 
     return (
         <React.Fragment>
-          <Link to="/addEmployee" style={{textDecoration: 'none', color: 'black'}}>
-            <ListItem>
-              <Button>
-                <ListItemIcon style={iconAndTextStyles}>
-                  <PersonAddIcon/>
-                </ListItemIcon>
-                <ListItemText primary="사원 등록" style={iconAndTextStyles}/>
-              </Button>
-            </ListItem>
-          </Link>
           <Link to="/employee/list" style={{textDecoration: 'none', color: 'black'}}>
             <ListItem>
               <Button>
                 <ListItemIcon style={iconAndTextStyles}>
                   <PeopleIcon/>
                 </ListItemIcon>
-                <ListItemText primary="사원 조회" style={iconAndTextStyles}/>
+                <ListItemText><span style={iconAndTextStyles}>사원 조회</span></ListItemText>
               </Button>
             </ListItem>
           </Link>

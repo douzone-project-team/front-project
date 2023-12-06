@@ -19,8 +19,13 @@ import {CheckButton} from "../../core/button/CheckButton";
 
 const boldCellStyle = {
   fontWeight: 'bold',
-  backgroundColor: '#f1f3f5'
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light'
 };
+
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light'
+}
 
 type Props = {
   tableSize: boolean,
@@ -242,14 +247,14 @@ class ViewDeliveryTable extends Component<Props, State> {
               <TableBody>
                 {list && list.length > 0 && list.map((row) => (
                     <TableRow>
-                      <TableCell align="center">{row.instructionNo}</TableCell>
-                      <TableCell align="center">{row.customerName}</TableCell>
-                      <TableCell align="center">{row.instructionDate}</TableCell>
-                      <TableCell align="center">{row.expirationDate}</TableCell>
-                      <TableCell align="center">{row.productNo}</TableCell>
-                      <TableCell align="center">{row.productCode}</TableCell>
-                      <TableCell align="center">{row.productName}</TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" style={tableCellStyle}>{row.instructionNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.instructionDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.expirationDate}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>
                         {!changeAmount ?
                             <div style={{
                               display: 'flex',
@@ -278,7 +283,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                                    }}/>
                         }
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" style={tableCellStyle}>
                         {delivery.deliveryStatus == 'INCOMPLETE' ?
                             <DeleteButton
                                 onClick={() => this.deleteDeliveryInstruction(row.instructionNo, row.productNo)}/> : null}
@@ -294,6 +299,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                                   display: 'flex',
                                   flexDirection: 'row',
                                   justifyContent: 'space-between',
+                                  ...tableCellStyle
                                 }}>
                                   <div style={{width: '99%'}}>
                                     {item.addDeliveryInstruction.instructionNo}
@@ -307,25 +313,25 @@ class ViewDeliveryTable extends Component<Props, State> {
                                   </div>
                                 </div>
                               </TableCell>
-                              <TableCell align="center">
+                              <TableCell align="center" style={tableCellStyle}>
                                 {item.addDeliveryInstruction.customerName}
                               </TableCell>
-                              <TableCell align="center">
+                              <TableCell align="center" style={tableCellStyle}>
                                 {item.addDeliveryInstruction.instructionDate}
                               </TableCell>
-                              <TableCell align="center">
+                              <TableCell align="center" style={tableCellStyle}>
                                 {item.addDeliveryInstruction.expirationDate}
                               </TableCell>
-                              <TableCell align="center">
+                              <TableCell align="center" style={tableCellStyle}>
                                 <img src={require(`../../images/button/add-item-button-black.png`)}
                                      className='cellHoverEffect'
                                      style={{width: '15px', verticalAlign: 'middle'}}
                                      onClick={changeDeliveryProductModalStatus}/>
                               </TableCell>
-                              <TableCell align="center"></TableCell>
-                              <TableCell align="center"></TableCell>
-                              <TableCell align="center"></TableCell>
-                              <TableCell align="center"></TableCell>
+                              <TableCell align="center" style={tableCellStyle}></TableCell>
+                              <TableCell align="center" style={tableCellStyle}></TableCell>
+                              <TableCell align="center" style={tableCellStyle}></TableCell>
+                              <TableCell align="center" style={tableCellStyle}></TableCell>
                             </TableRow>
                         ))
                     ) : (
@@ -336,10 +342,10 @@ class ViewDeliveryTable extends Component<Props, State> {
                                  style={{width: '15px', verticalAlign: 'middle'}}
                                  onClick={changeInstructionModalStatus}/>
                           </TableCell>
-                          <TableCell align="center"></TableCell>
-                          <TableCell align="center"></TableCell>
-                          <TableCell align="center"></TableCell>
-                          <TableCell align="center">
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}>
                             {this.state.selectedInstructionNo ? (
                                 <img src={require(`../../images/button/add-item-button-black.png`)}
                                      className='cellHoverEffect'
@@ -347,10 +353,10 @@ class ViewDeliveryTable extends Component<Props, State> {
                                      onClick={changeDeliveryProductModalStatus}/>
                             ) : null}
                           </TableCell>
-                          <TableCell align="center"></TableCell>
-                          <TableCell align="center"></TableCell>
-                          <TableCell align="center"></TableCell>
-                          <TableCell align="center"></TableCell>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
                         </TableRow>
                     )) : null}
               </TableBody>

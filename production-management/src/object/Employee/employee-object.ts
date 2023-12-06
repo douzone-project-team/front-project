@@ -64,6 +64,7 @@ export type Delivery = {
 
 export type DeliveryList = {
     list: Delivery[]
+}
 
 export type Messages = {
     messages: Message[]
@@ -101,7 +102,6 @@ export type EmployeeState = {
     deleteImage: (employeeNo: number) => void,
     myInstruction: () => void,
     myDelivery: () => void,
-    deleteImage: (employeeNo: number) => void
     getMessages: () => void
     sendMessage: (sendId: number, targetId: number, message: string) => void
     deleteMessage: (messageNo: number) => void

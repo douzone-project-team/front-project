@@ -16,11 +16,11 @@ import {EditInput} from "../../core/input/EditInput";
 const boldCellStyle = {
   fontWeight: 'bold',
   backgroundColor: '#f1f3f5',
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
 };
 
 const tableCellStyle = {
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
 }
 
 type Props = {
@@ -104,7 +104,7 @@ class ViewInstructionTable extends Component<Props> {
             </div>
           </div>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '18.1%' : '65%',
+            height: this.props.tableSize ? '18.1%' : '66%',
             transition: 'height 0.3s ease-in-out'
           }}>
             <Table size='small' className='table'>
