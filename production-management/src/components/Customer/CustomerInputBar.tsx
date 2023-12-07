@@ -43,6 +43,7 @@ class CustomerInputBar extends Component<Props, State> {
 
   handleSearchClick = () => {
     const state = this.context as CustomersState;
+    state.search.page = 1;
     state.setSearch(inputValue.customerCode, inputValue.customerName, inputValue.sector);
   }
 
