@@ -9,7 +9,7 @@ export const initialDeliverySearchState = {
 
 export const initialDeliveryPageState = {
     list: [],
-    currentPage: 0,
+    currentPage: -1,
     hasNextPage: false,
     hasPreviousPage: false
 }

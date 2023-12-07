@@ -16,6 +16,7 @@ import DeliveryProductModal from "../Modal/Delivery/DeliveryProductModal";
 import {DetailTitle} from "../../core/DetailTitle";
 import {DeleteButton} from "../../core/button/DeleteButton";
 import {CheckButton} from "../../core/button/CheckButton";
+import {AuthState} from "../../object/Auth/auth-object";
 
 const boldCellStyle = {
   fontWeight: 'bold',
@@ -35,6 +36,7 @@ type Props = {
   changeDeliveryProductModalStatus: () => void,
   changeAmount: boolean,
   changeAmountStatus: () => void,
+  tableSizeUp: () => void,
 }
 
 type State = {
@@ -56,6 +58,16 @@ class ViewDeliveryTable extends Component<Props, State> {
       newInstruction: [],
       newProduct: [],
       selectedInstructionNo: '',
+    }
+  }
+
+  componentDidMount() {
+    const state = this.context as DeliveriesState;
+    state.getDeliveryList();
+    const list = state.deliveryPage?.list;
+    const firstDelivery = list && list.length > 0 ? list[0] : null;
+    if(firstDelivery){
+      state.getDelivery(firstDelivery?.deliveryNo);
     }
   }
 
@@ -177,12 +189,14 @@ class ViewDeliveryTable extends Component<Props, State> {
 
     const list = delivery.instructions;
     const {
+      tableSize,
       changeInstructionModalStatus,
       changeDeliveryProductModalStatus,
       instructionModalOpen,
       deliveryProductModalOpen,
       changeAmount,
-      changeAmountStatus
+      changeAmountStatus,
+        tableSizeUp
     } = this.props;
 
     return (
@@ -190,7 +204,7 @@ class ViewDeliveryTable extends Component<Props, State> {
 
           <div style={{
             display: 'flex',
-            height: '20px',
+            height: '30px',
           }}>
             <div style={{width: '30%'}}>
               <DetailTitle options={{
@@ -199,12 +213,12 @@ class ViewDeliveryTable extends Component<Props, State> {
                 title: '출고 상태'
               }}/>
             </div>
-            <div style={{width: '68%'}}>
+            <div style={{width: '64%'}}>
               {delivery.deliveryStatus === 'INCOMPLETE' ? (
                   <span className='table-header'
                         style={{fontWeight: 'bold', fontSize: '16px'}}>출고일 :&nbsp;
                     <input type="date"
-                           style={{height: '20px', color: '#0C70F2'}}
+                           style={{height: '30px', color: '#0C70F2'}}
                            defaultValue={delivery.deliveryDate}
                            onChange={(e) => {
                              this.updateDelivery(e.target.value);
@@ -212,17 +226,23 @@ class ViewDeliveryTable extends Component<Props, State> {
                     />
                         </span>
               ) : (
-                  <span className='table-header'>출고일 : &nbsp;
+                  <span className='table-header' style={{fontWeight: 'bold', fontSize: '16px'}}>출고일 : &nbsp;
                     <span style={{color: '#0C70F2'}}>{delivery.deliveryDate}</span>
                             </span>
               )}
             </div>
-            <div style={{width: '4%', textAlign: 'right'}}>
+            <div style={{width: '8%', textAlign: 'right'}}>
               {delivery.deliveryStatus == 'INCOMPLETE' &&
                   <div>
                     <CheckButton size={20} onClick={() => updateDeliveryStatus(delivery.deliveryNo)}/>
                     &nbsp;&nbsp;
-                    <DeleteButton size={20} onClick={() => deleteDelivery(delivery.deliveryNo)}/>
+                    <DeleteButton size={20}
+                                  onClick={() => {
+                                    deleteDelivery(delivery.deliveryNo);
+                                    if(!tableSize){
+                                      tableSizeUp();
+                                    }
+                    }}/>
                   </div>}
             </div>
           </div>
