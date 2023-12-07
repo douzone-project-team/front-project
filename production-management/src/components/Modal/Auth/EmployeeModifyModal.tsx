@@ -3,8 +3,10 @@ import React, {ChangeEvent, Component} from "react";
 import {EmployeeState} from "../../../object/Employee/employee-object";
 import {Box} from "@material-ui/core";
 import {AuthContext} from "../../../store/Auth/auth-context";
+// @ts-ignore
+import defaultImage from '../../../images/default-image.jpg';
 
-import '../../../assets/css/EmployeeModifyModal.css?v=2';
+import './EmployeeModifyModal.css';
 
 type EmployeeModalProps = {
     onClose: () => void,
@@ -216,7 +218,7 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                                     </label>
                                     <button
                                         onClick={this.checkIdDuplicate}
-                                        style={{height: '30px', marginLeft: '5px'}}
+                                        style={{height: '30px', marginLeft: '5px', borderRadius: '5px'}}
                                     >중복 확인
                                     </button>
                                 </div>
