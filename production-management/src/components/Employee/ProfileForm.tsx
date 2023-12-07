@@ -97,8 +97,6 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
             email: modifyValue.email
         };
 
-        alert(updateEmployeeObj.email);
-
         state.updateEmployee(employee.employeeNo, updateEmployeeObj);
     };
 
