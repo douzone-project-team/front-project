@@ -54,6 +54,10 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
     state.search.page = 1;
     state.setSearchProgressStatus(progressStatus);
   }
+  
+  componentDidMount = async () => {
+    this.setState({all: true});
+  }
 
   renderProgressButton = (koreanStatus: string, status: string, image: string, color: string, checked: boolean,
                           changeFunc: () => void) => (

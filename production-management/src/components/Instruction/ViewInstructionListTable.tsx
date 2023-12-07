@@ -57,7 +57,7 @@ class ViewInstructionListTable extends Component<Props> {
         <>
           <ListTitle options={{title: '지시 목록', count: list.length}}/>
           <TableContainer className='table-container' style={{
-            height: tableSize ? '71%' : '20%',
+            height: tableSize ? '67.2%' : '20%',
             transition: 'height 0.3s ease-in-out',
           }}>
             <Table size='small' className='table'>

@@ -64,7 +64,7 @@ class ViewCustomerTable extends Component<Props, State> {
         <>
           <div style={{
             display: 'flex',
-            height: '20px',
+            height: '30px',
             marginTop: '20px'
           }}>
             <DetailTitle options={{

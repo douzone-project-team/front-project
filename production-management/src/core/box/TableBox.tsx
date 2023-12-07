@@ -10,7 +10,7 @@ export class TableBox extends Component<TableBoxProps> {
     const {p} = this.props;
 
     return (
-        <div className='table-box' style={{padding: p ? p : '30px'}}>
+        <div className='table-box' style={{padding: p ? p : '20px'}}>
           {this.props.children}
         </div>
     );

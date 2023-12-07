@@ -92,7 +92,7 @@ class ViewInstructionTable extends Component<Props> {
         <>
           <div style={{
             display: 'flex',
-            height: '20px'
+            height: '30px'
           }}>
             <div style={{width: '95%'}}>
               <DetailTitle options={{
@@ -112,7 +112,7 @@ class ViewInstructionTable extends Component<Props> {
             </div>
           </div>
           <TableContainer className='table-container' style={{
-            height: tableSize ? '18%' : '69%',
+            height: tableSize ? '17.8%' : '65%',
             transition: 'height 0.3s ease-in-out'
           }}>
             <Table size='small' className='table'>

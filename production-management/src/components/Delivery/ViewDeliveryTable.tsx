@@ -193,7 +193,7 @@ class ViewDeliveryTable extends Component<Props, State> {
 
           <div style={{
             display: 'flex',
-            height: '20px',
+            height: '30px',
           }}>
             <div style={{width: '30%'}}>
               <DetailTitle options={{
