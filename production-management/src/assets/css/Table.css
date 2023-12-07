@@ -35,8 +35,11 @@
   margin: 3px;
   width: 100px;
   border-radius: 10px;
-  background-color: #EE9616;
-  color: white;
+  /*background-color: #EE9616;*/
+  /*color: white;*/
+  border: 2px solid #EE9616;
+  color: #EE9616;
+  font-weight: bold;
   text-align: center;
 }
 
@@ -44,8 +47,11 @@
   margin: 3px;
   width: 100px;
   border-radius: 10px;
-  background-color: #329632;
-  color: white;
+  /*background-color: #329632;*/
+  /*color: white;*/
+  border: 2px solid #329632;
+  color: #329632;
+  font-weight: bold;
   text-align: center;
 }
 
@@ -53,8 +59,11 @@
   margin: 3px;
   width: 100px;
   border-radius: 10px;
-  background-color: #3C50C2;
-  color: white;
+  /*background-color: #3C50C2;*/
+  /*color: white;*/
+  border: 2px solid #3C50C2;
+  color: #3C50C2;
+  font-weight: bold;
   text-align: center;
 }
 
@@ -62,8 +71,11 @@
   margin: 3px;
   width: 100px;
   border-radius: 10px;
-  background-color: #3C50C2;
-  color: white;
+  /*background-color: #3C50C2;*/
+  /*color: white;*/
+  border: 2px solid #3C50C2;
+  color: #3C50C2;
+  font-weight: bold;
   text-align: center;
 }
 
@@ -71,7 +83,10 @@
   margin: 3px;
   width: 100px;
   border-radius: 10px;
-  background-color: #329632;
-  color: white;
+  /*background-color: #329632;*/
+  /*color: white;*/
+  border: 2px solid #329632;
+  color: #329632;
+  font-weight: bold;
   text-align: center;
 }
