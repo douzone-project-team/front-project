@@ -46,7 +46,7 @@ class ProfileImage extends Component<ProfileImageProps, ProfileImageState> {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                marginRight: '10px',
+                marginTop: '20px'
             }}
             >
                 {this.state.selectedImage ? (

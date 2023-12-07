@@ -193,7 +193,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             employeeAction.myInstruction()
                 .then(result => {
                     let data = result?.data;
-                    this.setState({instruction: data});
+                    this.setState({instructionList: data});
                 })
         },
 
@@ -201,7 +201,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             employeeAction.myDelivery()
                 .then(result => {
                     let data = result?.data;
-                    this.setState({delivery: data});
+                    this.setState({deliveryList: data});
                 });
         },
 

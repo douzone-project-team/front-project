@@ -5,27 +5,14 @@ import {Box, Grid} from "@material-ui/core";
 import ProfileImage from "../../components/Employee/ProfileImage";
 import MyInstruction from "../../components/Employee/MyInstruction";
 import MyDelivery from "../../components/Employee/MyDelivery";
-import Typography from "@material-ui/core/Typography";
+import {Title} from "../../core/Title";
 
 class Mypage extends Component {
 
     render() {
         return (
             <Layout>
-                <Box
-                    sx={{
-                        width: '100%',
-                        mt: '60px',
-                        mb: '20px',
-                        pt: '20px',
-                        pl: '15px',
-                        pb: '15px',
-                        bgcolor: '#3C50C2',
-                        color: 'white'
-                    }}
-                >
-                    <span style={{fontSize: '17px', fontWeight: 'bold'}}>마이 페이지</span>
-                </Box>
+                <Title title='마이 페이지'/>
                 <Box>
                 <Box
                     style={{
@@ -34,7 +21,7 @@ class Mypage extends Component {
                         marginTop: '40px',
                     }}
                 >
-                    <Grid style={{ marginRight: '20px' }}>
+                    <Grid style={{ marginRight: '40px' }}>
                         <ProfileImage/>
                     </Grid>
                     <ProfileForm/>
@@ -43,7 +30,7 @@ class Mypage extends Component {
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
-                        marginTop: '30px'
+                        marginTop: '20px'
                     }}
                 >
                     <MyInstruction />

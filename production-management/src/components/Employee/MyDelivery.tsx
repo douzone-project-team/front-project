@@ -3,13 +3,24 @@ import React, {Component} from "react";
 import {EmployeeState} from "../../object/Employee/employee-object";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 
+
 const boldCellStyle = {
     fontWeight: 'bold',
-    backgroundColor: '#f1f3f5'
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light'
 };
+
+const cellStyle = {
+    fontFamily: 'S-CoreDream-3Light'
+}
 
 class MyDelivery extends Component {
     static contextType = EmployeeContext;
+
+    componentDidMount() {
+        const state = this.context as EmployeeState;
+        state.myDelivery();
+    }
 
     render() {
         const state = this.context as EmployeeState;
@@ -19,7 +30,7 @@ class MyDelivery extends Component {
             <div style={{ display: 'flex', flexDirection: 'column', width: '40%' }}>
                 <div style={{display: 'flex', alignItems: 'center', marginBottom: '10px'}}>
                     <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
-                    <span>&nbsp; 나의 출고목록</span>
+                    <span style={{fontWeight: 'bold'}}>&nbsp; 나의 최근 출고</span>
                 </div>
                 <TableContainer style={{border: '1px solid #ccc', borderRadius: '10px'}}>
                     <Table size='small' style={{backgroundColor: '#FDFDFD'}}>
@@ -31,50 +42,13 @@ class MyDelivery extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
-                                <TableCell align="center">MW2311000001</TableCell>
-                                <TableCell align="center">2023-11-29</TableCell>
-                                <TableCell align="center" style={{width: '50px'}}>
-                                    <div className='COMPLETE'>
-                                        COMPLETE
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell align="center">MW2311000001</TableCell>
-                                <TableCell align="center">2023-11-29</TableCell>
-                                <TableCell align="center" style={{width: '50px'}}>
-                                    <div className='INCOMPLETE'>
-                                        INCOMPLETE
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell align="center">MW2311000001</TableCell>
-                                <TableCell align="center">2023-11-29</TableCell>
-                                <TableCell align="center" style={{width: '50px'}}>
-                                    <div className='INCOMPLETE'>
-                                        INCOMPLETE
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell align="center">MW2311000001</TableCell>
-                                <TableCell align="center">2023-11-29</TableCell>
-                                <TableCell align="center" style={{width: '50px'}}>
-                                    <div className='INCOMPLETE'>
-                                        INCOMPLETE
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-
                             {list && list.length > 0 && list.map((row) => (
                                 <TableRow key={row.deliveryNo}>
-                                    <TableCell align="center">{row.deliveryNo}</TableCell>
-                                    <TableCell align="center">{row.deliveryDate}</TableCell>
-                                    <TableCell align="center" style={{width: '50px'}}>
+                                    <TableCell align="center" style={cellStyle}>{row.deliveryNo}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.deliveryDate}</TableCell>
+                                    <TableCell align="center" style={{width: '50px', fontFamily: 'S-CoreDream-3Light'}}>
                                         <div className={row.progressStatus}>
-                                            {row.progressStatus}
+                                            {row.progressStatus === 'COMPLETE' ? '완료' : '미완료'}
                                         </div>
                                     </TableCell>
                                 </TableRow>
