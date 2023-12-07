@@ -1,6 +1,6 @@
 import React, {Component, useContext} from 'react';
 import AuthAction from './auth-action'
-import {AuthState, Employee, UpdateAuthEmployee} from "../../object/Auth/auth-object";
+import {AddEmployee, AuthState, Employee, UpdateAuthEmployee} from "../../object/Auth/auth-object";
 import {
     initialSearch,
     initialEmployee,
@@ -8,7 +8,6 @@ import {
     initialUpdateAuthEmployee, initialImage
 } from "../../state/authStateManagement";
 import EmployeeAction from "../Employee/employee-action";
-import {Image} from "../../object/Employee/employee-object";
 
 const authAction = new AuthAction;
 const employeeAction = new EmployeeAction();
@@ -24,7 +23,7 @@ export const AuthContext = React.createContext<AuthState>({
     employee: initialEmployee,
     updateAuthEmployee: initialUpdateAuthEmployee,
     image: initialImage,
-    addEmployee(employee: Employee): void {},
+    addEmployee(addEmployee: AddEmployee): void {},
     deleteEmployee(employeeNo: number): void {},
     updateEmployee(updateAuthEmployee1: UpdateAuthEmployee): void {},
     employeeNoCheck(employeeNo: number): void {},
@@ -50,7 +49,8 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         updateAuthEmployee: initialUpdateAuthEmployee,
         image: initialImage,
 
-        addEmployee: (object: Employee) => {
+
+        addEmployee: (object: AddEmployee) => {
             authAction.addEmployee(object)
                 .then(result => {
                     alert('사원 등록이 완료되었습니다.');
