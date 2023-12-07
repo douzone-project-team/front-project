@@ -66,7 +66,8 @@ class AccountMenu extends Component<{}, AccountMenuState> {
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                         >
-                            <Avatar style={{ width: 32, height: 32, marginRight: 5}}></Avatar>
+                            <Avatar style={{ width: 32, height: 32, marginRight: 5}}
+                                    src={(`http://localhost:8080/employees/${employeeNo}/image`)}></Avatar>
                             <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: 5 }}>
                                 <Typography variant="caption" color="inherit" style={{ marginBottom: -4, fontWeight: 'bold' }}>
                                     {name}
