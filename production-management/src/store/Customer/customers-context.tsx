@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import CustomerAction from "./customers-action";
 import {CustomersState, InsertCustomer, UpdateCustomer} from "../../object/Customer/customer-object";
 import {
@@ -126,7 +126,11 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
         deleteCustomer: (customerNo: number) => {
             customerAction.deleteCustomer(customerNo)
                 .then(result => {
-                    alert("삭제하였습니다.");
+                    Swal.fire({
+                        icon: "success",
+                        title: "거래처 삭제",
+                        text: "거래처 삭제를 완료하였습니다!"
+                    });
                     this.getCustomerList();
                     this.setState({customer: initialCustomer});
                 })
@@ -143,9 +147,18 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                 this.setState({duplicateCustomerCodeResult: data},
                     () => {
                     if(data.duplicateResult){
-                        alert("사용 가능한 거래처 코드입니다.")
+                        // alert("사용 가능한 거래처 코드입니다.")
+                        Swal.fire({
+                            icon: "success",
+                            text: "사용 가능한 거래처 코드입니다."
+                        });
+
                     }else{
-                        alert("사용 불가능한 거래처 코드입니다.")
+                        // alert("사용 불가능한 거래처 코드입니다.")
+                        Swal.fire({
+                            icon: "error",
+                            text: "사용이 불가능한 거래처 코드입니다."
+                        });
                     }
                     });
             })
@@ -154,7 +167,11 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
     insertCustomer = () => {
         customerAction.regiCustomers(this.state.insertCustomer)
             .then(result => {
-                alert("등록을 성공하였습니다.")
+                Swal.fire({
+                    icon: "success",
+                    title: "거래처 등록",
+                    text: "거래처 등록을 완료하였습니다!"
+                });
                 this.getCustomerList();
             })
             .catch(reason => {
@@ -165,12 +182,11 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
     updateCustomer = (customerNo: number) => {
         customerAction.updateCustomer(customerNo, this.state.updateCustomer)
             .then(() => {
-                alert("수정을 성공하였습니다.");
-                // Swal.fire({
-                //     icon: "success",
-                //     title: "확인",
-                //     text: "수정 하였습니다!",
-                // });
+                Swal.fire({
+                    icon: "success",
+                    title: "거래처 수정",
+                    text: "거래처 수정을 완료하였습니다!"
+                });
                 this.state.getCustomer(customerNo);
                 this.getCustomerList();
             })

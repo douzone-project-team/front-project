@@ -9,7 +9,7 @@ class CustomerAction{
 
     public duplicateCustomerCodeCheck(object : CheckCustomerCode){
         const URL = `${this.baseUrl}/customer/code/check`;
-        return fetcher.POST(URL, object);
+        return fetcher.GET(URL, object);
     }
 
     public regiCustomers(object : InsertCustomer){
