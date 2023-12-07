@@ -1,19 +1,26 @@
-import React, {ChangeEvent, Component} from 'react';
-import {Box, Table, TableCell, TableContainer, TableRow} from '@material-ui/core';
+import React, {Component} from 'react';
+import {Table, TableCell, TableContainer, TableRow} from '@material-ui/core';
 import {EmployeeContext} from '../../store/Employee/employee-context';
 import {EmployeeState, UpdateEmployee} from '../../object/Employee/employee-object';
 import {initialUpdateEmployee} from "../../state/employeeStateMangement";
-import ProfileImage from "./ProfileImage";
 
 const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
-    fontFamily: 'S-CoreDream-3Light'
+    fontFamily: 'S-CoreDream-3Light',
+    width: '250px'
 };
 
 const tableCellStyle = {
     fontFamily: 'S-CoreDream-3Light'
 }
+
+const inputStyle = {
+    height: '25px',
+    fontFamily: 'S-CoreDream-3Light',
+    width: '200px'
+}
+
 
 type ProfileFormProps = {}
 
@@ -84,18 +91,18 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         modifyValue.email = employee.email;
 
         return (
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '60%'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '50%'}}>
                 <TableContainer className='table-container'>
                     <Table size='small' className='table' style={{backgroundColor: '#FDFDFD'}}>
                         <TableRow>
                             <TableCell style={boldCellStyle}>사번</TableCell>
                             {employee.employeeNo !== 0 ?
-                                <TableCell >{employee.employeeNo}</TableCell>
+                                <TableCell style={tableCellStyle}>{employee.employeeNo}</TableCell>
                                 : null}
                         </TableRow>
                         <TableRow>
                             <TableCell style={boldCellStyle}>아이디</TableCell>
-                            <TableCell>{employee.id}</TableCell>
+                            <TableCell style={tableCellStyle}>{employee.id}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell style={boldCellStyle}>이름</TableCell>
@@ -107,7 +114,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.name = event.target.value;
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={inputStyle}
                                 />
                             </TableCell>
                         </TableRow>
@@ -120,7 +127,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.oldPassword = event.target.value;
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={inputStyle}
                                 />
                             </TableCell>
                         </TableRow>
@@ -133,20 +140,20 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.password = event.target.value;
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={inputStyle}
                                 />
                             </TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell style={boldCellStyle}>새 비밀번호</TableCell>
+                            <TableCell style={boldCellStyle}>새 비밀번호 재입력</TableCell>
                             <TableCell>
                                 <input
                                     type="password"
-                                    placeholder="새 비밀번호 다시입력"
+                                    placeholder="새 비밀번호 재입력"
                                     onChange={event => {
                                         modifyValue.passwordConfirm = event.target.value;
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={inputStyle}
                                 />
                             </TableCell>
                         </TableRow>
@@ -160,7 +167,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.tel = event.target.value;
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={inputStyle}
                                 />
                             </TableCell>
                         </TableRow>
@@ -174,7 +181,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.email = event.target.value;
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={inputStyle}
                                 />
                             </TableCell>
                         </TableRow>
