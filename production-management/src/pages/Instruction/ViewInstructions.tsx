@@ -54,9 +54,9 @@ class ViewInstructions extends Component<Props, State> {
 
   static contextType = InstructionsContext;
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const state = this.context as InstructionsState;
-    state.cleanInstruction();
+    await state.cleanInstruction();
     state.getInitInstruction();
   }
 

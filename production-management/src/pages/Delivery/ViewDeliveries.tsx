@@ -53,9 +53,9 @@ class ViewDeliveries extends Component<Props, State> {
 
   static contextType = DeliveriesContext;
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const state = this.context as DeliveriesState;
-    state.cleanDelivery();
+    await state.cleanDelivery();
     state.getInitDelivery();
   }
 

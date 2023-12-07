@@ -72,7 +72,7 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         addDeliveryObj: initialAddDeliveryObj,
         newDelivery: initialNewDelivery,
         cleanDelivery: () => {
-            this.setState({delivery: initialDelivery, newDelivery: initialNewDelivery, deliveryPage: initialDeliveryPageState})
+            this.setState({delivery: initialDelivery, newDelivery: initialNewDelivery, deliveryPage: initialDeliveryPageState, search: initialDeliverySearchState})
         },
         /* Delivery 조회 메서드  */
         setSearch: (employeeName: string, startDate: string, endDate: string) => {
@@ -193,7 +193,7 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                     this.getDelivery(updateDeliveryInstruction.deliveryNo);
                 })
         },
-        getInitDelivery: async () => {
+        getInitDelivery: () => {
             deliveryAction.getDeliveryList(this.state.search)
             .then((result) => {
                 this.setState({deliveryPage: result?.data}, () => {

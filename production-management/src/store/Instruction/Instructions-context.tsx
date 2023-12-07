@@ -62,9 +62,11 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
     instructionPage: initialInstructionPageState,
     instruction: initialInstruction,
     cleanInstruction: () => {
-      this.setState({instruction: initialInstruction})
-      this.setState({instructionPage: initialInstructionPageState})
-      this.setState({search: initialInstructionSearchState})
+      this.setState({
+        instruction: initialInstruction,
+        instructionPage: initialInstructionPageState,
+        search: initialInstructionSearchState
+      });
     },
     setSearch: (instructionSearch: InstructionSearch) => {
       this.setState({search: instructionSearch}, () => {
@@ -163,7 +165,7 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
           }
       )
     },
-    getInitInstruction: async () => {
+    getInitInstruction: () => {
       instructionAction.getInstructionList(this.state.search)
       .then((result) => {
         this.setState({instructionPage: result?.data}, () => {

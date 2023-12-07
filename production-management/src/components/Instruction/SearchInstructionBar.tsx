@@ -11,7 +11,16 @@ import {DateInput} from "../../core/input/DateInput";
 import { initialInstructionSearchState } from "../../state/InstructionStateManagement";
 
 
-let searchValue = initialInstructionSearchState as InstructionSearch;
+let searchValue = {
+  progressStatus: '',
+  employeeName: '',
+  startDate: '',
+  endDate: '',
+  expirationStartDate: '',
+  expirationEndDate: '',
+  page: 1,
+  pageSize: 8
+} as InstructionSearch;
 
 type SearchState = {
   all: boolean,
