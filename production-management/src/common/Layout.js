@@ -14,7 +14,7 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import logo from '../images/logo.png';
+import logo from '../images/BLOOMING.png';
 import {Link} from "react-router-dom";
 import AccountMenu from "./AccountMenu";
 import {MainListItems, SecondaryListItems} from "./ListItem";
@@ -24,7 +24,6 @@ import {EventSourcePolyfill, NativeEventSource} from "event-source-polyfill";
 import {EmployeeContext} from "../store/Employee/employee-context";
 import DraftsIcon from '@material-ui/icons/Drafts';
 import Message from "./Message";
-import message from "./Message";
 
 const drawerWidth = 240;
 
@@ -220,7 +219,7 @@ class Layout extends React.Component {
             getMessages();
             const messageData = event.data;
             console.log('Received SSE event:' + messageData);
-            const messageArray = messageData.split(',');
+            const messageArray = messageData.split('&&');
             const newMessage = {
                 sendId: messageArray[0],
                 sendName: messageArray[1],
@@ -383,7 +382,7 @@ class Layout extends React.Component {
                                 <img
                                     src={logo}
                                     alt='logo'
-                                    style={{height: '20px', marginRight: '10px'}}
+                                    style={{height: '20px', marginTop: '10px'}}
                                 />
                             </Link>
                         </Typography>
