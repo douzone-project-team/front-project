@@ -3,13 +3,15 @@ export const initialInstructionSearchState = {
   employeeName: '',
   startDate: '',
   endDate: '',
+  expirationStartDate: '',
+  expirationEndDate: '',
   page: 1,
   pageSize: 8
 };
 
 export const initialInstructionPageState = {
   list: [],
-  currentPage: 0,
+  currentPage: -1,
   hasNextPage: false,
   hasPreviousPage: false
 }

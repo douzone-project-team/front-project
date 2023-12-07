@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
-import {InstructionsState} from "../../object/Instruction/Instruction-object";
+import {InstructionSearch, InstructionsState} from "../../object/Instruction/Instruction-object";
 import {Box} from "@material-ui/core";
 import {TextInput} from "../../core/input/TextInput";
 import {DateInput} from "../../core/input/DateInput";
@@ -12,14 +12,16 @@ let searchValue = {
   employeeName: '',
   startDate: '',
   endDate: '',
-};
+  expirationStartDate: '',
+  expirationEndDate: ''
+} as InstructionSearch;
 
 class DeliverySearchInstructionBar extends Component {
   static contextType = InstructionsContext;
 
   handleSearchClick = () => {
     const state = this.context as InstructionsState;
-    state.setSearch(searchValue.employeeName, searchValue.startDate, searchValue.endDate);
+    state.setSearch(searchValue);
   }
 
   handleSearchProgressState = (progressStatus: string) => {

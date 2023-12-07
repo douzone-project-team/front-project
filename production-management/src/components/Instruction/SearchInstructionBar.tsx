@@ -1,21 +1,17 @@
 import {Box} from "@material-ui/core";
 import {Component} from "react";
 import {InstructionsContext, Props} from "../../store/Instruction/Instructions-context";
-import {InstructionsState} from "../../object/Instruction/Instruction-object";
+import {InstructionSearch, InstructionsState} from "../../object/Instruction/Instruction-object";
 import "./../../assets/css/Styles.css";
 import {ProgressButton} from "../../core/button/ProgressButton";
 import {SearchButton} from "../../core/button/SearchButton";
 import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {TextInput} from '../../core/input/TextInput';
 import {DateInput} from "../../core/input/DateInput";
+import { initialInstructionSearchState } from "../../state/InstructionStateManagement";
 
 
-let searchValue = {
-  progressStatus: '',
-  employeeName: '',
-  startDate: '',
-  endDate: '',
-};
+let searchValue = initialInstructionSearchState as InstructionSearch;
 
 type SearchState = {
   all: boolean,
@@ -50,7 +46,7 @@ class SearchInstructionBar extends Component<Props, SearchState> {
 
   handleSearchClick = () => {
     const state = this.context as InstructionsState;
-    state.setSearch(searchValue.employeeName, searchValue.startDate, searchValue.endDate);
+    state.setSearch(searchValue);
   }
 
   handleSearchProgressState = (progressStatus: string) => {
@@ -59,8 +55,7 @@ class SearchInstructionBar extends Component<Props, SearchState> {
     state.setSearchProgressStatus(progressStatus);
   }
 
-  componentDidMount() {
-    this.handleSearchProgressState('');
+  componentDidMount = async () => {
     this.setState({all: true});
   }
 
@@ -95,14 +90,14 @@ class SearchInstructionBar extends Component<Props, SearchState> {
                          startDate={{
                            datalaceholder: '시작일',
                            onChange: (e) => {
-                             searchValue.endDate = e.target.value
+                             searchValue.expirationStartDate = e.target.value
                            },
                            required: true
                          }}
                          endDate={{
                            datalaceholder: '종료일',
                            onChange: (e) => {
-                             searchValue.endDate = e.target.value
+                             searchValue.expirationEndDate = e.target.value
                            },
                            required: true
                          }}

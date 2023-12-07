@@ -106,5 +106,6 @@ export type DeliveriesState = {
     deleteDeliveryInstruction(deleteDeliveryInstructionObj: DeleteDeliveryInstruction): void,
     updateDelivery(updateDelivery: UpdateDelivery): void,
     updateDeliveryStatus(deliveryNo: string):void,
-    updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction): void
+    updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction): void,
+    getInitDelivery(): void,
 }
