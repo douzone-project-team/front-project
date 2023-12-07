@@ -8,12 +8,12 @@ import {Box} from "@material-ui/core";
 import "./error.css";
 import {Link} from "react-router-dom";
 // @ts-ignore
-import logo from "../../images/logo.png";
+import logo from "../../images/BLOOMING.png";
 
 class Error404 extends Component {
     render() {
         return (
-            <>
+            <div>
                 <Link to="/" style={{textDecoration: 'none', color: 'black'}}>
                     <Box
                         style={{
@@ -22,7 +22,9 @@ class Error404 extends Component {
                             alignItems: 'center',
                             justifyContent: 'center',
                             minHeight: '100vh',
-                            position: 'relative'
+                            position: 'relative',
+                            fontFamily: 'S-CoreDream-3Light',
+                            fontWeight: 'bold'
                         }}
                     >
                         <div className="arrow_box">
@@ -34,10 +36,10 @@ class Error404 extends Component {
                             width={200}
                             height={200}
                         />
-                        <Typography variant="h5" color="inherit" style={{marginBottom: '10px'}}>
+                        <Typography variant="h5" color="inherit" style={{marginBottom: '10px' , fontFamily: 'S-CoreDream-3Light'}}>
                             페이지를 찾을 수 없습니다.
                         </Typography>
-                        <Typography variant="body1" color="textSecondary">
+                        <Typography variant="body1" color="textSecondary" style={{fontFamily: 'S-CoreDream-3Light'}}>
                             요청하신 페이지를 찾을 수 없습니다. 입력하신 URL을 다시 확인해주세요.
                         </Typography>
                         <Box
@@ -57,7 +59,7 @@ class Error404 extends Component {
                         </Box>
                     </Box>
                 </Link>
-            </>
+            </div>
         )
     }
 }
