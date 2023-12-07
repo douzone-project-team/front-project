@@ -30,16 +30,26 @@ const cellStyle = {
 class ViewEmployeeTable extends Component<Props, State> {
     static contextType = AuthContext;
 
-    handleDeleteClick = (employeeNo: number) => {
-        const state = this.context as AuthState;
-        state.deleteEmployee(employeeNo);
-    }
-
     constructor(Props: Props) {
         super(Props);
         this.state = {
             employeeModifyModalOpen: false
         } as State;
+    }
+
+    componentDidMount() {
+        const state = this.context as AuthState;
+        state.getEmployeeList();
+        const list = state.employeePage?.list;
+        const firstEmployee = list && list.length > 0 ? list[0] : null;
+        if(firstEmployee){
+            state.getEmployee(firstEmployee?.employeeNo);
+        }
+    }
+
+    handleDeleteClick = (employeeNo: number) => {
+        const state = this.context as AuthState;
+        state.deleteEmployee(employeeNo);
     }
 
     updateEmployee = (employeeNo: number, id: string, password: string, name: string,

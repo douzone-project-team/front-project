@@ -1,9 +1,10 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import {AuthContext} from "../../store/Auth/auth-context";
 import {AuthState} from "../../object/Auth/auth-object";
 import {ListTitle} from "../../core/ListTitle";
 import {PageButton} from "../../core/button/PageButton";
+import Avatar from "@material-ui/core/Avatar";
 
 const boldCellStyle = {
     backgroundColor: '#f1f3f5',
@@ -43,6 +44,7 @@ class ViewEmployeeListTable extends Component {
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
+                                <TableCell align='center' style={boldCellStyle}>사진</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>사번</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>이름</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>연락처</TableCell>
@@ -54,6 +56,11 @@ class ViewEmployeeListTable extends Component {
                             {list && list.length > 0 ? list.map((row) => (
                                 <TableRow key={row.employeeNo} className='cellHoverEffect'
                                           onClick={() => state.getEmployee(row.employeeNo)}>
+                                    <TableCell align="center">
+                                        <Avatar style={{ width: 25, height: 25, marginLeft: 'auto', marginRight: 'auto'}}
+                                            src={(`http://localhost:8080/employees/${row.employeeNo}/image`)}>
+                                        </Avatar>
+                                    </TableCell>
                                     <TableCell align="center">
                                         {row.employeeNo}</TableCell>
                                     <TableCell align="center">
