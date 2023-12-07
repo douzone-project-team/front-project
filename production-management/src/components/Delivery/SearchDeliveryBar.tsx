@@ -45,6 +45,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
 
   handleSearchClick = () => {
     const state = this.context as DeliveriesState;
+    state.search.page = 1;
     state.setSearch(searchValue.employeeName, searchValue.startDate, searchValue.endDate);
   }
 

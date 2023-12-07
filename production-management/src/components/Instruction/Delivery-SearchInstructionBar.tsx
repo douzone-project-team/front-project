@@ -21,6 +21,7 @@ class DeliverySearchInstructionBar extends Component {
 
   handleSearchClick = () => {
     const state = this.context as InstructionsState;
+    state.search.page = 1;
     state.setSearch(searchValue);
   }
 
