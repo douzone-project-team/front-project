@@ -40,7 +40,7 @@ class ViewEmployeeListTable extends Component {
         return (
             <>
                 <ListTitle options={{title: '사원 목록', count: list.length}}/>
-                <TableContainer className='table-container' style={{height: '340px'}}>
+                <TableContainer className='table-container' style={{height: '380px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
