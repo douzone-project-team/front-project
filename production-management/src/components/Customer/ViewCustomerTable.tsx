@@ -21,11 +21,13 @@ type Props = {}
 const boldCellStyle = {
   fontWeight: 'bold',
   backgroundColor: '#f1f3f5',
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
+  fontSize: '16px'
 };
 
 const tableCellStyle = {
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
+  fontSize: '16px'
 }
 
 
@@ -84,13 +86,13 @@ class ViewCustomerTable extends Component<Props, State> {
             <div style={{marginLeft: 'auto'}}>
               {state.customer.customerNo !== 0 &&
                   <div>
-                    <EditButton size={20}  onClick={() => this.setState({customerModifyModalOpen: true})}/>
-                    &nbsp;&nbsp;
-                    <DeleteButton size={20}  onClick={() => this.handleDeleteClick(state.customer.customerNo)}/>
+                    <EditButton size={22}  onClick={() => this.setState({customerModifyModalOpen: true})}/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <DeleteButton size={22}  onClick={() => this.handleDeleteClick(state.customer.customerNo)}/>
                   </div>}
             </div>
           </div>
-          <TableContainer className='table-container' style={{height: '73px'}}>
+          <TableContainer className='table-container' style={{}}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
@@ -113,7 +115,7 @@ class ViewCustomerTable extends Component<Props, State> {
                 </TableRow> :
                     <TableRow>
                       <TableCell colSpan={6} style={{border: '0'}}>
-                        <NullText/>
+                        <NullText mt={'0px'}/>
                       </TableCell>
                     </TableRow>}
               </TableBody>

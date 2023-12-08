@@ -19,11 +19,13 @@ import {Loading} from "../../core/Loading";
 const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
-    fontFamily: 'S-CoreDream-3Light'
+    fontFamily: 'S-CoreDream-3Light',
+    fontSize: '16px'
 };
 
 const tableCellStyle = {
-    fontFamily: 'S-CoreDream-3Light'
+    fontFamily: 'S-CoreDream-3Light',
+    fontSize: '16px'
 }
 
 
@@ -64,7 +66,7 @@ class ViewCustomerListTable extends Component {
         return(
             <>
                 <ListTitle options={{title: '거래처 목록', count: list.length}}/>
-                <TableContainer className='table-container' style={{height:'410px'}}>
+                <TableContainer className='table-container' style={{height:'450px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>

@@ -66,11 +66,11 @@ class CustomerInputBar extends Component<Props, SearchState> {
             </BarLeftBox>
             <BarRightBox>
               <SearchButton
-                  size={30} onClick={this.handleSearchClick}
+                  size={35} onClick={this.handleSearchClick}
               />
               &nbsp;&nbsp;
               <AddItemButton
-                  size={30}
+                  size={35}
                   onClick={() => this.setState((prevState) => ({customerAddModalOpen: !prevState.customerAddModalOpen}))}
               />
             </BarRightBox>

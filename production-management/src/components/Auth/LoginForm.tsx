@@ -52,7 +52,7 @@ class LoginForm extends Component<LoginFormProps> {
     render() {
         return (
             <ThemeProvider theme={defaultTheme}>
-                <Grid container component="main" style={{ height: '65vh', marginTop: 15, width: '75%', marginLeft: '12%' }}>
+                <Grid container component="main" style={{ height: '65vh', marginTop: 15, width: '100%'}}>
                     <CssBaseline />
                     <Grid
                         component={Paper}
@@ -109,7 +109,8 @@ class LoginForm extends Component<LoginFormProps> {
                                     type="submit"
                                     variant="contained"
                                     fullWidth
-                                    style={{ marginTop: 3, marginBottom: 2 }}
+                                    style={{ marginTop: 30, marginBottom: 2,  fontFamily: 'S-CoreDream-3Light', fontWeight: 'bold'
+                                    }}
                                 >
                                     로그인
                                 </Button>

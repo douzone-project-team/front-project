@@ -16,7 +16,7 @@ const div = {
 
 const spanTitle = {
   fontWeight: 'bold',
-  fontSize: '16px',
+  fontSize: '19px',
   lineHeight: '16px',
   marginLeft: '10px'
 };
@@ -25,6 +25,7 @@ const spanStatus = {
   lineHeight: '16px',
   width: '130px',
   marginLeft: '10px',
+  fontSize: '19px'
 };
 
 const img = {
@@ -51,7 +52,7 @@ export class DetailTitle extends Component<DetailTitleProps> {
           <span style={spanTitle}>{title}</span>
           {targetName ?
               <span className={status ? status : ''} style={spanStatus}>{targetName}</span> :
-              <span style={spanStatus}>{targetName}</span>}
+              <span style={spanStatus}>{targetName == '0' ? null : targetName}</span>}
         </div>
     );
   }

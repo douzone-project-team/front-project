@@ -7,7 +7,7 @@ class Login extends Component {
         return (
             <div
                 style={{
-                    marginTop: '110px'
+                    margin: '230px'
                 }}
             >
                 <LoginForm />
