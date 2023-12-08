@@ -234,7 +234,7 @@ class AddDeliveryTable extends Component<Props, State> {
                           </TableCell>
                           <TableCell align="center" style={tableCellStyle}>
                             <AddItemButton color="black"
-                                 onClick={changeInstructionModalStatus}/>
+                                           onClick={changeInstructionModalStatus}/>
                           </TableCell>
                           <TableCell align="center" style={tableCellStyle}></TableCell>
                           <TableCell align="center" style={tableCellStyle}></TableCell>
@@ -242,7 +242,7 @@ class AddDeliveryTable extends Component<Props, State> {
                           <TableCell align="center" style={tableCellStyle}>
                             {this.state.selectedInstructionNo ?
                                 <AddItemButton color="black"
-                                           onClick={changeDeliveryProductModalStatus}/>
+                                               onClick={changeDeliveryProductModalStatus}/>
                                 : null}
                           </TableCell>
                           <TableCell align="center" style={tableCellStyle}></TableCell>

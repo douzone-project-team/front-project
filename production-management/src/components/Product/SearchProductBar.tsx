@@ -28,6 +28,7 @@ class SearchProductBar extends Component<{}, SearchState> {
 
   handleSearchClick = () => {
     const state = this.context as ProductsState;
+    state.search.page = 1;
     state.setProductCodeAndName(this.state.productCode, this.state.productName);
   };
 

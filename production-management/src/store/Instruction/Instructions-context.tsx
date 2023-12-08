@@ -2,6 +2,7 @@ import InstructionAction from "./instructions-action";
 import ProductInstructionAction from "../ProductInstruction/product-instruction-action";
 import {
   AddInstruction,
+  InstructionSearch,
   InstructionsState,
   UpdateInstruction
 } from "../../object/Instruction/Instruction-object";
@@ -29,7 +30,7 @@ export const InstructionsContext = React.createContext<InstructionsState>({
   instruction: initialInstruction,
   cleanInstruction(): void {
   },
-  setSearch(employeeName: string, startDate: string, endDate: string): void {
+  setSearch(instructionSearch: InstructionSearch): void {
   },
   setSearchProgressStatus(progressStatus: string): void {
   },
@@ -51,6 +52,8 @@ export const InstructionsContext = React.createContext<InstructionsState>({
   },
   updateInstructionProduct(amount: number, productNo: number): void {
   },
+  getInitInstruction(): void {
+  }
 })
 
 export class InstrcutionsContextProvider extends Component<Props, InstructionsState> {
@@ -59,21 +62,16 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
     instructionPage: initialInstructionPageState,
     instruction: initialInstruction,
     cleanInstruction: () => {
-      this.setState({instruction: initialInstruction})
-      this.setState({instructionPage: initialInstructionPageState})
-      this.setState({search: initialInstructionSearchState})
+      this.setState({
+        instruction: initialInstruction,
+        instructionPage: initialInstructionPageState,
+        search: initialInstructionSearchState
+      });
     },
-    setSearch: (employeeName: string, startDate: string, endDate: string) => {
-      this.setState((prevState) => ({
-        search: {
-          ...prevState.search,
-          employeeName: employeeName,
-          startDate: startDate,
-          endDate: endDate
-        }
-      }), () => {
+    setSearch: (instructionSearch: InstructionSearch) => {
+      this.setState({search: instructionSearch}, () => {
         this.getInstructionList();
-      })
+      });
     },
     setSearchProgressStatus: (progressStatus: string) => {
       this.setState((prevState) => ({
@@ -139,7 +137,6 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
         this.getInstruction(this.state.instruction.instructionNo);
       });
     },
-
     deleteProductInstruction: (deleteProductInstruction: DeleteProductInstruction) => {
       productInstructionAction.deleteProductInstruction(deleteProductInstruction)
       .then((result) => {
@@ -167,23 +164,29 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
             this.getInstruction(this.state.instruction.instructionNo);
           }
       )
+    },
+    getInitInstruction: () => {
+      instructionAction.getInstructionList(this.state.search)
+      .then((result) => {
+        this.setState({instructionPage: result?.data}, () => {
+          this.getInstruction(this.state.instructionPage.list[0].instructionNo);
+        });
+      })
     }
   }
 
   getInstructionList = () => {
     instructionAction.getInstructionList(this.state.search)
     .then((result) => {
-      let data = result?.data;
-      console.log(data);
-      this.setState({instructionPage: data});
+      console.log('1');
+      this.setState({instructionPage: result?.data});
     })
   };
 
   getInstruction = (instructionNo: string) => {
     instructionAction.getInstruction(instructionNo)
     .then((result) => {
-      let data = result?.data;
-      this.setState({instruction: data});
+      this.setState({instruction: result?.data});
     })
 
   }

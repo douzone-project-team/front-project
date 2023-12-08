@@ -25,6 +25,7 @@ type State = {
 
 class ViewInstructions extends Component<Props, State> {
 
+
   constructor(props: Props) {
     super(props);
 
@@ -53,9 +54,10 @@ class ViewInstructions extends Component<Props, State> {
 
   static contextType = InstructionsContext;
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const state = this.context as InstructionsState;
-    state.cleanInstruction();
+    await state.cleanInstruction();
+    state.getInitInstruction();
   }
 
   render() {
@@ -68,6 +70,7 @@ class ViewInstructions extends Component<Props, State> {
             </SearchBox>
             <TableBox>
               <ViewInstructionListTable tableSize={this.state.tableSize}
+                                        tableSizeUp={this.state.sizeUp}
                                         changeAmountStatusFalse={this.state.changeAmountStatusFalse}/>
               <div style={{textAlign: 'center'}}>
                 <TableSizeButton tableSize={this.state.tableSize} tableSizeUp={this.state.sizeUp}/>
@@ -79,6 +82,7 @@ class ViewInstructions extends Component<Props, State> {
                                     changeCustomerModalStatus={this.state.changeCustomerModalStatus}
                                     changeAmount={this.state.changeAmount}
                                     changeAmountStatus={this.state.changeAmountStatus}
+                                    tableSizeUp={this.state.sizeUp}
               />
             </TableBox>
           </Body>

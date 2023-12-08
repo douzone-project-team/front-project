@@ -196,7 +196,7 @@ class ViewDeliveryTable extends Component<Props, State> {
       deliveryProductModalOpen,
       changeAmount,
       changeAmountStatus,
-        tableSizeUp
+      tableSizeUp
     } = this.props;
 
     return (
@@ -242,7 +242,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                                     if(!tableSize){
                                       tableSizeUp();
                                     }
-                    }}/>
+                }}/>
                   </div>}
             </div>
           </div>

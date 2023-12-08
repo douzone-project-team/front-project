@@ -116,31 +116,31 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         },
         getDelivery: (deliveryNo: string) => {
             deliveryAction.getDelivery(deliveryNo)
-                .then((result) => {
-                    let data = result?.data;
-                    this.setState({delivery: data});
-                })
+            .then((result) => {
+                let data = result?.data;
+                this.setState({delivery: data});
+            })
         },
         getRemainAmount: (instructionNo: string, productNo: number) => {
             deliveryAction.getRemainAmount(instructionNo, productNo)
-                .then((result) => {
-                    let data = result?.data;
-                    this.setState({remainAmount: data});
-                    console.log(this.state.remainAmount);
-                })
+            .then((result) => {
+                let data = result?.data;
+                this.setState({remainAmount: data});
+                console.log(this.state.remainAmount);
+            })
         },
         /* Delivery 껍데기 추가 메서드 */
         addDelivery: (addDeliveryObj: AddDeliveryObj) => {
             deliveryAction.addDelivery(addDeliveryObj)
-                .then((result) => {
-                    this.setState((prevState) => ({
-                        newDelivery: {
-                            ...prevState.newDelivery,
-                            deliveryNo: result?.data.deliveryNo,
-                            deliveryDate: addDeliveryObj.deliveryDate
-                        }
-                    }));
-                });
+            .then((result) => {
+                this.setState((prevState) => ({
+                    newDelivery: {
+                        ...prevState.newDelivery,
+                        deliveryNo: result?.data.deliveryNo,
+                        deliveryDate: addDeliveryObj.deliveryDate
+                    }
+                }));
+            });
         },
 
         updateDelivery: (updateDelivery: UpdateDelivery) => {
@@ -160,65 +160,65 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         // 출고 껍데기에 지시 먼저 등록하기
         addDeliveryInstruction: (deliveryNo, addDeliveryInstruction: AddDeliveryInstruction) => {
             deliveryInstructionAction.addDeliveryInstruction(deliveryNo, addDeliveryInstruction)
-                .then((result) => {
-                    const {instructionNo} = addDeliveryInstruction;
-                    this.setState((prevState) => ({
-                        newDelivery: {
-                            ...prevState.newDelivery,
-                            instructionNo: instructionNo,
-                        },
-                    }), () => {this.getDelivery(deliveryNo)});
+            .then((result) => {
+                const {instructionNo} = addDeliveryInstruction;
+                this.setState((prevState) => ({
+                    newDelivery: {
+                        ...prevState.newDelivery,
+                        instructionNo: instructionNo,
+                    },
+                }), () => {this.getDelivery(deliveryNo)});
 
-                });
+            });
         },
 
         deleteDeliveryInstruction: (deleteDeliveryInstructionObj: DeleteDeliveryInstruction) => {
             deliveryInstructionAction.deleteDeliveryInstruction(deleteDeliveryInstructionObj)
+            .then((result) => {
+                deliveryAction.getDelivery(this.state.delivery.deliveryNo)
                 .then((result) => {
-                    deliveryAction.getDelivery(this.state.delivery.deliveryNo)
-                        .then((result) => {
-                            this.setState({delivery: result?.data})
-                        })
-                });
+                    this.setState({delivery: result?.data})
+                })
+            });
         },
 
         deleteDelivery: (deliveryNo: string) => {
             deliveryAction.deleteDelivery(deliveryNo)
-                .then((result) => {
-                    this.setState({delivery: initialDelivery})
-                    this.getDeliveryList();
-                })
+            .then((result) => {
+                this.setState({delivery: initialDelivery})
+                this.getDeliveryList();
+            })
         },
 
         updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction) {
             deliveryInstructionAction.updateDeliveryInstruction(updateDeliveryInstruction)
-                .then(() => {
-                    this.getDelivery(updateDeliveryInstruction.deliveryNo);
-                })
+            .then(() => {
+                this.getDelivery(updateDeliveryInstruction.deliveryNo);
+            })
         },
 
         getInitDelivery: async () => {
             deliveryAction.getDeliveryList(this.state.search)
-                .then((result) => {
-                    this.setState({deliveryPage: result?.data}, () => {
-                        this.getDelivery(this.state.deliveryPage.list[0].deliveryNo);
-                    });
-                })
+            .then((result) => {
+                this.setState({deliveryPage: result?.data}, () => {
+                    this.getDelivery(this.state.deliveryPage.list[0].deliveryNo);
+                });
+            })
         }
     }
 
     getDeliveryList = () => {
         deliveryAction.getDeliveryList(this.state.search)
-            .then((result) => {
-                this.setState({deliveryPage: result?.data});
-            })
+        .then((result) => {
+            this.setState({deliveryPage: result?.data});
+        })
     };
 
     getDelivery = (deliveryNo: string) => {
         deliveryAction.getDelivery(deliveryNo)
-            .then((result) => {
-                this.setState({delivery: result?.data});
-            })
+        .then((result) => {
+            this.setState({delivery: result?.data});
+        })
     }
 
     render() {
