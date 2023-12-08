@@ -33,6 +33,7 @@ class App extends Component {
             <Route exact path="/employee/list" component={ViewEmployees}/>
             <Route exact path="/error" component={Error500}/>
             <Route exact path="/not-found" component={Error404}/>
+            <Route exact path="/*" component={Error404}/>
           </Switch>
         </Router>
     );

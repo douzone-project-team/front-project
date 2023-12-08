@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import TodoBox from './TodoBox';
 import { Box } from '@material-ui/core';
-import './button.css';
 
 interface TodoItem {
     id: string;
@@ -15,48 +14,47 @@ interface TodoListState {
     doing: TodoItem[];
     done: TodoItem[];
     inputValue: string;
-    todoIsCollapsed: boolean;
-    doingIsCollapsed: boolean;
-    doneIsCollapsed: boolean;
+    isInputOpen: boolean;
 }
 
 const TodoStyle = {
-    width: '21vw',
-    maxWidth:'21vw',
-    /*    height: this.state.todoIsCollapsed ? '130px' : 'auto',*/
-    height:'auto',
-    minHeight: '25vh',
-    maxHeight:'25vh',
-    marginBottom:'1%',
+    width: '100%',
+    maxWidth: '100%',
+    height: '100%',
+    minHeight: '140px',
+    maxHeight: '140px',
+    marginBottom: '1%',
+    marginTop: '2%',
+    marginRight: '2%',
     flexGrow: 1,
-    padding: '16px',
-    border: '1px solid #ddd',
+    padding: '2%',
     borderRadius: '8px',
     overflow: 'auto',
-}
+    backgroundColor:'#F3F3F3',
+};
 
 const Todoinput = {
-    width: '17.2vw',
-    height: '3vw',
-    borderRadius:'20px',
-    border:0,
-    marginBottom:'5px',
+    width: '100%',
+    height: '100%',
+    borderRadius: '20px',
+    border: 0,
     boxShadow: '0 1px 7px rgba(0, 0, 0, 0.15)',
-    paddingLeft:'10px',
-}
+    paddingLeft: '5%',
+    marginLeft:'5%',
+    marginTop:'-5%'
+};
+
+const addTodoButtonImage = require('../../../images/button/add-todo-button.png');
+
+
 class TodoList extends Component<{}, TodoListState> {
-    constructor(props: {}) {
-        super(props);
-        this.state = {
-            todo: [],
-            doing: [],
-            done: [],
-            inputValue: '',
-            todoIsCollapsed: false,
-            doingIsCollapsed: false,
-            doneIsCollapsed: false,
-        };
-    }
+    state: TodoListState = {
+        todo: [],
+        doing: [],
+        done: [],
+        inputValue: '',
+        isInputOpen: false,
+    };
 
     onDragEnd = (result: DropResult): void => {
         if (!result.destination) {
@@ -72,180 +70,143 @@ class TodoList extends Component<{}, TodoListState> {
         const sourceId = source.droppableId as keyof TodoListState;
         const destinationId = destination.droppableId as keyof TodoListState;
 
-        const updatedItems = [...this.state[sourceId] as TodoItem[]]; // 수정된 부분
+        const updatedItems = [...this.state[sourceId] as TodoItem[]];
         const [reorderedItem] = updatedItems.splice(source.index, 1);
 
         this.setState((prevState) => ({
             ...prevState,
             [sourceId]: updatedItems,
-            [destinationId]: [...(prevState[destinationId] as TodoItem[]), reorderedItem],
+            [destinationId]: [...(prevState[destinationId] as TodoItem[] || []), reorderedItem],
         }));
     };
 
-
-    handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void  => {
+    handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({ inputValue: event.target.value });
     };
 
-    handleTodoSubmit = (event: React.FormEvent): void => {
-        event.preventDefault();
-        if (this.state.inputValue.trim() !== '') {
-            const newTodo: TodoItem = {
+    handleTodoSubmit = (): void => {
+        const { inputValue } = this.state;
+
+        if (inputValue.trim() !== '') {
+            const newTodo = {
                 id: String(Date.now()),
-                content: this.state.inputValue,
+                content: inputValue,
                 status: 'todo',
             };
 
             this.setState((prevState) => ({
-                todo: [...prevState.todo, newTodo],
+                todo: [...(prevState.todo as TodoItem[]), newTodo],
                 inputValue: '',
+                isInputOpen: false,
             }));
         }
     };
 
     handleDelete = (id: string): void => {
-        this.setState((prevState) => ({
-            todo: prevState.todo.filter((item) => item.id !== id),
-            doing: prevState.doing.filter((item) => item.id !== id),
-            done: prevState.done.filter((item) => item.id !== id),
+        this.setState((prevState: TodoListState) => ({
+            todo: prevState.todo.filter((item: TodoItem) => item.id !== id),
+            doing: prevState.doing.filter((item: TodoItem) => item.id !== id),
+            done: prevState.done.filter((item: TodoItem) => item.id !== id),
         }));
     };
 
-    toggleSection = (section: 'todo' | 'doing' | 'done') => {
+    toggleInput = (): void => {
         this.setState((prevState) => ({
             ...prevState,
-            [`${section}IsCollapsed`]: !prevState[`${section}IsCollapsed`],
-            // 아래 두 줄을 추가하여 다른 섹션의 상태를 유지하지 않도록 합니다.
-            ...(section !== 'todo' && { todoIsCollapsed: prevState.todoIsCollapsed }),
-            ...(section !== 'doing' && { doingIsCollapsed: prevState.doingIsCollapsed }),
-            ...(section !== 'done' && { doneIsCollapsed: prevState.doneIsCollapsed }),
+            isInputOpen: !prevState.isInputOpen,
         }));
     };
-
 
     render() {
         return (
             <Box>
-                <div>
-                    <DragDropContext onDragEnd={this.onDragEnd}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            {/* Todo Section */}
-                            <Droppable droppableId="todo" direction="vertical">
-                                {(provided) => (
-                                    <div
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                        style={TodoStyle}
-                                    >
-                                        <h2 style={{marginTop:'0%'}}>
-                                            Todo list
-                                           {/* <img
-                                                src={this.state.todoIsCollapsed ? require("../../../images/button/folded.png") : require("../../../images/button/unfolded.png")}
-                                                alt={this.state.todoIsCollapsed ? "Fold" : "Unfold"}
-                                                onClick={() => this.toggleSection('todo')}
-                                                style={{ width: '24px', height: '24px' }}
-                                            />*/}
-                                        </h2>
-                                        {this.state.todo.map((item, index) => (
-                                            <Draggable key={item.id} draggableId={item.id} index={index}>
-                                                {(provided, snapshot) => (
-                                                    <TodoBox
-                                                        id={item.id}
-                                                        content={item.content}
-                                                        provided={provided}
-                                                        snapshot={snapshot}
-                                                        onDelete={this.handleDelete}
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                    <div style={{ display: 'flex' }}>
+                        <Droppable droppableId="todo" direction="vertical">
+                            {(provided) => (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    style={TodoStyle}
+                                >
+                                    <div style={{ display: 'flex' }}>
+                                        <h2 style={{ marginTop: '0%',color:'#F595BA'}}>Todo list</h2>
+                                        <form
+                                            style={{ display: 'flex' }}
+                                            onSubmit={(e) => {
+                                                e.preventDefault();
+                                                this.handleTodoSubmit();
+                                            }}
+                                        >
+                                            {this.state.isInputOpen ? (
+                                                <>
+                                                    <input
+                                                        type="text"
+                                                        style={Todoinput}
+                                                        value={this.state.inputValue}
+                                                        onChange={this.handleInputChange}
+                                                        placeholder="할 일을 입력하세요"
                                                     />
-                                                )}
-                                            </Draggable>
-                                        ))}
-                                        {provided.placeholder}
+                                                </>
+                                            ) : (
+                                                <div
+                                                    onClick={this.toggleInput}
+                                                    style={{
+                                                        width: '30px',
+                                                        height: '30px',
+                                                        marginLeft: '5px',
+                                                        backgroundImage: `url(${addTodoButtonImage})`,
+                                                        backgroundSize: 'cover',
+                                                        cursor: 'pointer',
+                                                    }}
+                                                />
+                                            )}
+                                        </form>
                                     </div>
-                                )}
-                            </Droppable>
-
-                            {/* Doing Section */}
-                            {/*<Droppable droppableId="doing" direction="vertical">
-                                {(provided) => (
-                                    <div
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                        style={TodoStyle}
-                                    >
-                                        <h2 style={{marginTop:'0%'}}>
-                                            진행 중
-                                            <img
-                                                src={this.state.doingIsCollapsed ? require("../../../images/button/folded.png") : require("../../../images/button/unfolded.png")}
-                                                alt={this.state.doingIsCollapsed ? "Fold" : "Unfold"}
-                                                onClick={() => this.toggleSection('doing')}
-                                                style={{ width: '24px', height: '24px' }} // 원하는 크기로 조절
-                                            />
-                                        </h2>
-                                        {this.state.doing.map((item, index) => (
-                                            <Draggable key={item.id} draggableId={item.id} index={index}>
-                                                {(provided, snapshot) => (
-                                                    <TodoBox
-                                                        id={item.id}
-                                                        content={item.content}
-                                                        provided={provided}
-                                                        snapshot={snapshot}
-                                                        onDelete={this.handleDelete}
-                                                    />
-                                                )}
-                                            </Draggable>
-                                        ))}
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>*/}
-
-                            {/* Done Section */}
-                            <Droppable droppableId="done" direction="vertical">
-                                {(provided) => (
-                                    <div
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                        style={TodoStyle}
-                                    >
-                                        <h2 style={{marginTop:'0%'}}>
-                                            완료
-{/*                                            <img
-                                                src={this.state.doneIsCollapsed ? require("../../../images/button/folded.png") : require("../../../images/button/unfolded.png")}
-                                                alt={this.state.doneIsCollapsed ? "Fold" : "Unfold"}
-                                                onClick={() => this.toggleSection('done')}
-                                                style={{ width: '24px', height: '24px' }} // 원하는 크기로 조절
-                                            />*/}
-                                        </h2>
-                                        {this.state.done.map((item, index) => (
-                                            <Draggable key={item.id} draggableId={item.id} index={index}>
-                                                {(provided, snapshot) => (
-                                                    <TodoBox
-                                                        id={item.id}
-                                                        content={item.content}
-                                                        provided={provided}
-                                                        snapshot={snapshot}
-                                                        onDelete={this.handleDelete}
-                                                    />
-                                                )}
-                                            </Draggable>
-                                        ))}
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
-                        </div>
-                    </DragDropContext>
-                    <form onSubmit={this.handleTodoSubmit} style={{display:'flex'}}>
-                        <input
-                            type="text"
-                            style={Todoinput}
-                            value={this.state.inputValue}
-                            onChange={this.handleInputChange}
-                            placeholder="할 일을 입력하세요"
-                        />
-                        <button className="learn-more"  style={{width:'5px', height:'5px', marginLeft:'5px'}} type="submit">+</button>
-                    </form>
-                </div>
+                                    {this.state.todo.map((item, index) => (
+                                        <Draggable key={item.id} draggableId={item.id} index={index}>
+                                            {(provided, snapshot) => (
+                                                <TodoBox
+                                                    id={item.id}
+                                                    content={item.content}
+                                                    provided={provided}
+                                                    snapshot={snapshot}
+                                                    onDelete={this.handleDelete}
+                                                />
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                        <Droppable droppableId="done" direction="vertical">
+                            {(provided) => (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    style={TodoStyle}
+                                >
+                                    <h2 style={{ marginTop: '0%',color:'#3A4CA8' }}>Finish</h2>
+                                    {this.state.done.map((item, index) => (
+                                        <Draggable key={item.id || index} draggableId={item.id || index.toString()} index={index}>
+                                            {(provided, snapshot) => (
+                                                <TodoBox
+                                                    id={item.id}
+                                                    content={item.content}
+                                                    provided={provided}
+                                                    snapshot={snapshot}
+                                                    onDelete={this.handleDelete}
+                                                />
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </div>
+                </DragDropContext>
             </Box>
         );
     }

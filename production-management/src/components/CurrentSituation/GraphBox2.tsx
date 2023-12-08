@@ -31,10 +31,13 @@ class GraphBox2 extends React.Component<GraphBoxProps> {
             const myChart = echarts.init(chartDom);
 
             const option: echarts.EChartsOption = {
-                title: {
-                    left: 'left',
-                    text: '월별 현황'
-                },
+                /*                title: {
+                                    left: 'left',
+                                    text: '월별 현황',
+                                    textStyle: {
+                                        color: '#516377'
+                                    }
+                                },*/
                 legend: {
                     orient: 'vertical',
                     left: 'left',
@@ -60,18 +63,18 @@ class GraphBox2 extends React.Component<GraphBoxProps> {
                     {
                         type: 'bar',
                         itemStyle: {
-                            color: '#8FE3B7' // 원하는 색상으로 변경
+                            color: '#7378C2'
                         }
                     },
                     {
                         type: 'bar',
                         itemStyle: {
-                            color: '#F77D93' // 다른 색상으로 변경
+                            color: '#F77D93'
                         }
                     }
                 ]
             }
-                myChart.setOption(option);
+            myChart.setOption(option);
         }
     }
 
