@@ -8,7 +8,7 @@ import MyDelivery from "../../components/Employee/MyDelivery";
 import {Title} from "../../core/Title";
 
 class Mypage extends Component {
-
+  
   render() {
     return (
         <Layout>

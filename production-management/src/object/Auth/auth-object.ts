@@ -31,6 +31,16 @@ export type Employee = {
     email: string
 }
 
+export type AddEmployee = {
+    employeeNo: number,
+    id: string,
+    password: string,
+    name: string,
+    role: string,
+    tel: string,
+    email: string
+}
+
 export type UpdateAuthEmployee = {
     employeeNo: number
     id: string,
@@ -52,7 +62,7 @@ export type AuthState = {
     employee: Employee,
     updateAuthEmployee: UpdateAuthEmployee,
     image: Image,
-    addEmployee: (employee: Employee) => void,
+    addEmployee: (addEmployee: AddEmployee) => void,
     deleteEmployee: (employeeNo: number) => void,
     updateEmployee: (updateAuthEmployee: UpdateAuthEmployee) => void,
     employeeNoCheck: (employeeNo: number) => void,

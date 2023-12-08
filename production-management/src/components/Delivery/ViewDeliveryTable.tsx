@@ -242,7 +242,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                                     if(!tableSize){
                                       tableSizeUp();
                                     }
-                                  }}/>
+                }}/>
                   </div>}
             </div>
           </div>

@@ -29,6 +29,7 @@ const tableCellStyle = {
 }
 
 const myMap: Map<string, string> = new Map<string, string>([
+
   ['INCOMPLETE', '미완료'],
   ['COMPLETED', '완료'],
 ]);
@@ -59,7 +60,6 @@ class ViewDeliveryListTable extends Component<Props> {
         state.setPage(state.search.page - 1);
       }
     };
-
     return (
         <>
           <ListTitle options={{title: '출고 목록', count: list.length}}/>

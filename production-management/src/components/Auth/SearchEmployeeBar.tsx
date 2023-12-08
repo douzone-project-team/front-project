@@ -1,11 +1,18 @@
 import React, {Component} from "react";
 import Box from "@material-ui/core/Box";
-import {AuthContext} from "../../store/Auth/auth-context";
+import {AuthContext, Props} from "../../store/Auth/auth-context";
 import {AuthState} from "../../object/Auth/auth-object";
 import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {TextInput} from "../../core/input/TextInput";
 import {SearchButton} from "../../core/button/SearchButton";
 import {Select} from "@material-ui/core";
+import {AddItemButton} from "../../core/button/AddItemButton";
+import CustomerAddModal from "../Modal/Customer/CustomerAddModal";
+import EmployeeAddModal from "../Modal/Auth/EmployeeAddModal";
+
+type State = {
+    employeeAddModalOpen: boolean
+}
 
 let searchValue = {
     employeeNo: 0,
@@ -13,8 +20,20 @@ let searchValue = {
     role: '',
 }
 
-class SearchEmployeeBar extends Component {
+class SearchEmployeeBar extends Component<Props, State> {
     static contextType = AuthContext;
+
+    constructor(Props: Props) {
+        super(Props);
+        this.state = {
+            employeeAddModalOpen: false,
+        } as State;
+    }
+
+    addEmployee = (name: string, employeeNo: number, id: string, password: string, tel: string,
+                email: string, role: string) => {
+
+    }
 
     handleSearchClick = () => {
         const state = this.context as AuthState;
@@ -61,8 +80,21 @@ class SearchEmployeeBar extends Component {
                     </BarLeftBox>
                     <BarRightBox>
                         <SearchButton size={30} onClick={this.handleSearchClick} />
+                        &nbsp;&nbsp;
+                        <AddItemButton
+                            size={30}
+                            onClick={() => this.setState((prevState) =>
+                                ({employeeAddModalOpen: !prevState.employeeAddModalOpen}))}
+                        />
                     </BarRightBox>
                 </BarBox>
+                <React.Fragment>
+                    {this.state.employeeAddModalOpen ? (
+                    <EmployeeAddModal onClose={() => this.setState({employeeAddModalOpen: false})}
+                                      addEmployee={this.addEmployee}
+                    />
+                    ) : null}
+                </React.Fragment>
             </>
         );
     }

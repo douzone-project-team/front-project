@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import {EmployeeState} from "../../object/Employee/employee-object";
 import {EmployeeContext} from "../../store/Employee/employee-context";
 // @ts-ignore
-import logo from '../../images/logo.png';
+import logo from '../../images/BLOOMING.png';
 
 const defaultTheme = createMuiTheme();
 
@@ -73,13 +73,13 @@ class LoginForm extends Component<LoginFormProps> {
                         <Box
                             style={{
                                 margin: '8px',
-                                marginTop: '150px',
+                                marginTop: '140px',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
                             }}
                         >
-                            <img src={logo} height="30vh" alt="Logo" />
+                            <img src={logo} height="30vh" alt="Logo" style={{marginBottom: '10px'}}/>
                             <Box component="form" onSubmit={this.submitHandler} style={{ marginTop: 3, width: '30vh' }}>
                                 <TextField
                                     margin="normal"

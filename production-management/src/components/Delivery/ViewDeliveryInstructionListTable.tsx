@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {
-    Box,
     Table,
     TableBody,
     TableCell,
@@ -10,7 +9,6 @@ import {
 } from "@material-ui/core";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
-import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 
 import "./../../assets/css/Table.css";
 import {AddInstruction} from "../../object/DeliveryInstruction/delivery-instruction-object";

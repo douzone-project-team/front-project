@@ -8,8 +8,16 @@ import {Title} from "../../core/Title";
 import {Body} from "../../core/Body";
 import {SearchBox} from "../../core/box/SearchBox";
 import {TableBox} from "../../core/box/TableBox";
+import {AuthContext} from "../../store/Auth/auth-context";
+import {AuthState} from "../../object/Auth/auth-object";
 
 class ViewEmployees extends Component {
+    static contextType = AuthContext
+
+    componentDidMount() {
+        const state = this.context as AuthState;
+        state.cleanEmployee();
+    }
 
     render() {
         return(
