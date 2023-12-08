@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import { ListTitle } from '../../core/ListTitle';
 import { PageButton } from '../../core/button/PageButton';
+import {NullText} from "../../core/NullText";
+import {Loading} from "../../core/Loading";
 
 
 const boldCellStyle = {
@@ -36,7 +38,7 @@ class ViewCustomerListTable extends Component {
     }
 
     state = {
-        selectedRowIndex: 0,
+        selectedRowIndex: 1,
     };
 
     handleRowClick = (index: number) => {
@@ -46,7 +48,7 @@ class ViewCustomerListTable extends Component {
     render() {
         const state = this.context as CustomersState;
         const list = state.customerPage.list;
-
+        const currentPage = state.customerPage.currentPage;
         const handleNextPage = () => {
             if (state.customerPage.hasNextPage) {
                 state.setPage(state.search.page + 1);
@@ -74,11 +76,11 @@ class ViewCustomerListTable extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list.map((row, index) => (
+                            {list && list.length > 0 ? list.map((row, index) => (
                                 <TableRow key={row.customerNo}
-                                          className={`cellHoverEffect ${this.state.selectedRowIndex === index ? 'selectedRow' : ''}`}
+                                          className={`cellHoverEffect ${this.state.selectedRowIndex === row.customerNo ? 'selectedRow' : ''}`}
                                           onClick={() => {
-                                              this.handleRowClick(index);
+                                              this.handleRowClick(row.customerNo);
                                               state.getCustomer(row.customerNo);
                                           }}>
                                     <TableCell align="center" style={tableCellStyle}>{row.customerNo}</TableCell>
@@ -87,9 +89,15 @@ class ViewCustomerListTable extends Component {
                                     <TableCell align="center" style={tableCellStyle}>{row.ceo}</TableCell>
                                     <TableCell align="center" style={tableCellStyle}>{row.sector}</TableCell>
                                 </TableRow>
-                            ))}
+                            )):
+                                <TableRow>
+                                    <TableCell colSpan={7} style={{border: '0'}}>
+                                        {currentPage != -1 ? <NullText/> : <Loading/>}
+                                    </TableCell>
+                                </TableRow>}
                         </TableBody>
                     </Table>
+                    {currentPage != -1 && list.length > 0 ?
                     <PageButton options={{
                         currentPage: state.customerPage.currentPage,
                         handleNextPage: handleNextPage,
@@ -97,6 +105,8 @@ class ViewCustomerListTable extends Component {
                         hasNextPage: state.customerPage.hasNextPage,
                         hasPreviousPage: state.customerPage.hasPreviousPage
                     }}/>
+                        : null
+                    }
                 </TableContainer>
             </>
         );

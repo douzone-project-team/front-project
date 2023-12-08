@@ -9,6 +9,8 @@ import {DetailTitle} from "../../core/DetailTitle";
 import {DeleteButton} from "../../core/button/DeleteButton";
 import {EditButton} from "../../core/button/EditButton";
 import Swal from 'sweetalert2';
+import {NullText} from "../../core/NullText";
+import {Loading} from "../../core/Loading";
 
 type State = {
   customerModifyModalOpen: boolean
@@ -68,7 +70,6 @@ class ViewCustomerTable extends Component<Props, State> {
     const state = this.context as CustomersState;
     const customer = state.customer;
 
-
     return (
         <>
           <div style={{
@@ -102,14 +103,19 @@ class ViewCustomerTable extends Component<Props, State> {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {state.customer.customerNo !== 0 && <TableRow>
+                {state.customer.customerNo !== 0? <TableRow>
                   <TableCell align="center" style={tableCellStyle}>{customer.customerNo}</TableCell>
                   <TableCell align="center" style={tableCellStyle}>{customer.customerCode}</TableCell>
                   <TableCell align="center" style={tableCellStyle}>{customer.customerName}</TableCell>
                   <TableCell align="center" style={tableCellStyle}>{customer.ceo}</TableCell>
                   <TableCell align="center" style={tableCellStyle}>{customer.customerTel}</TableCell>
                   <TableCell align="center" style={tableCellStyle}>{customer.sector}</TableCell>
-                </TableRow>}
+                </TableRow> :
+                    <TableRow>
+                      <TableCell colSpan={6} style={{border: '0'}}>
+                        <NullText/>
+                      </TableCell>
+                    </TableRow>}
               </TableBody>
             </Table>
           </TableContainer>
