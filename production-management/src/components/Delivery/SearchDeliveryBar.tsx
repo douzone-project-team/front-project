@@ -34,10 +34,6 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
     }
   }
 
-    componentDidMount = () =>  {
-        this.setState({all: true});
-    }
-
   setStateAllFalse = () => {
     this.setState({
       all: false,

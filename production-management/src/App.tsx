@@ -11,7 +11,6 @@ import currentSituationpage from "./pages/CurrentSituation/CurrentSituationpage"
 import AddDeliveries from './pages/Delivery/AddDeliveries';
 import Mypage from "./pages/Employee/Mypage";
 import ViewEmployees from "./pages/Auth/ViewEmployees";
-import AddEmployees from "./pages/Auth/AddEmployees";
 import Error500 from "./pages/Error/Error500";
 import Error404 from "./pages/Error/Error404";
 
@@ -32,7 +31,6 @@ class App extends Component {
             <Route exact path="/delivery/add" component={AddDeliveries}/>
             <Route exact path="/current/page" component={currentSituationpage}/>
             <Route exact path="/employee/list" component={ViewEmployees}/>
-            <Route exact path="/employee/add" component={AddEmployees}/>
             <Route exact path="/error" component={Error500}/>
             <Route exact path="/not-found" component={Error404}/>
           </Switch>
