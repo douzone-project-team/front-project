@@ -97,9 +97,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                     let data = result?.data;
                     this.setState({availability: data}, () => {
                         if (result?.data.availability) {
-                            alert('사용 가능한 아이디입니다..');
+                            alert('사용 가능한 아이디입니다.');
                         } else {
-                            alert('이미 사용 중인 아이디입니다. 다른 번호를 선택해주세요.');
+                            alert('이미 사용 중인 아이디입니다. 다른 아이디를 사용해주세요.');
                         }
                     });
                 })
