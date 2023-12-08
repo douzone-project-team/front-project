@@ -8,8 +8,8 @@ class CustomerAction{
     private baseUrl : string = '/customers';
 
     public duplicateCustomerCodeCheck(object : CheckCustomerCode){
-        const URL = `${this.baseUrl}/customer/code/check`;
-        return fetcher.POST(URL, object);
+        const URL = `${this.baseUrl}/code/${object.customerCode}`;
+        return fetcher.GET(URL);
     }
 
     public regiCustomers(object : InsertCustomer){

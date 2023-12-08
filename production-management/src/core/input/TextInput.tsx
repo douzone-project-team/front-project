@@ -5,6 +5,7 @@ type InputProps = {
   onBlur?: (evt: FocusEvent<HTMLInputElement>) => void,
   onChange?: (evt: FocusEvent<HTMLInputElement>) => void,
   value?: string,
+  placeholder? : string,
   readOnly? : boolean
   input?: {
     width?: string,
@@ -21,7 +22,7 @@ type InputProps = {
 
 export class TextInput extends Component<InputProps> {
   render() {
-    const {label, onBlur, input, title, onChange, value, readOnly} = this.props;
+    const {label, onBlur, input, title, onChange, value, readOnly,placeholder} = this.props;
 
     return (
         <label>
@@ -37,7 +38,7 @@ export class TextInput extends Component<InputProps> {
         </span>
           <input
               type="text"
-              placeholder=""
+              placeholder={placeholder}
               style={{
                 marginLeft: input?.ml ? input.ml : '10px',
                 height: input?.height ? input.height : '20px',

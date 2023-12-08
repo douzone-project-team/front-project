@@ -70,6 +70,8 @@ export type CustomersState = {
     getCustomerList: () => void
     getCustomer: (customerNo: number) => void
     deleteCustomer: (customerNo: number) => void
+    cleanCustomer: () => void
+    getInitCustomer: () => void
 }
 
 export type CustomerPath = {

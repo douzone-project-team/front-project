@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import "./../../assets/css/Table.css";
 import {CustomersContext} from "../../store/Customer/customers-context";
 import {CustomersState} from "../../object/Customer/customer-object";
-import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 import {
-    Box,
     Table,
     TableBody,
     TableCell,
@@ -37,6 +35,14 @@ class ViewCustomerListTable extends Component {
         state.getCustomerList();
     }
 
+    state = {
+        selectedRowIndex: 0,
+    };
+
+    handleRowClick = (index: number) => {
+        this.setState({ selectedRowIndex: index });
+    };
+
     render() {
         const state = this.context as CustomersState;
         const list = state.customerPage.list;
@@ -56,7 +62,7 @@ class ViewCustomerListTable extends Component {
         return(
             <>
                 <ListTitle options={{title: '거래처 목록', count: list.length}}/>
-                <TableContainer className='table-container' style={{height:'395px'}}>
+                <TableContainer className='table-container' style={{height:'410px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>
@@ -68,8 +74,13 @@ class ViewCustomerListTable extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list === undefined || list.map((row) => (
-                                <TableRow key={row.customerNo} className='cellHoverEffect' onClick={() => state.getCustomer(row.customerNo)}>
+                            {list.map((row, index) => (
+                                <TableRow key={row.customerNo}
+                                          className={`cellHoverEffect ${this.state.selectedRowIndex === index ? 'selectedRow' : ''}`}
+                                          onClick={() => {
+                                              this.handleRowClick(index);
+                                              state.getCustomer(row.customerNo);
+                                          }}>
                                     <TableCell align="center" style={tableCellStyle}>{row.customerNo}</TableCell>
                                     <TableCell align="center" style={tableCellStyle}>{row.customerCode}</TableCell>
                                     <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>

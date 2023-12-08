@@ -1,6 +1,5 @@
 import React, {ChangeEvent, Component} from "react";
 import {EmployeeContext} from "../../store/Employee/employee-context";
-import {initialUpdateEmployee} from "../../state/employeeStateMangement";
 import {EmployeeState} from "../../object/Employee/employee-object";
 import {Box} from "@material-ui/core";
 

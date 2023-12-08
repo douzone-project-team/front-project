@@ -3,6 +3,8 @@ import {CustomersState, InsertCustomer} from "../../../object/Customer/customer-
 import {CustomersContext} from "../../../store/Customer/customers-context";
 import {Box} from "@material-ui/core";
 import './CustomerModalCss.css'
+import Swal from 'sweetalert2';
+
 
 type CustomerModalProps = {
     onClose: () => void,
@@ -51,39 +53,55 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
 
                 if (addValue.customerCode.length === 0 || addValue.customerName.length === 0 || addValue.customerTel1.length === 0 ||
                     addValue.customerTel2.length === 0 || addValue.customerTel3.length === 0 || addValue.ceo.length === 0 || addValue.sector.length === 0){
-                    alert("빈칸이 존재합니다.");
+                    // alert("빈칸이 존재합니다.");
+                    this.alertMessage('warning', '', '빈칸이 존재합니다.');
                     return;
                 }
 
                 if (!customerCodePattern.test(addValue.customerCode)) {
-                    alert("거래처 코드의 형식이 잘못되었습니다. (예: Z0001)");
+                    // alert("거래처 코드의 형식이 잘못되었습니다. (예: Z0001)");
+                    this.alertMessage('warning', '', '거래처 코드의 형식이 잘못되었습니다. (예: Z0001)');
                     return;
                 }
                 if (!state.duplicateCustomerCodeResult.duplicateResult){
-                    alert("거래처 코드 중복을 확인해주세요.");
+                    // alert("거래처 코드 중복을 확인해주세요.");
+                    this.alertMessage('warning', '', '거래처 코드 중복을 확인해주세요.');
                     return;
                 }
                 if (addValue.customerName.length > 10) {
-                    alert("거래처 명칭은 10글자를 넘을 수 없습니다.");
+                    // alert("거래처 명칭은 10글자를 넘을 수 없습니다.");
+                    this.alertMessage('warning', '', '거래처 명칭은 10글자를 넘을 수 없습니다.');
                     return;
                 }
                 if (!customerTelPattern.test(customerTel)) {
-                    alert("연락처의 형식이 잘못되었습니다. (예: 010-0000-0000)");
+                    // alert("연락처의 형식이 잘못되었습니다. (예: 010-0000-0000)");
+                    this.alertMessage('warning', '', '연락처의 형식이 잘못되었습니다. (예: 010-0000-0000)');
                     return;
                 }
                 if (addValue.ceo.length > 10) {
-                    alert("대표자는 10글자를 넘을 수 없습니다.");
+                    // alert("대표자는 10글자를 넘을 수 없습니다.");
+                    this.alertMessage('warning', '', '대표자는 10글자를 넘을 수 없습니다.');
                     return;
                 }
                 if (addValue.sector.length > 10) {
-                    alert("업종은 10글자를 넘을 수 없습니다.");
+                    // alert("업종은 10글자를 넘을 수 없습니다.");
+                    this.alertMessage('warning', '', '업종은 10글자를 넘을 수 없습니다.');
                     return;
                 }
                 const {onClose, insertCustomer} = this.props as CustomerModalProps;
                 insertCustomer(addValue.customerCode, addValue.customerName, customerTel, addValue.ceo, addValue.sector);
                 onClose();
-            }
+            },
         }
+    }
+
+    alertMessage = (icon: string, title: string, text: string) => {
+        // @ts-ignore
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: text
+        });
     }
 
     componentDidMount() {
@@ -94,7 +112,8 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
     duplicateCustomerCode = () => {
         const customerCodePattern = /^[A-Z]\d{4}$/;
         if (!customerCodePattern.test(addValue.customerCode) || addValue.customerCode.length === 0) {
-            alert("거래처 코드의 형식이 잘못되었습니다. (예: Z0001)");
+            // alert("거래처 코드의 형식이 잘못되었습니다. (예: Z0001)");
+            this.alertMessage('warning', '', '거래처 코드의 형식이 잘못되었습니다. (예: Z0001)');
             return;
         }
         const state = this.context as CustomersState;

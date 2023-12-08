@@ -8,6 +8,7 @@ import CustomerModifyModal from "../Modal/Customer/CustomerModifyModal";
 import {DetailTitle} from "../../core/DetailTitle";
 import {DeleteButton} from "../../core/button/DeleteButton";
 import {EditButton} from "../../core/button/EditButton";
+import Swal from 'sweetalert2';
 
 type State = {
   customerModifyModalOpen: boolean
@@ -47,13 +48,21 @@ class ViewCustomerTable extends Component<Props, State> {
   }
 
   handleDeleteClick = (customerNo: number) => {
-    if (window.confirm("거래처를 삭제하시겠습니까?")) {
-      const state = this.context as CustomersState;
-      state.deleteCustomer(customerNo);
-    } else {
-      return;
-    }
-  }
+    Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      text: "삭제 후 복구할 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소"
+    }).then((result) => {
+      if (result.isConfirmed) {
+          const state = this.context as CustomersState;
+          state.deleteCustomer(customerNo);
+        }});
+    };
 
   render() {
     const state = this.context as CustomersState;
@@ -80,7 +89,7 @@ class ViewCustomerTable extends Component<Props, State> {
                   </div>}
             </div>
           </div>
-          <TableContainer className='table-container' style={{height: '74px'}}>
+          <TableContainer className='table-container' style={{height: '73px'}}>
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
