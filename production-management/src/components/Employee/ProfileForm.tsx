@@ -56,10 +56,6 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         return name.length >= 2;
     }
 
-    validateTel = (tel: string) => {
-        return /^\d{11}$/.test(tel);
-    }
-
     validateEmail = (email: string) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
@@ -73,11 +69,6 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
             return;
         }
 
-        if(!this.validateTel(modifyValue.tel)){
-            alert('11자리 숫자로 연락처를 입력해주세요.')
-            return;
-        }
-
         if(!this.validateEmail(modifyValue.email)){
             alert('올바른 이메일을 입력해주세요.');
             return;
@@ -87,13 +78,12 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
             alert('새 비밀번호와 재입력한 새 비밀번호가 같지 않습니다. 다시 확인해주세요.');
             return;
         }
-        const telWithoutHyphen = modifyValue.tel.replace(/-/g, '');
 
         const updateEmployeeObj: UpdateEmployee = {
             oldPassword: modifyValue.oldPassword,
             password: modifyValue.password,
             name: modifyValue.name,
-            tel: telWithoutHyphen,
+            tel: modifyValue.tel,
             email: modifyValue.email
         };
 
@@ -104,8 +94,14 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         const state = this.context as EmployeeState;
         const employee = state.employee;
 
+        if (!employee || !employee.tel) {
+            return null;
+        }
+
+        const [tel1, tel2, tel3] = employee.tel.split('-');
+
         modifyValue.name = employee.name;
-        modifyValue.tel = employee.tel;
+        modifyValue.tel = tel1 + tel2 + tel3;
         modifyValue.email = employee.email;
 
         return (
@@ -163,11 +159,11 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                             </TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell style={boldCellStyle}>새 비밀번호</TableCell>
+                            <TableCell style={boldCellStyle}>새 비밀번호 재입력</TableCell>
                             <TableCell>
                                 <input
                                     type="password"
-                                    placeholder="새 비밀번호 다시입력"
+                                    placeholder="새 비밀번호 재입력"
                                     onChange={event => {
                                         modifyValue.passwordConfirm = event.target.value;
                                     }}
@@ -180,12 +176,33 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                             <TableCell>
                                 <input
                                     type="text"
-                                    placeholder="'-'제외 11자리 입력"
-                                    defaultValue={employee.tel}
+                                    defaultValue={tel1}
                                     onChange={event => {
-                                        modifyValue.tel = event.target.value;
+                                        modifyValue.tel = `${event.target.value}${tel2}${tel3}`;
                                     }}
-                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
+                                    style={{ width: '59px', height: '25px', fontFamily: 'S-CoreDream-3Light',
+                                        marginRight: '3px'
+                                    }}
+                                />
+                                -
+                                <input
+                                    type="text"
+                                    defaultValue={tel2}
+                                    onChange={event => {
+                                        modifyValue.tel = `${tel1}${event.target.value}${tel3}`;
+                                    }}
+                                    style={{ width: '59px', height: '25px', fontFamily: 'S-CoreDream-3Light'
+                                        , marginLeft: '3px', marginRight: '3px'}}
+                                />
+                                -
+                                <input
+                                    type="text"
+                                    defaultValue={tel3}
+                                    onChange={event => {
+                                        modifyValue.tel = `${tel1}${tel2}${event.target.value}`;
+                                    }}
+                                    style={{ width: '59px', height: '25px', fontFamily: 'S-CoreDream-3Light',
+                                        marginLeft: '3px'}}
                                 />
                             </TableCell>
                         </TableRow>
