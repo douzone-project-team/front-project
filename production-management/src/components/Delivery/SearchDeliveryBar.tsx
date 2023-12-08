@@ -119,6 +119,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
           <Box
               sx={{
                 mt: '10px',
+                mb: '8px',
               }}
           >
             &nbsp;

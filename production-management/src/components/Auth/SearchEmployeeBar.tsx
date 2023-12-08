@@ -61,20 +61,20 @@ class SearchEmployeeBar extends Component<Props, State> {
                         <span style={{
                             marginLeft: '50px',
                             marginRight: '5px',
-                            fontSize: '15px',
+                            fontSize: '17px',
                             fontWeight: 'bold'
                         }}>역할</span>
                             <select
-                                style={{height: '20px', marginLeft: '10px', borderRadius: '5px', width: '100px'}}
+                                style={{height: '30px', marginLeft: '10px', borderRadius: '5px', width: '100px', fontFamily: 'S-CoreDream-3Light'}}
                                 value={searchValue.role}
                                 onChange={(e) => {
                                     searchValue.role = e.target.value;
                                     this.handleSearchRoleState(e.target.value);
                                 }}
                             >
-                                <option value="">전체</option>
-                                <option value="ROLE_MEMBER">사원</option>
-                                <option value="ROLE_ADMIN">관리자</option>
+                                <option value="" style={{fontFamily: 'S-CoreDream-3Light'}}>전체</option>
+                                <option value="ROLE_MEMBER" style={{fontFamily: 'S-CoreDream-3Light'}}>사원</option>
+                                <option value="ROLE_ADMIN" style={{fontFamily: 'S-CoreDream-3Light'}}>관리자</option>
                             </select>
                         </label>
                     </BarLeftBox>
