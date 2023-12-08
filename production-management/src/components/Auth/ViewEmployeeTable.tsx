@@ -16,16 +16,19 @@ type Props = {
 }
 
 const boldCellStyle = {
-    backgroundColor: '#f1f3f5',
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    width: '10%',
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light'
 };
 
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-    width: '10%',
-};
+const tableCellStyle = {
+    fontFamily: 'S-CoreDream-3Light'
+}
+
+const myMap: Map<string, string> = new Map<string, string>([
+    ['ROLE_ADMIN', '관리자'],
+    ['ROLE_MEMBER', '사원'],
+]);
 
 class ViewEmployeeTable extends Component<Props, State> {
     static contextType = AuthContext;
@@ -110,14 +113,17 @@ class ViewEmployeeTable extends Component<Props, State> {
                         </TableHead>
                         <TableBody>
                             {state.employee.employeeNo !== 0 && <TableRow>
-                                <TableCell align="center">{employee.employeeNo}</TableCell>
-                                <TableCell align="center">{employee.id}</TableCell>
-                                <TableCell align="center">{employee.password}</TableCell>
-                                <TableCell align="center">{employee.name}</TableCell>
-                                <TableCell align="center">{employee.tel}</TableCell>
-                                <TableCell align="center">{employee.email}</TableCell>
-                                <TableCell align="center">
-                                    {employee.role === 'ROLE_ADMIN' ? '관리자' : '사원'}</TableCell>
+                                <TableCell align="center" style={tableCellStyle}>{employee.employeeNo}</TableCell>
+                                <TableCell align="center" style={tableCellStyle}>{employee.id}</TableCell>
+                                <TableCell align="center" style={tableCellStyle}>{employee.password}</TableCell>
+                                <TableCell align="center" style={tableCellStyle}>{employee.name}</TableCell>
+                                <TableCell align="center" style={tableCellStyle}>{employee.tel}</TableCell>
+                                <TableCell align="center" style={tableCellStyle}>{employee.email}</TableCell>
+                                <TableCell align="center" style={tableCellStyle}>
+                                    <div className={employee.role}>
+                                        {myMap.get(employee.role.toUpperCase())}
+                                    </div>
+                                </TableCell>
                             </TableRow>}
                         </TableBody>
                     </Table>

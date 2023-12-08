@@ -69,10 +69,11 @@ class AccountMenu extends Component<{}, AccountMenuState> {
                             <Avatar style={{ width: 32, height: 32, marginRight: 5}}
                                     src={(`http://localhost:8080/employees/${employeeNo}/image`)}></Avatar>
                             <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: 5 }}>
-                                <Typography variant="caption" color="inherit" style={{ marginBottom: -4, fontWeight: 'bold' }}>
+                                <Typography variant="caption" color="inherit"
+                                            style={{ marginBottom: -4, fontWeight: 'bold', fontFamily: 'S-CoreDream-3Light' }}>
                                     {name}
                                 </Typography>
-                                <Typography variant="caption" color="inherit">
+                                <Typography variant="caption" color="inherit" style={{fontFamily: 'S-CoreDream-3Light'}}>
                                     {role} | {employeeNo}
                                 </Typography>
                             </Box>
