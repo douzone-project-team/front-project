@@ -18,20 +18,20 @@ type DateInputProps = {
 }
 
 const inputStyle = {
-  height: '20px',
+  height: '30px',
   marginLeft: '10px',
   width: '100px',
   fontFamily: 'S-CoreDream-3Light',
-  color: 'rgba(0,0,0,0.7)'
+  fontSize: '17px',
+  color: 'lightgrey'
 };
 
 const labelStyle = {
   marginLeft: '60px',
   marginRight: '5px',
-  fontSize: '14px',
+  fontSize: '17px',
   fontWeight: 'bold',
   fontFamily: 'S-CoreDream-3Light',
-  color: 'rgba(0,0,0,0.7)'
 };
 
 export class DateInput extends Component<DateInputProps> {

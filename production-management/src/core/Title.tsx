@@ -11,7 +11,7 @@ export class Title extends Component<TopTitleProps> {
 
     return (
         <div className='main-title'>
-          <span style={{fontSize: '17px', fontWeight: 'bold'}}>{title}</span>
+          <span style={{fontSize: '20px', fontWeight: 'bold'}}>{title}</span>
           {this.props.children}
         </div>
     );

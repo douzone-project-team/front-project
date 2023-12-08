@@ -57,7 +57,7 @@ class AccountMenu extends Component<{}, AccountMenuState> {
         return (
             <React.Fragment>
                 <Box style={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-                    <Tooltip title="Account settings">
+                    <Tooltip title="내 정보">
                         <IconButton
                             onClick={this.handleClick}
                             size="small"

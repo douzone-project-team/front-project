@@ -16,20 +16,20 @@ const div = {
 
 const spanTitle = {
   fontWeight: 'bold',
-  fontSize: '16px',
+  fontSize: '19px',
   lineHeight: '16px',
-  marginLeft: '10px'
+  marginLeft: '10px',
 };
 
 const spanCount = {
   color: 'rgb(60, 80, 194)',
-  fontSize: '13px',
+  fontSize: '15px',
   lineHeight: '16px',
 };
 
 const img = {
-  width: '16px',
-  height: '16px'
+  width: '19px',
+  height: '19px'
 };
 
 /**

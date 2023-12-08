@@ -30,7 +30,7 @@ export class TextInput extends Component<InputProps> {
             style={{
               marginLeft: label?.ml ? label.ml : '50px',
               marginRight: label?.mr ? label.mr : '5px',
-              fontSize: label?.fs ? label.fs : '15px',
+              fontSize: label?.fs ? label.fs : '17px',
               fontWeight: label?.fw ? label.fw : 'bold'
             }}
         >
@@ -41,7 +41,7 @@ export class TextInput extends Component<InputProps> {
               placeholder={placeholder}
               style={{
                 marginLeft: input?.ml ? input.ml : '10px',
-                height: input?.height ? input.height : '20px',
+                height: input?.height ? input.height : '30px',
                 width: input?.width
               }}
               onBlur={onBlur}
