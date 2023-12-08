@@ -22,7 +22,7 @@ class ViewEmployees extends Component {
     render() {
         return(
             <Layout>
-                <Title title='사원 등록'/>
+                <Title title='사원 조회'/>
                 <Body>
                     <SearchBox>
                         <SearchEmployeeBar/>

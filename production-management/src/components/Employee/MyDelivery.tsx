@@ -14,6 +14,13 @@ const cellStyle = {
     fontFamily: 'S-CoreDream-3Light'
 }
 
+const myMap: Map<string, string> = new Map<string, string>([
+
+    ['INCOMPLETE', '미완료'],
+    ['COMPLETED', '완료'],
+]);
+
+
 class MyDelivery extends Component {
     static contextType = EmployeeContext;
 
@@ -48,7 +55,7 @@ class MyDelivery extends Component {
                                     <TableCell align="center" style={cellStyle}>{row.deliveryDate}</TableCell>
                                     <TableCell align="center" style={{width: '50px', fontFamily: 'S-CoreDream-3Light'}}>
                                         <div className={row.progressStatus}>
-                                            {row.progressStatus === 'COMPLETE' ? '완료' : '미완료'}
+                                            {myMap.get(row.progressStatus.toUpperCase())}
                                         </div>
                                     </TableCell>
                                 </TableRow>

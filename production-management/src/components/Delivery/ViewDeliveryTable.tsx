@@ -213,7 +213,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                 title: '출고 상태'
               }}/>
             </div>
-            <div style={{width: '64%'}}>
+            <div style={{width: '64%', height: '16px', display: 'flex', alignItems: 'center'}}>
               {delivery.deliveryStatus === 'INCOMPLETE' ? (
                   <span className='table-header'
                         style={{fontWeight: 'bold', fontSize: '16px'}}>출고일 :&nbsp;
@@ -231,11 +231,11 @@ class ViewDeliveryTable extends Component<Props, State> {
                             </span>
               )}
             </div>
-            <div style={{width: '8%', textAlign: 'right'}}>
+            <div style={{width: '8%', height: '16px', alignItems: 'center', textAlign: 'right'}}>
               {delivery.deliveryStatus == 'INCOMPLETE' &&
                   <div>
                     <CheckButton size={20} onClick={() => updateDeliveryStatus(delivery.deliveryNo)}/>
-                    &nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <DeleteButton size={20}
                                   onClick={() => {
                                     deleteDelivery(delivery.deliveryNo);

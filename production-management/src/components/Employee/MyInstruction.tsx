@@ -13,6 +13,12 @@ const cellStyle = {
     fontFamily: 'S-CoreDream-3Light'
 }
 
+const myMap: Map<string, string> = new Map<string, string>([
+    ['COMPLETED', '완료'],
+    ['PROGRESS', '진행'],
+    ['STANDBY', '준비'],
+]);
+
 class MyInstruction extends Component {
     static contextType = EmployeeContext;
 
@@ -50,7 +56,7 @@ class MyInstruction extends Component {
                                     <TableCell align="center" style={cellStyle}>{row.expirationDate}</TableCell>
                                     <TableCell align="center" style={{width: '50px', fontFamily: 'S-CoreDream-3Light'}}>
                                         <div className={row.progressStatus}>
-                                            {row.progressStatus}
+                                            {myMap.get(row.progressStatus.toUpperCase())}
                                         </div>
                                     </TableCell>
                                 </TableRow>

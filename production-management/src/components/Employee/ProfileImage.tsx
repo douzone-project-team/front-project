@@ -53,8 +53,8 @@ class ProfileImage extends Component<ProfileImageProps, ProfileImageState> {
                         src={URL.createObjectURL(this.state.selectedImage)}
                         alt="새 이미지"
                         style={{
-                            maxWidth: '200px',
-                            maxHeight: '250px',
+                            width: '200px',
+                            height: '250px',
                             marginTop: '10px',
                             marginBottom: "10px",
                             borderRadius: '20%'
