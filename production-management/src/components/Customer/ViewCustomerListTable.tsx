@@ -33,7 +33,6 @@ class ViewCustomerListTable extends Component {
     componentDidMount() {
         const state = this.context as CustomersState;
         state.getCustomerList();
-        state.getCustomer(1);
     }
 
     state = {

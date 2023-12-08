@@ -41,6 +41,10 @@ export const CustomersContext = React.createContext<CustomersState>({
     setPage(): void {
     },
     deleteCustomer() : void{
+    },
+    cleanCustomer(): void{
+    },
+    getInitCustomer ():  void{
     }
 });
 
@@ -136,6 +140,17 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                 })
                 .catch(reason => {
                     alert(reason);
+                })
+        },
+        cleanCustomer: () => {
+            this.setState({customer: initialCustomer, search: initialSearchState});
+        },
+        getInitCustomer: () => {
+            customerAction.getCustomerList(this.state.search)
+                .then((result) => {
+                    this.setState({customerPage: result?.data}, () => {
+                        this.state.getCustomer(this.state.customerPage.list[0].customerNo);
+                    })
                 })
         }
     }
