@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from "@material-ui/core/Divider";
 import {Box, Button} from "@material-ui/core";
 
+
 interface NotificationProps {
     notifications: [];
     isClear: () => void
@@ -27,7 +28,7 @@ class Notification extends React.Component<NotificationProps> {
                     width: '100%',
                     bgcolor: 'white',
                     color: 'black',
-                    height : '350px'
+                    height : '350px', fontFamily: 'S-CoreDream-3Light'
                 }}
             >
                 <div
@@ -41,7 +42,7 @@ class Notification extends React.Component<NotificationProps> {
                         backgroundColor: '#ffffff',
                     }}
                 >알림
-                    <button onClick={isClear} style={{float: 'right'}}>전체 삭제</button>
+                    <button onClick={isClear} style={{float: 'right', fontFamily: 'S-CoreDream-3Light', border: '0.5px solid gray', borderRadius: '5px'}}>모두 지우기</button>
                 </div>
 
                 <div style={{backgroundColor:'#f3f4f7', height : '100%'}}>
@@ -54,15 +55,15 @@ class Notification extends React.Component<NotificationProps> {
                                     <div style={{display : 'flex'}}>
                                         <div style={{width:'95%', display: 'flex'}}>
                                             <img src={('http://localhost:8080/employees/'+notification.employeeNo+'/image')} style={{width: '23px', height:'23px' ,borderRadius: '8px'}}/>
-                                            &nbsp;&nbsp;<Typography style={{fontWeight:'bold'}}>{notification.employeeNo}</Typography>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;<Typography style={{fontSize:'12px', color: 'lightgray', marginTop:'4px'}}>{notification.date}</Typography>
+                                            &nbsp;&nbsp;<Typography style={{fontWeight:'bold', fontFamily: 'S-CoreDream-3Light'}}>{notification.employeeNo}</Typography>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<Typography style={{fontSize:'12px', color: 'lightgray', marginTop:'4px', fontFamily: 'S-CoreDream-3Light'}}>{notification.date}</Typography>
                                         </div>
                                         <div>
                                             <img src={(require('../images/button/delete-button.png'))} onClick={() => onDeleteNotification(index)} style={{width:'20px'}}/>
                                         </div>
                                         <br/>
                                     </div>
-                                    <Typography style={{fontSize : '13px'}}>{notification.notification}</Typography>
+                                    <Typography style={{fontSize : '13px', fontFamily: 'S-CoreDream-3Light'}}>{notification.notification}</Typography>
                                 </div>
                             </>
                         ))}
