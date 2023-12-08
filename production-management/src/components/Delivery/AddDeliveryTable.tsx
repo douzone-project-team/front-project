@@ -34,14 +34,14 @@ type Props = {
 }
 
 const boldCellStyle = {
+  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-  backgroundColor: '#f1f3f5',
   fontFamily: 'S-CoreDream-3Light'
 };
 
 const tableCellStyle = {
   fontFamily: 'S-CoreDream-3Light'
-}
+};
 
 class AddDeliveryTable extends Component<Props, State> {
   static contextType = DeliveriesContext;
@@ -234,7 +234,7 @@ class AddDeliveryTable extends Component<Props, State> {
                           </TableCell>
                           <TableCell align="center" style={tableCellStyle}>
                             <AddItemButton color="black"
-                                 onClick={changeInstructionModalStatus}/>
+                                           onClick={changeInstructionModalStatus}/>
                           </TableCell>
                           <TableCell align="center" style={tableCellStyle}></TableCell>
                           <TableCell align="center" style={tableCellStyle}></TableCell>
@@ -242,7 +242,7 @@ class AddDeliveryTable extends Component<Props, State> {
                           <TableCell align="center" style={tableCellStyle}>
                             {this.state.selectedInstructionNo ?
                                 <AddItemButton color="black"
-                                           onClick={changeDeliveryProductModalStatus}/>
+                                               onClick={changeDeliveryProductModalStatus}/>
                                 : null}
                           </TableCell>
                           <TableCell align="center" style={tableCellStyle}></TableCell>
