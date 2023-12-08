@@ -45,6 +45,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
 
   handleSearchClick = () => {
     const state = this.context as DeliveriesState;
+    state.search.page = 1;
     state.setSearch(searchValue.employeeName, searchValue.startDate, searchValue.endDate);
   }
 
@@ -52,6 +53,10 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
     const state = this.context as DeliveriesState;
     state.search.page = 1;
     state.setSearchProgressStatus(progressStatus);
+  }
+  
+  componentDidMount = async () => {
+    this.setState({all: true});
   }
 
   renderProgressButton = (koreanStatus: string, status: string, image: string, color: string, checked: boolean,

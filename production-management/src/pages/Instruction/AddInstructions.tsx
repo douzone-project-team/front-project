@@ -110,26 +110,27 @@ class AddInstructions extends Component<Props, State> {
                                    existSelectedCheckBox={this.existSelectedCheckBox}
               />
             </TableBox>
-            {isChecksNotEmpty &&
-                <div className='delete-div' style={{
-                  height: '7vh'
-                }}>
-                  <div>
+          </Body>
+          {isChecksNotEmpty &&
+              <div className='delete-div' style={{
+                height: '7vh',margin:0
+              }}>
+                <div>
                   <span
                       style={{color: '#1ae0ed'}}>{selectedCheckBoxs.length}건 </span><span>선택됨</span>
-                  </div>
-                  <div>
-                    <Button variant="outlined" style={{
-                      lineHeight: 'normal',
-                      background: '#50596c',
-                      borderColor: '#b5b5b5',
-                      color: '#fff',
-                    }} onClick={this.deleteSelectedCheckBox}>삭제
-                    </Button>
-                  </div>
                 </div>
-            }
-          </Body>
+                <div>
+                  <Button variant="outlined" style={{
+                    lineHeight: 'normal',
+                    background: '#50596c',
+                    borderColor: '#b5b5b5',
+                    color: '#fff',
+                    marginRight: '100px'
+                  }} onClick={this.deleteSelectedCheckBox}>삭제
+                  </Button>
+                </div>
+              </div>
+          }
         </Layout>
     )
   }

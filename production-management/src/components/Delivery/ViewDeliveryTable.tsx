@@ -35,6 +35,7 @@ type Props = {
   changeDeliveryProductModalStatus: () => void,
   changeAmount: boolean,
   changeAmountStatus: () => void,
+  tableSizeUp: () => void
 }
 
 type State = {
@@ -177,12 +178,14 @@ class ViewDeliveryTable extends Component<Props, State> {
 
     const list = delivery.instructions;
     const {
+      tableSize,
       changeInstructionModalStatus,
       changeDeliveryProductModalStatus,
       instructionModalOpen,
       deliveryProductModalOpen,
       changeAmount,
-      changeAmountStatus
+      changeAmountStatus,
+      tableSizeUp
     } = this.props;
 
     return (
@@ -190,7 +193,7 @@ class ViewDeliveryTable extends Component<Props, State> {
 
           <div style={{
             display: 'flex',
-            height: '20px',
+            height: '30px',
           }}>
             <div style={{width: '30%'}}>
               <DetailTitle options={{
@@ -220,9 +223,15 @@ class ViewDeliveryTable extends Component<Props, State> {
             <div style={{width: '4%', textAlign: 'right'}}>
               {delivery.deliveryStatus == 'INCOMPLETE' &&
                   <div>
-                    <CheckButton size={20} onClick={() => updateDeliveryStatus(delivery.deliveryNo)}/>
+                    <CheckButton size={20}
+                                 onClick={() => updateDeliveryStatus(delivery.deliveryNo)}/>
                     &nbsp;&nbsp;
-                    <DeleteButton size={20} onClick={() => deleteDelivery(delivery.deliveryNo)}/>
+                    <DeleteButton size={20} onClick={() => {
+                      deleteDelivery(delivery.deliveryNo);
+                      if (!tableSize) {
+                        tableSizeUp();
+                      }
+                    }}/>
                   </div>}
             </div>
           </div>
@@ -247,10 +256,14 @@ class ViewDeliveryTable extends Component<Props, State> {
               <TableBody>
                 {list && list.length > 0 && list.map((row) => (
                     <TableRow>
-                      <TableCell align="center" style={tableCellStyle}>{row.instructionNo}</TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{row.instructionDate}</TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{row.expirationDate}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{row.instructionNo}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{row.customerName}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{row.instructionDate}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{row.expirationDate}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>

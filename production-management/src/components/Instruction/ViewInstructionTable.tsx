@@ -31,6 +31,7 @@ type Props = {
   changeCustomerModalStatus: () => void,
   changeAmount: boolean,
   changeAmountStatus: () => void,
+  tableSizeUp: () => void
 }
 
 class ViewInstructionTable extends Component<Props> {
@@ -77,19 +78,21 @@ class ViewInstructionTable extends Component<Props> {
 
     const list = instruction.products;
     const {
+      tableSize,
       changeProductModalStatus,
       changeCustomerModalStatus,
       productModalOpen,
       customerModalOpen,
       changeAmount,
-      changeAmountStatus
+      changeAmountStatus,
+      tableSizeUp
     } = this.props;
 
     return (
         <>
           <div style={{
             display: 'flex',
-            height: '20px'
+            height: '30px'
           }}>
             <div style={{width: '95%'}}>
               <DetailTitle options={{
@@ -100,11 +103,16 @@ class ViewInstructionTable extends Component<Props> {
             </div>
             <div style={{width: '5%', textAlign: 'right'}}>
               {instruction.progressStatus == 'STANDBY' &&
-                  <DeleteButton onClick={() => deleteInstruction(instruction.instructionNo)}/>}
+                  <DeleteButton onClick={() => {
+                    deleteInstruction(instruction.instructionNo);
+                    if(!tableSize){
+                      tableSizeUp();
+                    }
+                  }}/>}
             </div>
           </div>
           <TableContainer className='table-container' style={{
-            height: this.props.tableSize ? '18.1%' : '66%',
+            height: tableSize ? '17.8%' : '65%',
             transition: 'height 0.3s ease-in-out'
           }}>
             <Table size='small' className='table'>
@@ -129,7 +137,7 @@ class ViewInstructionTable extends Component<Props> {
                       <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.productName} </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" style={tableCellStyle}>
                         {!changeAmount ?
                             <div style={{
                               display: 'flex',
@@ -151,7 +159,7 @@ class ViewInstructionTable extends Component<Props> {
                                    }}/>
                         }
                       </TableCell>
-                      <TableCell align="center">{row.remainAmount}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.remainAmount}</TableCell>
                     </TableRow>
                 ))}
                 {(instruction.instructionNo && (instruction.progressStatus == 'STANDBY')) ? (

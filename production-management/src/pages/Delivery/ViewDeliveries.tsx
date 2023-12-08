@@ -53,9 +53,10 @@ class ViewDeliveries extends Component<Props, State> {
 
   static contextType = DeliveriesContext;
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const state = this.context as DeliveriesState;
-    state.cleanDelivery();
+    await state.cleanDelivery();
+    state.getInitDelivery();
   }
 
   render() {
@@ -68,6 +69,7 @@ class ViewDeliveries extends Component<Props, State> {
             </SearchBox>
             <TableBox>
               <ViewDeliveryListTable tableSize={this.state.tableSize}
+                                     tableSizeUp={this.state.sizeUp}
                                      changeAmountStatusFalse={this.state.changeAmountStatusFalse}/>
               <div style={{textAlign: 'center'}}>
                 <TableSizeButton tableSize={this.state.tableSize} tableSizeUp={this.state.sizeUp}/>
@@ -79,7 +81,9 @@ class ViewDeliveries extends Component<Props, State> {
                   changeInstructionModalStatus={this.state.changeInstructionModalStatus}
                   changeDeliveryProductModalStatus={this.state.changeDeliveryProductModalStatus}
                   changeAmount={this.state.changeAmount}
-                  changeAmountStatus={this.state.changeAmountStatus}/>
+                  changeAmountStatus={this.state.changeAmountStatus}
+                  tableSizeUp={this.state.sizeUp}
+              />
             </TableBox>
           </Body>
         </Layout>

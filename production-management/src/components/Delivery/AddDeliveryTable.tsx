@@ -34,13 +34,14 @@ type Props = {
 }
 
 const boldCellStyle = {
-  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light'
 };
 
-const cellStyle = {
-  border: '1px solid #D3D3D3',
-};
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light'
+}
 
 class AddDeliveryTable extends Component<Props, State> {
   static contextType = DeliveriesContext;
@@ -175,18 +176,18 @@ class AddDeliveryTable extends Component<Props, State> {
                             onChange={() => addSelectedCheckBox(instruction.productNo)}
                         />
                       </TableCell>
-                      <TableCell align="center" style={cellStyle}>{delivery.deliveryNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{delivery.deliveryNo}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionNo}</TableCell>
+                                 style={tableCellStyle}>{instruction.instructionNo}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionDate}</TableCell>
+                                 style={tableCellStyle}>{instruction.instructionDate}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.expirationDate}</TableCell>
+                                 style={tableCellStyle}>{instruction.expirationDate}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.customerName}</TableCell>
+                                 style={tableCellStyle}>{instruction.customerName}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.productCode}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{instruction.amount}</TableCell>
+                                 style={tableCellStyle}>{instruction.productCode}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{instruction.amount}</TableCell>
                     </TableRow>
                 ))}
                 {newDelivery.deliveryNo ? (
@@ -198,10 +199,10 @@ class AddDeliveryTable extends Component<Props, State> {
                                 fontWeight: 'bold'
                               }}>
                               </TableCell>
-                              <TableCell align="center" style={cellStyle}>
+                              <TableCell align="center" style={tableCellStyle}>
                                 {newDelivery.deliveryNo}
                               </TableCell>
-                              <TableCell align="center" style={cellStyle}>
+                              <TableCell align="center" style={tableCellStyle}>
                                 <div style={{
                                   display: 'flex',
                                   flexDirection: 'row',
@@ -216,19 +217,19 @@ class AddDeliveryTable extends Component<Props, State> {
                                   </div>
                                 </div>
                               </TableCell>
-                              <TableCell align="center" style={cellStyle}>
+                              <TableCell align="center" style={tableCellStyle}>
                                 {item.addDeliveryInstruction.instructionDate}
                               </TableCell>
-                              <TableCell align="center" style={cellStyle}>
+                              <TableCell align="center" style={tableCellStyle}>
                                 {item.addDeliveryInstruction.expirationDate}
                               </TableCell>
-                              <TableCell align="center" style={cellStyle}>
+                              <TableCell align="center" style={tableCellStyle}>
                                 {item.addDeliveryInstruction.customerName}
                               </TableCell>
-                              <TableCell align="center" style={cellStyle}>
+                              <TableCell align="center" style={tableCellStyle}>
                                 <AddButton onClick={changeDeliveryProductModalStatus}/>
                               </TableCell>
-                              <TableCell align="center" style={cellStyle}></TableCell>
+                              <TableCell align="center" style={tableCellStyle}></TableCell>
                             </TableRow>
                         ))
                     ) : (
@@ -238,23 +239,23 @@ class AddDeliveryTable extends Component<Props, State> {
                             fontWeight: 'bold'
                           }}>
                           </TableCell>
-                          <TableCell align="center" style={cellStyle}>
+                          <TableCell align="center" style={tableCellStyle}>
                             {newDelivery.deliveryNo}
                           </TableCell>
-                          <TableCell align="center" style={cellStyle}>
+                          <TableCell align="center" style={tableCellStyle}>
                             <AddItemButton color="black"
                                  onClick={changeInstructionModalStatus}/>
                           </TableCell>
-                          <TableCell align="center" style={cellStyle}></TableCell>
-                          <TableCell align="center" style={cellStyle}></TableCell>
-                          <TableCell align="center" style={cellStyle}></TableCell>
-                          <TableCell align="center" style={cellStyle}>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}>
                             {this.state.selectedInstructionNo ?
                                 <AddItemButton color="black"
                                            onClick={changeDeliveryProductModalStatus}/>
                                 : null}
                           </TableCell>
-                          <TableCell align="center" style={cellStyle}></TableCell>
+                          <TableCell align="center" style={tableCellStyle}></TableCell>
                         </TableRow>
                     )
                 ) : <td colSpan={11} style={{textAlign: 'center'}}>

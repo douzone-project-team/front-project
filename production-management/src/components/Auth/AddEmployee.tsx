@@ -3,7 +3,7 @@ import {AuthContext} from "../../store/Auth/auth-context";
 import {Box, Button, Grid, Paper, TextField} from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import {AuthState} from "../../object/Auth/auth-object";
-import '../../assets/css/AddEmployee.css?v=1';
+import '../../assets/css/AddEmployee.css?v=1'; 
 
 // @ts-ignore
 import defaultImage from '../../images/default-image.jpg';

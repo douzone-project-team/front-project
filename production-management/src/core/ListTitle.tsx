@@ -10,7 +10,8 @@ type ListTitleProps = {
 const div = {
   display: 'flex',
   alignItems: 'center',
-  height: '16px'
+  height: '16px',
+  marginBottom: '15px'
 };
 
 const spanTitle = {
