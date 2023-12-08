@@ -82,7 +82,7 @@ class Message extends React.Component<MessageProps> {
                     width: '100%',
                     bgcolor: 'white',
                     color: 'black',
-                    height: '400px'
+                    height: '400px', fontFamily: 'S-CoreDream-3Light'
                 }}
             >
                 <AppBar position="static">
@@ -90,8 +90,8 @@ class Message extends React.Component<MessageProps> {
                           indicatorColor="primary"
                           textColor="primary"
                           style={{backgroundColor: 'white'}}>
-                        <Tab label="쪽지함"/>
-                        <Tab label="쪽지 보내기"/>
+                        <Tab style={{fontFamily: 'S-CoreDream-3Light'}} label="쪽지함"/>
+                        <Tab style={{fontFamily: 'S-CoreDream-3Light'}} label="쪽지 보내기"/>
                     </Tabs>
                 </AppBar>
                 <div>
@@ -103,11 +103,11 @@ class Message extends React.Component<MessageProps> {
                                         <AccordionSummary>
                                             <Box display="flex" width="100%">
                                                 <img src={('http://localhost:8080/employees/'+message.sendId+'/image')} style={{width: '23px', height:'23px' ,borderRadius: '8px'}}/>
-                                                &nbsp;&nbsp;<Typography style={{fontSize: '15px', width: '50%', fontWeight:'bold'}}>
+                                                &nbsp;&nbsp;<Typography style={{fontSize: '15px', width: '50%', fontWeight:'bold', fontFamily: 'S-CoreDream-3Light'}}>
                                                     {message.sendId}({message.sendName})님의 쪽지
                                                     <Typography style={{
                                                         fontSize: '12px',
-                                                        color: 'lightgray'
+                                                        color: 'lightgray', fontFamily: 'S-CoreDream-3Light'
                                                     }}>{message.sendTime}</Typography>
                                                 </Typography>
                                             </Box>
@@ -116,7 +116,7 @@ class Message extends React.Component<MessageProps> {
                                                  style={{width: '20px', height: '25px'}}/>
                                         </AccordionSummary>
                                         <AccordionDetails>
-                                            <Typography style={{wordWrap: 'break-word', whiteSpace: 'normal', width: '350px'}}>{message.message}</Typography>
+                                            <Typography style={{wordWrap: 'break-word', whiteSpace: 'normal', width: '350px', fontFamily: 'S-CoreDream-3Light'}}>{message.message}</Typography>
                                         </AccordionDetails>
                                     </Accordion>
                                 ))}
@@ -128,13 +128,15 @@ class Message extends React.Component<MessageProps> {
                         <>
                             <div style={{padding: '20px'}}>
                                 <TextField
+                                    style={{fontFamily: 'S-CoreDream-3Light'}}
                                     label="보내는 사람"
                                     fullWidth
                                     margin="normal"
                                     value={employee.employeeNo}
                                 />
                                 <FormControl fullWidth margin="normal">
-                                    <InputLabel id="recipient-label">받는 사람</InputLabel>
+                                    <InputLabel style={{fontFamily: 'S-CoreDream-3Light'}}
+                                                id="recipient-label">받는 사람</InputLabel>
                                     <Select
                                         labelId="recipient-label"
                                         id="targetId"
@@ -149,6 +151,7 @@ class Message extends React.Component<MessageProps> {
                                     </Select>
                                 </FormControl>
                                 <TextField
+                                    style={{fontFamily: 'S-CoreDream-3Light'}}
                                     label="메시지 작성"
                                     multiline
                                     rows={4}
@@ -161,7 +164,7 @@ class Message extends React.Component<MessageProps> {
                                     variant="contained"
                                     color="primary"
                                     onClick={this.handleSendMessage}
-                                    style={{marginTop: '10px'}}
+                                    style={{marginTop: '10px', fontFamily: 'S-CoreDream-3Light'}}
                                 >
                                     쪽지 보내기
                                 </Button>
