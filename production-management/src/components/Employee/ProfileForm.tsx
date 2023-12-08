@@ -1,26 +1,19 @@
-import React, {Component} from 'react';
-import {Table, TableCell, TableContainer, TableRow} from '@material-ui/core';
+import React, {ChangeEvent, Component} from 'react';
+import {Box, Table, TableCell, TableContainer, TableRow} from '@material-ui/core';
 import {EmployeeContext} from '../../store/Employee/employee-context';
 import {EmployeeState, UpdateEmployee} from '../../object/Employee/employee-object';
 import {initialUpdateEmployee} from "../../state/employeeStateMangement";
+import ProfileImage from "./ProfileImage";
 
 const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
-    fontFamily: 'S-CoreDream-3Light',
-    width: '250px'
+    fontFamily: 'S-CoreDream-3Light'
 };
 
 const tableCellStyle = {
     fontFamily: 'S-CoreDream-3Light'
 }
-
-const inputStyle = {
-    height: '25px',
-    fontFamily: 'S-CoreDream-3Light',
-    width: '200px'
-}
-
 
 type ProfileFormProps = {}
 
@@ -59,12 +52,39 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         state.getEmployee(employeeData.employeeNo);
     }
 
+    validateName = (name: string) => {
+        return name.length >= 2;
+    }
+
+    validateTel = (tel: string) => {
+        return /^\d{11}$/.test(tel);
+    }
+
+    validateEmail = (email: string) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
     handleUpdateClick = () => {
         const state = this.context as EmployeeState;
         const employee = state.employee;
 
+        if(!this.validateName(modifyValue.name)){
+            alert('2글자 이상의 이름을 입력해주세요.');
+            return;
+        }
+
+        if(!this.validateTel(modifyValue.tel)){
+            alert('11자리 숫자로 연락처를 입력해주세요.')
+            return;
+        }
+
+        if(!this.validateEmail(modifyValue.email)){
+            alert('올바른 이메일을 입력해주세요.');
+            return;
+        }
+
         if (modifyValue.password !== modifyValue.passwordConfirm) {
-            alert('비밀번호를 다시 확인해주세요.');
+            alert('새 비밀번호와 재입력한 새 비밀번호가 같지 않습니다. 다시 확인해주세요.');
             return;
         }
         const telWithoutHyphen = modifyValue.tel.replace(/-/g, '');
@@ -76,8 +96,6 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
             tel: telWithoutHyphen,
             email: modifyValue.email
         };
-
-        alert(updateEmployeeObj.email);
 
         state.updateEmployee(employee.employeeNo, updateEmployeeObj);
     };
@@ -91,7 +109,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         modifyValue.email = employee.email;
 
         return (
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '50%'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '60%'}}>
                 <TableContainer className='table-container'>
                     <Table size='small' className='table' style={{backgroundColor: '#FDFDFD'}}>
                         <TableRow>
@@ -106,7 +124,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                         </TableRow>
                         <TableRow>
                             <TableCell style={boldCellStyle}>이름</TableCell>
-                            <TableCell>
+                            <TableCell >
                                 <input
                                     type="text"
                                     placeholder="이름"
@@ -114,7 +132,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.name = event.target.value;
                                     }}
-                                    style={inputStyle}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -127,7 +145,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.oldPassword = event.target.value;
                                     }}
-                                    style={inputStyle}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -140,20 +158,20 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.password = event.target.value;
                                     }}
-                                    style={inputStyle}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell style={boldCellStyle}>새 비밀번호 재입력</TableCell>
+                            <TableCell style={boldCellStyle}>새 비밀번호</TableCell>
                             <TableCell>
                                 <input
                                     type="password"
-                                    placeholder="새 비밀번호 재입력"
+                                    placeholder="새 비밀번호 다시입력"
                                     onChange={event => {
                                         modifyValue.passwordConfirm = event.target.value;
                                     }}
-                                    style={inputStyle}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -167,7 +185,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.tel = event.target.value;
                                     }}
-                                    style={inputStyle}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -181,7 +199,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.email = event.target.value;
                                     }}
-                                    style={inputStyle}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>

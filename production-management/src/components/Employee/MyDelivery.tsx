@@ -2,7 +2,7 @@ import {EmployeeContext} from "../../store/Employee/employee-context";
 import React, {Component} from "react";
 import {EmployeeState} from "../../object/Employee/employee-object";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
-import {DetailTitle} from "../../core/DetailTitle";
+
 
 const boldCellStyle = {
     fontWeight: 'bold',
@@ -10,7 +10,7 @@ const boldCellStyle = {
     fontFamily: 'S-CoreDream-3Light'
 };
 
-const tableCellStyle = {
+const cellStyle = {
     fontFamily: 'S-CoreDream-3Light'
 }
 
@@ -28,8 +28,10 @@ class MyDelivery extends Component {
 
         return (
             <div style={{ display: 'flex', flexDirection: 'column', width: '40%' }}>
-                <DetailTitle options={{title : '나의 출고목록'}}/>
-                <br/>
+                <div style={{display: 'flex', alignItems: 'center', marginBottom: '10px'}}>
+                    <img src={require('./../../images/icon/list.png')} style={{width: '20px'}}/>
+                    <span style={{fontWeight: 'bold'}}>&nbsp; 나의 최근 출고</span>
+                </div>
                 <TableContainer style={{border: '1px solid #ccc', borderRadius: '10px'}}>
                     <Table size='small' style={{backgroundColor: '#FDFDFD'}}>
                         <TableHead>
@@ -42,11 +44,11 @@ class MyDelivery extends Component {
                         <TableBody>
                             {list && list.length > 0 && list.map((row) => (
                                 <TableRow key={row.deliveryNo}>
-                                    <TableCell align="center" style={tableCellStyle}>{row.deliveryNo}</TableCell>
-                                    <TableCell align="center" style={tableCellStyle}>{row.deliveryDate}</TableCell>
-                                    <TableCell align="center" style={{...tableCellStyle,width: '50px'}}>
+                                    <TableCell align="center" style={cellStyle}>{row.deliveryNo}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.deliveryDate}</TableCell>
+                                    <TableCell align="center" style={{width: '50px', fontFamily: 'S-CoreDream-3Light'}}>
                                         <div className={row.progressStatus}>
-                                            {row.progressStatus}
+                                            {row.progressStatus === 'COMPLETE' ? '완료' : '미완료'}
                                         </div>
                                     </TableCell>
                                 </TableRow>

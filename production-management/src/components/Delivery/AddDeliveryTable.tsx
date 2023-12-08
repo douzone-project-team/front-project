@@ -72,7 +72,6 @@ class AddDeliveryTable extends Component<Props, State> {
     })
   }
 
-
   addProduct = (instructionNo: string, productNo: number, productCode: string, amount: number, remainAmount: number) => {
     const {product} = this.state;
 
@@ -106,15 +105,6 @@ class AddDeliveryTable extends Component<Props, State> {
       }]
     }
     state.addDeliveryInstruction(deliveryNo, addDelivery);
-    this.getDelivery();
-  }
-
-  getDelivery = () => {
-    const state = this.context as DeliveriesState;
-    const deliveryNo = state.newDelivery.deliveryNo;
-    const delivery = state.delivery;
-
-    state.getDelivery(deliveryNo);
   }
 
   deleteDeliveryInstruction = (instructionNo: string, productNo: number) => {

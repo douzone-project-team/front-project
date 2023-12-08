@@ -1,9 +1,18 @@
 import React, {Component} from "react";
-import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from "@material-ui/core";
+import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 
 import "./../../assets/css/Table.css";
 import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
-import {DeliveriesState} from "../../object/Delivery/delivery-object";
+import {DeliveriesState, Delivery} from "../../object/Delivery/delivery-object";
 import {ListTitle} from "../../core/ListTitle";
 import {PageButton} from "../../core/button/PageButton";
 import {NullText} from "../../core/NullText";
@@ -21,7 +30,7 @@ const tableCellStyle = {
 
 const myMap: Map<string, string> = new Map<string, string>([
   ['INCOMPLETE', '미완료'],
-  ['COMPELETE', '완료'],
+  ['COMPLETED', '완료'],
 ]);
 
 type Props = {
@@ -35,7 +44,7 @@ class ViewDeliveryListTable extends Component<Props> {
 
   render() {
     const state = this.context as DeliveriesState;
-    const list = state.deliveryPage.list;
+    const list = state.deliveryPage.list || [];
     const currentPage = state.deliveryPage.currentPage;
     const {tableSize, tableSizeUp, changeAmountStatusFalse} = this.props;
 
@@ -70,22 +79,21 @@ class ViewDeliveryListTable extends Component<Props> {
               </TableHead>
               <TableBody>
                 {list && list.length > 0 ? list.map((row) => (
-                        <TableRow key={row.deliveryNo} className='cellHoverEffect'
-                                  onClick={() => {
-                                    state.getDelivery(row.deliveryNo);
-                                    changeAmountStatusFalse();
-                                    if (tableSize) {
-                                      tableSizeUp();
-                                    }
-                                  }}>
+                        <TableRow
+                            key={row.deliveryNo}
+                            className='cellHoverEffect'
+                            onClick={() => {
+                              state.getDelivery(row.deliveryNo);
+                              changeAmountStatusFalse();
+                              if (tableSize) {
+                                tableSizeUp();
+                              }
+                            }}>
                           <TableCell align="center" style={{...tableCellStyle, fontWeight: 'bold'}}>
                             {row.deliveryNo}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.employeeName}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.deliveryDate}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.instructionCount}</TableCell>
+                          <TableCell align="center" style={tableCellStyle}>{row.employeeName}</TableCell>
+                          <TableCell align="center" style={tableCellStyle}>{row.deliveryDate}</TableCell>
+                          <TableCell align="center" style={tableCellStyle}>{row.instructionCount}</TableCell>
                           <TableCell align="center" style={{...tableCellStyle, width: '50px'}}>
                             <div className={row.deliveryStatus}>
                               {myMap.get(row.deliveryStatus.toUpperCase())}
@@ -95,7 +103,7 @@ class ViewDeliveryListTable extends Component<Props> {
                     )) :
                     <TableRow>
                       <TableCell colSpan={7} style={{border: '0'}}>
-                        {currentPage != -1 ? <NullText/> : <Loading/>}
+                        {currentPage != -1? <NullText/> : <Loading/> }
                       </TableCell>
                     </TableRow>}
               </TableBody>

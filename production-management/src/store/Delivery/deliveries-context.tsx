@@ -58,7 +58,7 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
     },
     updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction): void {
     },
-    getInitDelivery(): void {
+    getInitDelivery(): void{
     }
 })
 
@@ -72,7 +72,8 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         addDeliveryObj: initialAddDeliveryObj,
         newDelivery: initialNewDelivery,
         cleanDelivery: () => {
-            this.setState({delivery: initialDelivery, newDelivery: initialNewDelivery, deliveryPage: initialDeliveryPageState, search: initialDeliverySearchState})
+            this.setState({delivery: initialDelivery, newDelivery: initialNewDelivery,
+                deliveryPage: initialDeliveryPageState})
         },
         /* Delivery 조회 메서드  */
         setSearch: (employeeName: string, startDate: string, endDate: string) => {
@@ -115,85 +116,88 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         },
         getDelivery: (deliveryNo: string) => {
             deliveryAction.getDelivery(deliveryNo)
-                .then((result) => {
-                    let data = result?.data;
-                    this.setState({delivery: data});
-                })
+            .then((result) => {
+                let data = result?.data;
+                this.setState({delivery: data});
+            })
         },
         getRemainAmount: (instructionNo: string, productNo: number) => {
             deliveryAction.getRemainAmount(instructionNo, productNo)
-                .then((result) => {
-                    let data = result?.data;
-                    this.setState({remainAmount: data});
-                    console.log(this.state.remainAmount);
-                })
+            .then((result) => {
+                let data = result?.data;
+                this.setState({remainAmount: data});
+                console.log(this.state.remainAmount);
+            })
         },
         /* Delivery 껍데기 추가 메서드 */
         addDelivery: (addDeliveryObj: AddDeliveryObj) => {
             deliveryAction.addDelivery(addDeliveryObj)
-                .then((result) => {
-                    this.setState((prevState) => ({
-                        newDelivery: {
-                            ...prevState.newDelivery,
-                            deliveryNo: result?.data.deliveryNo,
-                            deliveryDate: addDeliveryObj.deliveryDate
-                        }
-                    }));
-                });
+            .then((result) => {
+                this.setState((prevState) => ({
+                    newDelivery: {
+                        ...prevState.newDelivery,
+                        deliveryNo: result?.data.deliveryNo,
+                        deliveryDate: addDeliveryObj.deliveryDate
+                    }
+                }));
+            });
         },
 
         updateDelivery: (updateDelivery: UpdateDelivery) => {
             deliveryAction.updateDelivery(updateDelivery).then((result) => {
                 this.getDelivery(updateDelivery.deliveryNo);
+                this.getDeliveryList();
             })
         },
 
         updateDeliveryStatus: (deliveryNo: string) => {
             deliveryAction.updateDeliveryStatus(deliveryNo).then((result) => {
                 this.getDelivery(deliveryNo);
+                this.getDeliveryList();
             })
         },
 
         // 출고 껍데기에 지시 먼저 등록하기
         addDeliveryInstruction: (deliveryNo, addDeliveryInstruction: AddDeliveryInstruction) => {
             deliveryInstructionAction.addDeliveryInstruction(deliveryNo, addDeliveryInstruction)
-                .then((result) => {
-                    const {instructionNo} = addDeliveryInstruction;
+            .then((result) => {
+                const {instructionNo} = addDeliveryInstruction;
+                this.setState((prevState) => ({
+                    newDelivery: {
+                        ...prevState.newDelivery,
+                        instructionNo: instructionNo,
+                    },
+                }), () => {this.getDelivery(deliveryNo)});
 
-                    this.setState((prevState) => ({
-                        newDelivery: {
-                            ...prevState.newDelivery,
-                            instructionNo: instructionNo,
-                        },
-                    }));
-                });
+            });
         },
 
         deleteDeliveryInstruction: (deleteDeliveryInstructionObj: DeleteDeliveryInstruction) => {
             deliveryInstructionAction.deleteDeliveryInstruction(deleteDeliveryInstructionObj)
+            .then((result) => {
+                deliveryAction.getDelivery(this.state.delivery.deliveryNo)
                 .then((result) => {
-                    deliveryAction.getDelivery(this.state.delivery.deliveryNo)
-                        .then((result) => {
-                            this.setState({delivery: result?.data})
-                        })
-                });
+                    this.setState({delivery: result?.data})
+                })
+            });
         },
 
         deleteDelivery: (deliveryNo: string) => {
             deliveryAction.deleteDelivery(deliveryNo)
-                .then((result) => {
-                    this.setState({delivery: initialDelivery})
-                    this.getDeliveryList();
-                })
+            .then((result) => {
+                this.setState({delivery: initialDelivery})
+                this.getDeliveryList();
+            })
         },
 
         updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction) {
             deliveryInstructionAction.updateDeliveryInstruction(updateDeliveryInstruction)
-                .then(() => {
-                    this.getDelivery(updateDeliveryInstruction.deliveryNo);
-                })
+            .then(() => {
+                this.getDelivery(updateDeliveryInstruction.deliveryNo);
+            })
         },
-        getInitDelivery: () => {
+
+        getInitDelivery: async () => {
             deliveryAction.getDeliveryList(this.state.search)
             .then((result) => {
                 this.setState({deliveryPage: result?.data}, () => {
@@ -201,21 +205,20 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                 });
             })
         }
-
     }
 
     getDeliveryList = () => {
         deliveryAction.getDeliveryList(this.state.search)
-            .then((result) => {
-                this.setState({deliveryPage: result?.data});
-            })
+        .then((result) => {
+            this.setState({deliveryPage: result?.data});
+        })
     };
 
     getDelivery = (deliveryNo: string) => {
         deliveryAction.getDelivery(deliveryNo)
-            .then((result) => {
-                this.setState({delivery: result?.data});
-            })
+        .then((result) => {
+            this.setState({delivery: result?.data});
+        })
     }
 
     render() {
