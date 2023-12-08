@@ -42,7 +42,7 @@ class Notification extends React.Component<NotificationProps> {
                         backgroundColor: '#ffffff',
                     }}
                 >알림
-                    <button onClick={isClear} style={{float: 'right'}}>전체 삭제</button>
+                    <button onClick={isClear} style={{float: 'right', fontFamily: 'S-CoreDream-3Light', border: '0.5px solid gray', borderRadius: '5px'}}>모두 지우기</button>
                 </div>
 
                 <div style={{backgroundColor:'#f3f4f7', height : '100%'}}>

@@ -14,7 +14,15 @@ class Mypage extends Component {
         <Layout>
           <Title title='마이 페이지'/>
           <Box>
-            <Box
+              <div style={{
+                  backgroundColor: 'white',
+                  margin: '30px',
+                  paddingTop:'10px',
+                  paddingBottom:'60px',
+                  borderRadius: '10px',
+                  boxShadow: '0 0 5px 1px #DDDDDD'
+              }}>
+                <Box
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
@@ -36,6 +44,7 @@ class Mypage extends Component {
               <MyInstruction />
               <MyDelivery/>
             </Box>
+              </div>
           </Box>
         </Layout>
     )
