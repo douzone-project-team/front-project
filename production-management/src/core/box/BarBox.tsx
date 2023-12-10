@@ -21,7 +21,7 @@ export class BarLeftBox extends Component<BarLeftBoxProps> {
   render() {
     const { width, minWidth } = this.props;
     return (
-        <div style={{width: width, minWidth : minWidth ? minWidth : '1000px', marginBottom: '7px', marginTop: '7px'}}>
+        <div style={{width: width, minWidth : minWidth, marginBottom: '7px', marginTop: '7px'}}>
           {this.props.children}
         </div>
     );
@@ -35,7 +35,7 @@ export class BarRightBox extends Component<BarRightBoxProps> {
   render() {
     const { minWidth } = this.props;
     return (
-        <div style={{marginRight: '1.5%', minWidth : minWidth ? minWidth : '30px', marginTop: '7px'}}>
+        <div style={{marginRight: '1.5%', minWidth : minWidth, marginTop: '14px'}}>
           {this.props.children}
         </div>
     );
