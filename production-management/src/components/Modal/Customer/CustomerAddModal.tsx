@@ -138,7 +138,7 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
                         <main className="customer-modal-main" style={{border: "none", display: 'grid', placeItems: 'center'}}>
                             <Box
                                 sx={{
-                                    width : '80%',
+                                    width : '95%',
                                     display: 'flex',
                                     flexDirection: 'column',
                                     borderRadius: '8px',

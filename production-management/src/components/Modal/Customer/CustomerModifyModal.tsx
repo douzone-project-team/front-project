@@ -87,7 +87,7 @@ export class CustomerModifyModal extends Component<CustomerModalProps, CustomerM
                     <main className="customer-modal-main" style={{border: "none", display: 'grid', placeItems: 'center'}}>
                         <Box
                             sx={{
-                                width : '80%',
+                                width : '95%',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 borderRadius: '8px',
