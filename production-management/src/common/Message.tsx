@@ -5,7 +5,7 @@ import {AuthContext} from "../store/Auth/auth-context";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-
+import SubdirectoryArrowRightOutlinedIcon from '@material-ui/icons/SubdirectoryArrowRightOutlined';
 
 interface MessageProps {
     messages: [],
@@ -49,8 +49,25 @@ class Message extends React.Component<MessageProps> {
         getEmployeeList();
     }
 
+    onReplyMessage = (sendId: string, targetId: string) => {
+        this.setState({
+            tabValue: 1,
+            targetId: parseInt(sendId),
+            message: `RE: `, // 기본적인 답장 메시지 설정
+        });
+
+    };
+
     handleChangeTab = (event: any, newValue: any) => {
-        this.setState({tabValue: newValue});
+        if (newValue === 1 && this.state.tabValue === 0) {
+            this.setState({
+                tabValue: newValue,
+                targetId: 0,
+                message: "",
+            });
+        } else {
+            this.setState({tabValue: newValue});
+        }
     };
 
     handleTargetIdChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -71,7 +88,7 @@ class Message extends React.Component<MessageProps> {
 
     render() {
         const {messages, onDeleteMessage} = this.props;
-        const {tabValue} = this.state;
+        const {tabValue, targetId, message} = this.state;
         const {employeePage} = this.context;
         let employee = JSON.parse(localStorage.getItem('employee') as string) as unknown as Employees;
         let messages1 = messages as unknown as Messages[];
@@ -103,7 +120,7 @@ class Message extends React.Component<MessageProps> {
                                         <AccordionSummary>
                                             <Box display="flex" width="100%">
                                                 <img src={('http://localhost:8080/employees/'+message.sendId+'/image')} style={{width: '23px', height:'23px' ,borderRadius: '8px'}}/>
-                                                &nbsp;&nbsp;<Typography style={{fontSize: '15px', width: '50%', fontWeight:'bold', fontFamily: 'S-CoreDream-3Light'}}>
+                                                &nbsp;&nbsp;<Typography style={{fontSize: '15px', width: '55%', fontWeight:'bold', fontFamily: 'S-CoreDream-3Light'}}>
                                                     {message.sendId}({message.sendName})님의 쪽지
                                                     <Typography style={{
                                                         fontSize: '12px',
@@ -111,6 +128,9 @@ class Message extends React.Component<MessageProps> {
                                                     }}>{message.sendTime}</Typography>
                                                 </Typography>
                                             </Box>
+                                            <SubdirectoryArrowRightOutlinedIcon
+                                                onClick={() => this.onReplyMessage(message.sendId, message.targetId)}
+                                            />
                                             <img src={(require('../images/button/delete-button.png'))}
                                                  onClick={() => onDeleteMessage(message.messageNo)}
                                                  style={{width: '20px', height: '25px'}}/>
@@ -141,7 +161,7 @@ class Message extends React.Component<MessageProps> {
                                         labelId="recipient-label"
                                         id="targetId"
                                         onChange={this.handleTargetIdChange}
-                                        defaultValue=""
+                                        defaultValue={targetId}
                                     >
                                         {employeePage.list.map((employee: any) => (
                                             <MenuItem key={employee.employeeNo} value={employee.employeeNo}>
@@ -157,6 +177,7 @@ class Message extends React.Component<MessageProps> {
                                     rows={4}
                                     variant="outlined"
                                     fullWidth
+                                    defaultValue={message}
                                     margin="normal"
                                     onChange={this.handleMessageChange}
                                 />

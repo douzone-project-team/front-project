@@ -24,6 +24,7 @@ import {EventSourcePolyfill, NativeEventSource} from "event-source-polyfill";
 import {EmployeeContext} from "../store/Employee/employee-context";
 import DraftsIcon from '@material-ui/icons/Drafts';
 import Message from "./Message";
+import Swal from 'sweetalert2'
 
 const drawerWidth = 240;
 
@@ -155,7 +156,8 @@ class Layout extends React.Component {
                 employeeNo: 0,
                 employee: "",
                 notification: "",
-                date: ""
+                date: "",
+                time: ""
             },
             newMessage: {
                 sendId: "",
@@ -205,11 +207,13 @@ class Layout extends React.Component {
             console.log('Received SSE CRUD Event:' + eventData + "/eventType : " + eventType);
             const notificationArray = eventData.split('(');
             const notificationArray2 = eventData.split(',');
+            const dateArray = notificationArray2[2].split('/');
             const newNotification = {
                 employeeNo: notificationArray[0],
                 employee: notificationArray2[0],
                 notification: notificationArray2[1],
-                date: notificationArray2[2]
+                date: dateArray[0],
+                time: dateArray[1]
             }
 
             this.addNotification(newNotification);
@@ -253,19 +257,38 @@ class Layout extends React.Component {
         );
     };
 
-    onDeleteNotification = (index) => {
-        const {notifications} = this.state;
+    onDeleteNotification = (notificationToDelete) => {
+        const { notifications } = this.state;
 
-        const updatedNotifications = [...notifications];
-        updatedNotifications.splice(index, 1);
+        const indexToDelete = notifications.findIndex((notification) =>
+            notification.employeeNo === notificationToDelete.employeeNo &&
+            notification.employee === notificationToDelete.employee &&
+            notification.notification === notificationToDelete.notification &&
+            notification.date === notificationToDelete.date &&
+            notification.time === notificationToDelete.time
+        );
 
-        // Update state
-        this.setState({
-            notifications: updatedNotifications,
-        }, () => {
-            localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
-        });
-    };2
+        if (indexToDelete !== -1) {
+            const updatedNotifications = [
+                ...notifications.slice(0, indexToDelete),
+                ...notifications.slice(indexToDelete + 1)
+            ];
+
+            // Update state
+            this.setState({
+                notifications: updatedNotifications,
+            }, () => {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "알림를 삭제하였습니다.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+            });
+        }
+    };
 
     clearNotifications = () => {
         localStorage.removeItem('notifications');
