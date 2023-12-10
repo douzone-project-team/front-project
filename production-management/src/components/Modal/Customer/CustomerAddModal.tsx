@@ -4,6 +4,7 @@ import {CustomersContext} from "../../../store/Customer/customers-context";
 import {Box} from "@material-ui/core";
 import './CustomerModalCss.css'
 import Swal from 'sweetalert2';
+import BusinessIcon from '@material-ui/icons/Business';
 
 
 type CustomerModalProps = {
@@ -120,8 +121,6 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
         state.setCheckCustomerCode(addValue.customerCode);
     }
 
-
-
     render() {
         const {onClose} = this.props as CustomerModalProps;
         const state = this.context as CustomersState;
@@ -129,124 +128,132 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
 
         return (
             <div className='modal'>
-                    <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'370px'}}>
-                        <header>
+                    <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'450px', height: '600px'}}>
+                        <div className="modalHeader" style={{height: '55px'}}>
+                            <div style={{display: 'flex'}}><BusinessIcon/>&nbsp;거래처 등록</div>
                             <button className="close" onClick={onClose}>
                                 &times;
                             </button>
-                        </header>
-                        <main style={{border: "none", display: 'grid', placeItems: 'center'}}>
+                        </div>
+                        <main className="customer-modal-main" style={{border: "none", display: 'grid', placeItems: 'center'}}>
                             <Box
                                 sx={{
+                                    width : '95%',
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    padding: '20px',
-                                    border: '1px solid #ccc',
                                     borderRadius: '8px',
-                                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'
                                 }}
                             >
                                 <label className="form-label">
                                     거래처 번호
-                                    <input
-                                        type="text"
-                                        placeholder=""
-                                        className="form-input"
-                                        disabled
-                                    />
                                 </label>
-                                <label className="form-label" style={{height:'30px'}}>
+                                <input
+                                    type="text"
+                                    placeholder=""
+                                    className="form-input"
+                                    disabled
+                                />
+                                <label className="form-label">
                                     거래처 코드
-                                    <input
-                                        type="text"
-                                        placeholder="ex) C0001"
-                                        className="form-input"
-                                        style={{width: '89px'}}
-                                        onChange={(event => {
-                                            addValue.customerCode = event.target.value
-                                            state.duplicateCustomerCodeResult.duplicateResult = false
-                                        })}
-                                    />
-                                    <button
-                                        style={{marginLeft:'20px', border: '1px solid', height:'25px', borderRadius:'2px',  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'}}
-                                        onClick={this.duplicateCustomerCode}
-                                    >
-                                        중복 체크
-                                    </button>
                                 </label>
+                                <div style={{display:'flex'}}>
+                                <input
+                                    type="text"
+                                    placeholder="ex) C0001(영문1+숫자4)"
+                                    className="form-input"
+                                    style={{width: '60%', marginBottom: '4px'}}
+                                    onChange={(event => {
+                                        addValue.customerCode = event.target.value
+                                        state.duplicateCustomerCodeResult.duplicateResult = false
+                                    })}
+                                />
+                                <button className="form-duplicate-button"
+                                    onClick={this.duplicateCustomerCode}
+                                >
+                                    중복 체크
+                                </button>
+                                </div>
                                 {duplicateResult?
-                                    <span style={{color: 'green', marginBottom:'7px', marginLeft:'30px'}}>사용 가능한 거래처 코드입니다.</span>
-                                    : null}
+                                    <span className="duplicate-span" style={{color: 'green'}}>
+                                        사용 가능한 거래처 코드입니다.</span>
+                                    : <span className="duplicate-span" style={{color: 'red'}}>
+                                        거래처 중복 확인은 필수입니다.</span>}
                                 <label className="form-label">
                                     거래처 명칭
-                                    <input
-                                        type="text"
-                                        placeholder="ex) 더존비즈온"
-                                        className="form-input"
-                                        onBlur={(event => {
-                                            addValue.customerName = event.target.value
-                                        })}
-                                    />
                                 </label>
+                                <input
+                                    type="text"
+                                    placeholder="ex) 더존비즈온"
+                                    className="form-input"
+                                    onBlur={(event => {
+                                        addValue.customerName = event.target.value
+                                    })}
+                                />
                                 <label className="form-label">
                                     회사 연락처
-                                    <input
-                                        type="text"
-                                        placeholder="010"
-                                        className="form-input"
-                                        style={{width:'40px'}}
-                                        onBlur={(event => {
-                                            addValue.customerTel1 = event.target.value
-                                        })}
-                                    /> -
-                                    <input
-                                        type="text"
-                                        placeholder="0000"
-                                        className="form-input"
-                                        style={{width:'45px', marginLeft:'7px'}}
-                                        onBlur={(event => {
-                                            addValue.customerTel2 = event.target.value
-                                        })}
-                                    /> -
-                                    <input
-                                        type="text"
-                                        placeholder="0000"
-                                        className="form-input"
-                                        style={{width:'45px', marginLeft:'7px'}}
-                                        onBlur={(event => {
-                                            addValue.customerTel3 = event.target.value
-                                        })}
-                                    />
                                 </label>
+                                <div style={{display: 'flex', alignItems: 'center', marginBottom: '10px'}}>
+                                <input
+                                    type="text"
+                                    placeholder="010"
+                                    className="form-input"
+                                    style={{width:'15%', marginBottom:0, textAlign: 'center'}}
+                                    onBlur={(event => {
+                                        addValue.customerTel1 = event.target.value
+                                    })}
+                                /> &nbsp;-&nbsp;
+                                <input
+                                    type="text"
+                                    placeholder="0000"
+                                    className="form-input"
+                                    style={{width:'15%', marginLeft:'3px', marginBottom:0, textAlign: 'center'}}
+                                    onBlur={(event => {
+                                        addValue.customerTel2 = event.target.value
+                                    })}
+                                /> &nbsp;-&nbsp;
+                                <input
+                                    type="text"
+                                    placeholder="0000"
+                                    className="form-input"
+                                    style={{width:'15%',  marginLeft:'3px', marginBottom:0, textAlign: 'center'}}
+                                    onBlur={(event => {
+                                        addValue.customerTel3 = event.target.value
+                                    })}
+                                />
+                                </div>
                                 <label className="form-label">
                                     회사 대표자
-                                    <input
-                                        type="text"
-                                        placeholder="ex) 김아무개"
-                                        className="form-input"
-                                        onBlur={(event => {
-                                            addValue.ceo = event.target.value
-                                        })}
-                                    />
                                 </label>
+                                <input
+                                    type="text"
+                                    placeholder="ex) 홍길동"
+                                    className="form-input"
+                                    onBlur={(event => {
+                                        addValue.ceo = event.target.value
+                                    })}
+                                />
                                 <label className="form-label">
                                     거래처 업종
-                                    <input
-                                        type="text"
-                                        placeholder="ex) 제조업"
-                                        className="form-input"
-                                        onBlur={(event => {
-                                            addValue.sector = event.target.value
-                                        })}
-                                    />
                                 </label>
+                                <input
+                                    type="text"
+                                    placeholder="ex) 제조업"
+                                    className="form-input"
+                                    onBlur={(event => {
+                                        addValue.sector = event.target.value
+                                    })}
+                                />
+                                <div style={{display : 'flex', justifyContent: 'center'}}>
+                                <button className="form-cancel-button" style={{border: '1px solid lightgray'}} onClick={onClose}>
+                                    취소
+                                </button>
+                                    &nbsp;
                                 <button className="form-button" onClick={this.state.insertCustomer}>
                                     등록
                                 </button>
+                                </div>
                             </Box>
                         </main>
-                        <footer style={{padding: '30px'}}>
-                        </footer>
                     </section>
             </div>
         )
