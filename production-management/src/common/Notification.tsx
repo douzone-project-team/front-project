@@ -118,7 +118,7 @@ class Notification extends React.Component<NotificationProps> {
                                             </div>
                                             <div>
                                                 <img
-                                                    src={(require('../images/button/delete-button.png'))}
+                                                    src={(require('../images/button/delete-button2.png'))}
                                                     onClick={() => onDeleteNotification(notification)}
                                                     style={{ width: '20px' }}
                                                 />

@@ -131,7 +131,7 @@ class Message extends React.Component<MessageProps> {
                                             <SubdirectoryArrowRightOutlinedIcon
                                                 onClick={() => this.onReplyMessage(message.sendId, message.targetId)}
                                             />
-                                            <img src={(require('../images/button/delete-button.png'))}
+                                            <img src={(require('../images/button/delete-button2.png'))}
                                                  onClick={() => onDeleteMessage(message.messageNo)}
                                                  style={{width: '20px', height: '25px'}}/>
                                         </AccordionSummary>
