@@ -96,7 +96,7 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
     return (
         <>
           <BarBox>
-            <BarLeftBox width='80%'>
+            <BarLeftBox width='80%' minWidth='1000px'>
             <TextInput title='거래처' value={this.state.customerName} readOnly/>
               <EditButton
                   size={20}

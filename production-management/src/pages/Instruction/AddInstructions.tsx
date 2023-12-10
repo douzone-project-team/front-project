@@ -10,7 +10,7 @@ import "../../assets/css/Styles.css";
 import {Title} from "../../core/Title";
 import {SearchBox} from "../../core/box/SearchBox";
 import {TableBox} from "../../core/box/TableBox";
-import { Body } from "../../core/Body";
+import {Body} from "../../core/Body";
 
 
 type State = {
@@ -97,11 +97,11 @@ class AddInstructions extends Component<Props, State> {
         <Layout>
           <Title title='지시등록'/>
           <Body>
-            <SearchBox>
+            <SearchBox minWidth='1100px'>
               <AddInstructionBar customerSearchModalOpen={customerSearchModalOpen}
                                  changeCustomerSearchModalStatus={this.state.changeCustomerSearchModalStatus}/>
             </SearchBox>
-            <TableBox>
+            <TableBox minWidth='1100px'>
               <AddInstructionTable addSelectedCheckBox={this.addSelectedCheckBox}
                                    productModalOpen={productModalOpen}
                                    customerModalOpen={customerModalOpen}
@@ -113,7 +113,7 @@ class AddInstructions extends Component<Props, State> {
           </Body>
           {isChecksNotEmpty &&
               <div className='delete-div' style={{
-                height: '7vh',margin:0
+                height: '7vh', margin: 0
               }}>
                 <div>
                   <span
