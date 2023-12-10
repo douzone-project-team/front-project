@@ -103,7 +103,7 @@ class ViewInstructionTable extends Component<Props> {
             </div>
             <div style={{width: '5%', textAlign: 'right'}}>
               {instruction.progressStatus == 'STANDBY' &&
-                  <DeleteButton onClick={() => {
+                  <DeleteButton size={22} onClick={() => {
                     deleteInstruction(instruction.instructionNo);
                     if(!tableSize){
                       tableSizeUp();

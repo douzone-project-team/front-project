@@ -64,9 +64,9 @@ class SearchProductBar extends Component<{}, SearchState> {
             }}/>
           </BarLeftBox>
           <BarRightBox>
-            <SearchButton size={30} onClick={this.handleSearchClick}/>
+            <SearchButton size={35} onClick={this.handleSearchClick}/>
             &nbsp;&nbsp;
-            <AddItemButton size={30} onClick={this.handleAddClick}/>
+            <AddItemButton size={35} onClick={this.handleAddClick}/>
           </BarRightBox>
           <Modal
               open={this.state.isModalOpen ?? false}

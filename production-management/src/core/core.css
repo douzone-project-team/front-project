@@ -5,6 +5,7 @@
   padding-left: 15px;
   background-color: rgb(50 95 211);
   color: white;
+  min-width: 1228px
 }
 
 .main-body {
@@ -20,6 +21,7 @@
   background-color: white;
   box-shadow: 0 0 5px 1px #DDDDDD;
   border-radius: 10px;
+  min-width: 1100px;
 }
 
 .table-box {
@@ -28,6 +30,7 @@
   box-shadow: 0 0 5px 1px #DDDDDD;
   border-radius: 10px;
   margin-top: 15px;
+  min-width: 1100px;
 }
 
 .bar-box {

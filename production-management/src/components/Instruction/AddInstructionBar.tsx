@@ -99,6 +99,7 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
             <BarLeftBox width='80%'>
             <TextInput title='거래처' value={this.state.customerName} readOnly/>
               <EditButton
+                  size={20}
                   color='black'
                   onClick={changeCustomerSearchModalStatus}
               />
@@ -121,7 +122,7 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
             </BarLeftBox>
             <BarRightBox>
               <AddButton
-                  size={30}
+                  size={35}
                   onClick={state.instruction.instructionNo === '' ? this.addInstructionClick : this.newAddInstructionClick}/>
             </BarRightBox>
           </BarBox>

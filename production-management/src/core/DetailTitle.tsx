@@ -18,14 +18,15 @@ const spanTitle = {
   fontWeight: 'bold',
   fontSize: '19px',
   lineHeight: '16px',
-  marginLeft: '10px'
+  marginLeft: '10px',
 };
 
 const spanStatus = {
   lineHeight: '16px',
-  width: '130px',
+  width: '180px',
   marginLeft: '10px',
-  fontSize: '19px'
+  fontSize: '17px',
+  padding: '2px'
 };
 
 const img = {

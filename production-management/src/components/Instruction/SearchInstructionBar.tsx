@@ -76,10 +76,10 @@ class SearchInstructionBar extends Component<Props, SearchState> {
     return (
         <>
           <BarBox>
-            <BarLeftBox width='80%'>
+            <BarLeftBox width='90%' minWidth='1010px'>
               <TextInput title='등록자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value;
-              }} label={{ml: '22px'}}/>
+              }} label={{ml: '30px'}}/>
               <DateInput title='지시일'
                          startDate={{
                            datalaceholder: '시작일',
@@ -113,8 +113,8 @@ class SearchInstructionBar extends Component<Props, SearchState> {
                          }}
               />
             </BarLeftBox>
-            <BarRightBox>
-              <SearchButton size={30} onClick={this.handleSearchClick}/>
+            <BarRightBox minWidth='30px'>
+              <SearchButton size={35} onClick={this.handleSearchClick}/>
             </BarRightBox>
           </BarBox>
           <Box

@@ -42,7 +42,8 @@ export class TextInput extends Component<InputProps> {
               style={{
                 marginLeft: input?.ml ? input.ml : '10px',
                 height: input?.height ? input.height : '30px',
-                width: input?.width
+                width: input?.width,
+                fontSize: '17px',
               }}
               onBlur={onBlur}
               onChange={onChange}
