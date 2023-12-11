@@ -91,10 +91,10 @@ class AddDeliveries extends Component<Props, State> {
         <Layout>
           <Title title='출고등록'/>
           <Body>
-            <SearchBox>
+            <SearchBox minWidth='1100px'>
               <AddDeliveryBar/>
             </SearchBox>
-            <TableBox>
+            <TableBox minWidth='1100px'>
               <AddDeliveryTable addSelectedCheckBox={this.addSelectedCheckBox}
                                 instructionModalOpen={instructionModalOpen}
                                 deliveryProductModalOpen={deliveryProductModalOpen}

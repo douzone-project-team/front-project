@@ -1,29 +1,32 @@
-import React, {Component, FocusEvent} from 'react';
+import React, {ChangeEvent, Component, FocusEvent} from 'react';
 import './../../assets/css/Styles.css';
 
 type DateInputProps = {
   title: string
   startDate: {
     datalaceholder: string,
-    onChange?: (evt: FocusEvent<HTMLInputElement>) => void,
-    onBlur?: (evt: FocusEvent<HTMLInputElement>) => void,
+    onChange: (evt: ChangeEvent<HTMLInputElement>) => void,
     required?: boolean
   }
   endDate?: {
     datalaceholder: string,
-    onChange?: (evt: FocusEvent<HTMLInputElement>) => void,
-    onBlur?: (evt: FocusEvent<HTMLInputElement>) => void,
+    onChange: (evt: ChangeEvent<HTMLInputElement>) => void,
     required?: boolean
   }
+}
+
+type DateInputState = {
+  start: string,
+  end: string
 }
 
 const inputStyle = {
   height: '30px',
   marginLeft: '10px',
-  width: '100px',
+  width: '115px',
   fontFamily: 'S-CoreDream-3Light',
-  fontSize: '17px',
-  color: 'lightgrey'
+  fontSize: '13px',
+  lineHeight: '40px'
 };
 
 const labelStyle = {
@@ -32,31 +35,53 @@ const labelStyle = {
   fontSize: '17px',
   fontWeight: 'bold',
   fontFamily: 'S-CoreDream-3Light',
+  lineHeight: '40px'
 };
 
-export class DateInput extends Component<DateInputProps> {
+export class DateInput extends Component<DateInputProps, DateInputState> {
+  constructor(props: DateInputProps) {
+    super(props);
+
+    this.state = {
+      start: '',
+      end: ''
+    }
+  }
+
   render() {
     const {title, startDate, endDate} = this.props;
+    const {start, end} = this.state;
+
     return (
         <label>
           <span style={labelStyle}>{title}</span>
           <input type="date"
-                 style={inputStyle}
+                 style={{
+                   ...inputStyle, color: start? 'black' : 'lightgrey'
+                 }}
                  data-placeholder={startDate.datalaceholder}
                  required={startDate.required}
                  aria-required="true"
-                 onChange={startDate.onChange}
-                 onBlur={startDate.onBlur}
+                 onChange={(e) => {
+                   startDate.onChange(e);
+                   this.setState({start: e.target.value});
+                 }}
+                 max={end}
           />
           {endDate ? <span>&nbsp;&nbsp;~</span> : null}
           {endDate ?
               <input type="date"
-                     style={inputStyle}
+                     style={{
+                       ...inputStyle, color: end? 'black' : 'lightgrey'
+                     }}
                      data-placeholder={endDate.datalaceholder}
                      required={endDate.required}
                      aria-required="true"
-                     onChange={endDate.onChange}
-                     onBlur={endDate.onBlur}
+                     onChange={(e) => {
+                       endDate.onChange(e);
+                       this.setState({end: e.target.value})
+                     }}
+                     min={start}
               /> : null}
         </label>
     );

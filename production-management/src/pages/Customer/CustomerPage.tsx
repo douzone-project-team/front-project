@@ -25,10 +25,10 @@ class CustomerPage extends Component {
         <Layout>
           <Title title='거래처 현황'/>
           <Body>
-            <SearchBox>
+            <SearchBox minWidth='1100px'>
               <CustomerInputBar/>
             </SearchBox>
-            <TableBox>
+            <TableBox minWidth='1100px'>
               <ViewCustomerListTable/>
               <ViewCustomerTable/>
             </TableBox>

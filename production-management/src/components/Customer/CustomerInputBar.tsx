@@ -52,19 +52,24 @@ class CustomerInputBar extends Component<Props, SearchState> {
     return (
         <>
           <BarBox>
-            <BarLeftBox width='70vw'>
+            <BarLeftBox width='90%' minWidth='900px'>
               <TextInput title='거래처 코드' onBlur={(e) => {
                 this.setState({customerCode : e.target.value});
+              }} input={{
+                width: '150px'
               }}/>
               <TextInput title='거래처 명칭' onBlur={(e) => {
                 this.setState({customerName : e.target.value});
-
+              }} input={{
+                width: '150px'
               }}/>
               <TextInput title='업종' onBlur={(e) => {
                 this.setState({sector : e.target.value});
+              }} input={{
+                width: '150px'
               }}/>
             </BarLeftBox>
-            <BarRightBox>
+            <BarRightBox minWidth='50px'>
               <SearchButton
                   size={35} onClick={this.handleSearchClick}
               />

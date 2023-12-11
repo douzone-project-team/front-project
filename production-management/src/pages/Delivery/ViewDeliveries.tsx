@@ -64,10 +64,10 @@ class ViewDeliveries extends Component<Props, State> {
         <Layout>
           <Title title='출고현황'/>
           <Body>
-            <SearchBox>
+            <SearchBox minWidth='1100px'>
               <SearchDeliveryBar/>
             </SearchBox>
-            <TableBox>
+            <TableBox minWidth='1100px'>
               <ViewDeliveryListTable tableSize={this.state.tableSize}
                                      tableSizeUp={this.state.sizeUp}
                                      changeAmountStatusFalse={this.state.changeAmountStatusFalse}/>

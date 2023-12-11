@@ -25,10 +25,10 @@ class ViewProducts extends Component {
         <Layout>
           <Title title='품목 현황'/>
           <Body>
-            <SearchBox>
+            <SearchBox minWidth='1100px'>
               <SearchProductBar/>
             </SearchBox>
-            <TableBox>
+            <TableBox minWidth='1100px'>
               <ViewProductListTable/>
               <ViewProductTable/>
             </TableBox>
