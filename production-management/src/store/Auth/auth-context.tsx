@@ -39,6 +39,7 @@ export const AuthContext = React.createContext<AuthState>({
     updateImage(employeeNo: number, image: File): void {},
     deleteImage(employeeNo: number): void {},
     getInitEmployee(): void {},
+    cleanAvailabilites(): void {},
 });
 
 export class AuthContextProvider extends Component<Props, AuthState> {
@@ -195,6 +196,13 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                         this.state.getEmployee(this.state.employeePage.list[0].employeeNo);
                     })
                 })
+        },
+
+        cleanAvailabilites: () => {
+            this.setState({
+                idDuplicate: initialIdDuplicate,
+                employeeNoDuplicate: initialEmployeeNoDuplicate
+            });
         }
     }
 

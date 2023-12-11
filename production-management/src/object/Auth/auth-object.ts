@@ -86,6 +86,7 @@ export type AuthState = {
     updateImage: (employeeNo: number, image: File) => void,
     deleteImage: (employeeNo: number) => void,
     getInitEmployee: () => void,
+    cleanAvailabilites: () => void,
 }
 
 export type AuthPath = {

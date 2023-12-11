@@ -51,6 +51,7 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
     componentDidMount() {
         const state = this.context as AuthState;
         state.getEmployee(this.props.employeeNo);
+        state.cleanAvailabilites();
 
         if (state.employee.role === 'ROLE_ADMIN') {
             this.setState({isAdmin: true});
@@ -127,6 +128,7 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
             }
         }
     }
+
 
     handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const state = this.context as AuthState;
