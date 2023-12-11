@@ -3,7 +3,7 @@ import {Component} from "react";
 type ListTitleProps = {
   options: {
     title: string,
-    count: number
+    count?: number
   }
 }
 
@@ -32,12 +32,6 @@ const img = {
   height: '19px'
 };
 
-/**
- * 리시트 제목
- * 
- * title: string | 타이블 제목
- * count: number | 현재 페이지에 보이는 갯수
- */
 export class ListTitle extends Component<ListTitleProps> {
 
   render() {
@@ -47,7 +41,7 @@ export class ListTitle extends Component<ListTitleProps> {
         <div style={div}>
           <img src={require('../images/icon/list.png')} style={img}/>
           <span style={spanTitle}> {title}&nbsp;&nbsp;
-            <span style={spanCount}>&nbsp;{count}&nbsp;<span style={{color: 'gray'}}>건</span></span>
+            {count ? <span style={spanCount}>&nbsp;{count}&nbsp;<span style={{color: 'gray'}}>건</span></span> : null}
           </span>
         </div>
     );
