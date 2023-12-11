@@ -10,7 +10,6 @@ import {DeliveriesState} from "../../object/Delivery/delivery-object";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import InstructionModal from "../Modal/Delivery/InstructionModal";
 import DeliveryProductModal from "../Modal/Delivery/DeliveryProductModal";
-import {AddButton} from "../../core/button/AddButton";
 import {EditButton} from "../../core/button/EditButton";
 import { AddItemButton } from "../../core/button/AddItemButton";
 
@@ -219,7 +218,7 @@ class AddDeliveryTable extends Component<Props, State> {
                                 {item.addDeliveryInstruction.customerName}
                               </TableCell>
                               <TableCell align="center" style={tableCellStyle}>
-                                <AddButton size={20} onClick={changeDeliveryProductModalStatus}/>
+                                <AddItemButton size={20} onClick={changeDeliveryProductModalStatus}/>
                               </TableCell>
                               <TableCell align="center" style={tableCellStyle}></TableCell>
                             </TableRow>
