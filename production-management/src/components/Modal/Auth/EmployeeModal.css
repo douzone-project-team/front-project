@@ -1,0 +1,173 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+
+.modal-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.modalHeader {
+    display: flex;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    background:rgb(50 95 211);
+    color: white;
+    justify-content: space-between;
+}
+
+.modalFooter {
+    background : #f0f0f0;
+}
+
+.close {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 25px;
+    color: white;
+    float: right;
+}
+
+.customer-modal-main {
+    height: 100%;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+.title-label{
+    display: flex;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.form-label {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.form-input {
+    height: 30px;
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 10px;
+    font-family: S-CoreDream-3Light;
+
+}
+
+.form-button {
+    background-color: rgb(50 95 211);
+    font-family: S-CoreDream-3Light;
+    width: 50%;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+.form-cancel-button{
+    font-family: S-CoreDream-3Light;
+    background-color: rgb(253, 253, 254);
+    width: 50%;
+    color: #545454;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.image-button {
+    font-family: S-CoreDream-3Light;
+    background-color: rgb(125, 134, 155);
+    width: 45%;
+    height: 30px;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-duplicate-button{
+    font-family: S-CoreDream-3Light;
+    background-color: rgb(125, 134, 155);
+    width: 25%;
+    float: right;
+    margin-left: 15%;
+    height: 30px;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.form-duplicate-button:hover{
+    background-color: rgb(100, 109, 133);
+}
+
+.form-button:hover {
+    background-color: rgba(52, 57, 71, 0.89);
+}
+
+.duplicate-span {
+    margin-bottom: 10px;
+    font-size: 11px;
+}
+
+.admin label {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: 45%;
+    height: 30px;
+    transition: 0.2s;
+}
+
+.admin input {
+    position: absolute;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.admin span {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+

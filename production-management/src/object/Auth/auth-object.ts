@@ -55,8 +55,17 @@ export type Image = {
     image: File | null;
 }
 
-export type AuthState = {
+export type IdDuplicate = {
     availability: boolean,
+}
+
+export type EmployeeNoDuplicate = {
+    availability: boolean,
+}
+
+export type AuthState = {
+    idDuplicate: IdDuplicate,
+    employeeNoDuplicate: EmployeeNoDuplicate
     search: Search,
     employeePage: EmployeePage,
     employee: Employee,
@@ -75,7 +84,8 @@ export type AuthState = {
     getEmployee: (employeeNo: number) => void,
     addImage: (employeeNo: number, image: File) => void,
     updateImage: (employeeNo: number, image: File) => void,
-    deleteImage: (employeeNo: number) => void
+    deleteImage: (employeeNo: number) => void,
+    getInitEmployee: () => void,
 }
 
 export type AuthPath = {

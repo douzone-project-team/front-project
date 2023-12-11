@@ -5,7 +5,7 @@ import {
     initialSearch,
     initialEmployee,
     initialEmployeePage,
-    initialUpdateAuthEmployee, initialImage
+    initialUpdateAuthEmployee, initialImage, initialIdDuplicate, initialEmployeeNoDuplicate
 } from "../../state/authStateManagement";
 import EmployeeAction from "../Employee/employee-action";
 
@@ -17,7 +17,8 @@ export type Props = {
 }
 
 export const AuthContext = React.createContext<AuthState>({
-    availability: false,
+    idDuplicate: initialIdDuplicate,
+    employeeNoDuplicate: initialEmployeeNoDuplicate,
     search: initialSearch,
     employeePage: initialEmployeePage,
     employee: initialEmployee,
@@ -37,12 +38,14 @@ export const AuthContext = React.createContext<AuthState>({
     addImage(employeeNo: number, image: File): void {},
     updateImage(employeeNo: number, image: File): void {},
     deleteImage(employeeNo: number): void {},
+    getInitEmployee(): void {},
 });
 
 export class AuthContextProvider extends Component<Props, AuthState> {
 
     state: AuthState = {
-        availability: false,
+        idDuplicate: initialIdDuplicate,
+        employeeNoDuplicate: initialEmployeeNoDuplicate,
         search: initialSearch,
         employeePage: initialEmployeePage,
         employee: initialEmployee,
@@ -55,7 +58,10 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 .then(result => {
                     alert('사원 등록이 완료되었습니다.');
                     let data = result?.data;
-                    this.setState({employee: data});
+                    this.setState({employee: data}, () => {
+                        this.getEmployee(object.employeeNo);
+                        this.getEmployeeList();
+                    });
                 })
         },
 
@@ -78,11 +84,11 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         },
 
         employeeNoCheck: async (employeeNo: number) => {
-            authAction.employeeNoCheck(employeeNo)
+            await authAction.employeeNoCheck(employeeNo)
                 .then(result => {
                     let data = result?.data;
-                    this.setState({availability : data},() => {
-                        if(result?.data.availability){
+                    this.setState({employeeNoDuplicate : data},() => {
+                        if(this.state.employeeNoDuplicate.availability){
                             alert('사용 가능한 사번입니다.');
                         }else{
                             alert('이미 사용 중인 번호입니다. 다른 번호를 선택해주세요.');
@@ -92,11 +98,11 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         },
 
         idCheck: async (id: string) => {
-            authAction.idCheck(id)
+            await authAction.idCheck(id)
                 .then(result => {
                     let data = result?.data;
-                    this.setState({availability: data}, () => {
-                        if (result?.data.availability) {
+                    this.setState({idDuplicate: data}, () => {
+                        if (this.state.idDuplicate.availability) {
                             alert('사용 가능한 아이디입니다.');
                         } else {
                             alert('이미 사용 중인 아이디입니다. 다른 아이디를 사용해주세요.');
@@ -106,7 +112,10 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         },
 
         cleanEmployee: () => {
-            this.setState({employee: initialEmployee });
+            this.setState({
+                employee: initialEmployee,
+                idDuplicate: initialIdDuplicate,
+                employeeNoDuplicate: initialEmployeeNoDuplicate });
         },
 
         setSearch: (employeeNo: number, name: string) => {
@@ -177,6 +186,15 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                     let data = result?.data;
                     this.setState({image: data});
                 });
+        },
+
+        getInitEmployee: () => {
+            authAction.getEmployeeList(this.state.search)
+                .then((result) => {
+                    this.setState({employeePage: result?.data}, () => {
+                        this.state.getEmployee(this.state.employeePage.list[0].employeeNo);
+                    })
+                })
         }
     }
 
@@ -186,6 +204,14 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 let data = result?.data;
                 this.setState({employeePage: data});
             })
+    };
+
+    getEmployee = (employeeNo: number) => {
+        authAction.getEmployee(employeeNo)
+            .then(result => {
+            let data = result?.data;
+            this.setState({employee: data});
+        })
     };
 
     render() {

@@ -8,7 +8,7 @@ export const initialSearch = {
 
 export const initialEmployeePage = {
     list: [],
-    currentPage: 0,
+    currentPage: -1,
     hasNextPage: false,
     hasPreviousPage: false
 }
@@ -35,5 +35,13 @@ export const initialUpdateAuthEmployee = {
 
 export const initialImage = {
     image: null,
+}
+
+export const initialIdDuplicate = {
+    availability: false,
+}
+
+export const initialEmployeeNoDuplicate = {
+    availability: false,
 }
 
