@@ -7,6 +7,7 @@ import DeliverySearchInstructionBar from "../../Instruction/Delivery-SearchInstr
 import ViewDeliveryInstructionListTable from "../../Delivery/ViewDeliveryInstructionListTable";
 import {SearchBox} from "../../../core/box/SearchBox";
 import {TableBox} from "../../../core/box/TableBox";
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 type InstructionModalProps = {
   onClose: () => void,
@@ -59,12 +60,13 @@ export class InstructionModal extends Component<InstructionModalProps, Instructi
 
     return (
         <div className='modal'>
-          <section style={{height: '600px'}}>
-            <header>
+          <section className='modal-container' style={{height: '625px', width: '1000px'}}>
+            <div className="modalHeader" style={{height: '55px'}}>
+              <div style={{display: 'flex'}}><AssignmentIcon/>&nbsp;거래처 등록</div>
               <button className="close" onClick={onClose}>
                 &times;
               </button>
-            </header>
+            </div>
             <main>
               <SearchBox p='0px'>
                 <DeliverySearchInstructionBar/>

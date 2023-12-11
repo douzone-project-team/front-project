@@ -67,7 +67,7 @@ class ViewDeliveries extends Component<Props, State> {
             <SearchBox minWidth='1100px'>
               <SearchDeliveryBar/>
             </SearchBox>
-            <TableBox minWidth='1100px'>
+            <TableBox minWidth='1100px' minHeight='650px'>
               <ViewDeliveryListTable tableSize={this.state.tableSize}
                                      tableSizeUp={this.state.sizeUp}
                                      changeAmountStatusFalse={this.state.changeAmountStatusFalse}/>

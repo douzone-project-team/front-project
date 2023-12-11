@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
 import {InstructionSearch, InstructionsState} from "../../object/Instruction/Instruction-object";
-import {Box} from "@material-ui/core";
 import {TextInput} from "../../core/input/TextInput";
 import {DateInput} from "../../core/input/DateInput";
 import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
-import { SearchButton } from "../../core/button/SearchButton";
+import {SearchButton} from "../../core/button/SearchButton";
+import { SearchBox } from "../../core/box/SearchBox";
 
 let searchValue = {
   progressStatus: '',
@@ -34,7 +34,7 @@ class DeliverySearchInstructionBar extends Component {
   render() {
     const state = this.context as InstructionsState;
     return (
-        <>
+        <SearchBox p='5px'>
           <BarBox>
             <BarLeftBox width='70vw'>
               <TextInput title='등록자'
@@ -42,7 +42,7 @@ class DeliverySearchInstructionBar extends Component {
                            searchValue.employeeName = e.target.value
                          }}
                          input={{width: '100px'}}
-                         label={{ml:'0px'}}
+                         label={{ml: '0px'}}
               />
               <label style={{marginLeft: '10px'}}>
                 <span style={{
@@ -84,10 +84,10 @@ class DeliverySearchInstructionBar extends Component {
               <SearchButton
                   size={25}
                   onClick={this.handleSearchClick}
-                />
+              />
             </BarRightBox>
           </BarBox>
-        </>
+        </SearchBox>
     )
   }
 }

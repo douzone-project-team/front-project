@@ -105,14 +105,14 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
               />
               <DateInput title='지시일'
                          startDate={{
-                           datalaceholder: '시작일',
+                           datalaceholder: '지시일',
                            onChange: (e) => {
                              this.setState({instructionDate: e.target.value})
                            },
                            required: true
                          }}
                          endDate={{
-                           datalaceholder: '종료일',
+                           datalaceholder: '만료일',
                            onChange: (e) => {
                              this.setState({expirationDate: e.target.value})
                            },

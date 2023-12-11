@@ -19,6 +19,7 @@ import {BarBox, BarLeftBox, BarRightBox} from "../../../core/box/BarBox";
 import {SearchButton} from "../../../core/button/SearchButton";
 import {ListTitle} from "../../../core/ListTitle";
 import {PageButton} from "../../../core/button/PageButton";
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 type ProductModalProps = {
   onClose: () => void,
@@ -114,14 +115,15 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
 
     return (
         <div className='modal'>
-          <section style={{height: '520px', width: '700px'}}>
-            <header>
+          <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', height: '685px', width: '700px'}}>
+            <div className="modalHeader" style={{height: '55px'}}>
+              <div style={{display: 'flex'}}><DashboardIcon/>&nbsp;품목 등록</div>
               <button className="close" onClick={onClose}>
                 &times;
               </button>
-            </header>
+            </div>
             <main>
-              <SearchBox p='0px'>
+              <SearchBox p='5px'>
                 <BarBox>
                   <BarLeftBox width='60%'>
                     <TextInput
@@ -146,10 +148,10 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                   </BarRightBox>
                 </BarBox>
               </SearchBox>
-              <TableBox p='15px'>
+              <TableBox p='15px' height='465px'>
                 <Box>
                   <ListTitle options={{title: '품목 목록', count: list.length}}/>
-                  <TableContainer className='table-container' style={{height: '250px'}}>
+                  <TableContainer className='table-container' style={{height: '405px'}}>
                     <Table size='small' className='table'>
                       <TableHead>
                         <TableRow>

@@ -28,7 +28,7 @@ class CustomerPage extends Component {
             <SearchBox minWidth='1100px'>
               <CustomerInputBar/>
             </SearchBox>
-            <TableBox minWidth='1100px'>
+            <TableBox minWidth='1100px' minHeight='650px'>
               <ViewCustomerListTable/>
               <ViewCustomerTable/>
             </TableBox>

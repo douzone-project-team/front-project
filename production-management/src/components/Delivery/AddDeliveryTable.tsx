@@ -40,6 +40,7 @@ const boldCellStyle = {
 };
 
 const tableCellStyle = {
+  border: '1px solid #D3D3D3',
   fontFamily: 'S-CoreDream-3Light'
 };
 
