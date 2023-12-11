@@ -47,6 +47,8 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  position: fixed; /* 고정 위치로 설정합니다. */
 }
 
 @keyframes fadeIn {
@@ -73,3 +75,4 @@ input[type='date']:focus::before,
 input[type='date']:valid::before {
   display: none;
 }
+
