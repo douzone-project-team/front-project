@@ -80,6 +80,7 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
             updateEmployee: () => {
                 const {onClose, updateEmployee} = this.props as EmployeeModalProps;
                 const state = this.context as AuthState;
+                const employee = state.employee;
 
                 const idPattern = /^[a-zA-Z0-9]{4,}$/;
                 const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{6,}$/;
@@ -106,8 +107,8 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                     return;
                 }
 
-                if(!state.idDuplicate.availability){
-                    this.alertMessage('warning', '', '사번과 아이디의 중복 체크가 필요합니다.');
+                if(employee.id !== modifyValue.id && !state.idDuplicate.availability){
+                    this.alertMessage('warning', '', '아이디의 중복 체크가 필요합니다.');
                     return;
                 }
 
@@ -144,7 +145,7 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
         const idPattern = /^[a-zA-Z0-9]{4,}$/;
         const enteredId = modifyValue.id;
 
-        if (enteredId) {
+        if (enteredId && enteredId.length > 0) {
             if(!idPattern.test(enteredId) || enteredId.length === 0 ) {
                 this.alertMessage('warning', '', '아이디는 최소 4자 이상이어야 합니다.');
                 return;
@@ -230,7 +231,11 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                                                  marginBottom: '8px',
                                                  border: '1.5px solid #D3D3D3',
                                                  borderRadius: '4px'
-                                             }}/>
+                                             }}
+                                            onError={(e) => {
+                                                e.currentTarget.src = defaultImage;
+                                            }}
+                                        />
                                     ) : (
                                         <img src={defaultImage} />
                                     )}
@@ -323,7 +328,7 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                                     <span className="duplicate-span" style={{color: 'green'}}>
                                             사용 가능한 아이디입니다.</span>
                                     : <span className="duplicate-span" style={{color: 'red'}}>
-                                            아이디 변경은 중복 확인이 필요합니다..</span>}
+                                            아이디 변경은 중복 확인이 필요합니다.</span>}
                                 <label className="form-label">
                                     비밀번호 <span style={{color: 'red'}}>*</span>
                                 </label>
