@@ -42,7 +42,7 @@ export class TextInput extends Component<InputProps> {
               style={{
                 marginLeft: input?.ml ? input.ml : '10px',
                 height: input?.height ? input.height : '30px',
-                width: input?.width,
+                width: input?.width ? input.width : '200px',
                 fontSize: '15px',
                 lineHeight: '18px',
               }}

@@ -12,11 +12,12 @@ import {DeleteButton} from "../../core/button/DeleteButton";
 import {AddItemButton} from "../../core/button/AddItemButton";
 import {EditButton} from "../../core/button/EditButton";
 import {EditInput} from "../../core/input/EditInput";
+import {EmptyText} from "../../core/EmptyText";
 
 const boldCellStyle = {
   fontWeight: 'bold',
   backgroundColor: '#f1f3f5',
-  fontFamily: 'S-CoreDream-3Light',
+  fontFamily: 'S-CoreDream-3Light'
 };
 
 const tableCellStyle = {
@@ -105,7 +106,7 @@ class ViewInstructionTable extends Component<Props> {
               {instruction.progressStatus == 'STANDBY' &&
                   <DeleteButton size={22} onClick={() => {
                     deleteInstruction(instruction.instructionNo);
-                    if(!tableSize){
+                    if (!tableSize) {
                       tableSizeUp();
                     }
                   }}/>}
@@ -131,12 +132,16 @@ class ViewInstructionTable extends Component<Props> {
               <TableBody>
                 {list && list.length > 0 && list.map((row) => (
                     <TableRow>
-                      <TableCell align="center" style={tableCellStyle}>{instruction.customerName}</TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{instruction.instructionDate}</TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{instruction.expirationDate}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{instruction.customerName}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{instruction.instructionDate}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{instruction.expirationDate}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{row.productName} </TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{row.productName} </TableCell>
                       <TableCell align="center" style={tableCellStyle}>
                         {!changeAmount ?
                             <div style={{
@@ -159,12 +164,13 @@ class ViewInstructionTable extends Component<Props> {
                                    }}/>
                         }
                       </TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{row.remainAmount}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{row.remainAmount}</TableCell>
                     </TableRow>
                 ))}
                 {(instruction.instructionNo && (instruction.progressStatus == 'STANDBY')) ? (
                     <TableRow>
-                      <TableCell align="center">
+                      <TableCell style={tableCellStyle} align="center">
                         <div style={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -198,7 +204,11 @@ class ViewInstructionTable extends Component<Props> {
                       <TableCell align="center" style={tableCellStyle}></TableCell>
                       <TableCell align="center" style={tableCellStyle}></TableCell>
                     </TableRow>
-                ) : null}
+                ) : <TableRow>
+                  <TableCell colSpan={8} style={{border: '0'}}>
+                    <EmptyText mt={'0px'}/>
+                  </TableCell>
+                </TableRow>}
               </TableBody>
             </Table>
           </TableContainer>

@@ -1,18 +1,9 @@
 import React, {Component} from "react";
-import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
-} from "@material-ui/core";
-import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 
 import "./../../assets/css/Table.css";
 import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
-import {DeliveriesState, Delivery} from "../../object/Delivery/delivery-object";
+import {DeliveriesState} from "../../object/Delivery/delivery-object";
 import {ListTitle} from "../../core/ListTitle";
 import {PageButton} from "../../core/button/PageButton";
 import {NullText} from "../../core/NullText";
@@ -40,8 +31,23 @@ type Props = {
   changeAmountStatusFalse: () => void,
 }
 
-class ViewDeliveryListTable extends Component<Props> {
+type State = {
+  selectedRowIndex: number
+}
+
+class ViewDeliveryListTable extends Component<Props, State> {
   static contextType = DeliveriesContext;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      selectedRowIndex: 0
+    }
+  }
+
+  handleRowClick = (index: number) => {
+    this.setState({selectedRowIndex: index});
+  };
 
   render() {
     const state = this.context as DeliveriesState;
@@ -79,21 +85,24 @@ class ViewDeliveryListTable extends Component<Props> {
               </TableHead>
               <TableBody>
                 {list && list.length > 0 ? list.map((row) => (
-                        <TableRow
-                            key={row.deliveryNo}
-                            className='cellHoverEffect'
-                            onClick={() => {
-                              state.getDelivery(row.deliveryNo);
-                              changeAmountStatusFalse();
-                              if (tableSize) {
-                                tableSizeUp();
-                              }
-                            }}>
+                        <TableRow key={row.deliveryNo.replace(/\D/g, '')}
+                                  className={`cellHoverEffect ${this.state.selectedRowIndex === row.deliveryNo.replace(/\D/g, '') as unknown as number ? 'selectedRow' : ''}`}
+                                  onClick={() => {
+                                    this.handleRowClick(row.deliveryNo.replace(/\D/g, '') as unknown as number);
+                                    state.getDelivery(row.deliveryNo);
+                                    changeAmountStatusFalse();
+                                    if (tableSize) {
+                                      tableSizeUp();
+                                    }
+                                  }}>
                           <TableCell align="center" style={{...tableCellStyle, fontWeight: 'bold'}}>
                             {row.deliveryNo}</TableCell>
-                          <TableCell align="center" style={tableCellStyle}>{row.employeeName}</TableCell>
-                          <TableCell align="center" style={tableCellStyle}>{row.deliveryDate}</TableCell>
-                          <TableCell align="center" style={tableCellStyle}>{row.instructionCount}</TableCell>
+                          <TableCell align="center"
+                                     style={tableCellStyle}>{row.employeeName}</TableCell>
+                          <TableCell align="center"
+                                     style={tableCellStyle}>{row.deliveryDate}</TableCell>
+                          <TableCell align="center"
+                                     style={tableCellStyle}>{row.instructionCount}</TableCell>
                           <TableCell align="center" style={{...tableCellStyle, width: '50px'}}>
                             <div className={row.deliveryStatus}>
                               {myMap.get(row.deliveryStatus.toUpperCase())}
@@ -103,7 +112,7 @@ class ViewDeliveryListTable extends Component<Props> {
                     )) :
                     <TableRow>
                       <TableCell colSpan={7} style={{border: '0'}}>
-                        {currentPage != -1? <NullText/> : <Loading/> }
+                        {currentPage != -1 ? <NullText/> : <Loading/>}
                       </TableCell>
                     </TableRow>}
               </TableBody>

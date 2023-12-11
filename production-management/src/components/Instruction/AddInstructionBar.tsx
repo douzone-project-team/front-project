@@ -101,28 +101,34 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
         <>
           <BarBox>
             <BarLeftBox width='80%' minWidth='1000px'>
-            <TextInput title='거래처' value={this.state.customerName} readOnly/>
-              <EditButton
-                  size={20}
-                  color='black'
-                  onClick={changeCustomerSearchModalStatus}
-              />
-              <DateInput title='지시일'
-                         startDate={{
-                           datalaceholder: '지시일',
-                           onChange: (e) => {
-                             this.setState({instructionDate: e.target.value})
-                           },
-                           required: true
-                         }}
-                         endDate={{
-                           datalaceholder: '만료일',
-                           onChange: (e) => {
-                             this.setState({expirationDate: e.target.value})
-                           },
-                           required: true
-                         }}
-              />
+              <div style={{display: 'flex'}}>
+                <div style={{display: 'flex'}}>
+                  <TextInput title='거래처' value={this.state.customerName} readOnly/>
+                  &nbsp;&nbsp;
+                  <EditButton
+                      mt= '5px'
+                      size={30}
+                      color='black'
+                      onClick={changeCustomerSearchModalStatus}
+                  />
+                </div>
+                <DateInput title='지시일'
+                           startDate={{
+                             datalaceholder: '지시일',
+                             onChange: (e) => {
+                               this.setState({instructionDate: e.target.value})
+                             },
+                             required: true
+                           }}
+                           endDate={{
+                             datalaceholder: '만료일',
+                             onChange: (e) => {
+                               this.setState({expirationDate: e.target.value})
+                             },
+                             required: true
+                           }}
+                />
+              </div>
             </BarLeftBox>
             <BarRightBox>
               <AddButton

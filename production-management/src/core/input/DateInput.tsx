@@ -23,9 +23,8 @@ type DateInputState = {
 const inputStyle = {
   height: '30px',
   marginLeft: '10px',
-  width: '115px',
   fontFamily: 'S-CoreDream-3Light',
-  fontSize: '14px',
+  fontSize: '15px',
   lineHeight: '40px'
 };
 
