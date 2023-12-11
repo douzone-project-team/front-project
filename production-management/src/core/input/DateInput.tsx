@@ -25,7 +25,7 @@ const inputStyle = {
   marginLeft: '10px',
   width: '115px',
   fontFamily: 'S-CoreDream-3Light',
-  fontSize: '13px',
+  fontSize: '14px',
   lineHeight: '40px'
 };
 
@@ -57,7 +57,7 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
           <span style={labelStyle}>{title}</span>
           <input type="date"
                  style={{
-                   ...inputStyle, color: start? 'black' : 'lightgrey'
+                   ...inputStyle, color: start? 'black' : '#868e96'
                  }}
                  data-placeholder={startDate.datalaceholder}
                  required={startDate.required}
@@ -72,7 +72,7 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
           {endDate ?
               <input type="date"
                      style={{
-                       ...inputStyle, color: end? 'black' : 'lightgrey'
+                       ...inputStyle, color: end? 'black' : '#868e96'
                      }}
                      data-placeholder={endDate.datalaceholder}
                      required={endDate.required}
