@@ -45,11 +45,6 @@ class AddInstructions extends Component<Props, State> {
     }
   }
 
-  componentDidMount() {
-    const state = this.context as InstructionsState;
-    state.cleanInstruction();
-  };
-
   deleteSelectedCheckBox = () => {
     const state = this.context as InstructionsState;
     this.state.selectedCheckBoxs.forEach(num => {

@@ -6,12 +6,14 @@ type EditInputProps = {
   defaultValue: string,
   onChange?: (evt: FocusEvent<HTMLInputElement>) => void,
   onBlur?: (evt: FocusEvent<HTMLInputElement>) => void,
+  min?:string,
+  max?:string
 }
 
 export class EditInput extends Component<EditInputProps> {
 
   render() {
-    const {type, defaultValue, onChange, onBlur} = this.props;
+    const {type, defaultValue, onChange, onBlur, min, max} = this.props;
 
     return (
         <input type={type}
@@ -28,6 +30,9 @@ export class EditInput extends Component<EditInputProps> {
                defaultValue={defaultValue}
                onChange={onChange}
                onBlur={onBlur}
+               min={min}
+               max={max}
+               placeholder={defaultValue}
         />
     );
   }

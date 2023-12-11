@@ -58,6 +58,26 @@ class ViewInstructionTable extends Component<Props, State> {
     } as State;
   }
 
+  handleCheckboxAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { existSelectedCheckBox, addSelectedCheckBox } = this.props;
+    const state = this.context as InstructionsState;
+    const instruction = state.instruction;
+
+    if (event.target.checked) {
+      instruction.products.forEach((row: ProductInstruction) => {
+        if (!existSelectedCheckBox(row.productNo)) {
+          addSelectedCheckBox(row.productNo);
+        }
+      });
+    } else {
+      instruction.products.forEach((row: ProductInstruction) => {
+        if (existSelectedCheckBox(row.productNo)) {
+          addSelectedCheckBox(row.productNo);
+        }
+      });
+    }
+  };
+
   addInstructionProduct = (productNo: number, amount: number) => {
     const state = this.context as InstructionsState;
     const instructionNo = state.instruction.instructionNo;
@@ -107,6 +127,11 @@ class ViewInstructionTable extends Component<Props, State> {
                     border: '1px solid #D3D3D3',
                     fontWeight: 'bold'
                   }}>
+                    {instruction.products.length > 0 &&
+                    <input
+                        type="checkbox"
+                        onChange={this.handleCheckboxAllChange}
+                    />}
                   </TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
@@ -148,7 +173,8 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.amount}</TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{row.remainAmount}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{row.remainAmount}</TableCell>
                     </TableRow>
                 ))}
                 {instruction.instructionNo ? (
@@ -186,7 +212,8 @@ class ViewInstructionTable extends Component<Props, State> {
                             {instruction.customerName}
                           </div>
                           <div style={{width: '1%'}}>
-                            <EditButton color='black' size={15} onClick={changeCustomerModalStatus}/>
+                            <EditButton color='black' size={15}
+                                        onClick={changeCustomerModalStatus}/>
                           </div>
                         </div>
                       </TableCell>

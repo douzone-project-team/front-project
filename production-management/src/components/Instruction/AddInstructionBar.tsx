@@ -66,7 +66,6 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
     );
   };
   getOneMonthAfterInstructionDate = (instructionDate: string) => {
-    console.log('instructionDate' + instructionDate);
     if (instructionDate !== '') {
       const date = new Date(instructionDate);
       date.setMonth(date.getMonth() + 1);
@@ -107,7 +106,7 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
                   &nbsp;&nbsp;
                   <EditButton
                       mt= '5px'
-                      size={30}
+                      size={25}
                       color='black'
                       onClick={changeCustomerSearchModalStatus}
                   />

@@ -29,7 +29,7 @@ const inputStyle = {
 };
 
 const labelStyle = {
-  marginLeft: '60px',
+  marginLeft: '30px',
   marginRight: '5px',
   fontSize: '17px',
   fontWeight: 'bold',
