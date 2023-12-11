@@ -7,13 +7,14 @@ type EditInputProps = {
   onChange?: (evt: FocusEvent<HTMLInputElement>) => void,
   onBlur?: (evt: FocusEvent<HTMLInputElement>) => void,
   min?:string,
-  max?:string
+  max?:string,
+  darkMode?:boolean,
 }
 
 export class EditInput extends Component<EditInputProps> {
 
   render() {
-    const {type, defaultValue, onChange, onBlur, min, max} = this.props;
+    const {type, defaultValue, onChange, onBlur, min, max, darkMode} = this.props;
 
     return (
         <input type={type}
@@ -25,7 +26,8 @@ export class EditInput extends Component<EditInputProps> {
                  fontFamily: 'S-CoreDream-3Light',
                  fontWeight: 400,
                  fontSize: '0.875rem',
-                 padding: 0
+                 padding: 0,
+                 background: 'url(' + require(darkMode ? `../../images/button/date-button-black.png` : `../../images/button/date-button.png`) + ')' + ' no-repeat right 5px center / 16px auto'
                }}
                defaultValue={defaultValue}
                onChange={onChange}

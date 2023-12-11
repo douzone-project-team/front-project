@@ -115,6 +115,7 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
                   />
                 </div>
                 <DateInput title='지시일'
+                           darkMode
                            startDate={{
                              datalaceholder: '지시일',
                              onChange: (e) => {

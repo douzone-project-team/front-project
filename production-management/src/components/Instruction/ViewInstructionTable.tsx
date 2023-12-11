@@ -325,7 +325,7 @@ class ViewInstructionTable extends Component<Props, State> {
                         />
                       </TableCell>
                       <TableCell align="center" style={tableCellStyle}>
-                        <AddItemButton size={18} onClick={changeProductModalStatus}/>
+                        <AddItemButton mt='3px' size={18} onClick={changeProductModalStatus}/>
                       </TableCell>
                       <TableCell align="center" style={tableCellStyle}></TableCell>
                       <TableCell align="center" style={tableCellStyle}></TableCell>
