@@ -203,7 +203,8 @@ class AddDeliveryTable extends Component<Props, State> {
                                     {item.addDeliveryInstruction.instructionNo}
                                   </div>
                                   <div style={{width: '1%'}}>
-                                    <EditButton color="black"
+                                    <EditButton size={20}
+                                                color="black"
                                                 onClick={changeInstructionModalStatus}/>
                                   </div>
                                 </div>
@@ -218,7 +219,7 @@ class AddDeliveryTable extends Component<Props, State> {
                                 {item.addDeliveryInstruction.customerName}
                               </TableCell>
                               <TableCell align="center" style={tableCellStyle}>
-                                <AddButton onClick={changeDeliveryProductModalStatus}/>
+                                <AddButton size={20} onClick={changeDeliveryProductModalStatus}/>
                               </TableCell>
                               <TableCell align="center" style={tableCellStyle}></TableCell>
                             </TableRow>
@@ -234,7 +235,8 @@ class AddDeliveryTable extends Component<Props, State> {
                             {newDelivery.deliveryNo}
                           </TableCell>
                           <TableCell align="center" style={tableCellStyle}>
-                            <AddItemButton color="black"
+                            <AddItemButton
+                                color="black"
                                            onClick={changeInstructionModalStatus}/>
                           </TableCell>
                           <TableCell align="center" style={tableCellStyle}></TableCell>
@@ -242,7 +244,8 @@ class AddDeliveryTable extends Component<Props, State> {
                           <TableCell align="center" style={tableCellStyle}></TableCell>
                           <TableCell align="center" style={tableCellStyle}>
                             {this.state.selectedInstructionNo ?
-                                <AddItemButton color="black"
+                                <AddItemButton size={20}
+                                               color="black"
                                                onClick={changeDeliveryProductModalStatus}/>
                                 : null}
                           </TableCell>

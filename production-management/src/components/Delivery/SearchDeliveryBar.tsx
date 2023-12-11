@@ -94,7 +94,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
             <BarLeftBox width='90%' minWidth='1010px'>
               <TextInput title='등록자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value
-              }} label={{ml: '30px'}}/>
+              }} label={{ml: '30px'}} input={{width:'120px'}}/>
               <DateInput title='출고일'
                          startDate={{
                            datalaceholder: '시작일',
@@ -113,7 +113,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
               />
             </BarLeftBox>
             <BarRightBox minWidth='30px'>
-              <SearchButton size={30} onClick={this.handleSearchClick}/>
+              <SearchButton size={35} onClick={this.handleSearchClick}/>
             </BarRightBox>
           </BarBox>
           <Box
