@@ -119,7 +119,10 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             employeeAction.logout();
             localStorage.removeItem('employee');
             localStorage.removeItem('accessToken');
-            alert('로그아웃 되었습니다.');
+            Swal.fire({
+                icon: "success",
+                text: "로그아웃 되었습니다.",
+            });
 
         },
 
@@ -138,7 +141,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     };
                     this.setState({employee: data}, () => {
                         localStorage.setItem('employee', JSON.stringify(employeeData));
-                        console.log(localStorage.getItem('employee'));
                     })
                 });
         },
@@ -147,7 +149,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             employeeAction.getEmployee(employeeNo)
                 .then(result => {
                     let data = result?.data;
-                    console.log('getEmployee: ' + data);
                     this.setState({employee: data});
                 })
         },
@@ -157,7 +158,10 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({employee: data});
-                    alert('정보가 업데이트되었습니다.');
+                    Swal.fire({
+                        icon: "success",
+                        text: `${data.name} 사원의 정보가 업데이트 되었습니다.`,
+                    });
                     this.getEmployee(employeeNo);
                 });
         },
@@ -167,7 +171,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                    alert('이미지가 성공적으로 추가되었습니다.');
                 });
         },
 
@@ -176,7 +179,10 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                    alert('이미지가 성공적으로 업데이트되었습니다.');
+                    Swal.fire({
+                        icon: "success",
+                        text: "사진이 변경되었습니다.",
+                    });
                 });
         },
 
@@ -185,7 +191,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                    alert('이미지가 성공적으로 삭제되었습니다.');
                 });
         },
 
@@ -210,7 +215,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
         },
 
         sendMessage: (sendId: number, targetId: number, message: string) => {
-            console.log('context message = '+message)
             employeeAction.sendMessage(sendId, targetId, message)
                 .then(result => {
                     Swal.fire({

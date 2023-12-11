@@ -8,6 +8,7 @@ import {
     initialUpdateAuthEmployee, initialImage, initialIdDuplicate, initialEmployeeNoDuplicate
 } from "../../state/authStateManagement";
 import EmployeeAction from "../Employee/employee-action";
+import Swal from "sweetalert2";
 
 const authAction = new AuthAction;
 const employeeAction = new EmployeeAction();
@@ -57,9 +58,12 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         addEmployee: (object: AddEmployee) => {
             authAction.addEmployee(object)
                 .then(result => {
-                    alert('사원 등록이 완료되었습니다.');
                     let data = result?.data;
                     this.setState({employee: data}, () => {
+                        Swal.fire({
+                            icon: "success",
+                            text: `${data.name} 사원이 등록되었습니다..`,
+                        });
                         this.getEmployee(object.employeeNo);
                         this.getEmployeeList();
                     });
@@ -69,7 +73,10 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         deleteEmployee: (employeeNo: number) => {
             authAction.deleteEmployee(employeeNo)
                 .then(result => {
-                    alert("사원을 삭제하였습니다.")
+                    Swal.fire({
+                        icon: "success",
+                        text: "사원을 삭제하였습니다.",
+                    });
                     this.getEmployeeList();
                     this.setState({employee: initialEmployee});
                 })
@@ -78,7 +85,10 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         updateEmployee: (updateAuthEmployee: UpdateAuthEmployee) => {
             authAction.updateEmployee(updateAuthEmployee)
                 .then(result => {
-                    alert("수정을 성공하였습니다.")
+                    Swal.fire({
+                        icon: "success",
+                        text: `${updateAuthEmployee.name} 사원의 정보가 수정되었습니다.`,
+                    });
                     this.state.getEmployee(updateAuthEmployee.employeeNo);
                     this.getEmployeeList();
                 })
@@ -90,9 +100,15 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                     let data = result?.data;
                     this.setState({employeeNoDuplicate : data},() => {
                         if(this.state.employeeNoDuplicate.availability){
-                            alert('사용 가능한 사번입니다.');
+                            Swal.fire({
+                                icon: "success",
+                                text: "사용 가능한 사번입니다.",
+                            });
                         }else{
-                            alert('이미 사용 중인 번호입니다. 다른 번호를 선택해주세요.');
+                            Swal.fire({
+                                icon: "error",
+                                text: "이미 사용 중인 사번입니다. 다른 번호를 입력해주세요.",
+                            });
                         }
                     });
                 })
@@ -104,9 +120,15 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                     let data = result?.data;
                     this.setState({idDuplicate: data}, () => {
                         if (this.state.idDuplicate.availability) {
-                            alert('사용 가능한 아이디입니다.');
+                            Swal.fire({
+                                icon: "success",
+                                text: "사용 가능한 아이디입니다.",
+                            });
                         } else {
-                            alert('이미 사용 중인 아이디입니다. 다른 아이디를 사용해주세요.');
+                            Swal.fire({
+                                icon: "error",
+                                text: "이미 사용 중인 아이디입니다. 다른 아이디를 사용해주세요..",
+                            });
                         }
                     });
                 })
