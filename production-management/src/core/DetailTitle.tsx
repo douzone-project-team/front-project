@@ -34,13 +34,6 @@ const img = {
   height: '16px'
 };
 
-/**
- * 상세 타이틀
- * 
- * status?: string,     | 지시, 출고 상태 (필수 X)
- * title: string,       | 타이블 제목
- * targetName?: string  | 상세보기 대상 (string 이 아닐경우 as string)
- */
 export class DetailTitle extends Component<DetailTitleProps> {
 
   render() {

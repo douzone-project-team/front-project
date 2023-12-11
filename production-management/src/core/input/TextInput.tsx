@@ -31,19 +31,20 @@ export class TextInput extends Component<InputProps> {
               marginLeft: label?.ml ? label.ml : '50px',
               marginRight: label?.mr ? label.mr : '5px',
               fontSize: label?.fs ? label.fs : '17px',
-              fontWeight: label?.fw ? label.fw : 'bold'
+              fontWeight: label?.fw ? label.fw : 'bold',
+              lineHeight: '18px',
             }}
         >
           {title}
         </span>
           <input
               type="text"
-              placeholder={placeholder}
               style={{
                 marginLeft: input?.ml ? input.ml : '10px',
                 height: input?.height ? input.height : '30px',
                 width: input?.width,
-                fontSize: '17px',
+                fontSize: '15px',
+                lineHeight: '18px',
               }}
               onBlur={onBlur}
               onChange={onChange}
