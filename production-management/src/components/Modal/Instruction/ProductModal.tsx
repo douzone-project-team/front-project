@@ -20,6 +20,7 @@ import {SearchButton} from "../../../core/button/SearchButton";
 import {ListTitle} from "../../../core/ListTitle";
 import {PageButton} from "../../../core/button/PageButton";
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import Swal from 'sweetalert2';
 
 type ProductModalProps = {
   onClose: () => void,
@@ -61,6 +62,11 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
     }
   }
 
+  componentDidMount = () => {
+    const state = this.context as ProductsState;
+    state.getProductList();
+  }
+
   handleSearchClick = () => {
     const state = this.context as ProductsState;
     state.setProductCodeAndName(this.state.productCode, this.state.productName);
@@ -78,10 +84,20 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
 
   addInstructionProduct = () => {
     if (this.state.product.amount <= 0) {
-      alert('수량을 올바르게 입력해주세요.');
+      Swal.fire({
+        icon: "error",
+        title: "수량 설정",
+        text: "수량을 올바르게 입력해주세요."
+      });
       return;
     }
-
+    Swal.fire({
+      icon: "success",
+      title: "품목 등록",
+      text: "등록에 성공했습니다.",
+      timer: 1000,
+      showConfirmButton: false
+    });
     const {onClose, addInstructionProduct} = this.props;
     addInstructionProduct(this.state.product.productNo, this.state.product.amount);
     onClose();

@@ -110,7 +110,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
 
                     this.setState({employee: data}, async () => {
                         await this.state.getMe();
-                        window.location.href = '/';
+                        window.location.href = '/main-page';
                     })
                 })
         },

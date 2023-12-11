@@ -62,7 +62,7 @@ export class InstructionModal extends Component<InstructionModalProps, Instructi
         <div className='modal'>
           <section className='modal-container' style={{height: '625px', width: '1000px'}}>
             <div className="modalHeader" style={{height: '55px'}}>
-              <div style={{display: 'flex'}}><AssignmentIcon/>&nbsp;거래처 등록</div>
+              <div style={{display: 'flex'}}><AssignmentIcon/>&nbsp;지시 설정</div>
               <button className="close" onClick={onClose}>
                 &times;
               </button>

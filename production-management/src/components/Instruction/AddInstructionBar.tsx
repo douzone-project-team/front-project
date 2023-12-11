@@ -7,7 +7,7 @@ import {EditButton} from "../../core/button/EditButton";
 import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {TextInput} from '../../core/input/TextInput';
 import {DateInput} from "../../core/input/DateInput";
-
+import Swal from 'sweetalert2';
 
 type AddInstructionBarProps = {
   customerSearchModalOpen: boolean,
@@ -44,7 +44,11 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
     let instruction = state.instruction;
 
     if (!customerNo) {
-      alert("거래처를 입력하세요.");
+      Swal.fire({
+        icon: "error",
+        title: "거래처 설정",
+        text: "거래처를 입력하세요."
+      });
       return;
     }
 

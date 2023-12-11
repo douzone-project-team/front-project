@@ -45,6 +45,11 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
     }
   }
 
+  componentDidMount = () => {
+    const state = this.context as CustomersState;
+    state.getCustomerList();
+  }
+
   handleSearchClick = () => {
     const state = this.context as CustomersState;
     const {customerCode, customerName, sector} = this.state;
@@ -78,7 +83,7 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
         <div className='modal'>
           <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', height: '635px', width: '700px'}}>
             <div className="modalHeader" style={{height: '55px'}}>
-              <div style={{display: 'flex'}}><BusinessIcon/>&nbsp;거래처 등록</div>
+              <div style={{display: 'flex'}}><BusinessIcon/>&nbsp;거래처 설정</div>
               <button className="close" onClick={onClose}>
                 &times;
               </button>
