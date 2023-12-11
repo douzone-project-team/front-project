@@ -34,12 +34,15 @@ type Props = {
 const boldCellStyle = {
   border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px',
 };
 
 const tableCellStyle = {
   border: '1px solid #D3D3D3',
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px',
+  maxHeight: '40px',
 };
 
 const statusMap = new Map([
@@ -59,7 +62,7 @@ class ViewInstructionTable extends Component<Props, State> {
   }
 
   handleCheckboxAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { existSelectedCheckBox, addSelectedCheckBox } = this.props;
+    const {existSelectedCheckBox, addSelectedCheckBox} = this.props;
     const state = this.context as InstructionsState;
     const instruction = state.instruction;
 
@@ -127,11 +130,11 @@ class ViewInstructionTable extends Component<Props, State> {
                     border: '1px solid #D3D3D3',
                     fontWeight: 'bold'
                   }}>
-                    {instruction.products.length > 0 &&
-                    <input
-                        type="checkbox"
-                        onChange={this.handleCheckboxAllChange}
-                    />}
+                    {instruction.products &&
+                        <input
+                            type="checkbox"
+                            onChange={this.handleCheckboxAllChange}
+                        />}
                   </TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
@@ -205,16 +208,13 @@ class ViewInstructionTable extends Component<Props, State> {
                                  style={tableCellStyle}>
                         <div style={{
                           display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}>
-                          <div style={{width: '99%'}}>
-                            {instruction.customerName}
-                          </div>
-                          <div style={{width: '1%'}}>
-                            <EditButton color='black' size={15}
-                                        onClick={changeCustomerModalStatus}/>
-                          </div>
+                          <span
+                              style={{marginLeft: '25px', marginRight: '10px'}}>{instruction.customerName}</span>
+                          <EditButton color='black' size={15}
+                                      onClick={changeCustomerModalStatus}/>
                         </div>
                       </TableCell>
                       <TableCell align="center" style={tableCellStyle}>

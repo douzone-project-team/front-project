@@ -106,12 +106,11 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
             <BarLeftBox width='80%' minWidth='1000px'>
               <div style={{display: 'flex'}}>
                 <div style={{display: 'flex'}}>
-                  <TextInput title='거래처' value={this.state.customerName} readOnly/>
+                  <TextInput title='거래처' input={{width:'150px'}} value={this.state.customerName} readOnly/>
                   &nbsp;&nbsp;
-                  <EditButton
-                      mt= '5px'
-                      size={25}
-                      color='black'
+                  <AddButton
+                      mt='5px'
+                      size={30}
                       onClick={changeCustomerSearchModalStatus}
                   />
                 </div>
