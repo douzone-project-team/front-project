@@ -20,6 +20,14 @@ type Notifications = {
 
 
 class Notification extends React.Component<NotificationProps> {
+
+    getDayOfWeek = (dateString: string) => {
+        const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+        const dateObject = new Date(dateString);
+        const dayOfWeekIndex = dateObject.getDay();
+        return daysOfWeek[dayOfWeekIndex];
+    };
+
     render() {
         const { notifications, isClear, onDeleteNotification } = this.props;
         const notificationList = notifications as unknown as Notifications[];
@@ -76,9 +84,8 @@ class Notification extends React.Component<NotificationProps> {
                         {sortedDates.map((date, index) => (
                             <div key={index}>
                                 <Divider />
-                                <Typography style={{ textAlign: 'center', margin: '6px', fontFamily: 'S-CoreDream-3Light', fontSize: '18px' }}>
-                                    <ScheduleIcon style={{width: '20px', height: '15px', alignItems: 'center'}}/>
-                                    {date}
+                                <Typography style={{ textAlign: 'left', marginLeft: '10px', marginTop: '6px', marginBottom: '6px', fontFamily: 'S-CoreDream-3Light', fontSize: '18px' }}>
+                                    {date} {this.getDayOfWeek(date)}
                                 </Typography>
                                 {notificationGroupByDate[date].map((notification, notificationIndex) => (
                                     <div

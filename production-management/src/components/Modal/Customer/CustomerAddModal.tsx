@@ -177,7 +177,7 @@ export class CustomerAddModal extends Component<CustomerModalProps, CustomerModa
                                     <span className="duplicate-span" style={{color: 'green'}}>
                                         사용 가능한 거래처 코드입니다.</span>
                                     : <span className="duplicate-span" style={{color: 'red'}}>
-                                        거래처 중복 확인은 필수입니다.</span>}
+                                        거래처 코드 중복 확인은 필수입니다.</span>}
                                 <label className="form-label">
                                     거래처 명칭
                                 </label>
