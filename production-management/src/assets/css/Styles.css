@@ -76,6 +76,7 @@ input[type="date"] {
   background: url(../../images/button/date-button.png) no-repeat right 5px center / 16px auto;
   border: 1px solid rgb(211, 211, 211);
   border-radius: 3px;
+  min-width: 120px;
 }
 input[type="date"]::-webkit-clear-button,
 input[type="date"]::-webkit-inner-spin-button {display: none}
