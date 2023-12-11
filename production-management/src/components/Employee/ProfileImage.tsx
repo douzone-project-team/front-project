@@ -66,7 +66,7 @@ class ProfileImage extends Component<ProfileImageProps, ProfileImageState> {
                             maxHeight: '250px',
                             marginTop: '10px',
                             marginBottom: "10px",
-                            borderRadius: '20%'
+                            borderRadius: '10%'
                         }}/>
                 ) : (
                     <div> 이미지 없음 </div>
@@ -74,14 +74,14 @@ class ProfileImage extends Component<ProfileImageProps, ProfileImageState> {
                 <button onClick={() => document.getElementById('fileInput')?.click()}
                     style={{
                         backgroundColor: '#546ae8',
-                        width: '50px',
+                        width: '36%',
                         height: '30px',
                         color: 'white',
                         border: 'none',
-                        borderRadius: '5px'
+                        borderRadius: '4px'
                     }}
                 >
-                    선택
+                    사진 선택
                     <input id='fileInput' type='file' accept='image/*' style={{display: 'none'}}
                            onChange={this.handleImageChange}/>
                 </button>
