@@ -12,6 +12,7 @@ import {Body} from "../../core/Body";
 import {TableSizeButton} from "../../core/button/TableSizeButton";
 import {DeleteProductInstruction} from "../../object/ProductInstruction/product-instruction-object";
 import Button from "@material-ui/core/Button/Button";
+import Swal from 'sweetalert2';
 
 type State = {
   selectedCheckBoxs: number[],
@@ -62,6 +63,10 @@ class ViewInstructions extends Component<Props, State> {
     }
   }
 
+  clearCheckBoxs = () => {
+    this.setState({selectedCheckBoxs : []})
+  };
+
   deleteSelectedCheckBox = () => {
     const state = this.context as InstructionsState;
     this.state.selectedCheckBoxs.forEach(num => {
@@ -72,7 +77,13 @@ class ViewInstructions extends Component<Props, State> {
 
       state.deleteProductInstruction(deleteProductInstruction);
     })
-    this.setState({selectedCheckBoxs: []})
+    this.setState({selectedCheckBoxs: []});
+    Swal.fire({
+      icon: "success",
+      text: "삭제되었습니다.",
+      showConfirmButton: false,
+      timer: 1000
+    });
   };
 
   addSelectedCheckBox = (productNo: number) => {
@@ -134,6 +145,7 @@ class ViewInstructions extends Component<Props, State> {
                                     changeTargetNumber={this.state.changeTargetNumber}
                                     existSelectedCheckBox={this.existSelectedCheckBox}
                                     addSelectedCheckBox={this.addSelectedCheckBox}
+                                    clearCheckBoxs={this.clearCheckBoxs}
               />
             </TableBox>
           </Body>

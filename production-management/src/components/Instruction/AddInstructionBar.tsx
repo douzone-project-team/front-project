@@ -64,6 +64,10 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
           state.addInstruction(this.state);
         }
     );
+    Swal.fire({
+      icon: "success",
+      text: "지시를 추가하였습니다."
+    });
   };
   getOneMonthAfterInstructionDate = (instructionDate: string) => {
     if (instructionDate !== '') {

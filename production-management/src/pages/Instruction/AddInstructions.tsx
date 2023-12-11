@@ -11,7 +11,7 @@ import {Title} from "../../core/Title";
 import {SearchBox} from "../../core/box/SearchBox";
 import {TableBox} from "../../core/box/TableBox";
 import {Body} from "../../core/Body";
-
+import Swal from 'sweetalert2';
 
 type State = {
   selectedCheckBoxs: number[],
@@ -55,7 +55,13 @@ class AddInstructions extends Component<Props, State> {
 
       state.deleteProductInstruction(deleteProductInstruction);
     })
-    this.setState({selectedCheckBoxs: []})
+    this.setState({selectedCheckBoxs: []});
+    Swal.fire({
+      icon: "success",
+      text: "삭제되었습니다.",
+      showConfirmButton: false,
+      timer: 1000
+    });
   };
 
   addSelectedCheckBox = (productNo: number) => {

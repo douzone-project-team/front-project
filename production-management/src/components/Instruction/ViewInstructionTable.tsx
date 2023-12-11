@@ -43,7 +43,8 @@ type Props = {
   changeAmountStatus: () => void,
   tableSizeUp: () => void,
   existSelectedCheckBox: (productNo: number) => boolean,
-  addSelectedCheckBox: (productNo: number) => void
+  addSelectedCheckBox: (productNo: number) => void,
+  clearCheckBoxs: () => void,
 }
 
 type State = {
@@ -96,18 +97,24 @@ class ViewInstructionTable extends Component<Props, State> {
 
   deleteInstructionButtonClickEvent = () => {
     const {instruction, deleteInstruction} = this.context as InstructionsState;
-    const {tableSize, tableSizeUp} = this.props;
+    const {tableSize, tableSizeUp, clearCheckBoxs} = this.props;
 
     Swal.fire({
-      icon: "success",
-      text: "지시를 삭제하였습니다.",
-      showConfirmButton: false,
-      timer: 1000
+      title: "정말 삭제하시겠습니까?",
+      text: "삭제 후 복구할 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소"
+    }).then(() => {
+      clearCheckBoxs();
+      deleteInstruction(instruction.instructionNo);
+      if (!tableSize) {
+        tableSizeUp();
+      }
     })
-    deleteInstruction(instruction.instructionNo);
-    if (!tableSize) {
-      tableSizeUp();
-    }
   }
 
   editProductCountButtonClickEvent = (row: ProductInstruction) => {
@@ -191,7 +198,7 @@ class ViewInstructionTable extends Component<Props, State> {
             </div>
             <div style={{width: '5%', textAlign: 'right'}}>
               {instruction.progressStatus == 'STANDBY' &&
-                  <DeleteButton size={22} onClick={() => this.deleteInstructionButtonClickEvent}/>}
+                  <DeleteButton size={22} onClick={() => this.deleteInstructionButtonClickEvent()}/>}
             </div>
           </div>
           <TableContainer className='table-container' style={{
@@ -201,7 +208,7 @@ class ViewInstructionTable extends Component<Props, State> {
             <Table size='small' className='table'>
               <TableHead>
                 <TableRow>
-                  {list.length > 0 && instruction.progressStatus == 'STANDBY' &&
+                  {instruction.progressStatus == 'STANDBY' &&
                       <TableCell align="center" style={boldCellStyle}>
                         <input
                             type="checkbox"
