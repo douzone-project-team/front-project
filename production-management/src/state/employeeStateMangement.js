@@ -10,7 +10,7 @@ export const initialSearch = {
 
 export const initialEmployeePage = {
     list: [],
-    currentPage: 0,
+    currentPage: -1,
     hasNextPage: false,
     hasPreviousPage: false
 }

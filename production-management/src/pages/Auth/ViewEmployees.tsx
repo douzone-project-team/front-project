@@ -17,6 +17,7 @@ class ViewEmployees extends Component {
     componentDidMount() {
         const state = this.context as AuthState;
         state.cleanEmployee();
+        state.getInitEmployee();
     }
 
     render() {

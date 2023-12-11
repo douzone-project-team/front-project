@@ -6,6 +6,7 @@ import {AuthContext} from "../../store/Auth/auth-context";
 import {DetailTitle} from "../../core/DetailTitle";
 import {EditButton} from "../../core/button/EditButton";
 import {DeleteButton} from "../../core/button/DeleteButton";
+import {NullText} from "../../core/NullText";
 
 type State = {
     employeeModifyModalOpen: boolean
@@ -18,11 +19,13 @@ type Props = {
 const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
-    fontFamily: 'S-CoreDream-3Light'
+    fontFamily: 'S-CoreDream-3Light',
+    fontSize: '16px'
 };
 
 const tableCellStyle = {
-    fontFamily: 'S-CoreDream-3Light'
+    fontFamily: 'S-CoreDream-3Light',
+    fontSize: '16px'
 }
 
 const myMap: Map<string, string> = new Map<string, string>([
@@ -112,17 +115,22 @@ class ViewEmployeeTable extends Component<Props, State> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {state.employee.employeeNo !== 0 && <TableRow>
+                            {state.employee.employeeNo !== 0 ? <TableRow>
                                 <TableCell align="center" style={tableCellStyle}>{employee.employeeNo}</TableCell>
                                 <TableCell align="center" style={tableCellStyle}>{employee.id}</TableCell>
                                 <TableCell align="center" style={tableCellStyle}>{employee.password}</TableCell>
                                 <TableCell align="center" style={tableCellStyle}>{employee.name}</TableCell>
-                                <TableCell align="center" style={tableCellStyle}>{employee.tel}</TableCell>
+                                <TableCell align="center" style={tableCellStyle}>{employee.tel === '--' ? '' : employee.tel}</TableCell>
                                 <TableCell align="center" style={tableCellStyle}>{employee.email}</TableCell>
                                 <TableCell align="center" style={tableCellStyle}>
                                     <div className={employee.role}>
-                                        {myMap.get(employee.role.toUpperCase())}
+                                        {myMap.get(employee.role)}
                                     </div>
+                                </TableCell>
+                            </TableRow> :
+                            <TableRow>
+                                <TableCell colSpan={6} style={{border: '0'}}>
+                                    <NullText mt={'0px'}/>
                                 </TableCell>
                             </TableRow>}
                         </TableBody>
