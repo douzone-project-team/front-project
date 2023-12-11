@@ -52,8 +52,6 @@ class AccountMenu extends Component<{}, AccountMenuState> {
         const role = employeeData.role === 'ROLE_ADMIN' ? '관리자' : '사원';
         const employeeNo = employeeData.employeeNo;
 
-        /* avatarIcon 자리 사원 이미지 띄워줄건지 말건지 고민해야함 */
-
         return (
             <React.Fragment>
                 <Box style={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
