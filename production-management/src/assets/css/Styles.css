@@ -99,3 +99,4 @@ input[type="date"]:valid::before {
 input[data-placeholder]::before {
   font-size: 14px;
 }
+
