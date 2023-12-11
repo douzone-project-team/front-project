@@ -32,8 +32,23 @@ type Props = {
   changeAmountStatusFalse: () => void;
 }
 
-class ViewInstructionListTable extends Component<Props> {
+type State = {
+  selectedRowIndex: number
+}
+
+class ViewInstructionListTable extends Component<Props, State> {
   static contextType = InstructionsContext;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      selectedRowIndex: 0
+    }
+  }
+
+  handleRowClick = (index: number) => {
+    this.setState({selectedRowIndex: index});
+  };
 
   render() {
     const state = this.context as InstructionsState;
@@ -74,8 +89,10 @@ class ViewInstructionListTable extends Component<Props> {
               </TableHead>
               <TableBody>
                 {list && list.length > 0 ? list.map((row) => (
-                        <TableRow className='cellHoverEffect'
+                        <TableRow key={row.instructionNo.replace(/\D/g, '')}
+                                  className={`cellHoverEffect ${this.state.selectedRowIndex === row.instructionNo.replace(/\D/g, '') as unknown as number ? 'selectedRow' : ''}`}
                                   onClick={() => {
+                                    this.handleRowClick(row.instructionNo.replace(/\D/g, '') as unknown as number);
                                     state.getInstruction(row.instructionNo);
                                     changeAmountStatusFalse();
                                     if (tableSize) {

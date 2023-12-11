@@ -10,6 +10,7 @@ import {TableBox} from "../../../core/box/TableBox";
 import {PageButton} from "../../../core/button/PageButton";
 import {BarBox, BarLeftBox, BarRightBox} from "../../../core/box/BarBox";
 import { ListTitle } from "../../../core/ListTitle";
+import BusinessIcon from '@material-ui/icons/Business';
 
 type CustomerModalProps = {
   onClose: () => void,
@@ -44,6 +45,11 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
     }
   }
 
+  componentDidMount = () => {
+    const state = this.context as CustomersState;
+    state.getCustomerList();
+  }
+
   handleSearchClick = () => {
     const state = this.context as CustomersState;
     const {customerCode, customerName, sector} = this.state;
@@ -75,14 +81,15 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
 
     return (
         <div className='modal'>
-          <section style={{width: '600px', height:'600px'}}>
-            <header>
+          <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', height: '635px', width: '700px'}}>
+            <div className="modalHeader" style={{height: '55px'}}>
+              <div style={{display: 'flex'}}><BusinessIcon/>&nbsp;거래처 설정</div>
               <button className="close" onClick={onClose}>
                 &times;
               </button>
-            </header>
+            </div>
             <main>
-              <SearchBox p='0px'>
+              <SearchBox p='5px'>
                 <BarBox>
                   <BarLeftBox width='60%'>
                     <TextInput title='코드' onBlur={(e) => {
@@ -98,12 +105,12 @@ class CustomerModal extends Component<CustomerModalProps, CustomerModalState> {
                     />
                   </BarLeftBox>
                   <BarRightBox>
-                    <SearchButton size={25} onClick={this.handleSearchClick}/>
+                    <SearchButton size={30} onClick={this.handleSearchClick}/>
                   </BarRightBox>
                 </BarBox>
               </SearchBox>
-              <TableBox p='15px'>
-                <ListTitle options={{title: '거래처 목록', count: list.length}}/>
+              <TableBox p='15px' height='480px'>
+                <ListTitle options={{title: '거래처 목록'}}/>
                 <TableContainer className='table-container' style={{height: '410px'}}>
                   <Table size='small' className='table'>
                     <TableHead>

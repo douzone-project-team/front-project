@@ -28,7 +28,7 @@ class ViewProducts extends Component {
             <SearchBox minWidth='1100px'>
               <SearchProductBar/>
             </SearchBox>
-            <TableBox minWidth='1100px'>
+            <TableBox minWidth='1100px' minHeight='650px'>
               <ViewProductListTable/>
               <ViewProductTable/>
             </TableBox>

@@ -4,8 +4,10 @@ import {InstructionsContext} from "../../../store/Instruction/Instructions-conte
 import {Box} from "@material-ui/core";
 import ViewDeliveryInstructionTable from "../../Delivery/ViewDeliveryInstructionTable";
 import {DeliveriesContext} from "../../../store/Delivery/deliveries-context";
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 import './DeliveryProductModal.css';
+import { TableBox } from "../../../core/box/TableBox";
 
 type DeliveryProductModalProps = {
     onClose: () => void,
@@ -70,16 +72,19 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
         const {product} = this.state;
 
         return (
-            <div className='dpModal'>
-                <section>
-                    <header>
+            <div className='modal'>
+              <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', height: '560px', width: '700px'}}>
+                   <div className="modalHeader" style={{height: '55px'}}>
+                        <div style={{display: 'flex'}}><DashboardIcon/>&nbsp;품목 등록</div>
                         <button className="close" onClick={onClose}>
                             &times;
                         </button>
-                    </header>
+                    </div>
                     <main>
+                      <TableBox height='330px'>
                         <ViewDeliveryInstructionTable instructionNo={instructionNo}
-                                                      setProduct={this.setProduct}/>
+                                                        setProduct={this.setProduct}/>
+                      </TableBox>
                     </main>
                     {product.productNo !== 0 && (
                         <Box

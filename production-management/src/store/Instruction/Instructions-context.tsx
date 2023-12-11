@@ -16,6 +16,7 @@ import {
   AddProductInstruction,
   DeleteProductInstruction
 } from "../../object/ProductInstruction/product-instruction-object";
+import Swal from 'sweetalert2';
 
 const instructionAction = new InstructionAction;
 const productInstructionAction = new ProductInstructionAction;
@@ -128,7 +129,10 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
       });
 
       if (isDuplicate) {
-        alert('두 개 이상의 상품 번호가 일치합니다.');
+        Swal.fire({
+          icon: "warning",
+          text: "이미 존재하는 상품입니다.",
+        });
         return;
       }
 

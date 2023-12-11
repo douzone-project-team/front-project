@@ -23,7 +23,7 @@ export class EditInput extends Component<EditInputProps> {
                  fontFamily: 'S-CoreDream-3Light',
                  fontWeight: 400,
                  fontSize: '0.875rem',
-                 marginLeft: '9px'
+                 padding: 0
                }}
                defaultValue={defaultValue}
                onChange={onChange}

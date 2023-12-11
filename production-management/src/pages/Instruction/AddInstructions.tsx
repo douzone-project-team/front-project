@@ -101,7 +101,7 @@ class AddInstructions extends Component<Props, State> {
               <AddInstructionBar customerSearchModalOpen={customerSearchModalOpen}
                                  changeCustomerSearchModalStatus={this.state.changeCustomerSearchModalStatus}/>
             </SearchBox>
-            <TableBox minWidth='1100px'>
+            <TableBox minWidth='1100px' minHeight='650px'>
               <AddInstructionTable addSelectedCheckBox={this.addSelectedCheckBox}
                                    productModalOpen={productModalOpen}
                                    customerModalOpen={customerModalOpen}

@@ -9,8 +9,8 @@ import {DetailTitle} from "../../core/DetailTitle";
 import {DeleteButton} from "../../core/button/DeleteButton";
 import {EditButton} from "../../core/button/EditButton";
 import Swal from 'sweetalert2';
-import {NullText} from "../../core/NullText";
 import {Loading} from "../../core/Loading";
+import {EmptyText} from "../../core/EmptyText";
 
 type State = {
   customerModifyModalOpen: boolean
@@ -115,7 +115,7 @@ class ViewCustomerTable extends Component<Props, State> {
                 </TableRow> :
                     <TableRow>
                       <TableCell colSpan={6} style={{border: '0'}}>
-                        <NullText mt={'0px'}/>
+                        <EmptyText mt={'0px'}/>
                       </TableCell>
                     </TableRow>}
               </TableBody>

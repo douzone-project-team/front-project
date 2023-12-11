@@ -5,6 +5,7 @@ type EditButtonProps = {
   onClick: () => void
   color?: string
   size?: number
+  mt?: string
 }
 
 /**
@@ -13,14 +14,14 @@ type EditButtonProps = {
  */
 export class EditButton extends Component<EditButtonProps> {
   render() {
-    const {onClick, color, size} = this.props;
+    const {onClick, color, size, mt} = this.props;
     let png = 'modify-button.png';
     if (color) {
       png = 'modify-button-' + color + '.png';
     }
     return (
         <img src={require('../../images/button/' + png)}
-             className='cellHoverEffect' style={{width: size ? size + 'px' : '15px'}}
+             className='cellHoverEffect' style={{width: size ? size + 'px' : '15px', height: size ? size + 'px' : '15px', marginTop: mt}}
              onClick={onClick}/>
     );
   }

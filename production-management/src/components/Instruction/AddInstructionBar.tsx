@@ -7,7 +7,7 @@ import {EditButton} from "../../core/button/EditButton";
 import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {TextInput} from '../../core/input/TextInput';
 import {DateInput} from "../../core/input/DateInput";
-
+import Swal from 'sweetalert2';
 
 type AddInstructionBarProps = {
   customerSearchModalOpen: boolean,
@@ -44,7 +44,11 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
     let instruction = state.instruction;
 
     if (!customerNo) {
-      alert("거래처를 입력하세요.");
+      Swal.fire({
+        icon: "error",
+        title: "거래처 설정",
+        text: "거래처를 입력하세요."
+      });
       return;
     }
 
@@ -97,28 +101,34 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
         <>
           <BarBox>
             <BarLeftBox width='80%' minWidth='1000px'>
-            <TextInput title='거래처' value={this.state.customerName} readOnly/>
-              <EditButton
-                  size={20}
-                  color='black'
-                  onClick={changeCustomerSearchModalStatus}
-              />
-              <DateInput title='지시일'
-                         startDate={{
-                           datalaceholder: '시작일',
-                           onChange: (e) => {
-                             this.setState({instructionDate: e.target.value})
-                           },
-                           required: true
-                         }}
-                         endDate={{
-                           datalaceholder: '종료일',
-                           onChange: (e) => {
-                             this.setState({expirationDate: e.target.value})
-                           },
-                           required: true
-                         }}
-              />
+              <div style={{display: 'flex'}}>
+                <div style={{display: 'flex'}}>
+                  <TextInput title='거래처' value={this.state.customerName} readOnly/>
+                  &nbsp;&nbsp;
+                  <EditButton
+                      mt= '5px'
+                      size={30}
+                      color='black'
+                      onClick={changeCustomerSearchModalStatus}
+                  />
+                </div>
+                <DateInput title='지시일'
+                           startDate={{
+                             datalaceholder: '지시일',
+                             onChange: (e) => {
+                               this.setState({instructionDate: e.target.value})
+                             },
+                             required: true
+                           }}
+                           endDate={{
+                             datalaceholder: '만료일',
+                             onChange: (e) => {
+                               this.setState({expirationDate: e.target.value})
+                             },
+                             required: true
+                           }}
+                />
+              </div>
             </BarLeftBox>
             <BarRightBox>
               <AddButton
