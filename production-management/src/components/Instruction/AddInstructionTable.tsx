@@ -192,12 +192,14 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center"
                                  style={tableCellStyle}>
                         <EditInput type='date'
+                                   darkMode
                                    defaultValue={instruction.instructionDate}
                                    onChange={(e) => this.updateInstruction({instructionDate: e.target.value})}/>
                       </TableCell>
                       <TableCell align="center"
                                  style={tableCellStyle}>
                         <EditInput type='date'
+                                   darkMode
                                    defaultValue={instruction.expirationDate}
                                    onChange={(e) => this.updateInstruction({expirationDate: e.target.value})
                                    }/>
