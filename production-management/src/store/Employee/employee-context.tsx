@@ -124,8 +124,6 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             Swal.fire({
                 icon: "success",
                 text: "로그아웃 되었습니다.",
-            }).catch((error) => {
-                this.printErrorAlert(error);
             })
         },
 
