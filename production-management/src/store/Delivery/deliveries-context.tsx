@@ -72,10 +72,12 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         remainAmount: initialRemainAmount,
         addDeliveryObj: initialAddDeliveryObj,
         newDelivery: initialNewDelivery,
+
         cleanDelivery: () => {
             this.setState({delivery: initialDelivery, newDelivery: initialNewDelivery,
                 deliveryPage: initialDeliveryPageState})
         },
+
         /* Delivery 조회 메서드  */
         setSearch: (employeeName: string, startDate: string, endDate: string) => {
             this.setState((prevState) => ({
@@ -86,10 +88,10 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                     endDate: endDate,
                 },
             }), () => {
-                console.log("검색 조건 : " + this.state.search.startDate);
                 this.getDeliveryList();
             })
         },
+
         setSearchProgressStatus: (progressStatus: string) => {
             this.setState((prevState) => ({
                 search: {
@@ -100,6 +102,7 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                 this.getDeliveryList();
             })
         },
+
         setPage: (page: number) => {
             this.setState((prevState) => ({
                 search: {
@@ -107,28 +110,34 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                     page: page,
                 },
             }), () => {
-                console.log(this.state.search);
                 this.getDeliveryList();
             })
         },
+
         getDeliveryList: () => {
             this.getDeliveryList();
         },
+
         getDelivery: (deliveryNo: string) => {
             deliveryAction.getDelivery(deliveryNo)
             .then((result) => {
                 let data = result?.data;
                 this.setState({delivery: data});
+            }).catch((error) => {
+                this.printErrorAlert(error);
             })
         },
+
         getRemainAmount: (instructionNo: string, productNo: number) => {
             deliveryAction.getRemainAmount(instructionNo, productNo)
             .then((result) => {
                 let data = result?.data;
                 this.setState({remainAmount: data});
-                console.log(this.state.remainAmount);
+            }).catch((error) => {
+                this.printErrorAlert(error);
             })
         },
+
         /* Delivery 껍데기 추가 메서드 */
         addDelivery: (addDeliveryObj: AddDeliveryObj) => {
             deliveryAction.addDelivery(addDeliveryObj)
@@ -145,13 +154,17 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                         text: "출고를 추가하였습니다.",
                     });
                 });
-            });
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         updateDelivery: (updateDelivery: UpdateDelivery) => {
             deliveryAction.updateDelivery(updateDelivery).then((result) => {
                 this.getDelivery(updateDelivery.deliveryNo);
                 this.getDeliveryList();
+            }).catch((error) => {
+                this.printErrorAlert(error);
             })
         },
 
@@ -159,6 +172,8 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
             deliveryAction.updateDeliveryStatus(deliveryNo).then((result) => {
                 this.getDelivery(deliveryNo);
                 this.getDeliveryList();
+            }).catch((error) => {
+                this.printErrorAlert(error);
             })
         },
 
@@ -173,8 +188,9 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                         instructionNo: instructionNo,
                     },
                 }), () => {this.getDelivery(deliveryNo)});
-
-            });
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         deleteDeliveryInstruction: (deleteDeliveryInstructionObj: DeleteDeliveryInstruction) => {
@@ -184,7 +200,9 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                 .then((result) => {
                     this.setState({delivery: result?.data})
                 })
-            });
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         deleteDelivery: (deliveryNo: string) => {
@@ -197,6 +215,8 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                     });
                 })
                 this.getDeliveryList();
+            }).catch((error) => {
+                this.printErrorAlert(error);
             })
         },
 
@@ -204,6 +224,11 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
             deliveryInstructionAction.updateDeliveryInstruction(updateDeliveryInstruction)
             .then(() => {
                 this.getDelivery(updateDeliveryInstruction.deliveryNo);
+            }).catch((error) => {
+                Swal.fire({
+                    icon: "warning",
+                    text: error
+                });
             })
         },
 
@@ -213,6 +238,8 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                 this.setState({deliveryPage: result?.data}, () => {
                     this.getDelivery(this.state.deliveryPage.list[0].deliveryNo);
                 });
+            }).catch((error) => {
+                this.printErrorAlert(error);
             })
         }
     }
@@ -221,6 +248,8 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         deliveryAction.getDeliveryList(this.state.search)
         .then((result) => {
             this.setState({deliveryPage: result?.data});
+        }).catch((error) => {
+            this.printErrorAlert(error);
         })
     };
 
@@ -228,7 +257,16 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         deliveryAction.getDelivery(deliveryNo)
         .then((result) => {
             this.setState({delivery: result?.data});
+        }).catch((error) => {
+            this.printErrorAlert(error);
         })
+    };
+
+    printErrorAlert = (message : string) => {
+        Swal.fire({
+            icon: "warning",
+            text: message
+        });
     }
 
     render() {

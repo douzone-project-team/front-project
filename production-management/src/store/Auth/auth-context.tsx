@@ -67,7 +67,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                         this.getEmployee(object.employeeNo);
                         this.getEmployeeList();
                     });
-                })
+                }).catch(error => {
+                    this.printErrorAlert(error);
+            })
         },
 
         deleteEmployee: (employeeNo: number) => {
@@ -79,7 +81,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                     });
                     this.getEmployeeList();
                     this.setState({employee: initialEmployee});
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         updateEmployee: (updateAuthEmployee: UpdateAuthEmployee) => {
@@ -91,7 +95,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                     });
                     this.state.getEmployee(updateAuthEmployee.employeeNo);
                     this.getEmployeeList();
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         employeeNoCheck: async (employeeNo: number) => {
@@ -111,6 +117,8 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                             });
                         }
                     });
+                }).catch(error => {
+                    this.printErrorAlert(error);
                 })
         },
 
@@ -131,6 +139,8 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                             });
                         }
                     });
+                }).catch(error => {
+                    this.printErrorAlert(error);
                 })
         },
 
@@ -138,7 +148,8 @@ export class AuthContextProvider extends Component<Props, AuthState> {
             this.setState({
                 employee: initialEmployee,
                 idDuplicate: initialIdDuplicate,
-                employeeNoDuplicate: initialEmployeeNoDuplicate });
+                employeeNoDuplicate: initialEmployeeNoDuplicate
+            });
         },
 
         setSearch: (employeeNo: number, name: string) => {
@@ -184,7 +195,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({employee: data});
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         addImage: (employeeNo: number, image: File) => {
@@ -192,7 +205,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                });
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         updateImage: (employeeNo: number, image: File) => {
@@ -200,7 +215,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                });
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         deleteImage: (employeeNo: number) => {
@@ -208,7 +225,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                });
+                }).catch(error => {
+                this.printErrorAlert(error);
+            });
         },
 
         getInitEmployee: () => {
@@ -217,7 +236,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                     this.setState({employeePage: result?.data}, () => {
                         this.state.getEmployee(this.state.employeePage.list[0].employeeNo);
                     })
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         cleanAvailabilites: () => {
@@ -233,16 +254,27 @@ export class AuthContextProvider extends Component<Props, AuthState> {
             .then((result) => {
                 let data = result?.data;
                 this.setState({employeePage: data});
-            })
+            }).catch(error => {
+            this.printErrorAlert(error);
+        })
     };
 
     getEmployee = (employeeNo: number) => {
         authAction.getEmployee(employeeNo)
             .then(result => {
-            let data = result?.data;
-            this.setState({employee: data});
+                let data = result?.data;
+                this.setState({employee: data});
+            }).catch(error => {
+                this.printErrorAlert(error);
         })
     };
+
+    printErrorAlert = (message : string) => {
+        Swal.fire({
+            icon: "warning",
+            text: message
+        });
+    }
 
     render() {
         return(
