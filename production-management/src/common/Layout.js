@@ -401,7 +401,7 @@ class Layout extends React.Component {
                             style={{flexGrow: 1, display: 'flex', alignItems: 'center'}}
                             className={classes.title}
                         >
-                            <Link to='/'>
+                            <Link to='/main-page'>
                                 <img
                                     src={logo}
                                     alt='logo'

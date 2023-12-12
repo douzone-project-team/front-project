@@ -13,7 +13,7 @@ class Error500 extends Component {
     render() {
         return (
             <div>
-                <Link to="/" style={{textDecoration: 'none', color: 'black'}}>
+                <Link to="/main-page" style={{textDecoration: 'none', color: 'black'}}>
                     <Box
                         style={{
                             display: 'flex',
