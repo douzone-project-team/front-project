@@ -96,6 +96,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                 searchValue.employeeName = e.target.value
               }} label={{ml: '30px'}} input={{width:'120px'}}/>
               <DateInput title='출고일'
+                         darkMode
                          startDate={{
                            datalaceholder: '시작일',
                            onChange: (e) => {
