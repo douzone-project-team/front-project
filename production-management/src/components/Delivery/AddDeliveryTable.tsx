@@ -6,7 +6,7 @@ import {
   DeleteDeliveryInstruction
 } from "../../object/DeliveryInstruction/delivery-instruction-object";
 import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
-import {DeliveriesState, DeliveryInstruction, Instructions} from "../../object/Delivery/delivery-object";
+import {DeliveriesState, Instructions} from "../../object/Delivery/delivery-object";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import InstructionModal from "../Modal/Delivery/InstructionModal";
 import DeliveryProductModal from "../Modal/Delivery/DeliveryProductModal";

@@ -60,7 +60,7 @@ class AddDeliveries extends Component<Props, State> {
         state.deleteDeliveryInstruction(deleteDeliveryInstruction);
       }
     });
-    this.setState({selectedCheckBoxes: []})
+    this.setState({selectedCheckBoxes: []});
     Swal.fire({
       icon: "success",
       text: "삭제되었습니다.",

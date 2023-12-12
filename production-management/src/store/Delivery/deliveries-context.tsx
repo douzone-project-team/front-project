@@ -14,6 +14,7 @@ import {
     AddDeliveryInstruction,
     DeleteDeliveryInstruction, UpdateDeliveryInstruction,
 } from "../../object/DeliveryInstruction/delivery-instruction-object";
+import Swal from "sweetalert2";
 
 const deliveryAction = new DeliveriesAction;
 const deliveryInstructionAction = new DeliveryInstructionAction;
@@ -96,7 +97,6 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                     progressStatus: progressStatus,
                 },
             }), () => {
-                console.log(this.state.search);
                 this.getDeliveryList();
             })
         },
@@ -139,7 +139,12 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                         deliveryNo: result?.data.deliveryNo,
                         deliveryDate: addDeliveryObj.deliveryDate
                     }
-                }));
+                }), () => {
+                    Swal.fire({
+                        icon: "success",
+                        text: "출고를 추가하였습니다.",
+                    });
+                });
             });
         },
 
@@ -185,7 +190,12 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         deleteDelivery: (deliveryNo: string) => {
             deliveryAction.deleteDelivery(deliveryNo)
             .then((result) => {
-                this.setState({delivery: initialDelivery})
+                this.setState({delivery: initialDelivery}, () => {
+                    Swal.fire({
+                        icon: "success",
+                        text: "출고가 삭제되었습니다.",
+                    });
+                })
                 this.getDeliveryList();
             })
         },
