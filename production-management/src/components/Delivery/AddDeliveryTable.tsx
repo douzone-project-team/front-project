@@ -281,10 +281,12 @@ class AddDeliveryTable extends Component<Props, State> {
                           <TableCell align="center" style={tableCellStyle}></TableCell>
                         </TableRow>
                     )
-                ) : <td colSpan={11} style={{textAlign: 'center'}}>
-                  <img src={require('./../../images/null/delivery-null-image.png')}
-                       style={{marginTop: '10%', width: '15%'}}/>
-                </td>}
+                ) :  <tr>
+                    <td colSpan={11} style={{textAlign: 'center'}}>
+                      <img src={require('./../../images/null/delivery-null-image.png')}
+                          style={{marginTop: '10%', width: '15%'}}/>
+                    </td>
+                </tr>}
               </TableBody>
             </Table>
           </TableContainer>

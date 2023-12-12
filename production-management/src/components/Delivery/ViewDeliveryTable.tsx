@@ -19,6 +19,7 @@ import {CheckButton} from "../../core/button/CheckButton";
 import Swal from "sweetalert2";
 import {AddItemButton} from "../../core/button/AddItemButton";
 import {EditButton} from "../../core/button/EditButton";
+import { NullText } from "../../core/NullText";
 
 const boldCellStyle = {
     fontWeight: 'bold',
@@ -411,7 +412,12 @@ class ViewDeliveryTable extends Component<Props, State> {
                                         }
                                     </TableCell>
                                 </TableRow>
-                            )) : null
+                            )) :
+                                <TableRow>
+                                    <TableCell colSpan={9} style={{borderTop: '0', borderRight: '0', borderLeft: '0'}}>
+                                        <NullText mt='0' />
+                                    </TableCell>
+                                </TableRow>
                             }
                             {delivery.deliveryStatus == 'INCOMPLETE' ?
                                 (this.state.selectedInstructionNo ? (

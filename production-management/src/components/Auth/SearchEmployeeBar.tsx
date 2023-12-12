@@ -50,7 +50,7 @@ class SearchEmployeeBar extends Component<Props, State> {
         return (
             <>
                 <BarBox>
-                    <BarLeftBox width='70vw'>
+                    <BarLeftBox width='90%' minWidth='1010px'>
                         <TextInput title='사번' onBlur={(e) => {
                             searchValue.employeeNo = parseInt(e.target.value)
                         }} />
@@ -86,11 +86,11 @@ class SearchEmployeeBar extends Component<Props, State> {
                             </select>
                         </label>
                     </BarLeftBox>
-                    <BarRightBox>
-                        <SearchButton size={30} onClick={this.handleSearchClick} />
+                    <BarRightBox minWidth='60px'>
+                        <SearchButton size={35} onClick={this.handleSearchClick} />
                         &nbsp;&nbsp;
                         <AddItemButton
-                            size={30}
+                            size={35}
                             onClick={() => this.setState((prevState) =>
                                 ({employeeAddModalOpen: !prevState.employeeAddModalOpen}))}
                         />
