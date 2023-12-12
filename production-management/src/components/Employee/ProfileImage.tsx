@@ -60,10 +60,10 @@ class ProfileImage extends Component<ProfileImageProps, ProfileImageState> {
                             borderRadius: '20%'
                         }}/>
                 ) : employeeData.employeeNo !== 0 ? (
-                    <img src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}
+                    <img src={('http://lodcalhost:8080/employees/'+employeeData.employeeNo+'/image')}
                         style={{
-                            maxWidth: '200px',
-                            maxHeight: '250px',
+                            width: '200px',
+                            height: '250px',
                             marginTop: '10px',
                             marginBottom: "10px",
                             borderRadius: '10%'

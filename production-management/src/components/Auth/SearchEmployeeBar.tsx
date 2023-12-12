@@ -65,7 +65,15 @@ class SearchEmployeeBar extends Component<Props, State> {
                             fontWeight: 'bold'
                         }}>역할</span>
                             <select
-                                style={{height: '30px', marginLeft: '10px', borderRadius: '5px', width: '100px', fontFamily: 'S-CoreDream-3Light'}}
+                                style={{
+                                    height: '30px',
+                                    marginLeft: '10px',
+                                    borderRadius: '4px',
+                                    border: '1px solid #D3D3D3',
+                                    width: '150px',
+                                    fontFamily: 'S-CoreDream-3Light',
+                                    fontSize: '15px'
+                                }}
                                 value={searchValue.role}
                                 onChange={(e) => {
                                     searchValue.role = e.target.value;
