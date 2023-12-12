@@ -150,7 +150,7 @@ class ViewInstructionTable extends Component<Props, State> {
               </TableHead>
               <TableBody>
                 {instruction.products.map((row: ProductInstruction, index: number) => (
-                    <TableRow>
+                    <TableRow key={row.productNo}>
                       <TableCell align="center" style={{
                         border: '1px solid #D3D3D3',
                         fontWeight: 'bold'
@@ -214,7 +214,10 @@ class ViewInstructionTable extends Component<Props, State> {
                           justifyContent: 'center',
                         }}>
                           <span
-                              style={{marginLeft: '25px', marginRight: '10px'}}>{instruction.customerName}</span>
+                              style={{
+                                marginLeft: '25px',
+                                marginRight: '10px'
+                              }}>{instruction.customerName}</span>
                           <EditButton color='black' size={15}
                                       onClick={changeCustomerModalStatus}/>
                         </div>
@@ -227,10 +230,12 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center" style={tableCellStyle}></TableCell>
                       <TableCell align="center" style={tableCellStyle}></TableCell>
                     </TableRow>
-                ) : <td colSpan={11} style={{textAlign: 'center'}}>
-                  <img src={require('./../../images/null/instruction-null-image.png')}
-                       style={{marginTop: '10%', width: '15%'}}/>
-                </td>}
+                ) : <tr>
+                  <td colSpan={11} style={{textAlign: 'center'}}>
+                    <img src={require('./../../images/null/instruction-null-image.png')}
+                         style={{marginTop: '10%', width: '15%'}}/>
+                  </td>
+                </tr>}
               </TableBody>
             </Table>
           </TableContainer>

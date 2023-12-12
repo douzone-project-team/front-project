@@ -227,7 +227,7 @@ class ViewInstructionTable extends Component<Props, State> {
               </TableHead>
               <TableBody>
                 {list && list.length > 0 ? list.map((row) => (
-                    <TableRow>
+                    <TableRow key={row.productNo}>
                       {instruction.progressStatus == 'STANDBY' &&
                           <TableCell align="center"
                                      style={tableCellStyle}>

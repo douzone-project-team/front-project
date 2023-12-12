@@ -1,11 +1,15 @@
-import axios, {AxiosError, AxiosResponse} from 'axios';
+import axios, {AxiosError, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import CookieManager from '../common/CookieManager';
-import Swal from 'sweetalert2';
 
-// TODO : custom axios 위치 변경 : 적용 O
-const cookieManager = new CookieManager();
+const BASE_URL = 'http://localhost:8080';
 
 type ServerError = { data: string };
+
+type Employee = {
+  employeeNo: number,
+  name: string,
+  role: string
+}
 
 interface FetchData {
   method: string;
@@ -19,10 +23,14 @@ class Fetcher {
   private getHeaders() {
     return {
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+        Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
       }
     };
-  }
+  };
+
+  private axiosInstance = axios.create({
+    baseURL: BASE_URL,
+  });
 
   private async fetch(fetchData: FetchData): Promise<AxiosResponse<any, any> | null> {
     const {method, url, data, param} = fetchData;
@@ -30,19 +38,22 @@ class Fetcher {
     try {
       const config = {
         ...this.getHeaders(),
+        withCredentials: true,
         params: method === 'get' ? param : undefined
       };
 
       const response = await axios.request({method, url, data, ...config});
-
       return response;
     } catch (err) {
       const serverError = err as AxiosError<ServerError>;
       const errorMessage = serverError.response?.data;
       if (serverError && serverError.response) {
         const status = serverError.response.status;
-        if (status === 401 && cookieManager.getCookie('refreshToken')) {
-          this.reissueToken();
+        if (status === 401 && url != '/token/reissue') {
+          await this.reissueToken();
+          const originalRequest = serverError.config as InternalAxiosRequestConfig;
+          originalRequest.headers['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
+          return this.axiosInstance(originalRequest);
         } else if (status >= 500) {
           window.location.href = '/error';
         }
@@ -51,14 +62,17 @@ class Fetcher {
     }
   }
 
-  reissueToken = () => {
-    this.POST('http://localhostL:8080/token/reissue', {
-      refreshToken: cookieManager.getCookie('refreshToken'),
-      employeeNo: localStorage.getItem('employeeNo')
-    }).then((result) => {
+  reissueToken = async (): Promise<void> => {
+    const { employeeNo } = JSON.parse(localStorage.getItem('employee') as any) as Employee;
+    try {
+      const result = await this.POST('/token/reissue', {
+        employeeNo: employeeNo
+      });
       const accessToken = result?.data.accessToken;
       localStorage.setItem('accessToken', accessToken);
-    })
+    } catch (error) {
+      throw new Error('Failed to reissue token');
+    }
   }
 
   public GET(url: string, params?: object): Promise<AxiosResponse<any, any> | null> {
