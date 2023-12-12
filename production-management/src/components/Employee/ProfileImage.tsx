@@ -32,6 +32,7 @@ class ProfileImage extends Component<ProfileImageProps, ProfileImageState> {
             this.setState({selectedImage: imageFile});
 
             await state.updateImage(employeeData.employeeNo, imageFile);
+            window.location.reload();
         }
     }
 
@@ -60,28 +61,28 @@ class ProfileImage extends Component<ProfileImageProps, ProfileImageState> {
                             borderRadius: '20%'
                         }}/>
                 ) : employeeData.employeeNo !== 0 ? (
-                    <img src={('http://lodcalhost:8080/employees/'+employeeData.employeeNo+'/image')}
-                        style={{
-                            width: '200px',
-                            height: '250px',
-                            marginTop: '10px',
-                            marginBottom: "10px",
-                            borderRadius: '10%'
-                        }}/>
+                    <img src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}
+                         style={{
+                             maxWidth: '200px',
+                             maxHeight: '250px',
+                             marginTop: '10px',
+                             marginBottom: "10px",
+                             borderRadius: '20%'
+                         }}/>
                 ) : (
                     <div> 이미지 없음 </div>
                 )}
                 <button onClick={() => document.getElementById('fileInput')?.click()}
-                    style={{
-                        backgroundColor: '#546ae8',
-                        width: '36%',
-                        height: '30px',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px'
-                    }}
+                        style={{
+                            backgroundColor: '#546ae8',
+                            width: '50px',
+                            height: '30px',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px'
+                        }}
                 >
-                    사진 선택
+                    선택
                     <input id='fileInput' type='file' accept='image/*' style={{display: 'none'}}
                            onChange={this.handleImageChange}/>
                 </button>
