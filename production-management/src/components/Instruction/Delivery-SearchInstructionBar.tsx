@@ -19,6 +19,13 @@ let searchValue = {
 class DeliverySearchInstructionBar extends Component {
   static contextType = InstructionsContext;
 
+    componentDidMount= async () => {
+        const state = this.context as InstructionsState;
+
+        state.search.page = 1;
+        state.setSearch(searchValue);
+    }
+
   handleSearchClick = () => {
     const state = this.context as InstructionsState;
     state.search.page = 1;
@@ -31,7 +38,7 @@ class DeliverySearchInstructionBar extends Component {
     state.setSearchProgressStatus(progressStatus);
   }
 
-  render() {
+    render() {
     const state = this.context as InstructionsState;
     return (
         <SearchBox p='5px'>
@@ -52,7 +59,7 @@ class DeliverySearchInstructionBar extends Component {
                   fontWeight: 'bold'
                 }}>진행 상태</span>
                 <select
-                    style={{height: '20px', width: '60px'}}
+                    style={{height: '30px', width: '100px'}}
                     value={searchValue.progressStatus}
                     onChange={(e) => {
                       searchValue.progressStatus = e.target.value;

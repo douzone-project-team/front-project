@@ -6,7 +6,7 @@ import {
   DeleteDeliveryInstruction
 } from "../../object/DeliveryInstruction/delivery-instruction-object";
 import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
-import {DeliveriesState} from "../../object/Delivery/delivery-object";
+import {DeliveriesState, DeliveryInstruction, Instructions} from "../../object/Delivery/delivery-object";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import InstructionModal from "../Modal/Delivery/InstructionModal";
 import DeliveryProductModal from "../Modal/Delivery/DeliveryProductModal";
@@ -35,12 +35,15 @@ type Props = {
 const boldCellStyle = {
   border: '1px solid #D3D3D3',
   fontWeight: 'bold',
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px'
 };
 
 const tableCellStyle = {
   border: '1px solid #D3D3D3',
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px',
+  maxHeight: '40px'
 };
 
 class AddDeliveryTable extends Component<Props, State> {
@@ -54,6 +57,26 @@ class AddDeliveryTable extends Component<Props, State> {
       product: [],
       selectedInstructionNo: '',
     } as State;
+  }
+
+  handleCheckboxAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {existSelectedCheckBox, addSelectedCheckBox} = this.props;
+    const state = this.context as DeliveriesState;
+    const delivery = state.delivery;
+
+    if(event.target.checked){
+      delivery.instructions.forEach((instruction: Instructions) => {
+        if(!existSelectedCheckBox(instruction.productNo)) {
+          addSelectedCheckBox(instruction.productNo);
+        }
+      });
+    } else{
+      delivery.instructions.forEach((instruction: Instructions) => {
+        if(existSelectedCheckBox(instruction.productNo)) {
+          addSelectedCheckBox(instruction.productNo);
+        }
+      });
+    }
   }
 
   addInstruction = (instructionNo: string, instructionDate: string, expirationDate: string, customerName: string) => {
@@ -143,6 +166,11 @@ class AddDeliveryTable extends Component<Props, State> {
                     border: '1px solid #D3D3D3',
                     fontWeight: 'bold'
                   }}>
+                    {delivery.instructions &&
+                        <input
+                            type="checkbox"
+                            onChange={this.handleCheckboxAllChange}
+                        />}
                   </TableCell>
                   <TableCell align='center' style={boldCellStyle}>출고 번호</TableCell>
                   <TableCell align='center' style={boldCellStyle}>지시 번호</TableCell>
@@ -218,7 +246,9 @@ class AddDeliveryTable extends Component<Props, State> {
                                 {item.addDeliveryInstruction.customerName}
                               </TableCell>
                               <TableCell align="center" style={tableCellStyle}>
-                                <AddItemButton size={20} onClick={changeDeliveryProductModalStatus}/>
+                                <AddItemButton
+                                    color="black"
+                                    size={20} onClick={changeDeliveryProductModalStatus}/>
                               </TableCell>
                               <TableCell align="center" style={tableCellStyle}></TableCell>
                             </TableRow>
