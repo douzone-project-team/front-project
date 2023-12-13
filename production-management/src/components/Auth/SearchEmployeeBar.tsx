@@ -63,7 +63,7 @@ class SearchEmployeeBar extends Component<Props, State> {
                             marginRight: '5px',
                             fontSize: '17px',
                             fontWeight: 'bold'
-                        }}>역할</span>
+                        }}>권한</span>
                             <select
                                 style={{
                                     height: '30px',
@@ -86,7 +86,7 @@ class SearchEmployeeBar extends Component<Props, State> {
                             </select>
                         </label>
                     </BarLeftBox>
-                    <BarRightBox minWidth='60px'>
+                    <BarRightBox minWidth='80px'>
                         <SearchButton size={35} onClick={this.handleSearchClick} />
                         &nbsp;&nbsp;
                         <AddItemButton
