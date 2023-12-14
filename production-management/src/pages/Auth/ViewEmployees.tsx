@@ -25,10 +25,10 @@ class ViewEmployees extends Component {
             <Layout>
                 <Title title='사원 조회'/>
                 <Body>
-                    <SearchBox>
+                    <SearchBox minWidth='1100px'>
                         <SearchEmployeeBar/>
                     </SearchBox>
-                    <TableBox>
+                    <TableBox minWidth='1100px' minHeight='650px'>
                         <ViewEmployeeListTable/>
                         <ViewEmployeeTable/>
                     </TableBox>
