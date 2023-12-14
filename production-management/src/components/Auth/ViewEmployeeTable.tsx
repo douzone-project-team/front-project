@@ -71,7 +71,6 @@ class ViewEmployeeTable extends Component<Props, State> {
             tel,
             email
         } as UpdateAuthEmployee
-        console.log('updateAuthEmployee : ' +  updateAuthEmployee);
 
         state.updateEmployee(updateAuthEmployee);
     }
