@@ -9,7 +9,6 @@ class DeliveryInstructionAction {
     // 출고 지시 등록
     public addDeliveryInstruction(deliveryNo: string, addDeliveryInstruction: AddDeliveryInstruction) {
         const URL = `${this.baseUrl}/${deliveryNo}`;
-        console.log(addDeliveryInstruction);
         return fetcher.POST(URL, addDeliveryInstruction);
     }
 
