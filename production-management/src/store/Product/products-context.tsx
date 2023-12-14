@@ -11,7 +11,6 @@ const productAction = new ProductAction();
 
 export type Props = {
 
-
   children?: React.ReactNode;
 }
 
@@ -33,6 +32,8 @@ export const ProductsContext = React.createContext<ProductsState>({
             resolve(true);
         });
     },
+  cleanProduct() : void {},
+  getInitProduct() : void {}
 });
 
 export class ProductsContextProvider extends Component<Props, ProductsState> {
@@ -126,7 +127,9 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
               console.error("Error deleting product:", error);
               return false;
           }
-      }
+      },
+    cleanProduct() : void {},
+    getInitProduct() : void {}
   };
 
   getProduct = (productNo: number) => {

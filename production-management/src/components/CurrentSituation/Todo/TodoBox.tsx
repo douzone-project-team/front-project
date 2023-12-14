@@ -1,5 +1,5 @@
 // TodoBox.tsx
-import React, { FC } from 'react';
+import React, {Component, FC } from 'react';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { Box, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
