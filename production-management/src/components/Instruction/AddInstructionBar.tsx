@@ -64,9 +64,12 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
           state.addInstruction(this.state);
         }
     );
+    Swal.fire({
+      icon: "success",
+      text: "지시를 추가하였습니다."
+    });
   };
   getOneMonthAfterInstructionDate = (instructionDate: string) => {
-    console.log('instructionDate' + instructionDate);
     if (instructionDate !== '') {
       const date = new Date(instructionDate);
       date.setMonth(date.getMonth() + 1);
@@ -103,16 +106,16 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
             <BarLeftBox width='80%' minWidth='1000px'>
               <div style={{display: 'flex'}}>
                 <div style={{display: 'flex'}}>
-                  <TextInput title='거래처' value={this.state.customerName} readOnly/>
+                  <TextInput title='거래처' input={{width:'150px'}} value={this.state.customerName} readOnly/>
                   &nbsp;&nbsp;
-                  <EditButton
-                      mt= '5px'
+                  <AddButton
+                      mt='5px'
                       size={30}
-                      color='black'
                       onClick={changeCustomerSearchModalStatus}
                   />
                 </div>
                 <DateInput title='지시일'
+                           darkMode
                            startDate={{
                              datalaceholder: '지시일',
                              onChange: (e) => {

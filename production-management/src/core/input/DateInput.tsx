@@ -1,8 +1,9 @@
-import React, {ChangeEvent, Component, FocusEvent} from 'react';
+import React, {ChangeEvent, Component} from 'react';
 import './../../assets/css/Styles.css';
 
 type DateInputProps = {
   title: string
+  darkMode?: boolean
   startDate: {
     datalaceholder: string,
     onChange: (evt: ChangeEvent<HTMLInputElement>) => void,
@@ -29,7 +30,7 @@ const inputStyle = {
 };
 
 const labelStyle = {
-  marginLeft: '60px',
+  marginLeft: '30px',
   marginRight: '5px',
   fontSize: '17px',
   fontWeight: 'bold',
@@ -48,7 +49,7 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
   }
 
   render() {
-    const {title, startDate, endDate} = this.props;
+    const {title, startDate, endDate, darkMode} = this.props;
     const {start, end} = this.state;
 
     return (
@@ -56,7 +57,8 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
           <span style={labelStyle}>{title}</span>
           <input type="date"
                  style={{
-                   ...inputStyle, color: start? 'black' : '#868e96'
+                   ...inputStyle, color: start ? 'black' : '#868e96',
+                   background: 'url(' + require(darkMode ? `../../images/button/date-button-black.png` : `../../images/button/date-button.png`) + ')' + ' no-repeat right 5px center / 16px auto'
                  }}
                  data-placeholder={startDate.datalaceholder}
                  required={startDate.required}
@@ -71,7 +73,8 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
           {endDate ?
               <input type="date"
                      style={{
-                       ...inputStyle, color: end? 'black' : '#868e96'
+                       ...inputStyle, color: end ? 'black' : '#868e96',
+                       background: 'url(' + require(darkMode ? `../../images/button/date-button-black.png` : `../../images/button/date-button.png`) + ')' + ' no-repeat right 5px center / 16px auto'
                      }}
                      data-placeholder={endDate.datalaceholder}
                      required={endDate.required}

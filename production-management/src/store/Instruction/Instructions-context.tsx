@@ -99,6 +99,8 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
       .then((result) => {
         let data = result?.data;
         this.setState({instruction: data});
+      }).catch((error) => {
+        this.printErrorAlert(error);
       })
     },
     /* Instruction 추가 메서드 */
@@ -115,11 +117,15 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
             progressStatus: addInstruction.progressStatus,
           }
         }));
+      }).catch((error) => {
+        this.printErrorAlert(error);
       });
     },
     updateInstruction: (updateInstruction: UpdateInstruction) => {
       instructionAction.updateInstruction(updateInstruction).then((result) => {
         this.getInstruction(updateInstruction.instructionNo);
+      }).catch((error) => {
+        this.printErrorAlert(error);
       })
     },
 
@@ -129,17 +135,16 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
       });
 
       if (isDuplicate) {
-        Swal.fire({
-          icon: "warning",
-          text: "이미 존재하는 상품입니다.",
-        });
+        this.printErrorAlert("이미 존재하는 상품입니다.");
         return;
       }
 
       productInstructionAction.addProductInstruction(addProductInstruction)
       .then((result) => {
         this.getInstruction(this.state.instruction.instructionNo);
-      });
+      }).catch((error) => {
+        this.printErrorAlert(error);
+      })
     },
     deleteProductInstruction: (deleteProductInstruction: DeleteProductInstruction) => {
       productInstructionAction.deleteProductInstruction(deleteProductInstruction)
@@ -147,14 +152,20 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
         instructionAction.getInstruction(this.state.instruction.instructionNo)
         .then((result) => {
           this.setState({instruction: result?.data})
+        }).catch((error) => {
+          this.printErrorAlert(error);
         })
-      });
+      }).catch((error) => {
+        this.printErrorAlert(error);
+      })
     },
     deleteInstruction: (instructionNo: string) => {
       instructionAction.deleteInstruction(instructionNo)
       .then((result) => {
         this.getInstructionList();
         this.setState({instruction: initialInstruction})
+      }).catch((error) => {
+        this.printErrorAlert(error);
       })
     },
     updateInstructionProduct: (amount: number, productNo: number) => {
@@ -167,7 +178,9 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
       .then(() => {
             this.getInstruction(this.state.instruction.instructionNo);
           }
-      )
+      ).catch((error) => {
+        this.printErrorAlert(error);
+      })
     },
     getInitInstruction: () => {
       instructionAction.getInstructionList(this.state.search)
@@ -175,6 +188,8 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
         this.setState({instructionPage: result?.data}, () => {
           this.getInstruction(this.state.instructionPage.list[0].instructionNo);
         });
+      }).catch((error) => {
+        this.printErrorAlert(error);
       })
     }
   }
@@ -182,8 +197,9 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
   getInstructionList = () => {
     instructionAction.getInstructionList(this.state.search)
     .then((result) => {
-      console.log('1');
       this.setState({instructionPage: result?.data});
+    }).catch((error) => {
+      this.printErrorAlert(error);
     })
   };
 
@@ -191,8 +207,16 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
     instructionAction.getInstruction(instructionNo)
     .then((result) => {
       this.setState({instruction: result?.data});
+    }).catch((error) => {
+      this.printErrorAlert(error);
     })
+  }
 
+  printErrorAlert = (message : string) => {
+    Swal.fire({
+      icon: "warning",
+      text: message
+    });
   }
 
   render() {

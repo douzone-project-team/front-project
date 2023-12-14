@@ -133,7 +133,7 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
         <div className='modal'>
           <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', height: '685px', width: '700px'}}>
             <div className="modalHeader" style={{height: '55px'}}>
-              <div style={{display: 'flex'}}><DashboardIcon/>&nbsp;품목 등록</div>
+              <div style={{display: 'flex'}}><DashboardIcon/>&nbsp;품목 설정</div>
               <button className="close" onClick={onClose}>
                 &times;
               </button>
@@ -166,7 +166,7 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
               </SearchBox>
               <TableBox p='15px' height='465px'>
                 <Box>
-                  <ListTitle options={{title: '품목 목록', count: list.length}}/>
+                  <ListTitle options={{title: '품목 목록'}}/>
                   <TableContainer className='table-container' style={{height: '405px'}}>
                     <Table size='small' className='table'>
                       <TableHead>

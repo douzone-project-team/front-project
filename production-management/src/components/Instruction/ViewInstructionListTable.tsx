@@ -13,11 +13,13 @@ import {NullText} from "../../core/NullText";
 const boldCellStyle = {
   fontWeight: 'bold',
   backgroundColor: '#f1f3f5',
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px'
 };
 
 const tableCellStyle = {
   fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px'
 }
 
 const myMap: Map<string, string> = new Map<string, string>([
