@@ -107,7 +107,6 @@ class ViewEmployeeTable extends Component<Props, State> {
                             <TableRow>
                                 <TableCell align="center" style={boldCellStyle}>사번</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>아이디</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>비밀번호</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>이름</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>연락처</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>이메일</TableCell>
@@ -118,7 +117,6 @@ class ViewEmployeeTable extends Component<Props, State> {
                             {state.employee.employeeNo !== 0 ? <TableRow>
                                 <TableCell align="center" style={tableCellStyle}>{employee.employeeNo}</TableCell>
                                 <TableCell align="center" style={tableCellStyle}>{employee.id}</TableCell>
-                                <TableCell align="center" style={tableCellStyle}>{employee.password}</TableCell>
                                 <TableCell align="center" style={tableCellStyle}>{employee.name}</TableCell>
                                 <TableCell align="center" style={tableCellStyle}>{employee.tel === '--' ? '' : employee.tel}</TableCell>
                                 <TableCell align="center" style={tableCellStyle}>{employee.email}</TableCell>
