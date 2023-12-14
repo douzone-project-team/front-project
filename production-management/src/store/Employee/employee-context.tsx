@@ -38,7 +38,7 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     },
     logout(): void {
     },
-    cleanEmployee(): void {
+    cleanEmployee(): void{
     },
     getMe(): void {
     },
@@ -54,7 +54,7 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     },
     myInstruction(): void {
     },
-    myDelivery(): void {
+    myDelivery(): void{
     },
     getMessages(): void {
     },
@@ -124,7 +124,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             Swal.fire({
                 icon: "success",
                 text: "로그아웃 되었습니다.",
-            })
+            });
         },
 
         cleanEmployee: () => {
@@ -145,7 +145,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     })
                 }).catch((error) => {
                     this.printErrorAlert(error);
-                })
+                });
         },
 
         getEmployee: (employeeNo: number) => {
@@ -155,7 +155,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.setState({employee: data});
                 }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
         },
 
         updateEmployee: (employeeNo: number, updateEmployee: UpdateEmployee) => {
@@ -170,7 +170,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.getEmployee(employeeNo);
                 }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
         },
 
         addImage: (employeeNo: number, image: File) => {
@@ -180,7 +180,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.setState({image: data});
                 }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
         },
 
         updateImage: (employeeNo: number, image: File) => {
@@ -194,7 +194,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     });
                 }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
         },
 
         deleteImage: (employeeNo: number) => {
@@ -204,7 +204,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.setState({image: data});
                 }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
         },
 
         myInstruction: () => {
@@ -214,7 +214,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.setState({instructionList: data});
                 }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
         },
 
         myDelivery: () => {
@@ -224,11 +224,11 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.setState({deliveryList: data});
                 }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
         },
 
-        getMessages: () => {
-            this.getMessages();
+        getMessages :  () => {
+             this.getMessages();
         },
 
         sendMessage: (sendId: number, targetId: number, message: string) => {
@@ -241,7 +241,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.getMessages();
                 }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
         },
 
         deleteMessage: (messageNo: number) => {
@@ -257,20 +257,20 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.getMessages();
                 }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
         }
+
     }
 
     getMessages = async () => {
         await employeeAction.getMessages()
             .then(result => {
                 let data = result?.data;
-                this.setState({messages: data}, () => {
-                    localStorage.setItem('messages', JSON.stringify(this.state.messages));
+                this.setState({ messages: data }, () => {
                 });
             }).catch((error) => {
                 this.printErrorAlert(error);
-            })
+            });
     }
 
     getEmployee = (employeeNo: number) => {
@@ -280,9 +280,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 this.setState({employee: data});
             }).catch((error) => {
             this.printErrorAlert(error);
-        }).catch((error) => {
-            this.printErrorAlert(error);
-        })
+        });
     }
 
     printErrorAlert = (message: string) => {

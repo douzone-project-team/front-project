@@ -17,14 +17,16 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import logo from '../images/BLOOMING.png';
 import {Link} from "react-router-dom";
 import AccountMenu from "./AccountMenu";
-import {MainListItems, SecondaryListItems} from "./ListItem";
+import {MainListItems} from "./ListItem";
 import Notification from './Notification';
 import {Popover} from "@material-ui/core";
 import {EventSourcePolyfill, NativeEventSource} from "event-source-polyfill";
 import {EmployeeContext} from "../store/Employee/employee-context";
-import DraftsIcon from '@material-ui/icons/Drafts';
 import Message from "./Message";
 import Swal from 'sweetalert2'
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import MailIcon from '@material-ui/icons/Mail';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 const drawerWidth = 240;
 
@@ -179,11 +181,6 @@ class Layout extends React.Component {
             this.setState({notifications: JSON.parse(storedNotifications)});
         }
 
-        const storedMessages = localStorage.getItem('messages');
-        if (storedMessages) {
-            this.setState({messages: JSON.parse(storedMessages).messages});
-        }
-
         const EventSource = EventSourcePolyfill || NativeEventSource;
 
         this.eventSource = new EventSource(
@@ -193,18 +190,17 @@ class Layout extends React.Component {
                     Authorization: 'Bearer ' + localStorage.getItem('accessToken')
                 },
                 withCredentials: true,
+                heartbeatTimeout: 600000
             }
         );
 
 
         this.eventSource.addEventListener('connect', (event) => {
-            console.log('event = ', event.data);
         });
+
 
         this.eventSource.addEventListener('crudEvent', (event) => {
             const eventData = event.data;
-            const eventType = event.type;
-            console.log('Received SSE CRUD Event:' + eventData + "/eventType : " + eventType);
             const notificationArray = eventData.split('(');
             const notificationArray2 = eventData.split(',');
             const dateArray = notificationArray2[2].split('/');
@@ -222,7 +218,6 @@ class Layout extends React.Component {
         this.eventSource.addEventListener('messageEvent', (event) => {
             getMessages();
             const messageData = event.data;
-            console.log('Received SSE event:' + messageData);
             const messageArray = messageData.split('&&');
             const newMessage = {
                 sendId: messageArray[0],
@@ -295,7 +290,13 @@ class Layout extends React.Component {
         this.setState((prevState) => {
             prevState.notifications = [];
         }, () => {
-            console.log('Notifications cleared');
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "모든 알림를 삭제하였습니다.",
+                showConfirmButton: false,
+                timer: 1500
+            });
         });
         this.setState({
             isPopoverOpen: false,
@@ -315,11 +316,9 @@ class Layout extends React.Component {
         getMessages();
         this.setState(
             (prevState) => ({
-                messages: [...prevState.messages, message],
                 isMessageShaking: true,
             }),
             () => {
-                localStorage.setItem('messages', JSON.stringify(this.state.messages));
                 setTimeout(() => {
                     this.setState({isMessageShaking: false});
                 }, 1000);
@@ -417,7 +416,7 @@ class Layout extends React.Component {
                             className={isMessageShaking ? classes.shakingNotificationIcon : null}
                         >
                             <Badge badgeContent={messages.length} color="secondary">
-                                <DraftsIcon/>
+                                {messages.length === 0?<MailOutlineIcon/> : <MailIcon/>}
                             </Badge>
                         </IconButton>
                         <IconButton
@@ -427,7 +426,7 @@ class Layout extends React.Component {
                             className={isNotificationShaking ? classes.shakingNotificationIcon : null}
                         >
                             <Badge badgeContent={this.state.notifications.length} color="secondary">
-                                <NotificationsIcon/>
+                                {this.state.notifications.length !== 0 ? <NotificationsIcon/> : <NotificationsNoneIcon/>}
                             </Badge>
                         </IconButton>
                         <Popover
