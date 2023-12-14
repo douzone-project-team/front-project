@@ -179,12 +179,18 @@ class ViewDeliveryTable extends Component<Props, State> {
 
 
         if (amount > state.remainAmount.remainAmount) {
-            alert('수량이 잔량보다 많습니다. \n현재 잔량 : ' + state.remainAmount.remainAmount);
+            Swal.fire({
+                icon: "warning",
+                text: `수량이 잔량보다 많습니다. \n현재 잔량 :  ${state.remainAmount.remainAmount}`
+            });
             return;
         }
 
         if (amount <= 0) {
-            alert('수량을 올바르게 입력해주세요.');
+            Swal.fire({
+                icon: "warning",
+                text: '수량을 올바르게 입력해주세요.'
+            });
             return;
         }
 

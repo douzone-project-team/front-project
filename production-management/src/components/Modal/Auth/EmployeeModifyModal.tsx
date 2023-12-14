@@ -122,8 +122,6 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                     modifyValue.tel1 + modifyValue.tel2 + modifyValue.tel3,
                     modifyValue.email1 && modifyValue.email2 ? modifyValue.email1 + '@' + modifyValue.email2 : '',
                 );
-                console.log(this.state.employee.id);
-                console.log(modifyValue.id);
                 onClose();
             }
         }

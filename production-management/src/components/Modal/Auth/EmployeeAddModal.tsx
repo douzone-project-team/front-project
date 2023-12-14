@@ -182,7 +182,7 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
             this.props.onClose();
 
         } catch (error) {
-            console.log("Error: " + error);
+
         }
     }
 

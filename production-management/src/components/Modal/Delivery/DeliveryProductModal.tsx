@@ -8,6 +8,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 
 import './DeliveryProductModal.css';
 import { TableBox } from "../../../core/box/TableBox";
+import Swal from "sweetalert2";
 
 type DeliveryProductModalProps = {
     onClose: () => void,
@@ -47,12 +48,18 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
         const {product, instructionNo} = this.state;
 
         if (product.amount <= 0) {
-            alert('수량을 올바르게 입력해주세요.');
+            Swal.fire({
+                icon: "warning",
+                text: '수량을 올바르게 입력해주세요.'
+            });
             return;
         }
 
         if (product.amount > product.remainAmount) {
-            alert('선택한 상품의 수량이 잔량보다 많습니다.')
+            Swal.fire({
+                icon: "warning",
+                text: '선택한 상품의 수량이 잔량보다 많습니다.'
+            });
             return;
         }
 
