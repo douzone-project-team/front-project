@@ -1,3 +1,5 @@
+// GraphBox2 컴포넌트
+
 import React, { Component, ReactNode, RefObject, createRef } from 'react';
 import * as echarts from 'echarts';
 import {BarGraph} from "../../object/Main/main-object";
@@ -91,7 +93,8 @@ class GraphBox2 extends React.Component<GraphBoxProps> {
 
 
     render(): ReactNode {
-            return <div ref={this.chartRef} style={{ width: '100%', height: '100%' }} />;
+        return <div ref={this.chartRef} style={{ width: '100%', height: '100%' }} />;
+
     }
 }
 

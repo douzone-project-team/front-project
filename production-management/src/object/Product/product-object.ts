@@ -44,14 +44,16 @@ export type ProductsState = {
   search: Search,
   productPage: ProductPage,
   product: Product,
-  setProductCodeAndName: (productCode: string, productName: string) => void
-  setPage: (page: number) => void
-  getProductList: () => void
-  getProduct: (productNo: number) => void
-  regiProducts(productCode: string, productName: string,standard: string, unit: number,  price: number, weight:number): void;
-  updateProduct: (productNo: number, productCode: string, productName: string, standard: string,
-                  unit: number, price: number, weight: number) => void;
-  deleteProduct: (productNo: number) => Promise<boolean>;
+  setProductCodeAndName(productCode: string, productName: string): void
+  setPage(page: number): void
+  getProductList(): void
+  getProduct(productNo: number): void
+  regiProducts(productCode: string, productName: string,standard: string, unit: number,  price: number, weight:number): void
+  updateProduct(productNo: number, productCode: string, productName: string, standard: string,
+                  unit: number, price: number, weight: number) : void;
+  deleteProduct(productNo: number) : Promise<boolean>
+  cleanProduct() : void
+  getInitProduct() : void
 }
 
 

@@ -14,6 +14,7 @@ import {
     AddDeliveryInstruction,
     DeleteDeliveryInstruction, UpdateDeliveryInstruction,
 } from "../../object/DeliveryInstruction/delivery-instruction-object";
+import Swal from "sweetalert2";
 
 const deliveryAction = new DeliveriesAction;
 const deliveryInstructionAction = new DeliveryInstructionAction;
@@ -58,6 +59,8 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
     },
     updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction): void {
     },
+    getInitDelivery(): void{
+    }
 })
 
 export class DeliveriesContextProvider extends Component<Props, DeliveriesState> {
@@ -69,9 +72,12 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         remainAmount: initialRemainAmount,
         addDeliveryObj: initialAddDeliveryObj,
         newDelivery: initialNewDelivery,
+
         cleanDelivery: () => {
-            this.setState({delivery: initialDelivery, newDelivery: initialNewDelivery})
+            this.setState({delivery: initialDelivery, newDelivery: initialNewDelivery,
+                deliveryPage: initialDeliveryPageState})
         },
+
         /* Delivery 조회 메서드  */
         setSearch: (employeeName: string, startDate: string, endDate: string) => {
             this.setState((prevState) => ({
@@ -82,10 +88,10 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                     endDate: endDate,
                 },
             }), () => {
-                console.log("검색 조건 : " + this.state.search.startDate);
                 this.getDeliveryList();
             })
         },
+
         setSearchProgressStatus: (progressStatus: string) => {
             this.setState((prevState) => ({
                 search: {
@@ -93,10 +99,10 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                     progressStatus: progressStatus,
                 },
             }), () => {
-                console.log(this.state.search);
                 this.getDeliveryList();
             })
         },
+
         setPage: (page: number) => {
             this.setState((prevState) => ({
                 search: {
@@ -104,110 +110,181 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                     page: page,
                 },
             }), () => {
-                console.log(this.state.search);
                 this.getDeliveryList();
             })
         },
+
         getDeliveryList: () => {
             this.getDeliveryList();
         },
+
         getDelivery: (deliveryNo: string) => {
             deliveryAction.getDelivery(deliveryNo)
-                .then((result) => {
-                    let data = result?.data;
-                    this.setState({delivery: data});
-                })
+            .then((result) => {
+                let data = result?.data;
+                this.setState({delivery: data});
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
+
         getRemainAmount: (instructionNo: string, productNo: number) => {
             deliveryAction.getRemainAmount(instructionNo, productNo)
-                .then((result) => {
-                    let data = result?.data;
-                    this.setState({remainAmount: data});
-                    console.log(this.state.remainAmount);
-                })
+            .then((result) => {
+                let data = result?.data;
+                this.setState({remainAmount: data});
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
+
         /* Delivery 껍데기 추가 메서드 */
         addDelivery: (addDeliveryObj: AddDeliveryObj) => {
             deliveryAction.addDelivery(addDeliveryObj)
-                .then((result) => {
-                    this.setState((prevState) => ({
-                        newDelivery: {
-                            ...prevState.newDelivery,
-                            deliveryNo: result?.data.deliveryNo,
-                            deliveryDate: addDeliveryObj.deliveryDate
-                        }
-                    }));
+            .then((result) => {
+                this.setState((prevState) => ({
+                    newDelivery: {
+                        ...prevState.newDelivery,
+                        deliveryNo: result?.data.deliveryNo,
+                        deliveryDate: addDeliveryObj.deliveryDate
+                    }
+                }), () => {
+                    Swal.fire({
+                        icon: "success",
+                        text: "출고를 추가하였습니다.",
+                    });
                 });
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         updateDelivery: (updateDelivery: UpdateDelivery) => {
             deliveryAction.updateDelivery(updateDelivery).then((result) => {
                 this.getDelivery(updateDelivery.deliveryNo);
+                this.getDeliveryList();
+            }).catch((error) => {
+                this.printErrorAlert(error);
             })
         },
 
         updateDeliveryStatus: (deliveryNo: string) => {
             deliveryAction.updateDeliveryStatus(deliveryNo).then((result) => {
                 this.getDelivery(deliveryNo);
+                this.getDeliveryList();
+            }).catch((error) => {
+                this.printErrorAlert(error);
             })
         },
 
         // 출고 껍데기에 지시 먼저 등록하기
         addDeliveryInstruction: (deliveryNo, addDeliveryInstruction: AddDeliveryInstruction) => {
-            deliveryInstructionAction.addDeliveryInstruction(deliveryNo, addDeliveryInstruction)
-                .then((result) => {
-                    const {instructionNo} = addDeliveryInstruction;
+            const isDuplicate = this.state.delivery.instructions.some(existingInstruction => {
+                return existingInstruction.instructionNo === addDeliveryInstruction.instructionNo &&
+                    existingInstruction.productNo === addDeliveryInstruction.products[0].productNo;
+            });
 
-                    this.setState((prevState) => ({
-                        newDelivery: {
-                            ...prevState.newDelivery,
-                            instructionNo: instructionNo,
-                        },
-                    }));
+            if(isDuplicate) {
+                Swal.fire({
+                    icon: 'warning',
+                    text: "이미 존재하는 상품입니다.",
                 });
+                return;
+            }
+
+            deliveryInstructionAction.addDeliveryInstruction(deliveryNo, addDeliveryInstruction)
+            .then((result) => {
+                const {instructionNo} = addDeliveryInstruction;
+                this.setState((prevState) => ({
+                    newDelivery: {
+                        ...prevState.newDelivery,
+                        instructionNo: instructionNo,
+                    },
+                }), () => {
+                    this.getDelivery(deliveryNo);
+                    this.getDeliveryList();
+                });
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         deleteDeliveryInstruction: (deleteDeliveryInstructionObj: DeleteDeliveryInstruction) => {
             deliveryInstructionAction.deleteDeliveryInstruction(deleteDeliveryInstructionObj)
+            .then((result) => {
+                deliveryAction.getDelivery(this.state.delivery.deliveryNo)
                 .then((result) => {
-                    deliveryAction.getDelivery(this.state.delivery.deliveryNo)
-                        .then((result) => {
-                            this.setState({delivery: result?.data})
-                        })
-                });
+                    this.setState({delivery: result?.data}, () => {
+                        this.getDeliveryList();
+                    })
+                })
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         deleteDelivery: (deliveryNo: string) => {
             deliveryAction.deleteDelivery(deliveryNo)
-                .then((result) => {
-                    this.setState({delivery: initialDelivery})
-                    this.getDeliveryList();
+            .then((result) => {
+                this.setState({delivery: initialDelivery}, () => {
+                    Swal.fire({
+                        icon: "success",
+                        text: "출고가 삭제되었습니다.",
+                    });
                 })
+                this.getDeliveryList();
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction) {
             deliveryInstructionAction.updateDeliveryInstruction(updateDeliveryInstruction)
-                .then(() => {
-                    this.getDelivery(updateDeliveryInstruction.deliveryNo);
-                })
+            .then(() => {
+                this.getDelivery(updateDeliveryInstruction.deliveryNo);
+            }).catch((error) => {
+                Swal.fire({
+                    icon: "warning",
+                    text: error
+                });
+            })
+        },
+
+        getInitDelivery: async () => {
+            deliveryAction.getDeliveryList(this.state.search)
+            .then((result) => {
+                this.setState({deliveryPage: result?.data}, () => {
+                    this.getDelivery(this.state.deliveryPage.list[0].deliveryNo);
+                });
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         }
     }
 
     getDeliveryList = () => {
         deliveryAction.getDeliveryList(this.state.search)
-            .then((result) => {
-                let data = result?.data;
-                console.log(data);
-                this.setState({deliveryPage: data});
-            })
+        .then((result) => {
+            this.setState({deliveryPage: result?.data});
+        }).catch((error) => {
+            this.printErrorAlert(error);
+        })
     };
 
     getDelivery = (deliveryNo: string) => {
         deliveryAction.getDelivery(deliveryNo)
-            .then((result) => {
-                let data = result?.data;
-                this.setState({delivery: data});
-            })
+        .then((result) => {
+            this.setState({delivery: result?.data});
+        }).catch((error) => {
+            this.printErrorAlert(error);
+        })
+    };
+
+    printErrorAlert = (message : string) => {
+        Swal.fire({
+            icon: "warning",
+            text: message
+        });
     }
 
     render() {

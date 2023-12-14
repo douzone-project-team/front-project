@@ -14,7 +14,7 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import logo from '../images/logo.png';
+import logo from '../images/BLOOMING.png';
 import {Link} from "react-router-dom";
 import AccountMenu from "./AccountMenu";
 import {MainListItems, SecondaryListItems} from "./ListItem";
@@ -24,7 +24,7 @@ import {EventSourcePolyfill, NativeEventSource} from "event-source-polyfill";
 import {EmployeeContext} from "../store/Employee/employee-context";
 import DraftsIcon from '@material-ui/icons/Drafts';
 import Message from "./Message";
-import message from "./Message";
+import Swal from 'sweetalert2'
 
 const drawerWidth = 240;
 
@@ -156,7 +156,8 @@ class Layout extends React.Component {
                 employeeNo: 0,
                 employee: "",
                 notification: "",
-                date: ""
+                date: "",
+                time: ""
             },
             newMessage: {
                 sendId: "",
@@ -206,11 +207,13 @@ class Layout extends React.Component {
             console.log('Received SSE CRUD Event:' + eventData + "/eventType : " + eventType);
             const notificationArray = eventData.split('(');
             const notificationArray2 = eventData.split(',');
+            const dateArray = notificationArray2[2].split('/');
             const newNotification = {
                 employeeNo: notificationArray[0],
                 employee: notificationArray2[0],
                 notification: notificationArray2[1],
-                date: notificationArray2[2]
+                date: dateArray[0],
+                time: dateArray[1]
             }
 
             this.addNotification(newNotification);
@@ -220,7 +223,7 @@ class Layout extends React.Component {
             getMessages();
             const messageData = event.data;
             console.log('Received SSE event:' + messageData);
-            const messageArray = messageData.split(',');
+            const messageArray = messageData.split('&&');
             const newMessage = {
                 sendId: messageArray[0],
                 sendName: messageArray[1],
@@ -254,19 +257,38 @@ class Layout extends React.Component {
         );
     };
 
-    onDeleteNotification = (index) => {
-        const {notifications} = this.state;
+    onDeleteNotification = (notificationToDelete) => {
+        const { notifications } = this.state;
 
-        const updatedNotifications = [...notifications];
-        updatedNotifications.splice(index, 1);
+        const indexToDelete = notifications.findIndex((notification) =>
+            notification.employeeNo === notificationToDelete.employeeNo &&
+            notification.employee === notificationToDelete.employee &&
+            notification.notification === notificationToDelete.notification &&
+            notification.date === notificationToDelete.date &&
+            notification.time === notificationToDelete.time
+        );
 
-        // Update state
-        this.setState({
-            notifications: updatedNotifications,
-        }, () => {
-            localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
-        });
-    };2
+        if (indexToDelete !== -1) {
+            const updatedNotifications = [
+                ...notifications.slice(0, indexToDelete),
+                ...notifications.slice(indexToDelete + 1)
+            ];
+
+            // Update state
+            this.setState({
+                notifications: updatedNotifications,
+            }, () => {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "알림를 삭제하였습니다.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+            });
+        }
+    };
 
     clearNotifications = () => {
         localStorage.removeItem('notifications');
@@ -379,11 +401,11 @@ class Layout extends React.Component {
                             style={{flexGrow: 1, display: 'flex', alignItems: 'center'}}
                             className={classes.title}
                         >
-                            <Link to='/'>
+                            <Link to='/main-page'>
                                 <img
                                     src={logo}
                                     alt='logo'
-                                    style={{height: '20px', marginRight: '10px'}}
+                                    style={{height: '20px', marginTop: '10px'}}
                                 />
                             </Link>
                         </Typography>
@@ -456,8 +478,6 @@ class Layout extends React.Component {
                         <Divider/>
                         <List><MainListItems open={this.state.open} isAccordionOpen={this.state.isAccordionOpen}
                                              onDrawerToggle={this.handleDrawerOpen}/></List>
-                        <Divider/>
-                        <List><SecondaryListItems/></List>
                     </div>
                 </Drawer>
                 <main className={classes.content} style={{margin: 0, padding: 0, backgroundColor: '#f1f3f5'}}>

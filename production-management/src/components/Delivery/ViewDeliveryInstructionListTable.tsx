@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {
-    Box,
     Table,
     TableBody,
     TableCell,
@@ -10,12 +9,13 @@ import {
 } from "@material-ui/core";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
-import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 
 import "./../../assets/css/Table.css";
 import {AddInstruction} from "../../object/DeliveryInstruction/delivery-instruction-object";
 import { ListTitle } from "../../core/ListTitle";
 import { PageButton } from "../../core/button/PageButton";
+import {NullText} from "../../core/NullText";
+import {Loading} from "../../core/Loading";
 
 type Props = {
     setInstruction: (addInstruction: AddInstruction) => void
@@ -24,15 +24,22 @@ type Props = {
 
 const boldCellStyle = {
     fontWeight: 'bold',
-    backgroundColor: '#f1f3f5'
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light'
 };
+
+const tableCellStyle = {
+    fontFamily: 'S-CoreDream-3Light'
+}
+
 
 class ViewDeliveryInstructionListTable extends Component<Props> {
     static contextType = InstructionsContext;
 
     render() {
         const state = this.context as InstructionsState;
-        const list = state.instructionPage.list;
+        const list = state.instructionPage.list || [];
+        const currentPage = state.instructionPage.currentPage;
 
         const handleNextPage = () => {
             if (state.instructionPage.hasNextPage) {
@@ -65,7 +72,7 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list && list.length > 0 && list.map((row) => (
+                            {list && list.length > 0 ? list.map((row) => (
                                 <TableRow className='cellHoverEffect'
                                           onClick={() => setInstruction({
                                               instructionNo: row.instructionNo,
@@ -81,16 +88,22 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                                     <TableCell align="center">{row.instructionDate}</TableCell>
                                     <TableCell align="center">{row.expirationDate}</TableCell>
                                 </TableRow>
-                            ))}
+                            )) :
+                            <TableRow>
+                                <TableCell colSpan={7} style={{border: '0'}}>
+                                    {currentPage != -1 ? <NullText/> : <Loading/>}
+                                </TableCell>
+                            </TableRow>}
                         </TableBody>
                     </Table>
+                    {currentPage != -1 && list.length > 0 ?
                     <PageButton options={{
                         currentPage: state.instructionPage.currentPage,
                         handleNextPage: handleNextPage,
                         handlePrevPage: handlePrevPage,
                         hasNextPage: state.instructionPage.hasNextPage,
                         hasPreviousPage: state.instructionPage.hasPreviousPage
-                    }}/>
+                    }}/> : null}
                 </TableContainer>
             </>
         );

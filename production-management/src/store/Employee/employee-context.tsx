@@ -38,7 +38,7 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     },
     logout(): void {
     },
-    cleanEmployee(): void{
+    cleanEmployee(): void {
     },
     getMe(): void {
     },
@@ -54,7 +54,7 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     },
     myInstruction(): void {
     },
-    myDelivery(): void{
+    myDelivery(): void {
     },
     getMessages(): void {
     },
@@ -110,21 +110,25 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
 
                     this.setState({employee: data}, async () => {
                         await this.state.getMe();
-                        window.location.href = '/';
+                        window.location.href = '/main-page';
                     })
-                })
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         logout: () => {
             employeeAction.logout();
             localStorage.removeItem('employee');
             localStorage.removeItem('accessToken');
-            alert('로그아웃 되었습니다.');
-
+            Swal.fire({
+                icon: "success",
+                text: "로그아웃 되었습니다.",
+            })
         },
 
         cleanEmployee: () => {
-            this.setState({employee: initialEmployee });
+            this.setState({employee: initialEmployee});
         },
 
         getMe: async () => {
@@ -138,18 +142,20 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     };
                     this.setState({employee: data}, () => {
                         localStorage.setItem('employee', JSON.stringify(employeeData));
-                        console.log(localStorage.getItem('employee'));
                     })
-                });
+                }).catch((error) => {
+                    this.printErrorAlert(error);
+                })
         },
 
         getEmployee: (employeeNo: number) => {
             employeeAction.getEmployee(employeeNo)
                 .then(result => {
                     let data = result?.data;
-                    console.log('getEmployee: ' + data);
                     this.setState({employee: data});
-                })
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         updateEmployee: (employeeNo: number, updateEmployee: UpdateEmployee) => {
@@ -157,9 +163,14 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({employee: data});
-                    alert('정보가 업데이트되었습니다.');
+                    Swal.fire({
+                        icon: "success",
+                        text: `${data.name} 사원의 정보가 업데이트 되었습니다.`,
+                    });
                     this.getEmployee(employeeNo);
-                });
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         addImage: (employeeNo: number, image: File) => {
@@ -167,8 +178,9 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                    alert('이미지가 성공적으로 추가되었습니다.');
-                });
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         updateImage: (employeeNo: number, image: File) => {
@@ -176,8 +188,13 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                    alert('이미지가 성공적으로 업데이트되었습니다.');
-                });
+                    Swal.fire({
+                        icon: "success",
+                        text: "사진이 변경되었습니다.",
+                    });
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         deleteImage: (employeeNo: number) => {
@@ -185,32 +202,36 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                    alert('이미지가 성공적으로 삭제되었습니다.');
-                });
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         myInstruction: () => {
             employeeAction.myInstruction()
                 .then(result => {
                     let data = result?.data;
-                    this.setState({instruction: data});
-                })
+                    this.setState({instructionList: data});
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         myDelivery: () => {
             employeeAction.myDelivery()
                 .then(result => {
                     let data = result?.data;
-                    this.setState({delivery: data});
-                });
+                    this.setState({deliveryList: data});
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
-        getMessages :  () => {
-             this.getMessages();
+        getMessages: () => {
+            this.getMessages();
         },
 
         sendMessage: (sendId: number, targetId: number, message: string) => {
-            console.log('context message = '+message)
             employeeAction.sendMessage(sendId, targetId, message)
                 .then(result => {
                     Swal.fire({
@@ -218,7 +239,9 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                         text: "쪽지를 전송하였습니다!",
                     });
                     this.getMessages();
-                });
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         },
 
         deleteMessage: (messageNo: number) => {
@@ -232,31 +255,42 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                         timer: 1500
                     });
                     this.getMessages();
-                });
+                }).catch((error) => {
+                this.printErrorAlert(error);
+            })
         }
-
     }
 
     getMessages = async () => {
         await employeeAction.getMessages()
             .then(result => {
                 let data = result?.data;
-                this.setState({ messages: data }, () => {
+                this.setState({messages: data}, () => {
                     localStorage.setItem('messages', JSON.stringify(this.state.messages));
                 });
-            });
+            }).catch((error) => {
+                this.printErrorAlert(error);
+            })
     }
 
-    getEmployee =  (employeeNo: number) => {
+    getEmployee = (employeeNo: number) => {
         employeeAction.getEmployee(employeeNo)
             .then(result => {
                 let data = result?.data;
                 this.setState({employee: data});
-            })
+            }).catch((error) => {
+            this.printErrorAlert(error);
+        }).catch((error) => {
+            this.printErrorAlert(error);
+        })
     }
 
-
-
+    printErrorAlert = (message: string) => {
+        Swal.fire({
+            icon: "warning",
+            text: message
+        });
+    }
 
     render() {
         return (

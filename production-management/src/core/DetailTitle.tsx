@@ -16,15 +16,17 @@ const div = {
 
 const spanTitle = {
   fontWeight: 'bold',
-  fontSize: '16px',
+  fontSize: '19px',
   lineHeight: '16px',
-  marginLeft: '10px'
+  marginLeft: '10px',
 };
 
 const spanStatus = {
   lineHeight: '16px',
-  width: '130px',
+  width: '180px',
   marginLeft: '10px',
+  fontSize: '17px',
+  padding: '2px'
 };
 
 const img = {
@@ -32,13 +34,6 @@ const img = {
   height: '16px'
 };
 
-/**
- * 상세 타이틀
- * 
- * status?: string,     | 지시, 출고 상태 (필수 X)
- * title: string,       | 타이블 제목
- * targetName?: string  | 상세보기 대상 (string 이 아닐경우 as string)
- */
 export class DetailTitle extends Component<DetailTitleProps> {
 
   render() {
@@ -51,7 +46,7 @@ export class DetailTitle extends Component<DetailTitleProps> {
           <span style={spanTitle}>{title}</span>
           {targetName ?
               <span className={status ? status : ''} style={spanStatus}>{targetName}</span> :
-              <span style={spanStatus}>{targetName}</span>}
+              <span style={spanStatus}>{targetName == '0' ? null : targetName}</span>}
         </div>
     );
   }

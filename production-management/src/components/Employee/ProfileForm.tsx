@@ -20,6 +20,9 @@ type ProfileFormProps = {}
 type ProfileFormState = {
     updateEmployeeObj: UpdateEmployee;
     selectedImage: File | null;
+    oldPassword: string
+    password: string,
+    passwordConfirm: string,
 }
 
 let modifyValue = {
@@ -40,6 +43,9 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         this.state = {
             updateEmployeeObj: initialUpdateEmployee,
             selectedImage: null,
+            oldPassword: '',
+            password: '',
+            passwordConfirm: '',
         }
     }
 
@@ -52,25 +58,55 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         state.getEmployee(employeeData.employeeNo);
     }
 
+    validateName = (name: string) => {
+        return name.length >= 2;
+    }
+
+    validateEmail = (email: string) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
     handleUpdateClick = () => {
         const state = this.context as EmployeeState;
         const employee = state.employee;
 
-        if (modifyValue.password !== modifyValue.passwordConfirm) {
-            alert('비밀번호를 다시 확인해주세요.');
+        if(!this.validateName(modifyValue.name)){
+            alert('2글자 이상의 이름을 입력해주세요.');
             return;
         }
-        const telWithoutHyphen = modifyValue.tel.replace(/-/g, '');
+
+        if(!this.validateEmail(modifyValue.email)){
+            alert('올바른 이메일을 입력해주세요.');
+            return;
+        }
+
+        if(this.state.password && this.state.password.length < 6){
+            alert('비밀번호는 6글자 이상이어야 합니다.');
+            this.setState(prevState => ({
+                oldPassword: '',
+                password: '',
+                passwordConfirm: '',
+            }));
+            return;
+        }
+
+        if (this.state.password !== this.state.passwordConfirm) {
+            alert('새 비밀번호와 재입력한 새 비밀번호가 같지 않습니다. 다시 확인해주세요.');
+            this.setState(prevState => ({
+                oldPassword: '',
+                password: '',
+                passwordConfirm: '',
+            }));
+            return;
+        }
 
         const updateEmployeeObj: UpdateEmployee = {
             oldPassword: modifyValue.oldPassword,
             password: modifyValue.password,
             name: modifyValue.name,
-            tel: telWithoutHyphen,
+            tel: modifyValue.tel,
             email: modifyValue.email
         };
-
-        alert(updateEmployeeObj.email);
 
         state.updateEmployee(employee.employeeNo, updateEmployeeObj);
     };
@@ -79,9 +115,16 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         const state = this.context as EmployeeState;
         const employee = state.employee;
 
+        if (!employee || !employee.tel || !employee.email) {
+            return null;
+        }
+
+        const [tel1, tel2, tel3] = employee.tel.split('-');
+        const [email1, email2] = employee.email.split('@');
+
         modifyValue.name = employee.name;
-        modifyValue.tel = employee.tel;
-        modifyValue.email = employee.email;
+        modifyValue.tel = tel1 + tel2 + tel3;
+        modifyValue.email = email1 + email2;
 
         return (
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '60%'}}>
@@ -90,16 +133,16 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                         <TableRow>
                             <TableCell style={boldCellStyle}>사번</TableCell>
                             {employee.employeeNo !== 0 ?
-                                <TableCell >{employee.employeeNo}</TableCell>
+                                <TableCell style={tableCellStyle}>{employee.employeeNo}</TableCell>
                                 : null}
                         </TableRow>
                         <TableRow>
                             <TableCell style={boldCellStyle}>아이디</TableCell>
-                            <TableCell>{employee.id}</TableCell>
+                            <TableCell style={tableCellStyle}>{employee.id}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell style={boldCellStyle}>이름</TableCell>
-                            <TableCell>
+                            <TableCell >
                                 <input
                                     type="text"
                                     placeholder="이름"
@@ -107,7 +150,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.name = event.target.value;
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -117,10 +160,11 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                 <input
                                     type="password"
                                     placeholder="현재 비밀번호"
+                                    value={this.state.oldPassword}
                                     onChange={event => {
-                                        modifyValue.oldPassword = event.target.value;
+                                        this.setState({oldPassword: event.target.value})
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -130,23 +174,25 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                 <input
                                     type="password"
                                     placeholder="새 비밀번호"
+                                    value={this.state.password}
                                     onChange={event => {
-                                        modifyValue.password = event.target.value;
+                                        this.setState({password: event.target.value})
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell style={boldCellStyle}>새 비밀번호</TableCell>
+                            <TableCell style={boldCellStyle}>새 비밀번호 재입력</TableCell>
                             <TableCell>
                                 <input
                                     type="password"
-                                    placeholder="새 비밀번호 다시입력"
+                                    placeholder="새 비밀번호 재입력"
+                                    value={this.state.passwordConfirm}
                                     onChange={event => {
-                                        modifyValue.passwordConfirm = event.target.value;
+                                        this.setState({passwordConfirm: event.target.value})
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -155,12 +201,33 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                             <TableCell>
                                 <input
                                     type="text"
-                                    placeholder="'-'제외 11자리 입력"
-                                    defaultValue={employee.tel}
+                                    defaultValue={tel1}
                                     onChange={event => {
-                                        modifyValue.tel = event.target.value;
+                                        modifyValue.tel = `${event.target.value}${tel2}${tel3}`;
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={{ width: '59px', height: '25px', fontFamily: 'S-CoreDream-3Light',
+                                        marginRight: '3px'
+                                    }}
+                                />
+                                -
+                                <input
+                                    type="text"
+                                    defaultValue={tel2}
+                                    onChange={event => {
+                                        modifyValue.tel = `${tel1}${event.target.value}${tel3}`;
+                                    }}
+                                    style={{ width: '59px', height: '25px', fontFamily: 'S-CoreDream-3Light'
+                                        , marginLeft: '3px', marginRight: '3px'}}
+                                />
+                                -
+                                <input
+                                    type="text"
+                                    defaultValue={tel3}
+                                    onChange={event => {
+                                        modifyValue.tel = `${tel1}${tel2}${event.target.value}`;
+                                    }}
+                                    style={{ width: '59px', height: '25px', fontFamily: 'S-CoreDream-3Light',
+                                        marginLeft: '3px'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -169,12 +236,20 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                             <TableCell>
                                 <input
                                     type="text"
-                                    placeholder="이메일"
-                                    defaultValue={employee.email}
+                                    defaultValue={email1}
                                     onChange={event => {
                                         modifyValue.email = event.target.value;
                                     }}
-                                    style={{ height: '25px'}}
+                                    style={{ width: '60px', height: '25px', fontFamily: 'S-CoreDream-3Light', marginRight: '5px'}}
+                                />
+                                @
+                                <input
+                                    type="text"
+                                    defaultValue={email2}
+                                    onChange={event => {
+                                        modifyValue.email = event.target.value;
+                                    }}
+                                    style={{ width: '115px', height: '25px', fontFamily: 'S-CoreDream-3Light', marginLeft: '5px'}}
                                 />
                             </TableCell>
                         </TableRow>

@@ -1,14 +1,14 @@
 import React, {Component, useContext} from 'react';
 import AuthAction from './auth-action'
-import {AuthState, Employee, UpdateAuthEmployee} from "../../object/Auth/auth-object";
+import {AddEmployee, AuthState, Employee, UpdateAuthEmployee} from "../../object/Auth/auth-object";
 import {
     initialSearch,
     initialEmployee,
     initialEmployeePage,
-    initialUpdateAuthEmployee, initialImage
+    initialUpdateAuthEmployee, initialImage, initialIdDuplicate, initialEmployeeNoDuplicate
 } from "../../state/authStateManagement";
 import EmployeeAction from "../Employee/employee-action";
-import {Image} from "../../object/Employee/employee-object";
+import Swal from "sweetalert2";
 
 const authAction = new AuthAction;
 const employeeAction = new EmployeeAction();
@@ -18,13 +18,14 @@ export type Props = {
 }
 
 export const AuthContext = React.createContext<AuthState>({
-    availability: false,
+    idDuplicate: initialIdDuplicate,
+    employeeNoDuplicate: initialEmployeeNoDuplicate,
     search: initialSearch,
     employeePage: initialEmployeePage,
     employee: initialEmployee,
     updateAuthEmployee: initialUpdateAuthEmployee,
     image: initialImage,
-    addEmployee(employee: Employee): void {},
+    addEmployee(addEmployee: AddEmployee): void {},
     deleteEmployee(employeeNo: number): void {},
     updateEmployee(updateAuthEmployee1: UpdateAuthEmployee): void {},
     employeeNoCheck(employeeNo: number): void {},
@@ -38,75 +39,117 @@ export const AuthContext = React.createContext<AuthState>({
     addImage(employeeNo: number, image: File): void {},
     updateImage(employeeNo: number, image: File): void {},
     deleteImage(employeeNo: number): void {},
+    getInitEmployee(): void {},
+    cleanAvailabilites(): void {},
 });
 
 export class AuthContextProvider extends Component<Props, AuthState> {
 
     state: AuthState = {
-        availability: false,
+        idDuplicate: initialIdDuplicate,
+        employeeNoDuplicate: initialEmployeeNoDuplicate,
         search: initialSearch,
         employeePage: initialEmployeePage,
         employee: initialEmployee,
         updateAuthEmployee: initialUpdateAuthEmployee,
         image: initialImage,
 
-        addEmployee: (object: Employee) => {
+
+        addEmployee: (object: AddEmployee) => {
             authAction.addEmployee(object)
                 .then(result => {
-                    alert('사원 등록이 완료되었습니다.');
                     let data = result?.data;
-                    this.setState({employee: data});
-                })
+                    this.setState({employee: data}, () => {
+                        Swal.fire({
+                            icon: "success",
+                            text: '사원이 등록되었습니다.'
+                        });
+                        this.getEmployee(object.employeeNo);
+                        this.getEmployeeList();
+                    });
+                }).catch(error => {
+                    this.printErrorAlert(error);
+            })
         },
 
         deleteEmployee: (employeeNo: number) => {
             authAction.deleteEmployee(employeeNo)
                 .then(result => {
-                    alert("사원을 삭제하였습니다.")
+                    Swal.fire({
+                        icon: "success",
+                        text: "사원을 삭제하였습니다.",
+                    });
                     this.getEmployeeList();
                     this.setState({employee: initialEmployee});
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         updateEmployee: (updateAuthEmployee: UpdateAuthEmployee) => {
             authAction.updateEmployee(updateAuthEmployee)
                 .then(result => {
-                    alert("수정을 성공하였습니다.")
+                    Swal.fire({
+                        icon: "success",
+                        text: `${updateAuthEmployee.name} 사원의 정보가 수정되었습니다.`,
+                    });
                     this.state.getEmployee(updateAuthEmployee.employeeNo);
                     this.getEmployeeList();
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         employeeNoCheck: async (employeeNo: number) => {
-            authAction.employeeNoCheck(employeeNo)
+            await authAction.employeeNoCheck(employeeNo)
                 .then(result => {
                     let data = result?.data;
-                    this.setState({availability : data},() => {
-                        if(result?.data.availability){
-                            alert('사용 가능한 사번입니다.');
+                    this.setState({employeeNoDuplicate : data},() => {
+                        if(this.state.employeeNoDuplicate.availability){
+                            Swal.fire({
+                                icon: "success",
+                                text: "사용 가능한 사번입니다.",
+                            });
                         }else{
-                            alert('이미 사용 중인 번호입니다. 다른 번호를 선택해주세요.');
+                            Swal.fire({
+                                icon: "error",
+                                text: "이미 사용 중인 사번입니다. 다른 번호를 입력해주세요.",
+                            });
                         }
                     });
+                }).catch(error => {
+                    this.printErrorAlert(error);
                 })
         },
 
         idCheck: async (id: string) => {
-            authAction.idCheck(id)
+            await authAction.idCheck(id)
                 .then(result => {
                     let data = result?.data;
-                    this.setState({availability: data}, () => {
-                        if (result?.data.availability) {
-                            alert('사용 가능한 아이디입니다..');
+                    this.setState({idDuplicate: data}, () => {
+                        if (this.state.idDuplicate.availability) {
+                            Swal.fire({
+                                icon: "success",
+                                text: "사용 가능한 아이디입니다.",
+                            });
                         } else {
-                            alert('이미 사용 중인 아이디입니다. 다른 번호를 선택해주세요.');
+                            Swal.fire({
+                                icon: "error",
+                                text: "이미 사용 중인 아이디입니다. 다른 아이디를 사용해주세요..",
+                            });
                         }
                     });
+                }).catch(error => {
+                    this.printErrorAlert(error);
                 })
         },
 
         cleanEmployee: () => {
-            this.setState({employee: initialEmployee });
+            this.setState({
+                employee: initialEmployee,
+                idDuplicate: initialIdDuplicate,
+                employeeNoDuplicate: initialEmployeeNoDuplicate
+            });
         },
 
         setSearch: (employeeNo: number, name: string) => {
@@ -152,7 +195,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({employee: data});
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         addImage: (employeeNo: number, image: File) => {
@@ -160,7 +205,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                });
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         updateImage: (employeeNo: number, image: File) => {
@@ -168,7 +215,9 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                });
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
         },
 
         deleteImage: (employeeNo: number) => {
@@ -176,7 +225,27 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                 .then(result => {
                     let data = result?.data;
                     this.setState({image: data});
-                });
+                }).catch(error => {
+                this.printErrorAlert(error);
+            });
+        },
+
+        getInitEmployee: () => {
+            authAction.getEmployeeList(this.state.search)
+                .then((result) => {
+                    this.setState({employeePage: result?.data}, () => {
+                        this.state.getEmployee(this.state.employeePage.list[0].employeeNo);
+                    })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            })
+        },
+
+        cleanAvailabilites: () => {
+            this.setState({
+                idDuplicate: initialIdDuplicate,
+                employeeNoDuplicate: initialEmployeeNoDuplicate
+            });
         }
     }
 
@@ -185,8 +254,27 @@ export class AuthContextProvider extends Component<Props, AuthState> {
             .then((result) => {
                 let data = result?.data;
                 this.setState({employeePage: data});
-            })
+            }).catch(error => {
+            this.printErrorAlert(error);
+        })
     };
+
+    getEmployee = (employeeNo: number) => {
+        authAction.getEmployee(employeeNo)
+            .then(result => {
+                let data = result?.data;
+                this.setState({employee: data});
+            }).catch(error => {
+                this.printErrorAlert(error);
+        })
+    };
+
+    printErrorAlert = (message : string) => {
+        Swal.fire({
+            icon: "warning",
+            text: message
+        });
+    }
 
     render() {
         return(

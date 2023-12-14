@@ -7,26 +7,27 @@ import {SearchButton} from '../../core/button/SearchButton';
 import { TextInput } from '../../core/input/TextInput';
 import { AddItemButton } from '../../core/button/AddItemButton';
 
-type State = {
-  customerAddModalOpen: boolean
-}
-
 type Props = {}
 
-let inputValue = {
-  customerCode: '',
-  customerName: '',
-  sector: ''
+interface SearchState {
+  customerCode: string;
+  customerName: string;
+  sector: string;
+  customerAddModalOpen?: boolean;
 }
 
-class CustomerInputBar extends Component<Props, State> {
+class CustomerInputBar extends Component<Props, SearchState> {
   static contextType = CustomersContext;
 
   constructor(Props: Props) {
     super(Props);
     this.state = {
-      customerAddModalOpen: false
-    } as State;
+      customerAddModalOpen: false,
+      customerCode: '',
+      customerName: '',
+      sector: ''
+    };
+
   }
 
   insertCustomer = (customerCode: string, customerName: string, customerTel: string, ceo: string, sector: string) => {
@@ -43,31 +44,38 @@ class CustomerInputBar extends Component<Props, State> {
 
   handleSearchClick = () => {
     const state = this.context as CustomersState;
-    state.setSearch(inputValue.customerCode, inputValue.customerName, inputValue.sector);
+    state.search.page = 1;
+    state.setSearch(this.state.customerCode, this.state.customerName, this.state.sector);
   }
 
   render() {
     return (
         <>
           <BarBox>
-            <BarLeftBox width='70vw'>
+            <BarLeftBox width='90%' minWidth='900px'>
               <TextInput title='거래처 코드' onBlur={(e) => {
-                inputValue.customerCode = e.target.value
-              }} input={{width:'100px'}}/>
+                this.setState({customerCode : e.target.value});
+              }} input={{
+                width: '150px'
+              }}/>
               <TextInput title='거래처 명칭' onBlur={(e) => {
-                inputValue.customerName = e.target.value
+                this.setState({customerName : e.target.value});
+              }} input={{
+                width: '150px'
               }}/>
               <TextInput title='업종' onBlur={(e) => {
-                inputValue.sector = e.target.value
+                this.setState({sector : e.target.value});
+              }} input={{
+                width: '150px'
               }}/>
             </BarLeftBox>
-            <BarRightBox>
+            <BarRightBox minWidth='50px'>
               <SearchButton
-                  size={30} onClick={this.handleSearchClick}
+                  size={35} onClick={this.handleSearchClick}
               />
               &nbsp;&nbsp;
               <AddItemButton
-                  size={30}
+                  size={35}
                   onClick={() => this.setState((prevState) => ({customerAddModalOpen: !prevState.customerAddModalOpen}))}
               />
             </BarRightBox>

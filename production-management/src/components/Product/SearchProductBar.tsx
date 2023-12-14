@@ -28,6 +28,7 @@ class SearchProductBar extends Component<{}, SearchState> {
 
   handleSearchClick = () => {
     const state = this.context as ProductsState;
+    state.search.page = 1;
     state.setProductCodeAndName(this.state.productCode, this.state.productName);
   };
 
@@ -53,7 +54,7 @@ class SearchProductBar extends Component<{}, SearchState> {
 
     return (
         <BarBox>
-          <BarLeftBox width='70vw'>
+          <BarLeftBox width='90%' minWidth='900px'>
             <TextInput title='품목 코드' onBlur={(e) => {
               this.setState({productCode: e.target.value});
             }}/>
@@ -61,10 +62,10 @@ class SearchProductBar extends Component<{}, SearchState> {
               this.setState({productName: e.target.value});
             }}/>
           </BarLeftBox>
-          <BarRightBox>
-            <SearchButton size={30} onClick={this.handleSearchClick}/>
+          <BarRightBox minWidth='50px'>
+            <SearchButton size={35} onClick={this.handleSearchClick}/>
             &nbsp;&nbsp;
-            <AddItemButton size={30} onClick={this.handleAddClick}/>
+            <AddItemButton size={35} onClick={this.handleAddClick}/>
           </BarRightBox>
           <Modal
               open={this.state.isModalOpen ?? false}

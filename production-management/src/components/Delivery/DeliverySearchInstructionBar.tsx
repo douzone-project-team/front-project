@@ -1,25 +1,35 @@
 import React, {Component} from "react";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
-import {InstructionsState} from "../../object/Instruction/Instruction-object";
-import {Box} from "@material-ui/core";
+import {InstructionSearch, InstructionsState} from "../../object/Instruction/Instruction-object";
 import {TextInput} from "../../core/input/TextInput";
 import {DateInput} from "../../core/input/DateInput";
 import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
-import { SearchButton } from "../../core/button/SearchButton";
+import {SearchButton} from "../../core/button/SearchButton";
+import { SearchBox } from "../../core/box/SearchBox";
 
 let searchValue = {
   progressStatus: '',
   employeeName: '',
   startDate: '',
   endDate: '',
-};
+  expirationStartDate: '',
+  expirationEndDate: ''
+} as InstructionSearch;
 
 class DeliverySearchInstructionBar extends Component {
   static contextType = InstructionsContext;
 
+    componentDidMount= async () => {
+        const state = this.context as InstructionsState;
+
+        state.search.page = 1;
+        state.setSearch(searchValue);
+    }
+
   handleSearchClick = () => {
     const state = this.context as InstructionsState;
-    state.setSearch(searchValue.employeeName, searchValue.startDate, searchValue.endDate);
+    state.search.page = 1;
+    state.setSearch(searchValue);
   }
 
   handleSearchProgressState = (progressStatus: string) => {
@@ -28,10 +38,10 @@ class DeliverySearchInstructionBar extends Component {
     state.setSearchProgressStatus(progressStatus);
   }
 
-  render() {
+    render() {
     const state = this.context as InstructionsState;
     return (
-        <>
+        <SearchBox p='5px'>
           <BarBox>
             <BarLeftBox width='70vw'>
               <TextInput title='등록자'
@@ -39,7 +49,7 @@ class DeliverySearchInstructionBar extends Component {
                            searchValue.employeeName = e.target.value
                          }}
                          input={{width: '100px'}}
-                         label={{ml:'0px'}}
+                         label={{ml: '0px'}}
               />
               <label style={{marginLeft: '10px'}}>
                 <span style={{
@@ -49,7 +59,7 @@ class DeliverySearchInstructionBar extends Component {
                   fontWeight: 'bold'
                 }}>진행 상태</span>
                 <select
-                    style={{height: '20px', width: '60px'}}
+                    style={{height: '30px', width: '100px'}}
                     value={searchValue.progressStatus}
                     onChange={(e) => {
                       searchValue.progressStatus = e.target.value;
@@ -81,10 +91,10 @@ class DeliverySearchInstructionBar extends Component {
               <SearchButton
                   size={25}
                   onClick={this.handleSearchClick}
-                />
+              />
             </BarRightBox>
           </BarBox>
-        </>
+        </SearchBox>
     )
   }
 }

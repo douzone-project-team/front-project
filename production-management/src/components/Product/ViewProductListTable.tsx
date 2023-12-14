@@ -70,7 +70,7 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
         return (
             <Box >
                 <ListTitle options={{title: '품목 목록', count: list.length}}/>
-                <TableContainer className='table-container' style={{height:'330px'}}>
+                <TableContainer className='table-container' style={{height:'410px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>

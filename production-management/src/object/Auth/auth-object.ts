@@ -31,6 +31,16 @@ export type Employee = {
     email: string
 }
 
+export type AddEmployee = {
+    employeeNo: number,
+    id: string,
+    password: string,
+    name: string,
+    role: string,
+    tel: string,
+    email: string
+}
+
 export type UpdateAuthEmployee = {
     employeeNo: number
     id: string,
@@ -45,14 +55,23 @@ export type Image = {
     image: File | null;
 }
 
-export type AuthState = {
+export type IdDuplicate = {
     availability: boolean,
+}
+
+export type EmployeeNoDuplicate = {
+    availability: boolean,
+}
+
+export type AuthState = {
+    idDuplicate: IdDuplicate,
+    employeeNoDuplicate: EmployeeNoDuplicate
     search: Search,
     employeePage: EmployeePage,
     employee: Employee,
     updateAuthEmployee: UpdateAuthEmployee,
     image: Image,
-    addEmployee: (employee: Employee) => void,
+    addEmployee: (addEmployee: AddEmployee) => void,
     deleteEmployee: (employeeNo: number) => void,
     updateEmployee: (updateAuthEmployee: UpdateAuthEmployee) => void,
     employeeNoCheck: (employeeNo: number) => void,
@@ -65,7 +84,9 @@ export type AuthState = {
     getEmployee: (employeeNo: number) => void,
     addImage: (employeeNo: number, image: File) => void,
     updateImage: (employeeNo: number, image: File) => void,
-    deleteImage: (employeeNo: number) => void
+    deleteImage: (employeeNo: number) => void,
+    getInitEmployee: () => void,
+    cleanAvailabilites: () => void,
 }
 
 export type AuthPath = {

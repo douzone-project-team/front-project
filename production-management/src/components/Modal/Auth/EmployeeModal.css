@@ -97,6 +97,23 @@
     margin-top: 20px;
 }
 
+.image-button {
+    font-family: S-CoreDream-3Light;
+    background-color: rgb(125, 134, 155);
+    width: 45%;
+    height: 30px;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .form-duplicate-button{
     font-family: S-CoreDream-3Light;
     background-color: rgb(125, 134, 155);
@@ -126,3 +143,31 @@
     margin-bottom: 10px;
     font-size: 11px;
 }
+
+.admin label {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: 45%;
+    height: 30px;
+    transition: 0.2s;
+}
+
+.admin input {
+    position: absolute;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.admin span {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+

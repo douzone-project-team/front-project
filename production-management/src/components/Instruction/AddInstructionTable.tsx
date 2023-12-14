@@ -34,10 +34,15 @@ type Props = {
 const boldCellStyle = {
   border: '1px solid #D3D3D3',
   fontWeight: 'bold',
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px',
 };
 
-const cellStyle = {
+const tableCellStyle = {
   border: '1px solid #D3D3D3',
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px',
+  maxHeight: '40px',
 };
 
 const statusMap = new Map([
@@ -55,6 +60,26 @@ class ViewInstructionTable extends Component<Props, State> {
       product: [],
     } as State;
   }
+
+  handleCheckboxAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {existSelectedCheckBox, addSelectedCheckBox} = this.props;
+    const state = this.context as InstructionsState;
+    const instruction = state.instruction;
+
+    if (event.target.checked) {
+      instruction.products.forEach((row: ProductInstruction) => {
+        if (!existSelectedCheckBox(row.productNo)) {
+          addSelectedCheckBox(row.productNo);
+        }
+      });
+    } else {
+      instruction.products.forEach((row: ProductInstruction) => {
+        if (existSelectedCheckBox(row.productNo)) {
+          addSelectedCheckBox(row.productNo);
+        }
+      });
+    }
+  };
 
   addInstructionProduct = (productNo: number, amount: number) => {
     const state = this.context as InstructionsState;
@@ -105,6 +130,11 @@ class ViewInstructionTable extends Component<Props, State> {
                     border: '1px solid #D3D3D3',
                     fontWeight: 'bold'
                   }}>
+                    {instruction.products &&
+                        <input
+                            type="checkbox"
+                            onChange={this.handleCheckboxAllChange}
+                        />}
                   </TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
@@ -120,7 +150,7 @@ class ViewInstructionTable extends Component<Props, State> {
               </TableHead>
               <TableBody>
                 {instruction.products.map((row: ProductInstruction, index: number) => (
-                    <TableRow>
+                    <TableRow key={row.productNo}>
                       <TableCell align="center" style={{
                         border: '1px solid #D3D3D3',
                         fontWeight: 'bold'
@@ -132,21 +162,22 @@ class ViewInstructionTable extends Component<Props, State> {
                         />
                       </TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionNo}</TableCell>
+                                 style={tableCellStyle}>{instruction.instructionNo}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionDate}</TableCell>
+                                 style={tableCellStyle}>{instruction.instructionDate}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.expirationDate}</TableCell>
+                                 style={tableCellStyle}>{instruction.expirationDate}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{statusMap.get(instruction.progressStatus)}</TableCell>
+                                 style={tableCellStyle}>{statusMap.get(instruction.progressStatus)}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.customerName}
+                                 style={tableCellStyle}>{instruction.customerName}
                       </TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.productNo}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.productCode}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.productName}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.amount}</TableCell>
-                      <TableCell align="center" style={cellStyle}>{row.remainAmount}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{row.amount}</TableCell>
+                      <TableCell align="center"
+                                 style={tableCellStyle}>{row.remainAmount}</TableCell>
                     </TableRow>
                 ))}
                 {instruction.instructionNo ? (
@@ -157,49 +188,54 @@ class ViewInstructionTable extends Component<Props, State> {
                       }}>
                       </TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{instruction.instructionNo}</TableCell>
+                                 style={tableCellStyle}>{instruction.instructionNo}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>
+                                 style={tableCellStyle}>
                         <EditInput type='date'
+                                   darkMode
                                    defaultValue={instruction.instructionDate}
                                    onChange={(e) => this.updateInstruction({instructionDate: e.target.value})}/>
                       </TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>
+                                 style={tableCellStyle}>
                         <EditInput type='date'
+                                   darkMode
                                    defaultValue={instruction.expirationDate}
                                    onChange={(e) => this.updateInstruction({expirationDate: e.target.value})
                                    }/>
                       </TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>{statusMap.get(instruction.progressStatus)}</TableCell>
+                                 style={tableCellStyle}>{statusMap.get(instruction.progressStatus)}</TableCell>
                       <TableCell align="center"
-                                 style={cellStyle}>
+                                 style={tableCellStyle}>
                         <div style={{
                           display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}>
-                          <div style={{width: '99%'}}>
-                            {instruction.customerName}
-                          </div>
-                          <div style={{width: '1%'}}>
-                            <EditButton color='black' size={15} onClick={changeCustomerModalStatus}/>
-                          </div>
+                          <span
+                              style={{
+                                marginLeft: '25px',
+                                marginRight: '10px'
+                              }}>{instruction.customerName}</span>
+                          <EditButton color='black' size={15}
+                                      onClick={changeCustomerModalStatus}/>
                         </div>
                       </TableCell>
-                      <TableCell align="center" style={cellStyle}>
+                      <TableCell align="center" style={tableCellStyle}>
                         <AddItemButton color='black' onClick={changeProductModalStatus}/>
                       </TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
-                      <TableCell align="center" style={cellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={tableCellStyle}></TableCell>
                     </TableRow>
-                ) : <td colSpan={11} style={{textAlign: 'center'}}>
-                  <img src={require('./../../images/null/instruction-null-image.png')}
-                       style={{marginTop: '10%', width: '15%'}}/>
-                </td>}
+                ) : <tr>
+                  <td colSpan={11} style={{textAlign: 'center'}}>
+                    <img src={require('./../../images/null/instruction-null-image.png')}
+                         style={{marginTop: '10%', width: '15%'}}/>
+                  </td>
+                </tr>}
               </TableBody>
             </Table>
           </TableContainer>

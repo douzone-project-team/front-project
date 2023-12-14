@@ -10,8 +10,8 @@ import "../../assets/css/Styles.css";
 import {Title} from "../../core/Title";
 import {SearchBox} from "../../core/box/SearchBox";
 import {TableBox} from "../../core/box/TableBox";
-import { Body } from "../../core/Body";
-
+import {Body} from "../../core/Body";
+import Swal from 'sweetalert2';
 
 type State = {
   selectedCheckBoxs: number[],
@@ -45,11 +45,6 @@ class AddInstructions extends Component<Props, State> {
     }
   }
 
-  componentDidMount() {
-    const state = this.context as InstructionsState;
-    state.cleanInstruction();
-  };
-
   deleteSelectedCheckBox = () => {
     const state = this.context as InstructionsState;
     this.state.selectedCheckBoxs.forEach(num => {
@@ -60,7 +55,13 @@ class AddInstructions extends Component<Props, State> {
 
       state.deleteProductInstruction(deleteProductInstruction);
     })
-    this.setState({selectedCheckBoxs: []})
+    this.setState({selectedCheckBoxs: []});
+    Swal.fire({
+      icon: "success",
+      text: "삭제되었습니다.",
+      showConfirmButton: false,
+      timer: 1000
+    });
   };
 
   addSelectedCheckBox = (productNo: number) => {
@@ -97,11 +98,11 @@ class AddInstructions extends Component<Props, State> {
         <Layout>
           <Title title='지시등록'/>
           <Body>
-            <SearchBox>
+            <SearchBox minWidth='1100px'>
               <AddInstructionBar customerSearchModalOpen={customerSearchModalOpen}
                                  changeCustomerSearchModalStatus={this.state.changeCustomerSearchModalStatus}/>
             </SearchBox>
-            <TableBox>
+            <TableBox minWidth='1100px' minHeight='650px'>
               <AddInstructionTable addSelectedCheckBox={this.addSelectedCheckBox}
                                    productModalOpen={productModalOpen}
                                    customerModalOpen={customerModalOpen}
@@ -110,26 +111,27 @@ class AddInstructions extends Component<Props, State> {
                                    existSelectedCheckBox={this.existSelectedCheckBox}
               />
             </TableBox>
-            {isChecksNotEmpty &&
-                <div className='delete-div' style={{
-                  height: '7vh'
-                }}>
-                  <div>
+          </Body>
+          {isChecksNotEmpty &&
+              <div className='delete-div' style={{
+                height: '7vh', margin: 0
+              }}>
+                <div>
                   <span
                       style={{color: '#1ae0ed'}}>{selectedCheckBoxs.length}건 </span><span>선택됨</span>
-                  </div>
-                  <div>
-                    <Button variant="outlined" style={{
-                      lineHeight: 'normal',
-                      background: '#50596c',
-                      borderColor: '#b5b5b5',
-                      color: '#fff',
-                    }} onClick={this.deleteSelectedCheckBox}>삭제
-                    </Button>
-                  </div>
                 </div>
-            }
-          </Body>
+                <div>
+                  <Button variant="outlined" style={{
+                    lineHeight: 'normal',
+                    background: '#50596c',
+                    borderColor: '#b5b5b5',
+                    color: '#fff',
+                    marginRight: '100px'
+                  }} onClick={this.deleteSelectedCheckBox}>삭제
+                  </Button>
+                </div>
+              </div>
+          }
         </Layout>
     )
   }

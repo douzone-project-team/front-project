@@ -16,6 +16,8 @@ export type InstructionSearch = {
   employeeName: string,
   startDate: string,
   endDate: string,
+  expirationStartDate: string,
+  expirationEndDate: string,
   page: number,
   pageSize: number
 }
@@ -75,7 +77,7 @@ export type InstructionsState = {
   instructionPage: InstructionPage,
   instruction: Instruction,
   cleanInstruction(): void,
-  setSearch(employeeName: string, startDate: string, endDate: string): void,
+  setSearch(instructionSearch: InstructionSearch): void,
   setSearchProgressStatus(progressStatus: string): void,
   setPage(page: number): void,
   getInstructionList(): void,
@@ -86,4 +88,5 @@ export type InstructionsState = {
   deleteProductInstruction(deleteProductInstruction: DeleteProductInstruction): void,
   deleteInstruction(instructionNo: string): void,
   updateInstructionProduct(amount: number, productNo: number): void,
+  getInitInstruction(): void,
 }

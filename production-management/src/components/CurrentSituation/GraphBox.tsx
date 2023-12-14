@@ -28,7 +28,7 @@ class GraphBox extends Component<GraphBoxProps> {
     }
 
     initializeChart() {
-        const {data, labelText, colors} = this.props;
+        const { data, labelText, colors } = this.props;
         const chartDom = this.chartRef.current;
 
         if (chartDom) {
@@ -89,7 +89,7 @@ class GraphBox extends Component<GraphBoxProps> {
     }
 
     render(): ReactNode {
-        return <div ref={this.chartRef} style={{width: '100%', height: '100%'}}/>;
+        return <div ref={this.chartRef} style={{ width: '100%', height: '100%' }} />;
     }
 }
 

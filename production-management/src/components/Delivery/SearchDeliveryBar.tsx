@@ -42,9 +42,9 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
     })
   }
 
-
   handleSearchClick = () => {
     const state = this.context as DeliveriesState;
+    state.search.page = 1;
     state.setSearch(searchValue.employeeName, searchValue.startDate, searchValue.endDate);
   }
 
@@ -52,6 +52,10 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
     const state = this.context as DeliveriesState;
     state.search.page = 1;
     state.setSearchProgressStatus(progressStatus);
+  }
+  
+  componentDidMount = async () => {
+    this.setState({all: true});
   }
 
   renderProgressButton = (koreanStatus: string, status: string, image: string, color: string, checked: boolean,
@@ -87,11 +91,12 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
     return (
         <>
           <BarBox>
-            <BarLeftBox width='70vw'>
+            <BarLeftBox width='90%' minWidth='1010px'>
               <TextInput title='등록자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value
-              }}/>
+              }} label={{ml: '30px'}} input={{width:'120px'}}/>
               <DateInput title='출고일'
+                         darkMode
                          startDate={{
                            datalaceholder: '시작일',
                            onChange: (e) => {
@@ -108,13 +113,14 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                          }}
               />
             </BarLeftBox>
-            <BarRightBox>
-              <SearchButton size={30} onClick={this.handleSearchClick}/>
+            <BarRightBox minWidth='30px'>
+              <SearchButton size={35} onClick={this.handleSearchClick}/>
             </BarRightBox>
           </BarBox>
           <Box
               sx={{
                 mt: '10px',
+                mb: '8px',
               }}
           >
             &nbsp;
