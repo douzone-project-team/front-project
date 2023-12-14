@@ -77,9 +77,11 @@ class ViewDeliveryTable extends Component<Props, State> {
         const state = this.context as DeliveriesState;
         state.getDeliveryList();
         const list = state.deliveryPage?.list;
-        const firstDelivery = list && list.length > 0 ? list[0] : null;
-        if (firstDelivery) {
-            state.getDelivery(firstDelivery?.deliveryNo);
+        if (list.length > 0) {
+            const firstDelivery = list && list.length > 0 ? list[0] : null;
+            if (firstDelivery) {
+                state.getDelivery(firstDelivery?.deliveryNo);
+            }
         }
     }
 

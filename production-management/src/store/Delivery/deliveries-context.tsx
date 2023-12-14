@@ -179,6 +179,19 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
 
         // 출고 껍데기에 지시 먼저 등록하기
         addDeliveryInstruction: (deliveryNo, addDeliveryInstruction: AddDeliveryInstruction) => {
+            const isDuplicate = this.state.delivery.instructions.some(existingInstruction => {
+                return existingInstruction.instructionNo === addDeliveryInstruction.instructionNo &&
+                    existingInstruction.productNo === addDeliveryInstruction.products[0].productNo;
+            });
+
+            if(isDuplicate) {
+                Swal.fire({
+                    icon: 'warning',
+                    text: "이미 존재하는 상품입니다.",
+                });
+                return;
+            }
+
             deliveryInstructionAction.addDeliveryInstruction(deliveryNo, addDeliveryInstruction)
             .then((result) => {
                 const {instructionNo} = addDeliveryInstruction;
@@ -187,7 +200,10 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
                         ...prevState.newDelivery,
                         instructionNo: instructionNo,
                     },
-                }), () => {this.getDelivery(deliveryNo)});
+                }), () => {
+                    this.getDelivery(deliveryNo);
+                    this.getDeliveryList();
+                });
             }).catch((error) => {
                 this.printErrorAlert(error);
             })
@@ -198,7 +214,9 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
             .then((result) => {
                 deliveryAction.getDelivery(this.state.delivery.deliveryNo)
                 .then((result) => {
-                    this.setState({delivery: result?.data})
+                    this.setState({delivery: result?.data}, () => {
+                        this.getDeliveryList();
+                    })
                 })
             }).catch((error) => {
                 this.printErrorAlert(error);
