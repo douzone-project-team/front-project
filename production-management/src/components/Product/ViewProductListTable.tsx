@@ -48,8 +48,6 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
     };
 
     componentDidMount() {
-        console.log("컴포넌트가 마운트됐습니다.");
-
         const state = this.context as ProductsState;
         state.getProductList();
     };

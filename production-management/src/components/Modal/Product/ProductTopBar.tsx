@@ -28,7 +28,6 @@ class ProductTopBar extends Component<{}, SearchState> {
     };
 
     handleAddClick = () => {
-        console.log(`모달 클릭됨`);
         this.setState({
             isModalOpen: true,
         });

@@ -1,10 +1,11 @@
-// GraphBox2 컴포넌트
-
 import React, { Component, ReactNode, RefObject, createRef } from 'react';
 import * as echarts from 'echarts';
+import {BarGraph} from "../../object/Main/main-object";
 
-interface GraphBoxProps {
-    data: { value: number; name: string }[];
+interface GraphBoxProps {/*
+    data: { value: number; name: string }[];*/
+    data: BarGraph;
+
 }
 
 class GraphBox2 extends React.Component<GraphBoxProps> {
@@ -26,58 +27,71 @@ class GraphBox2 extends React.Component<GraphBoxProps> {
     initializeChart() {
         const { data } = this.props;
         const chartDom = this.chartRef.current;
-
-        if (chartDom) {
+        const { deliveryData, instructionData } = data
+        if (chartDom && data) {
             const myChart = echarts.init(chartDom);
 
+            deliveryData.map(dd =>(dd));
+            instructionData.map((id=>(id)));
+
             const option: echarts.EChartsOption = {
-                title: {
+                /* title: {
                     left: 'left',
-                    text: '월별 현황'
-                },
+                    text: '월별 현황',
+                    textStyle: {
+                        color: '#516377'
+                    }
+                },*/
+
                 legend: {
-                    orient: 'vertical',
+                    orient: 'horizontal',
                     left: 'left',
-                    top:'bottom'
+                    top: 'bottom',
                 },
                 tooltip: {},
-                dataset: {
-                    dimensions: ['product', '지시', '출고' ],
-                    source: [
-                        { product: '2일  전', '지시': 43.3, '출고': 85.8 },
-                        { product: '어제', '지시': 83.1, '출고': 73.4},
-                        { product: '오늘', '지시': 86.4, '출고': 65.2},
-                        { product: '내일', '지시': 86.4, '출고': 65.2 },
-                        { product: '2일 후', '지시': 72.4, '출고': 53.9 }
-                    ]
-                },
 
-                xAxis: { type: 'category' },
-                yAxis: {},
-                // Declare several bar series, each will be mapped
-                // to a column of dataset.source by default.
+                xAxis: [
+                    {
+                        type: 'category',
+                        axisTick: { show: false },
+                        data: deliveryData.map(dd =>(dd.date))
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
                 series: [
                     {
+                        name: '지시',
                         type: 'bar',
-                        itemStyle: {
-                            color: '#8FE3B7' // 원하는 색상으로 변경
-                        }
+                        barWidth:'30',
+                        barGap: 0,
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data:instructionData.map(dd =>(dd.count))
                     },
+
                     {
+                        name: '출고',
                         type: 'bar',
-                        itemStyle: {
-                            color: '#F77D93' // 다른 색상으로 변경
-                        }
+                        barWidth:'30',
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data:deliveryData.map(dd =>(dd.count))
                     }
                 ]
-            }
-                myChart.setOption(option);
+            };
+            myChart.setOption(option);
         }
     }
 
-    render(): ReactNode {
-        return <div ref={this.chartRef} style={{ width: '100%', height: '100%' }} />;
 
+    render(): ReactNode {
+            return <div ref={this.chartRef} style={{ width: '100%', height: '100%' }} />;
     }
 }
 

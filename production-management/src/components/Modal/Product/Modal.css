@@ -12,17 +12,21 @@
 
 .modal-container {
     background: white;
-    width: 100%;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-header {
-    background: #f0f0f0;
-    border-bottom: 1px solid #ccc;
+.modalHeader {
+    display: flex;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    background:rgb(50 95 211);
+    color: white;
+    justify-content: space-between;
 }
 
-footer {
+.modalFooter {
     background : #f0f0f0;
 }
 
@@ -30,30 +34,46 @@ footer {
     cursor: pointer;
     border: none;
     background: none;
-    font-size: 18px;
-    color: #333;
+    font-size: 25px;
+    color: white;
+    float: right;
 }
 
-main {
+.product-modal-main {
+    height: 100%;
     width: 100%;
-    padding: 20px;
+    padding-left: 0;
+    padding-right: 0;
+}
+.title-label{
+    display: flex;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
 }
 
 .form-label {
+    font-size: 14px;
     margin-bottom: 10px;
     font-weight: bold;
+    display: flex;
+    width:100%;
+    justify-content: center;
 }
 
 .form-input {
     height: 30px;
-    width: 180px;
-    margin-left: 10px;
+    width: 100%;
+    margin-left: 0%;
     margin-bottom: 10px;
-    padding: 5px;
+    font-family: S-CoreDream-3Light;
+
 }
 
 .form-button {
-    background-color: rgba(52, 57, 71, 0.71);
+    background-color: rgb(50 95 211);
+    font-family: S-CoreDream-3Light;
+    width: 50%;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -63,10 +83,49 @@ main {
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
-    margin-top: 25px;
+    margin-top: 20px;
+}
+.form-cancel-button{
+    font-family: S-CoreDream-3Light;
+    background-color: rgb(253, 253, 254);
+    width: 50%;
+    color: #545454;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.form-duplicate-button{
+    font-family: S-CoreDream-3Light;
+    background-color: rgb(125, 134, 155);
     width: 100%;
+    float: right;
+    margin-left: 15%;
+    height: 30px;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.form-duplicate-button:hover{
+    background-color: rgb(100, 109, 133);
 }
 
 .form-button:hover {
     background-color: rgba(52, 57, 71, 0.89);
+}
+
+.duplicate-span {
+    margin-bottom: 10px;
+    font-size: 11px;
 }

@@ -75,6 +75,7 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
               });
       },
 
+
       regiProducts: (productCode: string, productName: string, standard: string, unit: number, weight: number, price: number) => {
           // productAction을 이용하여 제품 등록 요청을 보냅니다.
           productAction.regiProducts(productCode, productName, standard, unit ,weight, price)
@@ -143,6 +144,7 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
       this.setState({productPage: data});
     })
   };
+
 
   //   updateProduct = () => {
   //   const { productNo, productName, productCode, standard, unit } = this.state.product;

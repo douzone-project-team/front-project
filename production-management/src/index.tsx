@@ -11,9 +11,12 @@ import {CustomerContextProvider} from './store/Customer/customers-context';
 import {EmployeeContextProvider} from './store/Employee/employee-context';
 import {AuthContextProvider} from './store/Auth/auth-context';
 import ProductInstructionProvider from './store/ProductInstruction/product-instruction-context';
-
+import {MainContextProvider} from './store/Main/main-context';
+import {TodoContextProvider} from "./store/Todo/todo-context";
 ReactDOM.render(
+    <MainContextProvider>
     <AuthContextProvider>
+      <TodoContextProvider>
       <EmployeeContextProvider>
         <ProductsContextProvider>
           <InstrcutionsContextProvider>
@@ -31,6 +34,8 @@ ReactDOM.render(
           </InstrcutionsContextProvider>
         </ProductsContextProvider>
       </EmployeeContextProvider>
-    </AuthContextProvider>,
+      </TodoContextProvider>
+    </AuthContextProvider>
+    </MainContextProvider>,
     document.querySelector('#root')
 );

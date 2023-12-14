@@ -75,6 +75,7 @@ class ViewProductTable extends Component<{}, DetailState> {
     if (product.productNo !== 0) {
       this.setState({
         isModalOpen: true,
+        history: product,
       });
     } else {
       alert("품목을 선택해주세요");
@@ -182,6 +183,7 @@ class ViewProductTable extends Component<{}, DetailState> {
               >
                 <ModalProduct
                     handleCloseModal={this.handleCloseModal}
+                    product={this.state.history}
                 />
               </Paper>
             </Fade>
