@@ -125,7 +125,9 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                 .then(result => {
                     let data = result?.data;
                     this.setState({customer: data});
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            });
         },
         deleteCustomer: (customerNo: number) => {
             customerAction.deleteCustomer(customerNo)
@@ -138,9 +140,9 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                     this.getCustomerList();
                     this.setState({customer: initialCustomer});
                 })
-                .catch(reason => {
-                    alert(reason);
-                })
+                .catch(error => {
+                    this.printErrorAlert(error);
+                });
         },
         cleanCustomer: () => {
             this.setState({customer: initialCustomer, search: initialSearchState});
@@ -151,7 +153,9 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                     this.setState({customerPage: result?.data}, () => {
                         this.state.getCustomer(this.state.customerPage.list[0].customerNo);
                     })
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            });
         }
     }
 
@@ -189,8 +193,8 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                 });
                 this.getCustomerList();
             })
-            .catch(reason => {
-                alert(reason);
+            .catch(error => {
+                this.printErrorAlert(error);
             });
     }
 
@@ -206,7 +210,7 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                 this.getCustomerList();
             })
             .catch(error => {
-                // alert(reason);
+                this.printErrorAlert(error);
             });
     }
 
@@ -217,6 +221,13 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                 this.setState({customerPage: data});
             })
     };
+
+    printErrorAlert = (message : string) => {
+        Swal.fire({
+            icon: "warning",
+            text: message
+        });
+    }
 
     render() {
         return (
