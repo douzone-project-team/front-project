@@ -62,7 +62,7 @@ export class AuthContextProvider extends Component<Props, AuthState> {
                     this.setState({employee: data}, () => {
                         Swal.fire({
                             icon: "success",
-                            text: `${data.name} 사원이 등록되었습니다..`,
+                            text: '사원이 등록되었습니다.'
                         });
                         this.getEmployee(object.employeeNo);
                         this.getEmployeeList();
