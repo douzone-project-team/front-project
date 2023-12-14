@@ -63,6 +63,9 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
       isShippingAccordionOpen,
     } = this.state;
 
+    const storedEmployeeData = localStorage.getItem('employee');
+    const employeeData = storedEmployeeData ? JSON.parse(storedEmployeeData) : {};
+
     // 색상
     const iconAndTextStyles = {
       color: 'rgba(255,255,255,0.75)',
@@ -159,17 +162,20 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                 </AccordionDetails>
               </Accordion>
           )}
-          <Link to="/employee/list" style={{textDecoration: 'none', color: 'black'}}>
-            <ListItem>
-              <Button>
-                <ListItemIcon style={iconAndTextStyles}>
-                  <PeopleIcon/>
-                </ListItemIcon>
-                <ListItemText><span style={iconAndTextStyles}>사원 조회</span></ListItemText>
-              </Button>
-            </ListItem>
-          </Link>
+          { employeeData.role === 'ROLE_ADMIN' ? (
+              <Link to="/employee/list" style={{textDecoration: 'none', color: 'black'}}>
+                <ListItem>
+                  <Button>
+                    <ListItemIcon style={iconAndTextStyles}>
+                      <PeopleIcon/>
+                    </ListItemIcon>
+                    <ListItemText><span style={iconAndTextStyles}>사원 조회</span></ListItemText>
+                  </Button>
+                </ListItem>
+              </Link>
+          ) : null}
         </React.Fragment>
+
     );
   }
 }
