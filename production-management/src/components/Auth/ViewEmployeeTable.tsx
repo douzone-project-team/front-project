@@ -111,7 +111,7 @@ class ViewEmployeeTable extends Component<Props, State> {
                                 <TableCell align="center" style={boldCellStyle}>이름</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>연락처</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>이메일</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>역할</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>권한</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

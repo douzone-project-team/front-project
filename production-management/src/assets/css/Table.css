@@ -67,18 +67,6 @@
   text-align: center;
 }
 
-.COMPLETE {
-  margin: 3px;
-  width: 100px;
-  border-radius: 10px;
-  /*background-color: #3C50C2;*/
-  /*color: white;*/
-  border: 2px solid #3C50C2;
-  color: #3C50C2;
-  font-weight: bold;
-  text-align: center;
-}
-
 .INCOMPLETE {
   margin: 3px;
   width: 100px;
@@ -91,6 +79,16 @@
   text-align: center;
 }
 
+.ROLE_ADMIN {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80px;
+  border-radius: 10px;
+  border: 2px solid #5fbfe0;
+  color: #5fbfe0;
+  font-weight: bold;
+  text-align: center;
+}
 
 .selectedRow {
   background-color: rgba(224, 224, 224, 0.8);

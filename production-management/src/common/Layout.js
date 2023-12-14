@@ -478,8 +478,6 @@ class Layout extends React.Component {
                         <Divider/>
                         <List><MainListItems open={this.state.open} isAccordionOpen={this.state.isAccordionOpen}
                                              onDrawerToggle={this.handleDrawerOpen}/></List>
-                        <Divider/>
-                        <List><SecondaryListItems/></List>
                     </div>
                 </Drawer>
                 <main className={classes.content} style={{margin: 0, padding: 0, backgroundColor: '#f1f3f5'}}>

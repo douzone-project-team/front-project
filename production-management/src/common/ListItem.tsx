@@ -5,9 +5,7 @@ import {Accordion, AccordionDetails, Button} from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import BusinessIcon from '@material-ui/icons/Business';
 import {Link} from 'react-router-dom';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -161,31 +159,6 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                 </AccordionDetails>
               </Accordion>
           )}
-        </React.Fragment>
-    );
-  }
-}
-
-
-class SecondaryListItems extends Component {
-  render() {
-
-    // 색상
-    const iconAndTextStyles = {
-      color: 'rgba(255,255,255,0.75)',
-      fontFamily: 'S-CoreDream-3Light'
-    }
-
-    const storedEmployeeData = localStorage.getItem('employee');
-    const employeeData = storedEmployeeData ? JSON.parse(storedEmployeeData) : {};
-    const isAdmin = employeeData.role;
-
-    if(isAdmin !== 'ROLE_ADMIN'){
-      return null;
-    }
-
-    return (
-        <React.Fragment>
           <Link to="/employee/list" style={{textDecoration: 'none', color: 'black'}}>
             <ListItem>
               <Button>
@@ -201,4 +174,4 @@ class SecondaryListItems extends Component {
   }
 }
 
-export {MainListItems, SecondaryListItems};
+export {MainListItems};

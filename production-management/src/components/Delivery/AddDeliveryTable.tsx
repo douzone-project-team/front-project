@@ -6,7 +6,7 @@ import {
   DeleteDeliveryInstruction
 } from "../../object/DeliveryInstruction/delivery-instruction-object";
 import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
-import {DeliveriesState, DeliveryInstruction, Instructions} from "../../object/Delivery/delivery-object";
+import {DeliveriesState, Instructions} from "../../object/Delivery/delivery-object";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import InstructionModal from "../Modal/Delivery/InstructionModal";
 import DeliveryProductModal from "../Modal/Delivery/DeliveryProductModal";
@@ -281,10 +281,12 @@ class AddDeliveryTable extends Component<Props, State> {
                           <TableCell align="center" style={tableCellStyle}></TableCell>
                         </TableRow>
                     )
-                ) : <td colSpan={11} style={{textAlign: 'center'}}>
-                  <img src={require('./../../images/null/delivery-null-image.png')}
-                       style={{marginTop: '10%', width: '15%'}}/>
-                </td>}
+                ) :  <tr>
+                    <td colSpan={11} style={{textAlign: 'center'}}>
+                      <img src={require('./../../images/null/delivery-null-image.png')}
+                          style={{marginTop: '10%', width: '15%'}}/>
+                    </td>
+                </tr>}
               </TableBody>
             </Table>
           </TableContainer>

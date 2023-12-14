@@ -3,11 +3,11 @@ import {Component} from "react";
 import {InstructionsContext} from "../../../store/Instruction/Instructions-context";
 import {Box} from "@material-ui/core";
 import "./../../../assets/css/InstructionModal.css"
-import DeliverySearchInstructionBar from "../../Instruction/Delivery-SearchInstructionBar";
 import ViewDeliveryInstructionListTable from "../../Delivery/ViewDeliveryInstructionListTable";
 import {SearchBox} from "../../../core/box/SearchBox";
 import {TableBox} from "../../../core/box/TableBox";
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import DeliverySearchInstructionBar from "../../Delivery/DeliverySearchInstructionBar";
 
 type InstructionModalProps = {
   onClose: () => void,

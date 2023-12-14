@@ -50,7 +50,7 @@ class SearchEmployeeBar extends Component<Props, State> {
         return (
             <>
                 <BarBox>
-                    <BarLeftBox width='70vw'>
+                    <BarLeftBox width='90%' minWidth='1010px'>
                         <TextInput title='사번' onBlur={(e) => {
                             searchValue.employeeNo = parseInt(e.target.value)
                         }} />
@@ -63,9 +63,17 @@ class SearchEmployeeBar extends Component<Props, State> {
                             marginRight: '5px',
                             fontSize: '17px',
                             fontWeight: 'bold'
-                        }}>역할</span>
+                        }}>권한</span>
                             <select
-                                style={{height: '30px', marginLeft: '10px', borderRadius: '5px', width: '100px', fontFamily: 'S-CoreDream-3Light'}}
+                                style={{
+                                    height: '30px',
+                                    marginLeft: '10px',
+                                    borderRadius: '4px',
+                                    border: '1px solid #D3D3D3',
+                                    width: '150px',
+                                    fontFamily: 'S-CoreDream-3Light',
+                                    fontSize: '15px'
+                                }}
                                 value={searchValue.role}
                                 onChange={(e) => {
                                     searchValue.role = e.target.value;
@@ -78,11 +86,11 @@ class SearchEmployeeBar extends Component<Props, State> {
                             </select>
                         </label>
                     </BarLeftBox>
-                    <BarRightBox>
-                        <SearchButton size={30} onClick={this.handleSearchClick} />
+                    <BarRightBox minWidth='80px'>
+                        <SearchButton size={35} onClick={this.handleSearchClick} />
                         &nbsp;&nbsp;
                         <AddItemButton
-                            size={30}
+                            size={35}
                             onClick={() => this.setState((prevState) =>
                                 ({employeeAddModalOpen: !prevState.employeeAddModalOpen}))}
                         />

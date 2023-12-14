@@ -44,6 +44,7 @@ class AddDeliveryBar extends Component {
           <BarBox>
             <BarLeftBox width='70vw'>
               <DateInput title='출고일'
+                         darkMode
                          startDate={{
                            datalaceholder: '출고일',
                            onChange: (e) => {

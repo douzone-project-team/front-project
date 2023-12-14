@@ -1,13 +1,14 @@
 import React, {Component, FormEvent, RefObject} from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme , Grid, Paper, Box, CssBaseline, TextField, Button } from '@material-ui/core';
+import { Grid, Paper, Box, CssBaseline, TextField, Button } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import {EmployeeState} from "../../object/Employee/employee-object";
 import {EmployeeContext} from "../../store/Employee/employee-context";
+import { createTheme } from '@material-ui/core/styles'
 // @ts-ignore
 import logo from '../../images/BLOOMING.png';
 
-const defaultTheme = createMuiTheme();
+const defaultTheme = createTheme();
 
 interface LoginFormProps extends RouteComponentProps {}
 
@@ -36,15 +37,12 @@ class LoginForm extends Component<LoginFormProps> {
             await login(enteredId, enteredPassword);
 
             this.setState({ isLoading: false }, () => {
-                console.log('isSuccess:', isSuccess);
-                console.log('employee:', employee);
 
                 if (isSuccess) {
                     history.push('/');
                 }
             });
         } catch (error) {
-            console.error('Error during login:', error);
             this.setState({ isLoading: false });
         }
     };
@@ -91,6 +89,7 @@ class LoginForm extends Component<LoginFormProps> {
                                     autoComplete="id"
                                     autoFocus
                                     inputRef={this.idInputRef}
+                                    style={{ fontFamily: 'S-CoreDream-3Light' }}
                                 />
                                 <br />
                                 <TextField
@@ -103,6 +102,7 @@ class LoginForm extends Component<LoginFormProps> {
                                     id="password"
                                     autoComplete="current-password"
                                     inputRef={this.passwordInputRef}
+                                    style={{ fontFamily: 'S-CoreDream-3Light' }}
                                 />
                                 <br />
                                 <Button
