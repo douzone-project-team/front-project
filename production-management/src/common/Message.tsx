@@ -82,7 +82,6 @@ class Message extends React.Component<MessageProps> {
         const {sendMessage} = this.props;
         const {targetId, message} = this.state;
         const employee = JSON.parse(localStorage.getItem('employee') as string) as unknown as Employees;
-        console.log('message = ' + message);
         sendMessage(employee.employeeNo, targetId, message);
     }
 
@@ -99,16 +98,16 @@ class Message extends React.Component<MessageProps> {
                     width: '100%',
                     bgcolor: 'white',
                     color: 'black',
-                    height: '400px', fontFamily: 'S-CoreDream-3Light'
+                    height: '430px', fontFamily: 'S-CoreDream-3Light'
                 }}
             >
                 <AppBar position="static">
                     <Tabs value={tabValue} onChange={this.handleChangeTab}
                           indicatorColor="primary"
                           textColor="primary"
-                          style={{backgroundColor: 'white'}}>
-                        <Tab style={{fontFamily: 'S-CoreDream-3Light'}} label="쪽지함"/>
-                        <Tab style={{fontFamily: 'S-CoreDream-3Light'}} label="쪽지 보내기"/>
+                          style={{backgroundColor: 'white', width: '400px'}}>
+                        <Tab style={{fontFamily: 'S-CoreDream-3Light', width: '50%'}} label="쪽지함"/>
+                        <Tab style={{fontFamily: 'S-CoreDream-3Light', width: '50%'}} label="쪽지 보내기"/>
                     </Tabs>
                 </AppBar>
                 <div>
@@ -146,7 +145,7 @@ class Message extends React.Component<MessageProps> {
 
                     {tabValue === 1 && (
                         <>
-                            <div style={{padding: '20px'}}>
+                            <div style={{padding: '20px', width: '400px'}}>
                                 <TextField
                                     style={{fontFamily: 'S-CoreDream-3Light'}}
                                     label="보내는 사람"

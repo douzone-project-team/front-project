@@ -4,6 +4,7 @@ import {CustomersContext} from "../../../store/Customer/customers-context";
 import {Box} from "@material-ui/core";
 import './CustomerModalCss.css'
 import BusinessIcon from "@material-ui/icons/Business";
+import Swal from "sweetalert2";
 
 type CustomerModalProps = {
     onClose: () => void,
@@ -52,6 +53,30 @@ export class CustomerModifyModal extends Component<CustomerModalProps, CustomerM
                 const customerTel = modifyValue.customerTel1+"-"+modifyValue.customerTel2+"-"+modifyValue.customerTel3;
                 const state = this.context as CustomersState;
                 const {onClose, updateCustomer} = this.props as CustomerModalProps;
+                const customerCodePattern = /^[A-Z]\d{4}$/;
+                const customerTelPattern = /^010-\d{4}-\d{4}$/;
+
+                if (modifyValue.customerName.length === 0 || modifyValue.customerTel1.length === 0 ||
+                    modifyValue.customerTel2.length === 0 || modifyValue.customerTel3.length === 0 || modifyValue.ceo.length === 0){
+                    // alert("빈칸이 존재합니다.");
+                    this.alertMessage('warning', '', '빈칸이 존재합니다.');
+                    return;
+                }
+                if (modifyValue.customerName.length > 10) {
+                    // alert("거래처 명칭은 10글자를 넘을 수 없습니다.");
+                    this.alertMessage('warning', '', '거래처 명칭은 10글자를 넘을 수 없습니다.');
+                    return;
+                }
+                if (!customerTelPattern.test(customerTel)) {
+                    // alert("연락처의 형식이 잘못되었습니다. (예: 010-0000-0000)");
+                    this.alertMessage('warning', '', '연락처의 형식이 잘못되었습니다. (예: 010-0000-0000)');
+                    return;
+                }
+                if (modifyValue.ceo.length > 10) {
+                    // alert("대표자는 10글자를 넘을 수 없습니다.");
+                    this.alertMessage('warning', '', '대표자는 10글자를 넘을 수 없습니다.');
+                    return;
+                }
                 if(modifyValue.customerName === state.customer.customerName && customerTel === state.customer.customerTel && modifyValue.ceo === state.customer.ceo){
                     onClose();
                     return;
@@ -60,9 +85,17 @@ export class CustomerModifyModal extends Component<CustomerModalProps, CustomerM
                 onClose();
             }
         }
-
-
     }
+
+    alertMessage = (icon: string, title: string, text: string) => {
+        // @ts-ignore
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: text
+        });
+    }
+
 
     render() {
         const state = this.context as CustomersState;
