@@ -76,7 +76,6 @@ class ViewInstructionTable extends Component<Props, State> {
   };
 
   updateProductButtonClickEvent = (productNo: number) => {
-    console.log(this.state.changeValue);
     if (!/^\d+$/.test(this.state.changeValue as unknown as string)) {
       Swal.fire({
         icon: "warning",

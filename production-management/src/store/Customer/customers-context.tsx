@@ -180,7 +180,9 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                         });
                     }
                     });
-            })
+            }).catch(error => {
+            this.printErrorAlert(error);
+        });
     }
 
     insertCustomer = () => {
@@ -219,7 +221,9 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
             .then((result) => {
                 let data = result?.data;
                 this.setState({customerPage: data});
-            })
+            }).catch(error => {
+            this.printErrorAlert(error);
+        });
     };
 
     printErrorAlert = (message : string) => {
