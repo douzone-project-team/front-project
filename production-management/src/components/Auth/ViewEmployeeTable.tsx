@@ -7,6 +7,7 @@ import {DetailTitle} from "../../core/DetailTitle";
 import {EditButton} from "../../core/button/EditButton";
 import {DeleteButton} from "../../core/button/DeleteButton";
 import {NullText} from "../../core/NullText";
+import Swal from "sweetalert2";
 
 type State = {
     employeeModifyModalOpen: boolean
@@ -55,7 +56,22 @@ class ViewEmployeeTable extends Component<Props, State> {
 
     handleDeleteClick = (employeeNo: number) => {
         const state = this.context as AuthState;
-        state.deleteEmployee(employeeNo);
+
+        Swal.fire({
+            title: "사원을 삭제하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "완료",
+            cancelButtonText: "취소",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.cancel) {
+                return;
+            }
+            state.deleteEmployee(employeeNo);
+        });
     }
 
     updateEmployee = (employeeNo: number, id: string, password: string, name: string,
@@ -114,22 +130,22 @@ class ViewEmployeeTable extends Component<Props, State> {
                         </TableHead>
                         <TableBody>
                             {state.employee.employeeNo !== 0 ? <TableRow>
-                                <TableCell align="center" style={tableCellStyle}>{employee.employeeNo}</TableCell>
-                                <TableCell align="center" style={tableCellStyle}>{employee.id}</TableCell>
-                                <TableCell align="center" style={tableCellStyle}>{employee.name}</TableCell>
-                                <TableCell align="center" style={tableCellStyle}>{employee.tel === '--' ? '' : employee.tel}</TableCell>
-                                <TableCell align="center" style={tableCellStyle}>{employee.email}</TableCell>
-                                <TableCell align="center" style={tableCellStyle}>
-                                    <div className={employee.role}>
-                                        {myMap.get(employee.role)}
-                                    </div>
-                                </TableCell>
-                            </TableRow> :
-                            <TableRow>
-                                <TableCell colSpan={6} style={{border: '0'}}>
-                                    <NullText mt={'0px'}/>
-                                </TableCell>
-                            </TableRow>}
+                                    <TableCell align="center" style={tableCellStyle}>{employee.employeeNo}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{employee.id}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{employee.name}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{employee.tel === '--' ? '' : employee.tel}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{employee.email}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>
+                                        <div className={employee.role}>
+                                            {myMap.get(employee.role)}
+                                        </div>
+                                    </TableCell>
+                                </TableRow> :
+                                <TableRow>
+                                    <TableCell colSpan={6} style={{border: '0'}}>
+                                        <NullText mt={'0px'}/>
+                                    </TableCell>
+                                </TableRow>}
                         </TableBody>
                     </Table>
                 </TableContainer>

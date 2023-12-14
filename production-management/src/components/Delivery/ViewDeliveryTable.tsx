@@ -138,7 +138,11 @@ class ViewDeliveryTable extends Component<Props, State> {
             cancelButtonColor: "#d33",
             confirmButtonText: "삭제",
             cancelButtonText: "취소"
-        }).then(() => {
+        }).then((result) => {
+            if(result.dismiss === Swal.DismissReason.cancel) {
+                return;
+            }
+
             clearCheckBoxes();
             deleteDelivery(delivery.deliveryNo);
             if (!tableSize) {
@@ -166,6 +170,27 @@ class ViewDeliveryTable extends Component<Props, State> {
 
         state.updateDelivery({deliveryNo, deliveryDate: newDeliveryDate});
     };
+
+    updateDeliveryStatusButtonClick = (deliveryNo: string) => {
+        const state = this.context as DeliveriesState;
+
+        Swal.fire({
+            title: "출고를 완료하시겠습니까?",
+            text: "미완료의 출고가 상태가 완료로 업데이트 됩니다. ",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "완료",
+            cancelButtonText: "취소",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.cancel) {
+                return;
+            }
+            state.updateDeliveryStatus(deliveryNo);
+        });
+    }
 
     getRemainAmount = async (instructionNo: string, productNo: number) => {
         const state = this.context as DeliveriesState;
@@ -330,7 +355,8 @@ class ViewDeliveryTable extends Component<Props, State> {
                     <div style={{width: '8%', height: '16px', alignItems: 'center', textAlign: 'right'}}>
                         {delivery.deliveryStatus == 'INCOMPLETE' &&
                             <div>
-                                <CheckButton size={20} onClick={() => updateDeliveryStatus(delivery.deliveryNo)} />
+                                <CheckButton size={20} onClick={() =>
+                                    this.updateDeliveryStatusButtonClick(delivery.deliveryNo)} />
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <DeleteButton size={22} onClick={() => this.deleteDeliveryButtonClickEvent()} />
                             </div>}
@@ -363,64 +389,64 @@ class ViewDeliveryTable extends Component<Props, State> {
                         </TableHead>
                         <TableBody>
                             {list && list.length > 0 ? list.map((row) => (
-                                <TableRow>
-                                    {delivery.deliveryStatus == 'INCOMPLETE' ?
+                                    <TableRow>
+                                        {delivery.deliveryStatus == 'INCOMPLETE' ?
+                                            <TableCell align="center" style={tableCellStyle}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={this.props.existSelectedCheckBox(row.productNo)}
+                                                    onChange={() => addSelectedCheckBox(row.productNo)}
+                                                />
+                                            </TableCell>
+                                            : null }
+                                        <TableCell align="center" style={tableCellStyle}>{row.instructionNo}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.instructionDate}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.expirationDate}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>
                                         <TableCell align="center" style={tableCellStyle}>
-                                            <input
-                                                type="checkbox"
-                                                checked={this.props.existSelectedCheckBox(row.productNo)}
-                                                onChange={() => addSelectedCheckBox(row.productNo)}
-                                            />
-                                        </TableCell>
-                                    : null }
-                                    <TableCell align="center" style={tableCellStyle}>{row.instructionNo}</TableCell>
-                                    <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
-                                    <TableCell align="center" style={tableCellStyle}>{row.instructionDate}</TableCell>
-                                    <TableCell align="center" style={tableCellStyle}>{row.expirationDate}</TableCell>
-                                    <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
-                                    <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
-                                    <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>
-                                    <TableCell align="center" style={tableCellStyle}>
-                                        {row.productNo !== changeTarget || !changeAmount ?
-                                            <div style={{
-                                                display: 'flex',
-                                                flexDirection: 'row',
-                                                justifyContent: 'space-between',
-                                            }}>
-                                                <div style={{width: '99%'}}>
-                                                    {row.amount}
-                                                </div>
-                                                <div style={{width: '1px'}}>
-                                                    {delivery.deliveryStatus == 'INCOMPLETE' ?
+                                            {row.productNo !== changeTarget || !changeAmount ?
+                                                <div style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'space-between',
+                                                }}>
+                                                    <div style={{width: '99%'}}>
+                                                        {row.amount}
+                                                    </div>
+                                                    <div style={{width: '1px'}}>
+                                                        {delivery.deliveryStatus == 'INCOMPLETE' ?
+                                                            <EditButton
+                                                                color="black"
+                                                                onClick={() => this.editProductCountButtonClickEvent(row)}/>
+                                                            : null
+                                                        }
+                                                    </div>
+                                                </div> :
+                                                <div style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'space-between',
+                                                }}>
+                                                    <div style={{width: '99%'}}>
+                                                        <input type="number" defaultValue={row.amount}
+                                                               onChange={(e) => {
+                                                                   this.setState({changeValue: e.target.value as unknown as number});
+                                                               }}
+                                                               style={{width: '68px'}}
+                                                        />
+                                                    </div>
+                                                    <div style={{width: '1%'}}>
                                                         <EditButton
-                                                            color="black"
-                                                            onClick={() => this.editProductCountButtonClickEvent(row)}/>
-                                                        : null
-                                                    }
+                                                            onClick={() => this.updateProductButtonClickEvent(row.instructionNo, row.productNo)}/>
+                                                    </div>
                                                 </div>
-                                            </div> :
-                                            <div style={{
-                                                display: 'flex',
-                                                flexDirection: 'row',
-                                                justifyContent: 'space-between',
-                                            }}>
-                                                <div style={{width: '99%'}}>
-                                                    <input type="number" defaultValue={row.amount}
-                                                           onChange={(e) => {
-                                                               this.setState({changeValue: e.target.value as unknown as number});
-                                                           }}
-                                                           style={{width: '68px'}}
-                                                    />
-                                                </div>
-                                                <div style={{width: '1%'}}>
-                                                    <EditButton
-                                                        onClick={() => this.updateProductButtonClickEvent(row.instructionNo, row.productNo)}/>
-                                                </div>
-                                            </div>
-                                        }
-                                    </TableCell>
-                                </TableRow>
-                            )) :
+                                            }
+                                        </TableCell>
+                                    </TableRow>
+                                )) :
                                 <TableRow>
                                     <TableCell colSpan={9} style={{borderTop: '0', borderRight: '0', borderLeft: '0'}}>
                                         <NullText mt='0' />
