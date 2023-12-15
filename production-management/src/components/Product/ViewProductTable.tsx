@@ -111,6 +111,7 @@ class ViewProductTable extends Component<{}, DetailState> {
     const state = this.context as ProductsState;
     const product = state.product;
 
+
     return (
         <>
           <div style={{
@@ -167,6 +168,9 @@ class ViewProductTable extends Component<{}, DetailState> {
               BackdropProps={{
                 invisible: true,
                 timeout: 500,
+              }}
+              style={{
+                zIndex: 1, // 원하는 z-index 값으로 설정
               }}
           >
             <Fade in={this.state.isModalOpen || false}>

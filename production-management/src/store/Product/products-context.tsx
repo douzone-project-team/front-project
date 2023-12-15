@@ -6,6 +6,7 @@ import {
   initialProductPageState,
   initialSearchState
 } from "../../state/productStateManagement";
+import Swal from "sweetalert2";
 
 const productAction = new ProductAction();
 
@@ -129,7 +130,19 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
           }
       },
     cleanProduct() : void {},
-    getInitProduct() : void {}
+      getInitProduct: () => {
+          productAction.getProductList(this.state.search)
+              .then((result) => {
+                  this.setState({productPage: result?.data}, () => {
+                      // 업데이트된 상태에서 첫 번째 고객의 번호를 가져와 getCustomer 메서드를 호출합니다.
+                      this.state.getProduct(this.state.productPage.list[0].productNo);
+                  });
+              })
+              .catch(error => {
+                  // 에러가 발생한 경우 에러를 처리하는 printErrorAlert 메서드를 호출합니다.
+                  this.printErrorAlert(error);
+              });
+      }
   };
 
   getProduct = (productNo: number) => {
@@ -178,7 +191,12 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
   //         console.error("Error updating product:", error);
   //       });
   // };
-
+      printErrorAlert = (message : string) => {
+          Swal.fire({
+              icon: "warning",
+              text: message
+          });
+      }
 
   render() {
     return (
