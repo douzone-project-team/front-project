@@ -8,6 +8,7 @@
     justify-content: center;
     align-content: center;
     display: flex;
+    font-family: S-CoreDream-3Light;
 }
 .custom-swal-container {
     z-index: 100000000000 !important;
@@ -41,7 +42,7 @@
     float: right;
 }
 
-.customer-modal-main {
+.product-modal-main{
     height: 100%;
     width: 100%;
     padding-left: 0;

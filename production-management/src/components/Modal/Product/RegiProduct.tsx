@@ -3,8 +3,9 @@ import { ProductsContext } from "../../../store/Product/products-context";
 import { ProductsState } from "../../../object/Product/product-object";
 import { Box } from "@material-ui/core";
 import './Modal.css';
-import BusinessIcon from '@material-ui/icons/Business';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import Swal from "sweetalert2";
+import {CustomersState} from "../../../object/Customer/customer-object";
 
 interface ModalProductProps {
     handleCloseModal: () => void;
@@ -14,11 +15,12 @@ interface regiProduct {
     productCode: string;
     productName: string;
     productStandard: string;
-    productPrice:number;
+    productPrice: number;
     productWeight: number;
     productUnit: number;
-    temCode:string;
+    temCode: string | null;
 }
+
 
 class ModalProduct extends Component<ModalProductProps, regiProduct> {
     static contextType = ProductsContext;
@@ -65,7 +67,6 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
         if (Array.isArray(list)) {
             if (list.some(item => item.productCode === this.state.productCode)) {
                 this.alertMessage('warning', '', '이미 존재하는 품목 코드입니다.');
-                return;
             } else {
                 this.setState({ temCode: this.state.productCode });
                 this.alertMessage('success', '', '사용할 수 있는 품목 코드입니다.');
@@ -74,6 +75,25 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
             this.alertMessage('error', '', '품목 목록을 가져올 수 없습니다.');
         }
     };
+
+// 중복 체크 버튼 클릭 시 품목 코드 입력란이 변경될 때 호출되는 함수
+    handleInputChange = (e: ChangeEvent<HTMLInputElement>, field: keyof regiProduct) => {
+        // 사용자가 다른 코드를 입력하면 temCode를 초기화
+        if (field === 'productCode') {
+            this.setState({
+                ...this.state,
+                [field]: e.target.value,
+                temCode: '', // 사용자가 다른 코드를 입력하면 temCode를 초기화
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                [field]: e.target.value,
+            });
+        }
+    };
+
+
 
     onRegiClick = () => {
         if (!this.state.productName) {
@@ -123,20 +143,15 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
         });
     };
 
-    handleInputChange = (e: ChangeEvent<HTMLInputElement>, field: keyof regiProduct) => {
-        this.setState({
-            ...this.state,
-            [field]: e.target.value,
-        });
-    };
 
 
     render() {
+        const { temCode, productCode } = this.state;
         return (
             <div className='modal'>
                 <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'450px', height: '600px'}}>
                     <div className="modalHeader" style={{height: '55px'}}>
-                        <div style={{display: 'flex'}}><BusinessIcon/>&nbsp;품목 등록</div>
+                        <div style={{display: 'flex'}}><DashboardIcon/>&nbsp;품목 등록</div>
                         <button className="close" onClick={this.props.handleCloseModal}>
                             &times;
                         </button>
@@ -152,11 +167,12 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
                         >
                             <label className="form-label">
                                 품목 이름
+                            </label>
                                 <input value={this.state.productName} placeholder="" className="form-input"
                                        onChange={(e) => this.handleInputChange(e, 'productName')} />
-                            </label>
                             <label className="form-label" style={{width:'100%'}}>
                                 품목 코드
+                            </label>
                                 <div style={{display:'flex', width:'100%'}}>
                                     <input
                                         value={this.state.productCode || ''}
@@ -166,15 +182,22 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
                                         style={{width: '60%', marginBottom: '4px'}}
                                         onChange={(e) => this.handleInputChange(e, 'productCode')}
                                     />
-                                    <button className="form-duplicate-button"
-                                        onClick={this.checkCodeClick}
-                                    >
+                                    <button className="form-duplicate-button" onClick={this.checkCodeClick}>
                                         중복 체크
                                     </button>
                                 </div>
-                            </label>
+                                {temCode ? (
+                                    <span className="duplicate-span" style={{ color: 'green' }}>
+                                사용 가능한 품목 코드입니다.
+                            </span>
+                                ) : (
+                                    <span className="duplicate-span" style={{ color: 'red' }}>
+                                품목 코드 중복 확인은 필수입니다.
+                            </span>
+                                )}
                             <label className="form-label">
                                 품목 가격
+                            </label>
                                 <input
                                     value={this.state.productPrice}
                                     type="number"
@@ -182,9 +205,9 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
                                     onChange={(e) => this.handleInputChange(e, 'productPrice')}
                                     min="0"
                                 />
-                            </label>
                             <label className="form-label">
                                 품목 규격
+                            </label>
                                 <input
                                     value={this.state.productStandard}
                                     type="text"
@@ -192,9 +215,9 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
                                     className="form-input"
                                     onChange={(e) => this.handleInputChange(e, 'productStandard')}
                                 />
-                            </label>
                             <label className="form-label">
                                 품목 무게
+                            </label>
                                 <input
                                     value={this.state.productWeight}
                                     type="number"
@@ -202,9 +225,9 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
                                     onChange={(e) => this.handleInputChange(e, 'productWeight')}
                                     min="0"
                                 />
-                            </label>
                             <label className="form-label">
                                 품목 단위
+                            </label>
                                 <input
                                     value={this.state.productUnit}
                                     type="number"
@@ -212,7 +235,6 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
                                     onChange={(e) => this.handleInputChange(e, 'productUnit')}
                                     min="0"
                                 />
-                            </label>
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <button className="form-cancel-button" style={{ border: '1px solid lightgray' }} onClick={this.props.handleCloseModal}>
                                     취소

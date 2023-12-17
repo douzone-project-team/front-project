@@ -3,7 +3,7 @@ import { ProductsContext } from "../../../store/Product/products-context";
 import { Product } from "../../../object/Product/product-object";
 import './Modal.css';
 import { Box } from "@material-ui/core";
-import BusinessIcon from "@material-ui/icons/Business";
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import Swal from "sweetalert2";
 
 interface ModalProductProps {
@@ -101,7 +101,7 @@ class ModalProduct extends Component<ModalProductProps, ModalProductState> {
             <div className='modal'>
                 <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', width:'450px', height: '600px'}}>
                     <div className="modalHeader" style={{height: '55px'}}>
-                        <div style={{display: 'flex'}}><BusinessIcon/>&nbsp;품목 수정</div>
+                        <div style={{display: 'flex'}}><DashboardIcon   />&nbsp;품목 수정</div>
                         <button className="close" onClick={this.props.handleCloseModal}>
                             &times;
                         </button>
@@ -117,29 +117,28 @@ class ModalProduct extends Component<ModalProductProps, ModalProductState> {
                         >
                             <label className="form-label" style={{width:'100%'}}>
                                 품목 코드
+                            </label>
                                 <div style={{display:'flex', width:'100%'}}>
                                     <input
                                         value={updatedProduct.productCode || ''}
                                         type="text"
                                         className="form-input"
-                                        style={{width: '100%', marginBottom: '4px',
-                                        backgroundColor:'#D5D5D5'}}
+                                        style={{width: '100%', marginBottom: '4px'}}
                                         disabled
                                     />
                                 </div>
-                            </label>
-
                             <label className="form-label">
                                 품목 이름
+                            </label>
                                 <input
                                     type="text"
                                     name="productName"
                                     value={updatedProduct.productName}
                                     onChange={this.handleInputChange}
                                     className="form-input"/>
-                            </label>
                             <label className="form-label">
                                 품목 가격
+                            </label>
                                 <input
                                     type="text"
                                     name="price"
@@ -147,9 +146,9 @@ class ModalProduct extends Component<ModalProductProps, ModalProductState> {
                                     onChange={this.handleInputChange}
                                     className="form-input"
                                 />
-                            </label>
                             <label className="form-label">
                                 품목 규격
+                            </label>
                                 <input
                                     type="text"
                                     name="standard"
@@ -157,9 +156,9 @@ class ModalProduct extends Component<ModalProductProps, ModalProductState> {
                                     onChange={this.handleInputChange}
                                     className="form-input"
                                 />
-                            </label>
                             <label className="form-label">
                                 품목 무게
+                            </label>
                                 <input
                                     type="text"
                                     name="weight"
@@ -167,9 +166,9 @@ class ModalProduct extends Component<ModalProductProps, ModalProductState> {
                                     onChange={this.handleInputChange}
                                     className="form-input"
                                 />
-                            </label>
                             <label className="form-label">
                                 품목 단위
+                            </label>
                                 <input
                                     type="text"
                                     name="unit"
@@ -177,7 +176,6 @@ class ModalProduct extends Component<ModalProductProps, ModalProductState> {
                                     onChange={this.handleInputChange}
                                     className="form-input"
                                 />
-                            </label>
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <button className="form-cancel-button" style={{ border: '1px solid lightgray' }} onClick={this.props.handleCloseModal}>
                                     취소

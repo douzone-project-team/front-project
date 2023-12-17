@@ -118,7 +118,7 @@ class Main extends Component <ProfileImageProps>{
         state.getCurrentBox()
     };
     state = {
-        selectedPeriod: 'Y', // 기본값은 'D'로 설정
+        selectedPeriod: 'Y',
         employeeData: {} as Employee,
         usedata:{} as Employee,
     };
@@ -169,41 +169,12 @@ class Main extends Component <ProfileImageProps>{
                                 안녕하세요.{' '} <span style={{color: '#3A4CA8', marginLeft: '0.5em'}}>{state.employee.name} 사원님</span>😁 오늘도 즐거운 하루 되세요.
                         </span>
                     </div>
-                    <div style={{display: 'flex', height: '100%'}}>
+                    <div style={{display: 'flex', height: '100%',minWidth:'100%'}}>
                         <div style={userDiv}>
                             <div>
                                 <MainImage/>
-                                {/*{this.state.selectedImage ? (*/}
-                                {/*    <img*/}
-                                {/*        src={URL.createObjectURL(this.state.selectedImage)}*/}
-                                {/*        alt="새 이미지"*/}
-                                {/*        style={{*/}
-                                {/*            maxWidth: '200px',*/}
-                                {/*            maxHeight: '250px',*/}
-                                {/*            marginTop: '10px',*/}
-                                {/*            marginBottom: "10px",*/}
-                                {/*            borderRadius: '20%'*/}
-                                {/*        }}/>*/}
-                                {/*) : employeeData.employeeNo !== 0 ? (*/}
-                                {/*    <img src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}*/}
-                                {/*         style={{*/}
-                                {/*             maxWidth: '200px',*/}
-                                {/*             maxHeight: '250px',*/}
-                                {/*             marginTop: '10px',*/}
-                                {/*             marginBottom: "10px",*/}
-                                {/*             borderRadius: '20%'*/}
-                                {/*         }}/>*/}
-                                {/*) : (*/}
-                                {/*    <div> 이미지 없음 </div>*/}
-                                {/*)}*/}
-{/*                                <Avatar src='http://localhost:8080/employees/200001/image' style={{
-                                    width: '130px',
-                                    height: '130px',
-                                    border: '2px solid rgba(82,99,115,0.1)',
-                                    marginTop: '10px'
-                                }} alt="사원사진"/>*/}
                             </div>
-                            <div style={{margin: '1%', paddingRight: '20%', marginLeft: '2%',width:'50%'}}>
+                            <div style={{margin: '1%', paddingRight: '20%', marginLeft: '2%',width:'50%',minWidth:'50%'}}>
                         <span
                             style={{color: '#444444', fontSize: '1.8em', fontWeight: '900'}}>
                             <SupervisorAccount style={{color: '#444444'}}/>

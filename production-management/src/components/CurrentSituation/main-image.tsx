@@ -63,8 +63,8 @@ class MainImage extends Component<ProfileImageProps, ProfileImageState> {
                 ) : employeeData.employeeNo !== 0 ? (
                     <img src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}
                          style={{
-                             maxWidth: '200px',
-                             maxHeight: '250px',
+                             maxWidth: '150px',
+                             maxHeight: '150px',
                              marginTop: '10px',
                              marginBottom: "10px",
                              borderRadius: '20%'
