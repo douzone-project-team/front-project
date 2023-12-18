@@ -55,8 +55,20 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
 
     componentDidMount() {
         const state = this.context as ProductsState;
+        const list = state.productPage.list;
+
+        if (list && list.length > 0) {
+            const selectedProductNo = list[0].productNo;
+
+            if (selectedProductNo !== 1) {
+                this.setState({ selectedProductNo, selectedRowIndex: selectedProductNo });
+            }
+        }
+
         state.getProductList();
-    };
+    }
+
+
 
 
     handleRowClick = (index: number) => {

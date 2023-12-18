@@ -159,7 +159,9 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
                 return false;
             }
         },
-        cleanProduct() : void {},
+        cleanProduct:() =>{
+            this.setState({product:initialProduct, search:initialSearchState})
+        },
         getInitProduct: () => {
             productAction.getProductList(this.state.search)
                 .then((result) => {
