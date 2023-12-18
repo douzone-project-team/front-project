@@ -187,10 +187,11 @@ class ViewDeliveryTable extends Component<Props, State> {
 
     updateDeliveryStatusButtonClick = (deliveryNo: string) => {
         const state = this.context as DeliveriesState;
+        const delivery = state.delivery;
 
         Swal.fire({
             title: "출고를 완료하시겠습니까?",
-            text: "미완료의 출고가 상태가 완료로 업데이트 됩니다. ",
+            text: "출고의 상태가 미완료에서 완료로 업데이트 됩니다. ",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -203,14 +204,7 @@ class ViewDeliveryTable extends Component<Props, State> {
             if (result.dismiss === Swal.DismissReason.cancel) {
                 return;
             }
-            Swal.fire({
-                icon: "success",
-                text: "출고의 상태가 완료 처리 되었습니다.",
-                showConfirmButton: false,
-                timer: 1000
-            })
             state.updateDeliveryStatus(deliveryNo);
-            this.getDeliveryList();
         });
     }
 
@@ -314,7 +308,7 @@ class ViewDeliveryTable extends Component<Props, State> {
         const state = this.context as DeliveriesState;
         const deliveryNo = state.delivery.deliveryNo;
 
-        state.getDelivery(deliveryNo);
+         state.getDelivery(deliveryNo);
     }
 
     getDeliveryList = () => {

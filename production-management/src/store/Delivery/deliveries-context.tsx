@@ -181,8 +181,21 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         updateDeliveryStatus: (deliveryNo: string) => {
             deliveryAction.updateDeliveryStatus(deliveryNo)
                 .then((result) => {
-                    this.getDeliveryList();
-                    this.getDelivery(deliveryNo);
+                    this.setState((prevState) => ({
+                        delivery: {
+                            ...prevState.delivery,
+                            deliveryStatus: 'COMPLETED',
+                        },
+                    }), () => {
+                        this.getDelivery(deliveryNo);
+                        this.getDeliveryList();
+                        Swal.fire({
+                            icon: "success",
+                            text: "출고의 상태가 완료 처리 되었습니다.",
+                            showConfirmButton: false,
+                            timer: 1000
+                        })
+                    });
                 }).catch((error) => {
                 this.printErrorAlert(error);
             })
