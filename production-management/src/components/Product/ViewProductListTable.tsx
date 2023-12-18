@@ -15,6 +15,8 @@ import { ProductsState } from "../../object/Product/product-object";
 import "./../../assets/css/Table.css";
 import { ListTitle } from "../../core/ListTitle";
 import { PageButton } from "../../core/button/PageButton";
+import {NullText} from "../../core/NullText";
+import {Loading} from "../../core/Loading";
 
 const boldCellStyle = {
     fontWeight: 'bold',
@@ -64,6 +66,8 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
     render() {
         const state = this.context as ProductsState;
         const list = state.productPage.list;
+        const currentPage = state.productPage.currentPage;
+
 
         const handleNextPage = () => {
             if (state.productPage.hasNextPage) {
@@ -93,7 +97,7 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list.map((row: ProductList) => (
+                            {list && list.length > 0 ? list.map((row, index) => (
                                 <TableRow
                                     key={row.productNo}
                                     className={`cellHoverEffect ${this.state.selectedRowIndex === row.productNo ? 'selectedRow' : ''}`}
@@ -107,8 +111,12 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
                                     <TableCell align="right" style={{ ...tableCellStyle, paddingRight: '7.2%' }}>{row.price.toLocaleString()}</TableCell>
                                     <TableCell align="center" style={tableCellStyle}>{row.unit.toLocaleString() + 'EA'}</TableCell>
                                 </TableRow>
-                            ))}
-
+                            )):
+                                <TableRow>
+                                    <TableCell colSpan={7} style={{border: '0'}}>
+                                        {currentPage != -1 ? <NullText/> : <Loading/>}
+                                    </TableCell>
+                                </TableRow>}
                         </TableBody>
                     </Table>
                     <PageButton options={{

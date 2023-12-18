@@ -1,6 +1,18 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import {Box, Tab, Tabs, AppBar, TextField, Button, MenuItem, Select, InputLabel, FormControl} from "@material-ui/core";
+import {
+    Box,
+    Tab,
+    Tabs,
+    AppBar,
+    TextField,
+    Button,
+    MenuItem,
+    Select,
+    InputLabel,
+    FormControl,
+    Avatar
+} from "@material-ui/core";
 import {AuthContext} from "../store/Auth/auth-context";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -118,7 +130,7 @@ class Message extends React.Component<MessageProps> {
                                     <Accordion key={index} style={{marginTop: 0, marginBottom: '2px', width: '400px'}}>
                                         <AccordionSummary>
                                             <Box display="flex" width="100%">
-                                                <img src={('http://localhost:8080/employees/'+message.sendId+'/image')} style={{width: '23px', height:'23px' ,borderRadius: '8px'}}/>
+                                                <Avatar src={('http://localhost:8080/employees/'+message.sendId+'/image')} style={{width: '23px', height:'23px' ,borderRadius: '8px'}}/>
                                                 &nbsp;&nbsp;<Typography style={{fontSize: '15px', width: '55%', fontWeight:'bold', fontFamily: 'S-CoreDream-3Light'}}>
                                                     {message.sendId}({message.sendName})님의 쪽지
                                                     <Typography style={{

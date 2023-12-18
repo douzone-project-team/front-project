@@ -234,7 +234,7 @@ class Main extends Component <ProfileImageProps>{
                                                 fontSize: '2.1em',
                                                 marginLeft: '1em',
                                                 fontWeight: '900'
-                                            }}>{state.currentBox.instruction.thisMonthCount}</span>
+                                            }}>{state.currentBox.instruction?.thisMonthCount}</span>
                                                 <span>건</span>
                                             </div>
                                         </div>
@@ -248,7 +248,7 @@ class Main extends Component <ProfileImageProps>{
                                                 fontSize: '2.1em',
                                                 marginLeft: '1em',
                                                 fontWeight: '900'
-                                            }}>{state.currentBox.instruction.allCount}</span>
+                                            }}>{state.currentBox.instruction?.allCount}</span>
                                                 <span>건</span>
                                             </div>
                                         </div>
@@ -279,7 +279,7 @@ class Main extends Component <ProfileImageProps>{
                                                 fontSize: '2.1em',
                                                 marginLeft: '1em',
                                                 fontWeight: '900'
-                                            }}>{state.currentBox.delivery.thisMonthCount}</span>
+                                            }}>{state.currentBox.delivery?.thisMonthCount}</span>
                                                 <span>건</span>
                                             </div>
                                         </div>
@@ -294,7 +294,7 @@ class Main extends Component <ProfileImageProps>{
                                                     fontSize: '2.1em',
                                                     marginLeft: '1em',
                                                     fontWeight: '900'
-                                                }}>{state.currentBox.delivery.allCount}</span>
+                                                }}>{state.currentBox.delivery?.allCount}</span>
                                                 <span>건</span>
                                             </div>
                                         </div>
