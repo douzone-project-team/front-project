@@ -20,6 +20,7 @@ import {EditButton} from "../../core/button/EditButton";
 import {DeleteButton} from "../../core/button/DeleteButton";
 import Swal from "sweetalert2";
 import {CustomersState} from "../../object/Customer/customer-object";
+import {EmptyText} from "../../core/EmptyText";
 
 const boldCellStyle = {
   fontWeight: 'bold',
@@ -93,7 +94,9 @@ class ViewProductTable extends Component<{}, DetailState> {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "삭제",
-      cancelButtonText: "취소"
+      cancelButtonText: "취소",
+      reverseButtons: true,
+      focusCancel: true
     }).then((result) => {
       if (result.isConfirmed) {
         const state = this.context as ProductsState;
@@ -125,7 +128,7 @@ class ViewProductTable extends Component<{}, DetailState> {
         <>
           <div style={{
             display: 'flex',
-            height: '20px',
+            height: '30px',
             marginTop: '20px'
           }}>
             <div style={{width: '95%'}}>
@@ -155,7 +158,7 @@ class ViewProductTable extends Component<{}, DetailState> {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {product && product.productNo !== 0 && product.unit !== 0 && (
+                {product && product.productNo !== 0 && product.unit !== 0?
                     <TableRow>
                       <TableCell align="center" style={tableCellStyle}>{product.productNo}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{product.productCode}</TableCell>
@@ -165,8 +168,12 @@ class ViewProductTable extends Component<{}, DetailState> {
                       <TableCell align="center" style={tableCellStyle}>{product.standard}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{product.weight + 'g'}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{product.unit.toLocaleString() + 'EA'}</TableCell>
-                    </TableRow>
-                )}
+                    </TableRow> :
+                    <TableRow>
+                      <TableCell colSpan={6} style={{border: '0'}}>
+                        <EmptyText mt={'0px'}/>
+                      </TableCell>
+                    </TableRow>}
               </TableBody>
             </Table>
           </TableContainer>

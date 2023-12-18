@@ -60,7 +60,9 @@ class ViewCustomerTable extends Component<Props, State> {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "삭제",
-      cancelButtonText: "취소"
+      cancelButtonText: "취소",
+      reverseButtons: true,
+      focusCancel: true
     }).then((result) => {
       if (result.isConfirmed) {
           const state = this.context as CustomersState;
