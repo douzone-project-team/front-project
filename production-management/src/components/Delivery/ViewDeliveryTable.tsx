@@ -106,6 +106,8 @@ class ViewDeliveryTable extends Component<Props, State> {
     };
 
     updateProductButtonClickEvent = (instructionNo: string, productNo: number, amount: number) => {
+        const state = this.context as DeliveriesState;
+
         if (!/^\d+$/.test(this.state.changeValue as unknown as string)) {
             Swal.fire({
                 icon: "warning",
@@ -119,7 +121,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                 timer: 1000
             });
             const {changeAmountStatus} = this.props;
-            this.getRemainAmount(instructionNo, productNo);
+            state.getRemainAmount(instructionNo, productNo);
             this.updateProductAmount(instructionNo, this.state.changeValue, productNo, amount);
             changeAmountStatus();
         }
@@ -208,20 +210,21 @@ class ViewDeliveryTable extends Component<Props, State> {
         });
     }
 
-    getRemainAmount = async (instructionNo: string, productNo: number) => {
+    getRemainAmount = (instructionNo: string, productNo: number) => {
         const state = this.context as DeliveriesState;
-        await state.getRemainAmount(instructionNo, productNo);
+        state.getRemainAmount(instructionNo, productNo);
     }
 
     // 한 가지 지시의 품목 amount 수정
     updateProductAmount = (instructionNo: string, amount: number, productNo: number, prevAmount: number) => {
         const state = this.context as DeliveriesState;
         const delivery = state.delivery;
+        const remainAmount = state.remainAmount.remainAmount;
 
-        if (amount > state.remainAmount.remainAmount + prevAmount) {
+        if (amount > remainAmount + prevAmount) {
             Swal.fire({
                 icon: "warning",
-                text: `수량이 잔량보다 많습니다. \n현재 잔량 :  ${state.remainAmount.remainAmount + prevAmount}`
+                text: `수량이 잔량보다 많습니다. \n현재 잔량 :  ${remainAmount + prevAmount}`
             });
             return;
         }
@@ -447,7 +450,11 @@ class ViewDeliveryTable extends Component<Props, State> {
                                                         {delivery.deliveryStatus == 'INCOMPLETE' ?
                                                             <EditButton
                                                                 color="black"
-                                                                onClick={() => this.editProductCountButtonClickEvent(row)}/>
+                                                                onClick={() => {
+                                                                    this.editProductCountButtonClickEvent(row)
+                                                                    this.getRemainAmount(row.instructionNo, row.productNo);
+                                                                }}
+                                                            />
                                                             : null
                                                         }
                                                     </div>
@@ -467,7 +474,11 @@ class ViewDeliveryTable extends Component<Props, State> {
                                                     </div>
                                                     <div style={{width: '1%'}}>
                                                         <EditButton
-                                                            onClick={() => this.updateProductButtonClickEvent(row.instructionNo, row.productNo, row.amount)}/>
+                                                            onClick={() => {
+                                                                this.updateProductButtonClickEvent(row.instructionNo, row.productNo, row.amount);
+                                                            }}
+                                                        />
+
                                                     </div>
                                                 </div>
                                             }
