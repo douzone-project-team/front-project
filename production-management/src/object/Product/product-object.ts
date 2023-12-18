@@ -1,3 +1,5 @@
+import {CheckCustomerCode, DuplicateCustomerCodeResult} from "../Customer/customer-object";
+
 export type Search = {
   productCode: string,
   productName: string,
@@ -28,7 +30,9 @@ export type InsertProduct = {
   weight: number,
   unit: number
 }
-
+export type DuplicateProductCodeResult ={
+  duplicateResult : boolean
+}
 export type Product = {
   productNo: number,
   productCode: string,
@@ -39,11 +43,19 @@ export type Product = {
   unit: number
 }
 
+export type CheckProductCode = {
+  productCode : string
+}
 /* state type */
 export type ProductsState = {
   search: Search,
   productPage: ProductPage,
   product: Product,
+  setCheckProductCode :(productCode:string)=>void
+  checkProductCode: CheckProductCode
+  duplicateProductrCodeResult: DuplicateProductCodeResult
+  duplicateCheck(productCode:string, handleResult: (result: boolean) => void):void
+  duplicateCheckProductCode(productCode: string):void
   setProductCodeAndName(productCode: string, productName: string): void
   setPage(page: number): void
   getProductList(): void

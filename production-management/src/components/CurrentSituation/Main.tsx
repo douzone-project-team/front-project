@@ -224,11 +224,11 @@ class Main extends Component <ProfileImageProps>{
                                                 fontWeight: '900',
                                             }}>지시 건수</span>
                                         </div>
-                                        <span style={{marginTop: '2%', color: 'gray'}}>금일, 누적 지시 건수를 나타냅니다.</span>
+                                        <span style={{marginTop: '2%', color: 'gray'}}>금월, 누적 지시 건수를 나타냅니다.</span>
                                     </div>
                                     <div style={{display: 'flex',flexDirection: 'column'}}>
                                         <div style={{...BoxStyle, backgroundColor: "#C8DDED"}}>
-                                            <span style={MainStyle}>금일 총 지시</span>
+                                            <span style={MainStyle}>금월 총 지시</span>
                                             <div style={SubStyle}>
                                             <span style={{
                                                 fontSize: '2.1em',
@@ -268,12 +268,12 @@ class Main extends Component <ProfileImageProps>{
                                                 marginLeft: '1%'
                                             }}>출고 건수</span>
                                         </div>
-                                        <span style={{marginTop: '2%', color: 'gray'}}>금일, 누적 출고 건수를 나타냅니다.</span>
+                                        <span style={{marginTop: '2%', color: 'gray'}}>금월, 누적 출고 건수를 나타냅니다.</span>
                                     </div>
                                     <div style={{display: 'flex',flexDirection: 'column'}}>
                                         <div style={{...BoxStyle, backgroundColor: "#C8DDED"
                                         }}>
-                                            <span style={MainStyle}> 금일 총 출고</span>
+                                            <span style={MainStyle}> 금월 총 출고</span>
                                             <div style={SubStyle}>
                                             <span style={{
                                                 fontSize: '2.1em',
@@ -437,23 +437,32 @@ class Main extends Component <ProfileImageProps>{
                                 width: '49%',
                                 height: '100%'
                             }}>
-    {/*                                <span style={{fontSize: '1.2em', fontWeight: '800', height: '10.5%'}}>지시사항</span>*/}
                                 <div
                                     style={{
                                         width: '100%', backgroundColor:
                                             '#FFFFFF', boxShadow: boxShadowStyle,
                                         height: '100%'
                                     }}>
-                                    {/*<GraphBox data={this.state.instructionData} labelText="지시"*/}
-                                    {/*          colors={instructionColors}/>*/}
-                                    <GraphBox data={state.circleGraph.instructionData.map(cg =>({
-                                        name: cg.progress,
-                                        value: cg.count,
-                                    }))}
-
+                                    <GraphBox
+                                        data={state.circleGraph.instructionData.map(cg => ({
+                                            name: (() => {
+                                                switch (cg.progress) {
+                                                    case 'STANDBY':
+                                                        return '준비';
+                                                    case 'PROGRESS':
+                                                        return '진행';
+                                                    case 'COMPLETED':
+                                                        return '완료';
+                                                    default:
+                                                        return '알 수 없음';
+                                                }
+                                            })(),
+                                            value: cg.count,
+                                        }))}
                                         labelText="지시"
                                         colors={instructionColors}
                                     />
+
                                 </div>
                             </div>
                             <div style={{
@@ -462,19 +471,20 @@ class Main extends Component <ProfileImageProps>{
                                 width: '49%',
                                 marginLeft: '2%'
                             }}>
-{/*                                <span style={{fontSize: '1.2em', fontWeight: '800', height: '10.5%'}}>출고사항</span>*/}
                                 <div
                                     style={{
                                         width: '100%', backgroundColor:
                                             '#FFFFFF', boxShadow: boxShadowStyle,
                                         height: '100%'
                                     }}>
-                                    <GraphBox data={state.circleGraph.deliveryData.map(cg =>({
-                                            name: cg.progress,
+                                    <GraphBox
+                                        data={state.circleGraph.deliveryData.map(cg => ({
+                                            name: cg.progress === 'STANDBY' ? '미완료' : '완료',
                                             value: cg.count,
                                         }))}
-                                              labelText="출고"
-                                              colors={deliveryColors}/>
+                                        labelText="출고"
+                                        colors={deliveryColors}
+                                    />
                                 </div>
                             </div>
                         </div>

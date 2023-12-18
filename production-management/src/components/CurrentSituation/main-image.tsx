@@ -2,7 +2,7 @@ import React, {ChangeEvent, Component} from "react";
 import {EmployeeContext} from "../../store/Employee/employee-context";
 import {initialUpdateEmployee} from "../../state/employeeStateMangement";
 import {EmployeeState} from "../../object/Employee/employee-object";
-import {Box} from "@material-ui/core";
+import {Avatar, Box} from "@material-ui/core";
 
 type ProfileImageProps = {
 }
@@ -54,20 +54,26 @@ class MainImage extends Component<ProfileImageProps, ProfileImageState> {
                         src={URL.createObjectURL(this.state.selectedImage)}
                         alt="새 이미지"
                         style={{
-                            maxWidth: '200px',
+                            marginLeft:'10px',
+                            width:'160%',
+                            maxWidth: '250px',
+                            height:'150%',
                             maxHeight: '250px',
                             marginTop: '10px',
                             marginBottom: "10px",
-                            borderRadius: '20%'
+                            borderRadius: '100%'
                         }}/>
                 ) : employeeData.employeeNo !== 0 ? (
-                    <img src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}
+                    <Avatar src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}
                          style={{
-                             maxWidth: '150px',
-                             maxHeight: '150px',
+                             marginLeft:'10px',
+                             width:'160%',
+                             maxWidth: '250px',
+                             height:'150%',
+                             maxHeight: '250px',
                              marginTop: '10px',
                              marginBottom: "10px",
-                             borderRadius: '20%'
+                             borderRadius: '100%'
                          }}/>
                 ) : (
                     <div> 이미지 없음 </div>

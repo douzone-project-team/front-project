@@ -2,11 +2,13 @@ import React, {Component} from "react";
 import ProductAction from "./products-action"
 import {ProductsState} from "../../object/Product/product-object";
 import {
+    initialCheckProductCode, initialDuplicateProductCodeResult,
     initialProduct,
     initialProductPageState,
     initialSearchState
 } from "../../state/productStateManagement";
 import Swal from "sweetalert2";
+import {initialCheckCustomerCode} from "../../state/customerStateManagement";
 
 const productAction = new ProductAction();
 
@@ -19,6 +21,11 @@ export const ProductsContext = React.createContext<ProductsState>({
     search: initialSearchState,
     productPage: initialProductPageState,
     product: initialProduct,
+    checkProductCode : initialCheckProductCode,
+    duplicateProductrCodeResult:initialDuplicateProductCodeResult,
+    duplicateCheck(productCode:string, handleResult: (result: boolean) => void): void{},
+    setCheckProductCode(): void{},
+    duplicateCheckProductCode(productCode:string): void{},
     setProductCodeAndName(): void {},
     setPage(page: number): void {},
     getProductList(): void {},
@@ -42,6 +49,32 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
         search: initialSearchState,
         productPage: initialProductPageState,
         product: initialProduct,
+        checkProductCode : initialCheckProductCode,
+        duplicateCheckProductCode(productCode: string) {
+        },
+        duplicateProductrCodeResult:initialDuplicateProductCodeResult,
+        setCheckProductCode: (productCode:string) =>{
+/*            this.setState((prevState) =>({
+                    checkProductCode: {
+                        ...prevState.checkProductCode,
+                        productCode: productCode
+                    }
+                }), () => {
+                this.duplicateCheck()
+                }
+            );*/
+        },
+        duplicateCheck: (productCode:string, callback: (result: boolean) => void) => {
+            productAction.duplicateCheckProductCode(productCode)
+                .then((result) => {
+                    let data = result?.data;
+                    this.setState({duplicateProductrCodeResult: {duplicateResult: Boolean(data)}},
+                        () => callback(data));
+                }).catch(error => {
+                this.printErrorAlert(error);
+            });
+        },
+
         setProductCodeAndName: (productCode: string, productName: string) => {
             this.setState((prevState) => ({
                     search: {
@@ -72,7 +105,6 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
             productAction.getProduct(productNo)
                 .then(result => {
                     let data = result?.data;
-                    console.log(data);
                     this.setState({product: data});
                 });
         },
@@ -104,7 +136,6 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
                         unit,
                     };
 
-                    alert("업데이트되었습니다");
                 })
                 .catch((error) => {
                     console.error("Error updating product:", error);
@@ -116,11 +147,10 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
                 // Assuming productAction.deleteProduct returns a Promise<boolean>
                 const result = await productAction.deleteProduct(productNo);
                 if (result) {
-                    alert("삭제 완료");
+
                     return true;
                 } else {
                     // Handle case where deletion was not successful
-                    alert("삭제 실패");
                     return false;
                 }
             } catch (error) {
@@ -144,6 +174,31 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
                 });
         }
     };
+    duplicateCheck = (productCode:string) => {
+        productAction.duplicateCheckProductCode(productCode)
+            .then((result) => {
+                let data = result?.data;
+                console.log(data);
+                this.setState({duplicateProductrCodeResult: data},
+                    () => {
+                        if(data.duplicateResult){
+                            Swal.fire({
+                                icon: "success",
+                                text: "사용 가능한 품목 코드입니다."
+                            });
+
+                        }else{
+                            Swal.fire({
+                                icon: "error",
+                                text: "사용이 불가능한 품목 코드입니다."
+                            });
+                        }
+                    });
+            }).catch(error => {
+            this.printErrorAlert(error);
+        });
+    }
+
 
     getProduct = (productNo: number) => {
         productAction.getProduct(productNo)

@@ -294,8 +294,9 @@ class TodoList extends Component<{}, TodoListState> {
                                             )}
                                         </form>
                                     </div>
-                                    {this.state.TodoItem.map((item, index) => {
+                                    {this.state.todo.map((item, index) => {
                                         if (!item || item.todoNo === undefined) {
+                                            // 처리할 로직이 있으면 추가
                                         }
 
                                         return (

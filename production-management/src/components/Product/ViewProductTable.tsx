@@ -18,6 +18,8 @@ import ModalProduct from "../Modal/Product/UpdateProduct";
 import {DetailTitle} from "../../core/DetailTitle";
 import {EditButton} from "../../core/button/EditButton";
 import {DeleteButton} from "../../core/button/DeleteButton";
+import Swal from "sweetalert2";
+import {CustomersState} from "../../object/Customer/customer-object";
 
 const boldCellStyle = {
   fontWeight: 'bold',
@@ -78,27 +80,34 @@ class ViewProductTable extends Component<{}, DetailState> {
         history: product,
       });
     } else {
-      alert("품목을 선택해주세요");
+      Swal.fire({
+        title: "품목을 선택해주세요",
+      })
     }
-  };
-  handlerDelete = async (productNo: number) => {
-    const state = this.context as ProductsState;
-    if (productNo !== 0) {
-      try {
-        const isDeleted = await state.deleteProduct(productNo);
-        if (isDeleted) {
+  };handlerDelete = async (productNo: number) => {
+    Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      text: "삭제 후 복구할 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const state = this.context as ProductsState;
+        state.deleteProduct(productNo);
+        Swal.fire({
+          icon: "success",
+          text: "삭제되었습니다."
+        }).then(() => {
           window.location.reload();
-        } else {
-          alert("삭제 실패");
-        }
-      } catch (error) {
-        console.error("Error deleting product:", error);
-        alert("삭제 중 오류가 발생했습니다");
+        });
       }
-    } else {
-      alert("품목을 선택해주세요");
-    }
-  };
+    });
+  }
+
 
 
   handleCloseModal = () => {
@@ -155,7 +164,7 @@ class ViewProductTable extends Component<{}, DetailState> {
                                  style={tableCellStyle}>{product.price.toLocaleString() + '원'}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{product.standard}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{product.weight + 'g'}</TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{product.unit}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{product.unit.toLocaleString() + 'EA'}</TableCell>
                     </TableRow>
                 )}
               </TableBody>

@@ -37,20 +37,30 @@ export type ProductList = {
 interface ViewTableState {  // 추가
     isModalOpen: boolean;
     selectedProductNo: number | null;
+    selectedRowIndex: number,
 }
 
 class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
     static contextType = ProductsContext;
 
+
     state: ViewTableState = {  // 수정
         isModalOpen: false,
         selectedProductNo: null,
+        selectedRowIndex: 1,
     };
+
 
     componentDidMount() {
         const state = this.context as ProductsState;
         state.getProductList();
     };
+
+
+    handleRowClick = (index: number) => {
+        this.setState({ selectedRowIndex: index });
+    };
+
     render() {
         const state = this.context as ProductsState;
         const list = state.productPage.list;
@@ -66,6 +76,7 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
                 state.setPage(state.search.page - 1);
             }
         };
+
 
         return (
             <Box >
@@ -85,14 +96,16 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
                             {list.map((row: ProductList) => (
                                 <TableRow
                                     key={row.productNo}
-                                    className='cellHoverEffect'
-                                    onClick={() => state.getProduct(row.productNo)}
-                                >
+                                    className={`cellHoverEffect ${this.state.selectedRowIndex === row.productNo ? 'selectedRow' : ''}`}
+                                    onClick={() => {
+                                        this.handleRowClick(row.productNo);
+                                        state.getProduct(row.productNo);
+                                    }}>
                                     <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
                                     <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
                                     <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>
                                     <TableCell align="right" style={{ ...tableCellStyle, paddingRight: '7.2%' }}>{row.price.toLocaleString()}</TableCell>
-                                    <TableCell align="center" style={tableCellStyle}>{row.unit}</TableCell>
+                                    <TableCell align="center" style={tableCellStyle}>{row.unit.toLocaleString() + 'EA'}</TableCell>
                                 </TableRow>
                             ))}
 
