@@ -33,7 +33,7 @@ export const DeliveriesContext = React.createContext<DeliveriesState>({
     addDeliveryObj: initialAddDeliveryObj,
     cleanDelivery(): void {
     },
-    setSearch(employeeName: string, startDate: string, endDate: string): void {
+    setSearch(employeeName: string, startDate: string, endDate: string, deliveryNo: string): void {
     },
     setSearchProgressStatus(progressStatus: string): void {
     },
@@ -81,13 +81,14 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         },
 
         /* Delivery 조회 메서드  */
-        setSearch: (employeeName: string, startDate: string, endDate: string) => {
+        setSearch: (employeeName: string, startDate: string, endDate: string, deliveryNo: string) => {
             this.setState((prevState) => ({
                 search: {
                     ...prevState.search,
                     employeeName: employeeName,
                     startDate: startDate,
                     endDate: endDate,
+                    deliveryNo: deliveryNo
                 },
             }), () => {
                 this.getDeliveryList();

@@ -1,4 +1,5 @@
 export const initialDeliverySearchState = {
+    deliveryNo: '',
     progressStatus: '',
     employeeName: '',
     startDate: '',

@@ -9,6 +9,7 @@ import { TextInput } from '../../core/input/TextInput';
 import { DateInput } from "../../core/input/DateInput";
 
 let searchValue = {
+  deliveryNo: '',
   progressStatus: '',
   employeeName: '',
   startDate: '',
@@ -45,7 +46,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
   handleSearchClick = () => {
     const state = this.context as DeliveriesState;
     state.search.page = 1;
-    state.setSearch(searchValue.employeeName, searchValue.startDate, searchValue.endDate);
+    state.setSearch(searchValue.employeeName, searchValue.startDate, searchValue.endDate, searchValue.deliveryNo);
   }
 
   handleSearchProgressState = (progressStatus: string) => {
@@ -92,6 +93,9 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
         <>
           <BarBox>
             <BarLeftBox width='90%' minWidth='1010px'>
+              <TextInput title='출고번호' onBlur={(e) => {
+                searchValue.deliveryNo = e.target.value
+              }} label={{ml: '30px'}} input={{width:'120px'}}/>
               <TextInput title='등록자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value
               }} label={{ml: '30px'}} input={{width:'120px'}}/>

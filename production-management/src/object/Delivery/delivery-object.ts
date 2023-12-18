@@ -8,6 +8,7 @@ import {
  * 조회
  */
 export type DeliverySearch = {
+    deliveryNo: string,
     progressStatus: string,
     employeeName: string,
     startDate: string,
@@ -94,7 +95,7 @@ export type DeliveriesState = {
     addDeliveryObj: AddDeliveryObj,
     newDelivery: NewDelivery,
     cleanDelivery(): void,
-    setSearch(employeeName: string, startDate: string, endDate: string): void,
+    setSearch(employeeName: string, startDate: string, endDate: string, deliveryNo: string): void,
     setSearchProgressStatus(progressStatus: string): void,
     setPage(page: number): void,
     getDeliveryList(): void,
