@@ -91,36 +91,41 @@ class ViewInstructionListTable extends Component<Props, State> {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {list && list.length > 0 ? list.map((row) => (
-                        <TableRow key={row.instructionNo.replace(/\D/g, '')}
-                                  className={`cellHoverEffect ${this.state.selectedRowIndex === row.instructionNo.replace(/\D/g, '') as unknown as number ? 'selectedRow' : ''}`}
-                                  onClick={() => {
-                                    this.handleRowClick(row.instructionNo.replace(/\D/g, '') as unknown as number);
-                                    state.getInstruction(row.instructionNo);
-                                    changeAmountStatusFalse();
-                                    clearCheckBoxs();
-                                    if (tableSize) {
-                                      tableSizeUp();
-                                    }
-                                  }}>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.instructionNo}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.employeeName}</TableCell>
-                          <TableCell align="center" style={tableCellStyle}>{row.customerNo}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.customerName}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.instructionDate}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.expirationDate}</TableCell>
-                          <TableCell align="center" style={{width: '50px'}}>
-                            <div className={row.progressStatus}>
-                              {myMap.get(row.progressStatus.toUpperCase())}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                    )) :
+                {list && list.length > 0 ? list.map((row) => {
+                      if (this.state.selectedRowIndex == 0) {
+                        this.setState({selectedRowIndex: list[0].instructionNo.replace(/\D/g, '') as unknown as number});
+                      }
+                      return (
+                          <TableRow key={row.instructionNo.replace(/\D/g, '')}
+                                    className={`cellHoverEffect ${this.state.selectedRowIndex === row.instructionNo.replace(/\D/g, '') as unknown as number ? 'selectedRow' : ''}`}
+                                    onClick={() => {
+                                      this.handleRowClick(row.instructionNo.replace(/\D/g, '') as unknown as number);
+                                      state.getInstruction(row.instructionNo);
+                                      changeAmountStatusFalse();
+                                      clearCheckBoxs();
+                                      if (tableSize) {
+                                        tableSizeUp();
+                                      }
+                                    }}>
+                            <TableCell align="center"
+                                       style={tableCellStyle}>{row.instructionNo}</TableCell>
+                            <TableCell align="center"
+                                       style={tableCellStyle}>{row.employeeName}</TableCell>
+                            <TableCell align="center"
+                                       style={tableCellStyle}>{row.customerNo}</TableCell>
+                            <TableCell align="center"
+                                       style={tableCellStyle}>{row.customerName}</TableCell>
+                            <TableCell align="center"
+                                       style={tableCellStyle}>{row.instructionDate}</TableCell>
+                            <TableCell align="center"
+                                       style={tableCellStyle}>{row.expirationDate}</TableCell>
+                            <TableCell align="center" style={{width: '50px'}}>
+                              <div className={row.progressStatus}>
+                                {myMap.get(row.progressStatus.toUpperCase())}
+                              </div>
+                            </TableCell>
+                          </TableRow>)
+                    }) :
                     <TableRow>
                       <TableCell colSpan={7} style={{border: '0'}}>
                         {currentPage != -1 ? <NullText/> : <Loading/>}
