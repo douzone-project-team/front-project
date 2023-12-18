@@ -22,6 +22,7 @@ interface FetchData {
 class Fetcher {
   private getHeaders() {
     return {
+      baseURL: 'http://localhost:8080/',
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
       }
