@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import EmployeeAction from "./employee-action";
-import {EmployeeState, Message, UpdateEmployee} from "../../object/Employee/employee-object";
+import {Employee, EmployeeState, Message, UpdateEmployee} from "../../object/Employee/employee-object";
 import Swal from "sweetalert2";
 import {
     initialSearch,
@@ -104,8 +104,13 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     };
 
                     this.setState({employee: data}, async () => {
-                        await this.state.getMe();
-                        window.location.href = '/main-page';
+                            await this.state.getMe();
+                            const { role } = JSON.parse(localStorage.getItem('employee') as any) as Employee;
+                            if(role === 'ROLE_ADMIN'){
+                                window.location.href = '/employee/list';
+                            } else {
+                                window.location.href = '/main-page';
+                            }
                     })
                 }).catch((error) => {
                 this.printErrorAlert(error);
@@ -116,6 +121,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             employeeAction.logout();
             localStorage.removeItem('employee');
             localStorage.removeItem('accessToken');
+            localStorage.removeItem('notifications');
             Swal.fire({
                 icon: "success",
                 text: "로그아웃 되었습니다.",
