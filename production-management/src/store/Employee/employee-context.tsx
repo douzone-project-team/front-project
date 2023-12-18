@@ -119,10 +119,11 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             Swal.fire({
                 icon: "success",
                 text: "로그아웃 되었습니다.",
-                timer: 4000,
+                timer: 1500,
                 showConfirmButton: false
+            }).then(() => {
+                window.location.href="/login";
             });
-            window.location.href="/login";
         },
 
         cleanEmployee: () => {

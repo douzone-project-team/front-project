@@ -115,7 +115,7 @@ class AccountMenu extends Component<{}, AccountMenuState> {
                 >
                     <MenuItem onClick={this.handleClose}>
                         <RouterLink to="/my-page" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
-                            <Avatar style={{ width: 20, height: 20, marginRight: 36}}/>
+                            <Avatar style={{ width: 20, height: 20, marginRight: 36}} src={(`http://localhost:8080/employees/${employeeData.employeeNo}/image`)}/>
                             프로필
                         </RouterLink>
                     </MenuItem>
