@@ -87,33 +87,37 @@ class ViewDeliveryListTable extends Component<Props, State> {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {list && list.length > 0 ? list.map((row) => (
-                        <TableRow key={row.deliveryNo.replace(/\D/g, '')}
-                                  className={`cellHoverEffect ${this.state.selectedRowIndex === row.deliveryNo.replace(/\D/g, '') as unknown as number ? 'selectedRow' : ''}`}
-                                  onClick={() => {
-                                    this.handleRowClick(row.deliveryNo.replace(/\D/g, '') as unknown as number);
-                                    state.getDelivery(row.deliveryNo);
-                                    changeAmountStatusFalse();
-                                    clearCheckBoxes();
-                                    if (tableSize) {
-                                      tableSizeUp();
-                                    }
-                                  }}>
-                          <TableCell align="center" style={{...tableCellStyle, fontWeight: 'bold'}}>
-                            {row.deliveryNo}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.employeeName}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.deliveryDate}</TableCell>
-                          <TableCell align="center"
-                                     style={tableCellStyle}>{row.instructionCount}</TableCell>
-                          <TableCell align="center" style={{...tableCellStyle, width: '50px'}}>
-                            <div className={row.deliveryStatus}>
-                              {myMap.get(row.deliveryStatus.toUpperCase())}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                    )) :
+                {list && list.length > 0 ? list.map((row) => {
+                      if (this.state.selectedRowIndex == 0) {
+                        this.setState({selectedRowIndex: list[0].deliveryNo.replace(/\D/g, '') as unknown as number});
+                      }
+                      return (
+                          <TableRow key={row.deliveryNo.replace(/\D/g, '')}
+                                    className={`cellHoverEffect ${this.state.selectedRowIndex === row.deliveryNo.replace(/\D/g, '') as unknown as number ? 'selectedRow' : ''}`}
+                                    onClick={() => {
+                                      this.handleRowClick(row.deliveryNo.replace(/\D/g, '') as unknown as number);
+                                      state.getDelivery(row.deliveryNo);
+                                      changeAmountStatusFalse();
+                                      clearCheckBoxes();
+                                      if (tableSize) {
+                                        tableSizeUp();
+                                      }
+                                    }}>
+                            <TableCell align="center" style={{...tableCellStyle, fontWeight: 'bold'}}>
+                              {row.deliveryNo}</TableCell>
+                            <TableCell align="center"
+                                       style={tableCellStyle}>{row.employeeName}</TableCell>
+                            <TableCell align="center"
+                                       style={tableCellStyle}>{row.deliveryDate}</TableCell>
+                            <TableCell align="center"
+                                       style={tableCellStyle}>{row.instructionCount}</TableCell>
+                            <TableCell align="center" style={{...tableCellStyle, width: '50px'}}>
+                              <div className={row.deliveryStatus}>
+                                {myMap.get(row.deliveryStatus.toUpperCase())}
+                              </div>
+                            </TableCell>
+                          </TableRow>)
+                    }) :
                     <TableRow>
                       <TableCell colSpan={7} style={{border: '0'}}>
                         {currentPage != -1 ? <NullText/> : <Loading/>}

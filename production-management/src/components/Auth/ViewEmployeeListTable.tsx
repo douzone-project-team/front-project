@@ -46,6 +46,10 @@ class ViewEmployeeListTable extends Component {
         const list = state.employeePage?.list;
         const currentPage = state.employeePage.currentPage;
 
+        if (list && list.length > 0 && this.state.selectedRowIndex === 1) {
+            this.setState({ selectedRowIndex: list[0].employeeNo });
+        }
+
         const handleNextPage = () => {
             if (state.employeePage.hasNextPage) {
                 state.setPage(state.search.page + 1);
