@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {
-    Box,
     Table,
     TableBody,
     TableCell,
@@ -10,10 +9,13 @@ import {
 } from "@material-ui/core";
 import {InstructionsContext} from "../../store/Instruction/Instructions-context";
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
-import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 
 import "./../../assets/css/Table.css";
 import {AddInstruction} from "../../object/DeliveryInstruction/delivery-instruction-object";
+import { ListTitle } from "../../core/ListTitle";
+import { PageButton } from "../../core/button/PageButton";
+import {NullText} from "../../core/NullText";
+import {Loading} from "../../core/Loading";
 
 type Props = {
     setInstruction: (addInstruction: AddInstruction) => void
@@ -21,20 +23,23 @@ type Props = {
 }
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light'
 };
 
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-};
+const tableCellStyle = {
+    fontFamily: 'S-CoreDream-3Light'
+}
+
 
 class ViewDeliveryInstructionListTable extends Component<Props> {
     static contextType = InstructionsContext;
 
     render() {
         const state = this.context as InstructionsState;
-        const list = state.instructionPage.list;
+        const list = state.instructionPage.list || [];
+        const currentPage = state.instructionPage.currentPage;
 
         const handleNextPage = () => {
             if (state.instructionPage.hasNextPage) {
@@ -52,10 +57,9 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
 
         return (
             <>
-                <span className='table-header'>지시 목록</span>
+                <ListTitle options={{title: '지시 목록', count: list.length}}/>
                 <TableContainer className='table-container' style={{
-                    height: this.props.tableSize ? '330px' : '90px',
-                    transition: 'height 0.3s ease-in-out'
+                    height: '340px'
                 }}>
                     <Table size='small' className='table'>
                         <TableHead>
@@ -68,7 +72,7 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list.map((row) => (
+                            {list && list.length > 0 ? list.map((row) => (
                                 <TableRow className='cellHoverEffect'
                                           onClick={() => setInstruction({
                                               instructionNo: row.instructionNo,
@@ -77,34 +81,29 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                                               customerName: row.customerName,
                                           })}
                                     key={row.instructionNo}>
-                                    <TableCell align="center" style={cellStyle} className='cellHoverEffect'
+                                    <TableCell align="center" className='cellHoverEffect' style={{fontWeight: 'bold'}}
                                                onClick={() => state.getInstruction(row.instructionNo)}>{row.instructionNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.instructionDate}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{row.expirationDate}</TableCell>
+                                    <TableCell align="center">{row.employeeName}</TableCell>
+                                    <TableCell align="center">{row.customerName}</TableCell>
+                                    <TableCell align="center">{row.instructionDate}</TableCell>
+                                    <TableCell align="center">{row.expirationDate}</TableCell>
                                 </TableRow>
-                            ))}
+                            )) :
+                            <TableRow>
+                                <TableCell colSpan={7} style={{border: '0'}}>
+                                    {currentPage != -1 ? <NullText/> : <Loading/>}
+                                </TableCell>
+                            </TableRow>}
                         </TableBody>
                     </Table>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <KeyboardArrowLeft
-                            onClick={handlePrevPage}
-                        >
-                            이전 페이지
-                        </KeyboardArrowLeft>
-                        <KeyboardArrowRight
-                            onClick={handleNextPage}
-                        >
-                            다음 페이지
-                        </KeyboardArrowRight>
-                    </Box>
+                    {currentPage != -1 && list.length > 0 ?
+                    <PageButton options={{
+                        currentPage: state.instructionPage.currentPage,
+                        handleNextPage: handleNextPage,
+                        handlePrevPage: handlePrevPage,
+                        hasNextPage: state.instructionPage.hasNextPage,
+                        hasPreviousPage: state.instructionPage.hasPreviousPage
+                    }}/> : null}
                 </TableContainer>
             </>
         );

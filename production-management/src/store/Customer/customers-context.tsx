@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Swal from 'sweetalert2'
 import CustomerAction from "./customers-action";
 import {CustomersState, InsertCustomer, UpdateCustomer} from "../../object/Customer/customer-object";
 import {
@@ -40,6 +41,10 @@ export const CustomersContext = React.createContext<CustomersState>({
     setPage(): void {
     },
     deleteCustomer() : void{
+    },
+    cleanCustomer(): void{
+    },
+    getInitCustomer ():  void{
     }
 });
 
@@ -120,18 +125,37 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
                 .then(result => {
                     let data = result?.data;
                     this.setState({customer: data});
-                })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            });
         },
         deleteCustomer: (customerNo: number) => {
             customerAction.deleteCustomer(customerNo)
                 .then(result => {
-                    alert("삭제하였습니다.");
+                    Swal.fire({
+                        icon: "success",
+                        title: "거래처 삭제",
+                        text: "거래처 삭제를 완료하였습니다!"
+                    });
                     this.getCustomerList();
                     this.setState({customer: initialCustomer});
                 })
-                .catch(reason => {
-                    alert(reason);
-                })
+                .catch(error => {
+                    this.printErrorAlert(error);
+                });
+        },
+        cleanCustomer: () => {
+            this.setState({customer: initialCustomer, search: initialSearchState});
+        },
+        getInitCustomer: () => {
+            customerAction.getCustomerList(this.state.search)
+                .then((result) => {
+                    this.setState({customerPage: result?.data}, () => {
+                        this.state.getCustomer(this.state.customerPage.list[0].customerNo);
+                    })
+                }).catch(error => {
+                this.printErrorAlert(error);
+            });
         }
     }
 
@@ -139,30 +163,56 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
         customerAction.duplicateCustomerCodeCheck(this.state.checkCustomerCode)
             .then((result) => {
                 let data = result?.data;
-                this.setState({duplicateCustomerCodeResult: data});
-            })
+                this.setState({duplicateCustomerCodeResult: data},
+                    () => {
+                    if(data.duplicateResult){
+                        // alert("사용 가능한 거래처 코드입니다.")
+                        Swal.fire({
+                            icon: "success",
+                            text: "사용 가능한 거래처 코드입니다."
+                        });
+
+                    }else{
+                        // alert("사용 불가능한 거래처 코드입니다.")
+                        Swal.fire({
+                            icon: "error",
+                            text: "사용이 불가능한 거래처 코드입니다."
+                        });
+                    }
+                    });
+            }).catch(error => {
+            this.printErrorAlert(error);
+        });
     }
 
     insertCustomer = () => {
         customerAction.regiCustomers(this.state.insertCustomer)
             .then(result => {
-                alert("등록을 성공하였습니다.")
+                Swal.fire({
+                    icon: "success",
+                    title: "거래처 등록",
+                    text: "거래처 등록을 완료하였습니다!"
+                });
                 this.getCustomerList();
             })
-            .catch(reason => {
-                alert(reason);
+            .catch(error => {
+                this.printErrorAlert(error);
             });
     }
 
     updateCustomer = (customerNo: number) => {
         customerAction.updateCustomer(customerNo, this.state.updateCustomer)
             .then(() => {
-                alert("수정을 성공하였습니다.");
+                Swal.fire({
+                    icon: "success",
+                    title: "거래처 수정",
+                    text: "거래처 수정을 완료하였습니다!"
+                });
                 this.state.getCustomer(customerNo);
                 this.getCustomerList();
             })
             .catch(error => {
-                // alert(reason);
+                this.printErrorAlert(error);
             });
     }
 
@@ -171,8 +221,17 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
             .then((result) => {
                 let data = result?.data;
                 this.setState({customerPage: data});
-            })
+            }).catch(error => {
+            this.printErrorAlert(error);
+        });
     };
+
+    printErrorAlert = (message : string) => {
+        Swal.fire({
+            icon: "warning",
+            text: message
+        });
+    }
 
     render() {
         return (

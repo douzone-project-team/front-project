@@ -4,6 +4,7 @@
   border: 1px solid #D3D3D3;
   border-top: 2px solid #0C70F2;
   margin-bottom: 3px;
+  border-radius: 5px;
 }
 
 .table-container.table-header {
@@ -29,3 +30,79 @@
   background-color: rgba(224, 224, 224, 0.8);
   cursor: pointer;
 }
+
+.STANDBY {
+  margin: 3px;
+  width: 100px;
+  border-radius: 10px;
+  /*background-color: #EE9616;*/
+  /*color: white;*/
+  border: 2px solid #EE9616;
+  color: #EE9616;
+  font-weight: bold;
+  text-align: center;
+}
+
+.PROGRESS {
+  margin: 3px;
+  width: 100px;
+  border-radius: 10px;
+  /*background-color: #329632;*/
+  /*color: white;*/
+  border: 2px solid #329632;
+  color: #329632;
+  font-weight: bold;
+  text-align: center;
+}
+
+.COMPLETED {
+  margin: 3px;
+  width: 100px;
+  border-radius: 10px;
+  /*background-color: #3C50C2;*/
+  /*color: white;*/
+  border: 2px solid #3C50C2;
+  color: #3C50C2;
+  font-weight: bold;
+  text-align: center;
+}
+
+.INCOMPLETE {
+  margin: 3px;
+  width: 100px;
+  border-radius: 10px;
+  /*background-color: #329632;*/
+  /*color: white;*/
+  border: 2px solid #329632;
+  color: #329632;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ROLE_ADMIN {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80px;
+  border-radius: 10px;
+  border: 2px solid #5fbfe0;
+  color: #5fbfe0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ROLE_MEMBER {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80px;
+  border-radius: 10px;
+  border: 2px solid #95a4a8;
+  color: #95a4a8;
+  font-weight: bold;
+  text-align: center;
+}
+
+.selectedRow {
+  background-color: rgba(224, 224, 224, 0.8);
+  cursor: pointer;
+}
+

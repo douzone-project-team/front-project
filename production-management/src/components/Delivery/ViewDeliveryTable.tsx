@@ -2,28 +2,36 @@ import React, {Component} from "react";
 
 import "../../assets/css/Table.css";
 import {DeliveriesContext} from "../../store/Delivery/deliveries-context";
-import {DeliveriesState, UpdateDelivery} from "../../object/Delivery/delivery-object";
+import {DeliveriesState, Instructions} from "../../object/Delivery/delivery-object";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import {
     AddDeliveryInstruction,
     AddInstruction,
-    AddProduct, DeleteDeliveryInstruction,
+    AddProduct,
+    DeleteDeliveryInstruction,
     UpdateDeliveryInstruction
 } from "../../object/DeliveryInstruction/delivery-instruction-object";
 import InstructionModal from "../Modal/Delivery/InstructionModal";
 import DeliveryProductModal from "../Modal/Delivery/DeliveryProductModal";
-import {InstructionsState} from "../../object/Instruction/Instruction-object";
+import {DetailTitle} from "../../core/DetailTitle";
+import {DeleteButton} from "../../core/button/DeleteButton";
+import {CheckButton} from "../../core/button/CheckButton";
+import Swal from "sweetalert2";
+import {AddItemButton} from "../../core/button/AddItemButton";
+import {EditButton} from "../../core/button/EditButton";
+import { NullText } from "../../core/NullText";
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
     fontWeight: 'bold',
-    width: '10%',
+    backgroundColor: '#f1f3f5',
+    fontFamily: 'S-CoreDream-3Light',
+    minWidth: '100px'
 };
 
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-    width: '10%',
-};
+const tableCellStyle = {
+    fontFamily: 'S-CoreDream-3Light',
+    minWidth: '100px'
+}
 
 type Props = {
     tableSize: boolean,
@@ -32,7 +40,13 @@ type Props = {
     changeInstructionModalStatus: () => void,
     changeDeliveryProductModalStatus: () => void,
     changeAmount: boolean,
+    changeTarget: number,
+    changeTargetNumber: (target: number) => void,
     changeAmountStatus: () => void,
+    tableSizeUp: () => void,
+    existSelectedCheckBox: (productNo: number) => boolean,
+    addSelectedCheckBox: (productNo: number) => void,
+    clearCheckBoxes: () => void,
 }
 
 type State = {
@@ -43,9 +57,10 @@ type State = {
         addDeliveryProduct: AddProduct
     }[]
     selectedInstructionNo: string,
+    changeValue: number,
 }
 
-class ViewDeliveryTable extends Component<Props, State>{
+class ViewDeliveryTable extends Component<Props, State> {
     static contextType = DeliveriesContext;
 
     constructor(props: Props) {
@@ -54,33 +69,168 @@ class ViewDeliveryTable extends Component<Props, State>{
             newInstruction: [],
             newProduct: [],
             selectedInstructionNo: '',
+            changeValue: 0,
         }
     }
 
-    updateDelivery = (newDeliveryDate: string)=> {
+    componentDidMount() {
+        const state = this.context as DeliveriesState;
+        state.getDeliveryList();
+        const list = state.deliveryPage?.list;
+        if (list.length > 0) {
+            const firstDelivery = list && list.length > 0 ? list[0] : null;
+            if (firstDelivery) {
+                state.getDelivery(firstDelivery?.deliveryNo);
+            }
+        }
+    }
+
+    handleCheckboxAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const {existSelectedCheckBox, addSelectedCheckBox} = this.props;
+        const state = this.context as DeliveriesState;
+        const delivery = state.delivery;
+
+        if (event.target.checked) {
+            delivery.instructions.forEach((instruction: Instructions) => {
+                if (!existSelectedCheckBox(instruction.productNo)) {
+                    addSelectedCheckBox(instruction.productNo);
+                }
+            });
+        } else {
+            delivery.instructions.forEach((instruction: Instructions) => {
+                if (existSelectedCheckBox(instruction.productNo)) {
+                    addSelectedCheckBox(instruction.productNo);
+                }
+            });
+        }
+    };
+
+    updateProductButtonClickEvent = (instructionNo: string, productNo: number, amount: number) => {
+        if (!/^\d+$/.test(this.state.changeValue as unknown as string)) {
+            Swal.fire({
+                icon: "warning",
+                text: "숫자만 입력해주세요."
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                text: "수량을 수정하였습니다.",
+                showConfirmButton: false,
+                timer: 1000
+            });
+            const {changeAmountStatus} = this.props;
+            this.getRemainAmount(instructionNo, productNo);
+            this.updateProductAmount(instructionNo, this.state.changeValue, productNo, amount);
+            changeAmountStatus();
+        }
+    }
+
+    deleteDeliveryButtonClickEvent = () => {
+        const {delivery, deleteDelivery} = this.context as DeliveriesState;
+        const {tableSize, tableSizeUp, clearCheckBoxes} = this.props;
+
+        Swal.fire({
+            title: "정말 삭제하시겠습니까?",
+            text: "삭제 후 복구할 수 없습니다.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "삭제",
+            cancelButtonText: "취소"
+        }).then((result) => {
+            if(result.dismiss === Swal.DismissReason.cancel) {
+                return;
+            }
+            Swal.fire({
+                icon: 'success',
+                text: '출고가 삭제 되었습니다.',
+                showConfirmButton: false,
+                timer: 1000
+            })
+
+            clearCheckBoxes();
+            deleteDelivery(delivery.deliveryNo);
+            if (!tableSize) {
+                tableSizeUp();
+            }
+        })
+    }
+
+    editProductCountButtonClickEvent = (row: Instructions) => {
+        const {changeAmountStatus, changeAmount, changeTargetNumber} = this.props;
+        if (changeAmount) {
+            this.setState({changeValue: row.amount});
+            changeTargetNumber(row.productNo);
+        } else {
+            this.setState({changeValue: row.amount});
+            changeTargetNumber(row.productNo);
+            changeAmountStatus();
+        }
+    }
+
+    updateDelivery = (newDeliveryDate: string) => {
         const state = this.context as DeliveriesState;
         const delivery = state.delivery;
         const deliveryNo = state.delivery.deliveryNo;
 
         state.updateDelivery({deliveryNo, deliveryDate: newDeliveryDate});
+        Swal.fire({
+            icon: "success",
+            text: "출고일이 변경되었습니다.",
+            showConfirmButton: false,
+            timer: 1000
+        });
+        this.getDelivery();
+        this.getDeliveryList();
     };
 
-    // 한 가지 지시의 품목 amount 수정
-    updateProductAmount = (instructionNo: string, amount: number, productNo: number) => {
+    updateDeliveryStatusButtonClick = (deliveryNo: string) => {
         const state = this.context as DeliveriesState;
         const delivery = state.delivery;
 
-        /* instruciton의 remainAmount 구하기
-        * const remainAmount =  state.getRemainAmount(instructionNo, productNo);
-        *
-        * if(remainAmount < amount){
-        *   alert('수량이 잔량보다 많습니다. <br/> 현재 잔량 : ' + remainingAmount);
-        *   return;
-        * */
+        Swal.fire({
+            title: "출고를 완료하시겠습니까?",
+            text: "출고의 상태가 미완료에서 완료로 업데이트 됩니다. ",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "완료",
+            cancelButtonText: "취소",
+            reverseButtons: true,
+            focusCancel: true
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.cancel) {
+                return;
+            }
+            state.updateDeliveryStatus(deliveryNo);
+        });
+    }
 
+    getRemainAmount = async (instructionNo: string, productNo: number) => {
+        const state = this.context as DeliveriesState;
+        await state.getRemainAmount(instructionNo, productNo);
+    }
 
-        if(amount <= 0) {
-            alert('수량을 올바르게 입력해주세요.');
+    // 한 가지 지시의 품목 amount 수정
+    updateProductAmount = (instructionNo: string, amount: number, productNo: number, prevAmount: number) => {
+        const state = this.context as DeliveriesState;
+        const delivery = state.delivery;
+
+        if (amount > state.remainAmount.remainAmount + prevAmount) {
+            Swal.fire({
+                icon: "warning",
+                text: `수량이 잔량보다 많습니다. \n현재 잔량 :  ${state.remainAmount.remainAmount + prevAmount}`
+            });
+            return;
+        }
+
+        if (amount <= 0) {
+            Swal.fire({
+                icon: "warning",
+                text: '수량을 올바르게 입력해주세요.'
+            });
             return;
         }
 
@@ -92,6 +242,12 @@ class ViewDeliveryTable extends Component<Props, State>{
         } as UpdateDeliveryInstruction;
 
         state.updateDeliveryInstruction(updateDeliveryInstruction);
+        Swal.fire({
+            icon: "success",
+            text: "수량이 변경되었습니다.",
+            showConfirmButton: false,
+            timer: 1000
+        })
     };
 
     addInstruction = (instructionNo: string, instructionDate: string, expirationDate: string, customerName: string) => {
@@ -105,34 +261,34 @@ class ViewDeliveryTable extends Component<Props, State>{
         };
 
         this.setState({
-            newInstruction: [{ addDeliveryInstruction: addInstruction }],
+            newInstruction: [{addDeliveryInstruction: addInstruction}],
             selectedInstructionNo: instructionNo,
         })
     }
 
     addProduct =
         (instructionNo: string, productNo: number, productCode: string, amount: number, remainAmount: number) => {
-        const {newProduct} = this.state;
+            const {newProduct} = this.state;
 
-        const addProduct = {
-            addDeliveryProduct: {
-                instructionNo: instructionNo,
-                productNo: productNo,
-                productCode: productCode,
-                amount: amount,
-                remainAmount: remainAmount,
-            }
-        };
+            const addProduct = {
+                addDeliveryProduct: {
+                    instructionNo: instructionNo,
+                    productNo: productNo,
+                    productCode: productCode,
+                    amount: amount,
+                    remainAmount: remainAmount,
+                }
+            };
 
-        this.setState({
-            newProduct: [addProduct],
-        });
+            this.setState({
+                newProduct: [addProduct],
+            });
 
-        this.addDeliveryInstruction(addProduct.addDeliveryProduct.instructionNo,
-            addProduct.addDeliveryProduct.productNo,
-            addProduct.addDeliveryProduct.amount);
+            this.addDeliveryInstruction(addProduct.addDeliveryProduct.instructionNo,
+                addProduct.addDeliveryProduct.productNo,
+                addProduct.addDeliveryProduct.amount);
 
-    }
+        }
 
     addDeliveryInstruction = (instructionNo: string, productNo: number, amount: number) => {
         const state = this.context as DeliveriesState;
@@ -152,13 +308,18 @@ class ViewDeliveryTable extends Component<Props, State>{
         const state = this.context as DeliveriesState;
         const deliveryNo = state.delivery.deliveryNo;
 
-        state.getDelivery(deliveryNo);
+         state.getDelivery(deliveryNo);
+    }
+
+    getDeliveryList = () => {
+        const state = this.context as DeliveriesState;
+        state.getDeliveryList();
     }
 
     deleteDeliveryInstruction = (instructionNo: string, productNo: number) => {
         const state = this.context as DeliveriesState;
 
-        const deleteDeliveryInstruction: DeleteDeliveryInstruction ={
+        const deleteDeliveryInstruction: DeleteDeliveryInstruction = {
             deliveryNo: state.delivery.deliveryNo,
             instructionNo: instructionNo,
             productNo: productNo,
@@ -167,203 +328,235 @@ class ViewDeliveryTable extends Component<Props, State>{
         state.deleteDeliveryInstruction(deleteDeliveryInstruction);
     }
 
+
     render() {
-        const {delivery, deleteDelivery} = this.context as DeliveriesState;
+        const {delivery, updateDeliveryStatus, deleteDelivery} = this.context as DeliveriesState;
 
         const list = delivery.instructions;
         const {
+            tableSize,
             changeInstructionModalStatus,
             changeDeliveryProductModalStatus,
             instructionModalOpen,
             deliveryProductModalOpen,
+            changeTarget,
             changeAmount,
-            changeAmountStatus
+            changeTargetNumber,
+            tableSizeUp,
+            addSelectedCheckBox,
+            existSelectedCheckBox
         } = this.props;
 
         return (
             <>
                 <div style={{
-                    width: '100%',
-                    height: '30px',
-                    marginBottom: '10px',
-                    marginLeft: '2px',
                     display: 'flex',
+                    height: '30px',
                 }}>
-                    <div style={{width: '17%'}}>
-                      <span className='table-header'>출고 상세 :&nbsp;
-                        <span style={{color: '#0C70F2'}}>{delivery.deliveryNo}</span>
-                      </span>
+                    <div style={{width: '30%'}}>
+                        <DetailTitle options={{
+                            status: delivery.deliveryStatus,
+                            targetName: delivery.deliveryNo as string,
+                            title: '출고 상세'
+                        }}/>
                     </div>
-                    <div style={{width: '78%'}}>
+                    <div style={{width: '64%', height: '16px', display: 'flex', alignItems: 'center'}}>
                         {delivery.deliveryStatus === 'INCOMPLETE' ? (
-                        <span className='table-header'>출고일 :&nbsp;
-                            <input type="date"
-                                   style={{height: '20px', color: '#0C70F2'}}
-                                   defaultValue={delivery.deliveryDate}
-                                   onChange={(e) => {
-                                        this.updateDelivery(e.target.value);}}
-                            />
+                            <span className='table-header'
+                                  style={{fontWeight: 'bold', fontSize: '16px'}}>출고일 :&nbsp;
+                                <input type="date"
+                                       style={{height: '30px', color: '#0C70F2'}}
+                                       defaultValue={delivery.deliveryDate}
+                                       value={delivery.deliveryDate}
+                                       onChange={(e) => {
+                                           this.updateDelivery(e.target.value);
+                                       }}
+                                />
                         </span>
                         ) : (
-                            <span className='table-header'>출고일 : &nbsp;
+                            <span className='table-header' style={{fontWeight: 'bold', fontSize: '16px'}}>출고일 : &nbsp;
                                 <span style={{color: '#0C70F2'}}>{delivery.deliveryDate}</span>
                             </span>
-                            )}
+                        )}
                     </div>
-                    <div style={{width: '5%', textAlign: 'right'}}>
+                    <div style={{width: '8%', height: '16px', alignItems: 'center', textAlign: 'right'}}>
                         {delivery.deliveryStatus == 'INCOMPLETE' &&
-                            <img src={require('../../images/button/delete-button.png')}
-                                 style={{width: '20px', marginRight: '10px', marginTop: '6px'}}
-                                 className='cellHoverEffect'
-                                 onClick={() => deleteDelivery(delivery.deliveryNo)}/>}
+                            <div>
+                                <CheckButton size={20} onClick={() =>
+                                    this.updateDeliveryStatusButtonClick(delivery.deliveryNo)} />
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <DeleteButton size={22} onClick={() => this.deleteDeliveryButtonClickEvent()} />
+                            </div>}
                     </div>
                 </div>
-                        <TableContainer className='table-container' style={{
-                            height: this.props.tableSize? '220px' : '460px',
-                            transition: 'height 0.3s ease-in-out',
-                        }}>
-                            <Table size='small' className='table'>
-                                <TableHead>
+                <TableContainer className='table-container' style={{
+                    height: this.props.tableSize ? '17.8%' : '65%',
+                    transition: 'height 0.3s ease-in-out',
+                }}>
+                    <Table size='small' className='table'>
+                        <TableHead>
+                            <TableRow>
+                                {delivery.deliveryStatus == 'INCOMPLETE' &&
+                                    <TableCell align="center" style={boldCellStyle}>
+                                        <input
+                                            type="checkbox"
+                                            onChange={this.handleCheckboxAllChange}
+                                        />
+                                    </TableCell>
+                                }
+                                <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>만료일</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>수량</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {list && list.length > 0 ? list.map((row) => (
                                     <TableRow>
-                                        <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
-                                        <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
-                                        <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
-                                        <TableCell align="center" style={boldCellStyle}>만료일</TableCell>
-                                        <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
-                                        <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
-                                        <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
-                                        <TableCell align="center" style={boldCellStyle}>수량</TableCell>
-                                        <TableCell align="center" style={boldCellStyle}>삭제</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {list && list.length > 0 && list.map((row) => (
-                                        <TableRow>
-                                            <TableCell align="center" style={cellStyle}>{row.instructionNo}</TableCell>
-                                            <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
-                                            <TableCell align="center"
-                                                       style={cellStyle}>{row.instructionDate}</TableCell>
-                                            <TableCell align="center" style={cellStyle}>{row.expirationDate}</TableCell>
-                                            <TableCell align="center" style={cellStyle}>{row.productNo}</TableCell>
-                                            <TableCell align="center" style={cellStyle}>{row.productCode}</TableCell>
-                                            <TableCell align="center" style={cellStyle}>{row.productName}</TableCell>
-                                            <TableCell align="center" style={cellStyle}>
-                                                {!changeAmount ?
-                                                    <div style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'row',
-                                                        justifyContent: 'space-between',
-                                                    }}>
-                                                        <div style={{width: '99%'}}>
-                                                            {row.amount}
-                                                        </div>
-                                                        <div style={{width: '1px'}}>
-                                                            {delivery.deliveryStatus == 'INCOMPLETE' ?
-                                                            <img src={require(`../../images/button/modify-button-black.png`)}
-                                                                 className='cellHoverEffect'
-                                                                 style={{width: '15px', verticalAlign: 'middle'}}
-                                                                 onClick={changeAmountStatus}/> : null}
-                                                        </div>
-                                                    </div> :
-                                                    <input type="number" defaultValue={row.amount}
-                                                           onBlur={(e) => {
-                                                            this.updateProductAmount(row.instructionNo, e.target.value as unknown as number, row.productNo);
-                                                            changeAmountStatus();
-                                                           }}/>
-                                                }
+                                        {delivery.deliveryStatus == 'INCOMPLETE' ?
+                                            <TableCell align="center" style={tableCellStyle}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={this.props.existSelectedCheckBox(row.productNo)}
+                                                    onChange={() => addSelectedCheckBox(row.productNo)}
+                                                />
                                             </TableCell>
-                                                <TableCell align="center" style={cellStyle}>
-                                                    {delivery.deliveryStatus == 'INCOMPLETE' ?
-                                                    <img src={require(`../../images/button/delete-button.png`)}
-                                                         style={{width: '15px', verticalAlign: 'middle'}}
-                                                         onClick={() =>
-                                                             this.deleteDeliveryInstruction(row.instructionNo, row.productNo)}
-                                                    /> : null }
-                                                </TableCell>
+                                            : null }
+                                        <TableCell align="center" style={tableCellStyle}>{row.instructionNo}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.instructionDate}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.expirationDate}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.productNo}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>
+                                            {row.productNo !== changeTarget || !changeAmount ?
+                                                <div style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'space-between',
+                                                }}>
+                                                    <div style={{width: '99%'}}>
+                                                        {row.amount}
+                                                    </div>
+                                                    <div style={{width: '1px'}}>
+                                                        {delivery.deliveryStatus == 'INCOMPLETE' ?
+                                                            <EditButton
+                                                                color="black"
+                                                                onClick={() => this.editProductCountButtonClickEvent(row)}/>
+                                                            : null
+                                                        }
+                                                    </div>
+                                                </div> :
+                                                <div style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'space-between',
+                                                }}>
+                                                    <div style={{width: '99%'}}>
+                                                        <input type="number" defaultValue={row.amount}
+                                                               onChange={(e) => {
+                                                                   this.setState({changeValue: e.target.value as unknown as number});
+                                                               }}
+                                                               style={{width: '68px'}}
+                                                        />
+                                                    </div>
+                                                    <div style={{width: '1%'}}>
+                                                        <EditButton
+                                                            onClick={() => this.updateProductButtonClickEvent(row.instructionNo, row.productNo, row.amount)}/>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </TableCell>
+                                    </TableRow>
+                                )) :
+                                <TableRow>
+                                    <TableCell colSpan={9} style={{borderTop: '0', borderRight: '0', borderLeft: '0'}}>
+                                        <NullText mt='0' />
+                                    </TableCell>
+                                </TableRow>
+                            }
+                            {delivery.deliveryStatus == 'INCOMPLETE' ?
+                                (this.state.selectedInstructionNo ? (
+                                    this.state.newInstruction.map((item, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell align="center" style={tableCellStyle}>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <div style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'space-between',
+                                                    ...tableCellStyle
+                                                }}>
+                                                    <div style={{width: '99%'}}>
+                                                        {item.addDeliveryInstruction.instructionNo}
+                                                    </div>
+                                                    <div style={{width: '1%'}}>
+                                                        <EditButton size={18} onClick={changeInstructionModalStatus}/>
+                                                    </div>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell align="center" style={tableCellStyle}>
+                                                {item.addDeliveryInstruction.customerName}
+                                            </TableCell>
+                                            <TableCell align="center" style={tableCellStyle}>
+                                                {item.addDeliveryInstruction.instructionDate}
+                                            </TableCell>
+                                            <TableCell align="center" style={tableCellStyle}>
+                                                {item.addDeliveryInstruction.expirationDate}
+                                            </TableCell>
+                                            <TableCell align="center" style={tableCellStyle}>
+                                                <AddItemButton mt='3px' size={18}
+                                                               onClick={changeDeliveryProductModalStatus}/>
+                                            </TableCell>
+                                            <TableCell align="center" style={tableCellStyle}></TableCell>
+                                            <TableCell align="center" style={tableCellStyle}></TableCell>
+                                            <TableCell align="center" style={tableCellStyle}></TableCell>
                                         </TableRow>
-                                    ))}
-                                    {delivery.deliveryStatus == 'INCOMPLETE' ?
-                                        (this.state.selectedInstructionNo ? (
-                                            this.state.newInstruction.map((item, index) => (
-                                                <TableRow key={index}>
-                                                    <TableCell align="center" style={cellStyle}>
-                                                        <div style={{
-                                                            display: 'flex',
-                                                            flexDirection: 'row',
-                                                            justifyContent: 'space-between',
-                                                        }}>
-                                                            <div style={{width: '99%'}}>
-                                                                {item.addDeliveryInstruction.instructionNo}
-                                                            </div>
-                                                            <div style={{width: '1%'}}>
-                                                                <img src={require(`../../images/button/modify-button-black.png`)}
-                                                                     className='cellHoverEffect'
-                                                                     style={{width: '15px', verticalAlign: 'middle'}}
-                                                                     onClick={changeInstructionModalStatus}/>
-                                                            </div>
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell align="center" style={cellStyle}>
-                                                        {item.addDeliveryInstruction.customerName}
-                                                    </TableCell>
-                                                    <TableCell align="center" style={cellStyle}>
-                                                        {item.addDeliveryInstruction.instructionDate}
-                                                    </TableCell>
-                                                    <TableCell align="center" style={cellStyle}>
-                                                        {item.addDeliveryInstruction.expirationDate}
-                                                    </TableCell>
-                                                    <TableCell align="center" style={cellStyle}>
-                                                        <img src={require(`../../images/button/add-item-button-black.png`)}
-                                                             className='cellHoverEffect'
-                                                             style={{width: '15px', verticalAlign:'middle'}}
-                                                             onClick={changeDeliveryProductModalStatus}/>
-                                                    </TableCell>
-                                                    <TableCell align="center" style={cellStyle}></TableCell>
-                                                    <TableCell align="center" style={cellStyle}></TableCell>
-                                                    <TableCell align="center" style={cellStyle}></TableCell>
-                                                    <TableCell align="center" style={cellStyle}></TableCell>
-                                                </TableRow>
-                                            ))
-                                        ) : (
-                                            <TableRow>
-                                                <TableCell align="center" style={cellStyle}>
-                                                    <img src={require(`../../images/button/add-item-button-black.png`)}
-                                                         className='cellHoverEffect'
-                                                         style={{width: '15px', verticalAlign:'middle'}}
-                                                         onClick={changeInstructionModalStatus}/>
-                                                </TableCell>
-                                                <TableCell align="center" style={cellStyle}></TableCell>
-                                                <TableCell align="center" style={cellStyle}></TableCell>
-                                                <TableCell align="center" style={cellStyle}></TableCell>
-                                                <TableCell align="center" style={cellStyle}>
-                                                    <img src={require(`../../images/button/add-item-button-black.png`)}
-                                                         className='cellHoverEffect'
-                                                         style={{width: '15px', verticalAlign:'middle'}}
-                                                         onClick={changeDeliveryProductModalStatus}/>
-                                                </TableCell>
-                                                <TableCell align="center" style={cellStyle}></TableCell>
-                                                <TableCell align="center" style={cellStyle}></TableCell>
-                                                <TableCell align="center" style={cellStyle}></TableCell>
-                                                <TableCell align="center" style={cellStyle}></TableCell>
-                                            </TableRow>
-                                        )) : null }
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                        <div style={{textAlign: 'center'}}>
-                            <React.Fragment>
-                                {instructionModalOpen? (
-                                    <InstructionModal onClose={changeInstructionModalStatus}
-                                                      addDeliveryInstruction={this.addInstruction}/>
-                                ) : null}
-                                {deliveryProductModalOpen? (
-                                    <DeliveryProductModal onClose={changeDeliveryProductModalStatus}
-                                                          addDeliveryProduct={this.addProduct}
-                                                          instructionNo={this.state.selectedInstructionNo}/>
-                                ) : null}
-                            </React.Fragment>
-                        </div>
-                    </>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell align="center" style={tableCellStyle}>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <AddItemButton mt="3px" size={18} onClick={changeInstructionModalStatus}/>
+                                        </TableCell>
+                                        <TableCell align="center" style={tableCellStyle}></TableCell>
+                                        <TableCell align="center" style={tableCellStyle}></TableCell>
+                                        <TableCell align="center" style={tableCellStyle}></TableCell>
+                                        <TableCell align="center" style={tableCellStyle}>
+                                            {this.state.selectedInstructionNo ? (
+                                                <AddItemButton mt='3px' size={18}
+                                                               onClick={changeDeliveryProductModalStatus}/>
+                                            ) : null}
+                                        </TableCell>
+                                        <TableCell align="center" style={tableCellStyle}></TableCell>
+                                        <TableCell align="center" style={tableCellStyle}></TableCell>
+                                        <TableCell align="center" style={tableCellStyle}></TableCell>
+                                    </TableRow>
+                                )) : null}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <div style={{textAlign: 'center'}}>
+                    <React.Fragment>
+                        {instructionModalOpen ? (
+                            <InstructionModal onClose={changeInstructionModalStatus}
+                                              addDeliveryInstruction={this.addInstruction}/>
+                        ) : null}
+                        {deliveryProductModalOpen ? (
+                            <DeliveryProductModal onClose={changeDeliveryProductModalStatus}
+                                                  addDeliveryProduct={this.addProduct}
+                                                  instructionNo={this.state.selectedInstructionNo}/>
+                        ) : null}
+                    </React.Fragment>
+                </div>
+            </>
         );
     }
 }

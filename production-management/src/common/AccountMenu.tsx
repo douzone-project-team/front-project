@@ -12,6 +12,7 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 import { Link as RouterLink } from 'react-router-dom';
 import {EmployeeContext} from '../store/Employee/employee-context';
 import Typography from "@material-ui/core/Typography";
+import {EmployeeState} from "../object/Employee/employee-object";
 
 interface AccountMenuState {
     anchorEl: HTMLElement | null;
@@ -29,7 +30,8 @@ class AccountMenu extends Component<{}, AccountMenuState> {
     }
 
     handleLogout = () => {
-        this.context.logout();
+        const state = this.context as EmployeeState;
+        state.logout();
     };
 
     handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,10 +46,16 @@ class AccountMenu extends Component<{}, AccountMenuState> {
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
 
+        const storedEmployeeData = localStorage.getItem('employee');
+        const employeeData = storedEmployeeData ? JSON.parse(storedEmployeeData) : {};
+        const name = employeeData.name;
+        const role = employeeData.role === 'ROLE_ADMIN' ? '관리자' : '사원';
+        const employeeNo = employeeData.employeeNo;
+
         return (
             <React.Fragment>
                 <Box style={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-                    <Tooltip title="Account settings">
+                    <Tooltip title="">
                         <IconButton
                             onClick={this.handleClick}
                             size="small"
@@ -56,13 +64,15 @@ class AccountMenu extends Component<{}, AccountMenuState> {
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                         >
-                            <Avatar style={{ width: 32, height: 32, marginRight: 5}}></Avatar>
+                            <Avatar style={{ width: 32, height: 32, marginRight: 5}}
+                                    src={(`http://localhost:8080/employees/${employeeNo}/image`)}></Avatar>
                             <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: 5 }}>
-                                <Typography variant="caption" color="inherit" style={{ marginBottom: -4, fontWeight: 'bold' }}>
-                                    오수민
+                                <Typography variant="caption" color="inherit"
+                                            style={{ marginBottom: -4, fontWeight: 'bold', fontFamily: 'S-CoreDream-3Light' }}>
+                                    {name}
                                 </Typography>
-                                <Typography variant="caption" color="inherit">
-                                    DZ Company
+                                <Typography variant="caption" color="inherit" style={{fontFamily: 'S-CoreDream-3Light'}}>
+                                    {role} | {employeeNo}
                                 </Typography>
                             </Box>
                         </IconButton>
@@ -104,7 +114,7 @@ class AccountMenu extends Component<{}, AccountMenuState> {
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     <MenuItem onClick={this.handleClose}>
-                        <RouterLink to="/profile" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                        <RouterLink to="/my-page" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
                             <Avatar style={{ width: 20, height: 20, marginRight: 36}}/>
                             프로필
                         </RouterLink>

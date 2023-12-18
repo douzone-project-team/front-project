@@ -1,57 +1,17 @@
 import Fetcher from '../fetch-action';
-import {Employee, UpdateAuthEmployee} from "../../object/Auth/auth-object";
+import {Employee, Search, UpdateAuthEmployee} from "../../object/Auth/auth-object";
 
 const fetcher = new Fetcher();
 
 class AuthAction {
 
-    createTokenHeader(token: string){
-        return{
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        }
-    }
-
-    calculateRemainingTime(expirationTime: number){
-        const currentTime = new Date().getTime();
-        const ajdExpirationTime = new Date(expirationTime).getTime();
-        const remainingDuration = ajdExpirationTime - currentTime;
-
-        return remainingDuration;
-    }
-
-    loginToken(token: string){
-        localStorage.setItem('token', token);
-        return;
-    }
-
-    retrieveStoredToken(){
-        const storedToken = localStorage.getItem('token');
-        const storedExpirationDate = localStorage.getItem('expirationTime') || 0;
-
-        const remainingTime = this.calculateRemainingTime(+ storedExpirationDate);
-
-        // 임의로 토큰 유효시간 1000으로 제한
-        if(remainingTime <= 1000){
-            localStorage.removeItem('token');
-            localStorage.removeItem('expirationTime');
-            return null;
-        }
-
-        return{
-            token: storedToken,
-            duration: remainingTime
-        }
-    }
-
     private baseUrl: string = '/auth/employees';
+    private baseUrl2: string = '/employees';
 
     /* Employee 등록 */
-    public regiEmployee(object: Employee) {
+    public addEmployee(object: Employee) {
         const URL = `${this.baseUrl}/register`;
-        const regiEmpObject = {object};
-        return fetcher.POST(URL, regiEmpObject);
+        return fetcher.POST(URL, object);
     }
 
     /* Employee 삭제 */
@@ -61,28 +21,33 @@ class AuthAction {
     }
 
     /* Employee 수정 */
-    public updateEmployee(employeeNo: number, object: UpdateAuthEmployee) {
-        const URL = `${this.baseUrl}/${employeeNo}`;
-        const updateEmpObject = {object};
-        return fetcher.PUT(URL, updateEmpObject);
+    public updateEmployee(updateAuthEmployee: UpdateAuthEmployee) {
+        const URL = `${this.baseUrl}/${updateAuthEmployee.employeeNo}`;
+        return fetcher.PUT(URL, updateAuthEmployee);
     }
 
     /* Employee No 중복 체크 */
     public employeeNoCheck(employeeNo: number) {
         const URL = `${this.baseUrl}/no/check`;
-        const response = fetcher.GET(URL, {
-            params : { employeeNo }
-        });
-        return response;
+        return fetcher.GET(URL,{employeeNo: employeeNo});
     }
 
     /* Employee Id 중복 체크 */
     public idCheck(id: string) {
         const URL = `${this.baseUrl}/id/check`;
-        const response = fetcher.GET(URL, {
-            params : { id }
-        });
-        return response;
+        return fetcher.GET(URL,{id: id});
+    }
+
+    /* Employee 상세 조회 */
+    public getEmployee(employeeNo: number) {
+        const URL = `${this.baseUrl2}/${employeeNo}`;
+        return fetcher.GET(URL);
+    }
+
+    /* EmployeeList 조회 */
+    public getEmployeeList(object: Search) {
+        const URL = `${this.baseUrl2}/list`;
+        return fetcher.GET(URL, object);
     }
 
 }

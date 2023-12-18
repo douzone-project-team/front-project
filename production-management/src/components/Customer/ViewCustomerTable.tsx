@@ -1,125 +1,137 @@
 import React, {Component} from "react";
-import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 
 import "./../../assets/css/Table.css";
 import {CustomersContext} from "../../store/Customer/customers-context";
 import {CustomersState, UpdateCustomer} from "../../object/Customer/customer-object";
 import CustomerModifyModal from "../Modal/Customer/CustomerModifyModal";
+import {DetailTitle} from "../../core/DetailTitle";
+import {DeleteButton} from "../../core/button/DeleteButton";
+import {EditButton} from "../../core/button/EditButton";
+import Swal from 'sweetalert2';
+import {Loading} from "../../core/Loading";
+import {EmptyText} from "../../core/EmptyText";
 
 type State = {
-    customerModifyModalOpen: boolean
+  customerModifyModalOpen: boolean
 }
 
-type Props = {
-
-}
+type Props = {}
 
 const boldCellStyle = {
-    border: '1px solid #D3D3D3',
-    fontWeight: 'bold',
-    width: '10%',
+  fontWeight: 'bold',
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light',
+  fontSize: '16px'
 };
 
-const cellStyle = {
-    border: '1px solid #D3D3D3',
-    width: '10%',
-};
+const tableCellStyle = {
+  fontFamily: 'S-CoreDream-3Light',
+  fontSize: '16px'
+}
+
 
 class ViewCustomerTable extends Component<Props, State> {
-    static contextType = CustomersContext;
+  static contextType = CustomersContext;
 
-    handleDeleteClick = (customerNo:number) => {
-        const state = this.context as CustomersState;
-        state.deleteCustomer(customerNo);
+  constructor(Props: Props) {
+    super(Props);
+    this.state = {
+      customerModifyModalOpen: false
+    } as State;
+  }
+
+  updateCustomer = (customerNo: number, customerName: string, customerTel: string, ceo: string) => {
+    const state = this.context as CustomersState;
+    const updateCustomer: UpdateCustomer = {
+      customerName,
+      customerTel,
+      ceo,
     }
-    constructor(Props: Props) {
-        super(Props);
-        this.state = {
-            customerModifyModalOpen: false
-        } as State;
-    }
+    state.setUpdateCustomer(customerNo, updateCustomer);
+  }
 
-    updateCustomer = (customerNo: number, customerName: string, customerTel: string, ceo: string) => {
-        const state = this.context as CustomersState;
-        const updateCustomer : UpdateCustomer = {
-            customerName,
-            customerTel,
-            ceo,
-        }
-        state.setUpdateCustomer(customerNo, updateCustomer);
-    }
+  handleDeleteClick = (customerNo: number) => {
+    Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      text: "삭제 후 복구할 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소"
+    }).then((result) => {
+      if (result.isConfirmed) {
+          const state = this.context as CustomersState;
+          state.deleteCustomer(customerNo);
+        }});
+    };
 
+  render() {
+    const state = this.context as CustomersState;
+    const customer = state.customer;
 
-    render() {
-        const state = this.context as CustomersState;
-        const customer = state.customer;
-
-
-        return (
-            <>
-                <Box
-                    sx={{
-                        width: '100%',
-                        height: '30px',
-                        marginBottom: '10px',
-                        marginLeft: '2px',
-                        display: 'flex',
-                    }}
-                >
-                  <span className='table-header' style={{marginTop:'10px'}}>거래처 상세 :
-                      {state.customer.customerNo !== 0 && <span style={{color: '#0C70F2'}}>{state.customer.customerNo}</span>}
-                  </span>
-                    <div style={{ marginLeft: 'auto' }}>
-                        {state.customer.customerNo !== 0 &&<button className='customerBtn'
-                                style={{ marginRight: '10px', marginTop: '5px'}}
-                                onClick={() => this.setState({customerModifyModalOpen: true})}>
-                            수정
-                        </button>}
-                        <React.Fragment>
-                            {this.state.customerModifyModalOpen && state.customer.customerNo !== 0 ? (
-                                <CustomerModifyModal onClose={() => this.setState({customerModifyModalOpen: false})}
-                                                  status={this.state.customerModifyModalOpen}
-                                                  updateCustomer = {this.updateCustomer}
-                                                  customerNo = {state.customer.customerNo}/>
-                            ) : null}
-                        </React.Fragment>
-
-                        {state.customer.customerNo !== 0 &&<button className='customerBtn'
-                                type="submit"
-                                style={{ marginRight: '3px' }}
-                                onClick={()=>this.handleDeleteClick(state.customer.customerNo)}
-                        >
-                            삭제
-                        </button>}
-                    </div>
-                </Box>
-                <TableContainer className='table-container' style={{height:'74px'}}>
-                    <Table size='small' className='table'>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center" style={boldCellStyle}>번호</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>거래처 코드</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>거래처 명칭</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>대표자</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>연락처</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>업종</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {state.customer.customerNo !== 0 && <TableRow>
-                                    <TableCell align="center" style={cellStyle}>{customer.customerNo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{customer.customerCode}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{customer.customerName}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{customer.ceo}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{customer.customerTel}</TableCell>
-                                    <TableCell align="center" style={cellStyle}>{customer.sector}</TableCell>
-                                </TableRow>}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </>
-        );
-    }
+    return (
+        <>
+          <div style={{
+            display: 'flex',
+            height: '30px',
+            marginTop: '20px'
+          }}>
+            <DetailTitle options={{
+              targetName: state.customer.customerNo as unknown as string,
+              title: '거래처 상세'
+            }}/>
+            <div style={{marginLeft: 'auto'}}>
+              {state.customer.customerNo !== 0 &&
+                  <div>
+                    <EditButton size={22}  onClick={() => this.setState({customerModifyModalOpen: true})}/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <DeleteButton size={22}  onClick={() => this.handleDeleteClick(state.customer.customerNo)}/>
+                  </div>}
+            </div>
+          </div>
+          <TableContainer className='table-container' style={{}}>
+            <Table size='small' className='table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" style={boldCellStyle}>번호</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>거래처 코드</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>거래처 명칭</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>대표자</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>연락처</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>업종</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {state.customer.customerNo !== 0? <TableRow>
+                  <TableCell align="center" style={tableCellStyle}>{customer.customerNo}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.customerCode}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.customerName}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.ceo}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.customerTel}</TableCell>
+                  <TableCell align="center" style={tableCellStyle}>{customer.sector}</TableCell>
+                </TableRow> :
+                    <TableRow>
+                      <TableCell colSpan={6} style={{border: '0'}}>
+                        <EmptyText mt={'0px'}/>
+                      </TableCell>
+                    </TableRow>}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <React.Fragment>
+            {this.state.customerModifyModalOpen && state.customer.customerNo !== 0 ? (
+                <CustomerModifyModal onClose={() => this.setState({customerModifyModalOpen: false})}
+                                     status={this.state.customerModifyModalOpen}
+                                     updateCustomer={this.updateCustomer}
+                                     customerNo={state.customer.customerNo}/>
+            ) : null}
+          </React.Fragment>
+        </>
+    );
+  }
 }
 
 export default ViewCustomerTable;

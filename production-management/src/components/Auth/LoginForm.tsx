@@ -1,13 +1,14 @@
 import React, {Component, FormEvent, RefObject} from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme , Grid, Paper, Box, CssBaseline, TextField, Button } from '@material-ui/core';
+import { Grid, Paper, Box, CssBaseline, TextField, Button } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import EmployeeContext from "../../store/Employee/employee-context";
-// @ts-ignore
-import logo from '../../images/logo.png';
 import {EmployeeState} from "../../object/Employee/employee-object";
+import {EmployeeContext} from "../../store/Employee/employee-context";
+import { createTheme } from '@material-ui/core/styles'
+// @ts-ignore
+import logo from '../../images/BLOOMING.png';
 
-const defaultTheme = createMuiTheme();
+const defaultTheme = createTheme();
 
 interface LoginFormProps extends RouteComponentProps {}
 
@@ -36,15 +37,12 @@ class LoginForm extends Component<LoginFormProps> {
             await login(enteredId, enteredPassword);
 
             this.setState({ isLoading: false }, () => {
-                console.log('isSuccess:', isSuccess);
-                console.log('employee:', employee);
 
                 if (isSuccess) {
                     history.push('/');
                 }
             });
         } catch (error) {
-            console.error('Error during login:', error);
             this.setState({ isLoading: false });
         }
     };
@@ -52,7 +50,7 @@ class LoginForm extends Component<LoginFormProps> {
     render() {
         return (
             <ThemeProvider theme={defaultTheme}>
-                <Grid container component="main" style={{ height: '65vh', marginTop: 15, width: '75%', marginLeft: '12%' }}>
+                <Grid container component="main" style={{ height: '65vh', marginTop: 15, width: '100%'}}>
                     <CssBaseline />
                     <Grid
                         component={Paper}
@@ -73,13 +71,13 @@ class LoginForm extends Component<LoginFormProps> {
                         <Box
                             style={{
                                 margin: '8px',
-                                marginTop: '150px',
+                                marginTop: '140px',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
                             }}
                         >
-                            <img src={logo} height="30vh" alt="Logo" />
+                            <img src={logo} height="30vh" alt="Logo" style={{marginBottom: '10px'}}/>
                             <Box component="form" onSubmit={this.submitHandler} style={{ marginTop: 3, width: '30vh' }}>
                                 <TextField
                                     margin="normal"
@@ -91,6 +89,7 @@ class LoginForm extends Component<LoginFormProps> {
                                     autoComplete="id"
                                     autoFocus
                                     inputRef={this.idInputRef}
+                                    style={{ fontFamily: 'S-CoreDream-3Light' }}
                                 />
                                 <br />
                                 <TextField
@@ -103,13 +102,15 @@ class LoginForm extends Component<LoginFormProps> {
                                     id="password"
                                     autoComplete="current-password"
                                     inputRef={this.passwordInputRef}
+                                    style={{ fontFamily: 'S-CoreDream-3Light' }}
                                 />
                                 <br />
                                 <Button
                                     type="submit"
                                     variant="contained"
                                     fullWidth
-                                    style={{ marginTop: 3, marginBottom: 2 }}
+                                    style={{ marginTop: 30, marginBottom: 2,  fontFamily: 'S-CoreDream-3Light', fontWeight: 'bold'
+                                    }}
                                 >
                                     로그인
                                 </Button>
