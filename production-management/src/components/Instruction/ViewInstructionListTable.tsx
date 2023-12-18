@@ -31,7 +31,8 @@ const myMap: Map<string, string> = new Map<string, string>([
 type Props = {
   tableSize: boolean,
   tableSizeUp: () => void,
-  changeAmountStatusFalse: () => void;
+  changeAmountStatusFalse: () => void,
+  clearCheckBoxs: () => void,
 }
 
 type State = {
@@ -56,7 +57,7 @@ class ViewInstructionListTable extends Component<Props, State> {
     const state = this.context as InstructionsState;
     const list = state.instructionPage.list;
     const currentPage = state.instructionPage.currentPage;
-    const {tableSize, tableSizeUp, changeAmountStatusFalse} = this.props;
+    const {tableSize, tableSizeUp, changeAmountStatusFalse, clearCheckBoxs} = this.props;
 
     const handleNextPage = () => {
       if (state.instructionPage.hasNextPage) {
@@ -97,6 +98,7 @@ class ViewInstructionListTable extends Component<Props, State> {
                                     this.handleRowClick(row.instructionNo.replace(/\D/g, '') as unknown as number);
                                     state.getInstruction(row.instructionNo);
                                     changeAmountStatusFalse();
+                                    clearCheckBoxs();
                                     if (tableSize) {
                                       tableSizeUp();
                                     }

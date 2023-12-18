@@ -129,7 +129,9 @@ class ViewInstructions extends Component<Props, State> {
             <TableBox minWidth='1100px' minHeight='650px'>
               <ViewInstructionListTable tableSize={this.state.tableSize}
                                         tableSizeUp={this.state.sizeUp}
-                                        changeAmountStatusFalse={this.state.changeAmountStatusFalse}/>
+                                        changeAmountStatusFalse={this.state.changeAmountStatusFalse}
+                                        clearCheckBoxs={this.clearCheckBoxs}
+              />
               <div style={{textAlign: 'center'}}>
                 <TableSizeButton tableSize={this.state.tableSize} tableSizeUp={this.state.sizeUp}/>
               </div>

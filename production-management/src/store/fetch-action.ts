@@ -71,7 +71,8 @@ class Fetcher {
       const accessToken = result?.data.accessToken;
       localStorage.setItem('accessToken', accessToken);
     } catch (error) {
-      throw new Error('Failed to reissue token');
+      window.location.href = '/login';
+      return Promise.reject("토큰이 만료되었습니다. 로그인페이지로 이동합니다.");
     }
   }
 

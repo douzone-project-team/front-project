@@ -21,6 +21,7 @@ type State = {
   changeProductModalStatus: () => void,
   changeCustomerModalStatus: () => void,
   changeCustomerSearchModalStatus: () => void,
+  clearSelectedCheckBox: () => void
 }
 
 class AddInstructions extends Component<Props, State> {
@@ -41,6 +42,9 @@ class AddInstructions extends Component<Props, State> {
       },
       changeCustomerSearchModalStatus: () => {
         this.setState({customerSearchModalOpen: !this.state.customerSearchModalOpen});
+      },
+      clearSelectedCheckBox: () => {
+        this.setState({selectedCheckBoxs: []})
       }
     }
   }
@@ -85,6 +89,11 @@ class AddInstructions extends Component<Props, State> {
     return this.state.selectedCheckBoxs.filter((num) => num == productNo).length > 0;
   }
 
+  componentDidMount = async () => {
+    const state = this.context as InstructionsState;
+    await state.cleanInstruction();
+  }
+
   render() {
     const {
       selectedCheckBoxs,
@@ -100,7 +109,9 @@ class AddInstructions extends Component<Props, State> {
           <Body>
             <SearchBox minWidth='1100px'>
               <AddInstructionBar customerSearchModalOpen={customerSearchModalOpen}
-                                 changeCustomerSearchModalStatus={this.state.changeCustomerSearchModalStatus}/>
+                                 changeCustomerSearchModalStatus={this.state.changeCustomerSearchModalStatus}
+                                 clearSelectedCheckBox={this.state.clearSelectedCheckBox}
+              />
             </SearchBox>
             <TableBox minWidth='1100px' minHeight='650px'>
               <AddInstructionTable addSelectedCheckBox={this.addSelectedCheckBox}

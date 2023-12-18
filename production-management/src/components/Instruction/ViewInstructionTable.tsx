@@ -106,8 +106,19 @@ class ViewInstructionTable extends Component<Props, State> {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "삭제",
-      cancelButtonText: "취소"
-    }).then(() => {
+      cancelButtonText: "취소",
+      reverseButtons: true,
+      focusCancel: true
+    }).then((result) => {
+      if(result.dismiss === Swal.DismissReason.cancel) {
+        return;
+      }
+      Swal.fire({
+        icon: "success",
+        text: "지시가 삭제 되었습니다.",
+        showConfirmButton: false,
+        timer: 1000
+      })
       clearCheckBoxs();
       deleteInstruction(instruction.instructionNo);
       if (!tableSize) {

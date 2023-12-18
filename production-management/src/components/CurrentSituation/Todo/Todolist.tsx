@@ -198,9 +198,11 @@ class TodoList extends Component<{}, TodoListState> {
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<TodoListState>, snapshot?: any) {
         console.log('업데이트');
-
+        const todo = [];
+        const done = [];
         if (prevState.TodoItem !== this.state.TodoItem) {
             const todoItemList = this.state.TodoItem;
+            
             const todo = todoItemList
                 .filter((item) => !item.checked)
                 .map((item) => ({

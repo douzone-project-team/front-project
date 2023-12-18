@@ -3,7 +3,6 @@ import {InstructionsContext} from "../../store/Instruction/Instructions-context"
 import {InstructionsState} from "../../object/Instruction/Instruction-object";
 import CustomerModal from "../Modal/Instruction/CustomerModal";
 import {AddButton} from "../../core/button/AddButton";
-import {EditButton} from "../../core/button/EditButton";
 import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {TextInput} from '../../core/input/TextInput';
 import {DateInput} from "../../core/input/DateInput";
@@ -12,6 +11,7 @@ import Swal from 'sweetalert2';
 type AddInstructionBarProps = {
   customerSearchModalOpen: boolean,
   changeCustomerSearchModalStatus: () => void,
+  clearSelectedCheckBox: () => void
 };
 
 type AddInstructionBarState = {
@@ -37,15 +37,23 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
 
   static contextType = InstructionsContext;
 
+  clearSelectState = () => {
+    this.setState({
+      customerNo: 0,
+      customerName: '',
+      instructionDate: '',
+      expirationDate: '',
+      progressStatus: 'STANDBY'
+    })
+  }
 
   addInstructionClick = () => {
     const state = this.context as InstructionsState;
     const {customerName, customerNo, instructionDate, expirationDate, progressStatus} = this.state;
     let instruction = state.instruction;
-
     if (!customerNo) {
       Swal.fire({
-        icon: "error",
+        icon: "warning",
         title: "거래처 설정",
         text: "거래처를 입력하세요."
       });
@@ -68,7 +76,9 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
       icon: "success",
       text: "지시를 추가하였습니다."
     });
+    this.props.clearSelectedCheckBox();
   };
+
   getOneMonthAfterInstructionDate = (instructionDate: string) => {
     if (instructionDate !== '') {
       const date = new Date(instructionDate);
@@ -84,9 +94,24 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
   newAddInstructionClick = () => {
     const state = this.context as InstructionsState;
 
-    state.cleanInstruction();
-
-    this.addInstructionClick();
+    Swal.fire({
+      title: "새로운 지시를 등록하겠습니까?",
+      text: "새로운 지시 등록시 이전 작업은 종료됩니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "완료",
+      cancelButtonText: "취소",
+      reverseButtons: true,
+      focusCancel: true
+    }).then((result) => {
+      if(result.dismiss === Swal.DismissReason.cancel) {
+        return;
+      }
+      state.cleanInstruction();
+      this.addInstructionClick();
+    });
   }
 
   getCustomer = (customerNo: number, customerName: string) => {
@@ -106,7 +131,8 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
             <BarLeftBox width='80%' minWidth='1000px'>
               <div style={{display: 'flex'}}>
                 <div style={{display: 'flex'}}>
-                  <TextInput title='거래처' input={{width:'150px'}} value={this.state.customerName} readOnly/>
+                  <TextInput title='거래처' input={{width: '150px'}} value={this.state.customerName}
+                             readOnly/>
                   &nbsp;&nbsp;
                   <AddButton
                       mt='5px'
