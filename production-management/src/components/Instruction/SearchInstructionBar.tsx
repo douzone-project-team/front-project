@@ -12,6 +12,7 @@ import { initialInstructionSearchState } from "../../state/InstructionStateManag
 
 
 let searchValue = {
+  instructionNo: '',
   progressStatus: '',
   employeeName: '',
   startDate: '',
@@ -72,14 +73,16 @@ class SearchInstructionBar extends Component<Props, SearchState> {
   render() {
     const state = this.context as InstructionsState;
     const {all, standby, progress, completed} = this.state;
-
     return (
         <>
           <BarBox>
-            <BarLeftBox width='90%' minWidth='1040px'>
+            <BarLeftBox width='90%' minWidth='1190px'>
+              <TextInput title='지시번호' onBlur={(e) => {
+                searchValue.instructionNo = e.target.value;
+              }} label={{ml: '30px'}} input={{width:'140px'}}/>
               <TextInput title='등록자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value;
-              }} label={{ml: '30px'}}/>
+              }} label={{ml: '30px'}} input={{width:'100px'}}/>
               <DateInput title='지시일'
                          darkMode
                          startDate={{

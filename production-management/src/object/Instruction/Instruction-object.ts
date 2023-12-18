@@ -12,6 +12,7 @@ export type AddInstruction = {
 }
 
 export type InstructionSearch = {
+  instructionNo: string,
   progressStatus: string,
   employeeName: string,
   startDate: string,

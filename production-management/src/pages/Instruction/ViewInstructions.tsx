@@ -123,10 +123,10 @@ class ViewInstructions extends Component<Props, State> {
         <Layout>
           <Title title='지시현황'/>
           <Body>
-            <SearchBox minWidth='1100px'>
+            <SearchBox minWidth='1250px'>
               <SearchInstructionBar/>
             </SearchBox>
-            <TableBox minWidth='1100px' minHeight='650px'>
+            <TableBox minWidth='1250px' minHeight='650px'>
               <ViewInstructionListTable tableSize={this.state.tableSize}
                                         tableSizeUp={this.state.sizeUp}
                                         changeAmountStatusFalse={this.state.changeAmountStatusFalse}

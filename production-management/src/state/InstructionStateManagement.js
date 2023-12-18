@@ -1,4 +1,5 @@
 export const initialInstructionSearchState = {
+  instructionNo: '',
   progressStatus: '',
   employeeName: '',
   startDate: '',
