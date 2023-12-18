@@ -186,7 +186,9 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
       instructionAction.getInstructionList(this.state.search)
       .then((result) => {
         this.setState({instructionPage: result?.data}, () => {
-          this.getInstruction(this.state.instructionPage.list[0].instructionNo);
+          if(this.state.instructionPage.list.length) {
+            this.getInstruction(this.state.instructionPage.list[0].instructionNo);
+          }
         });
       }).catch((error) => {
         this.printErrorAlert(error);

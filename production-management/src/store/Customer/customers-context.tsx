@@ -151,7 +151,9 @@ export class CustomerContextProvider extends Component<Props, CustomersState>{
             customerAction.getCustomerList(this.state.search)
                 .then((result) => {
                     this.setState({customerPage: result?.data}, () => {
-                        this.state.getCustomer(this.state.customerPage.list[0].customerNo);
+                        if(this.state.customerPage.list.length){
+                            this.state.getCustomer(this.state.customerPage.list[0].customerNo);
+                        }
                     })
                 }).catch(error => {
                 this.printErrorAlert(error);

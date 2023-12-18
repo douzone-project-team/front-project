@@ -285,7 +285,9 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
             deliveryAction.getDeliveryList(this.state.search)
                 .then((result) => {
                     this.setState({deliveryPage: result?.data}, () => {
-                        this.getDelivery(this.state.deliveryPage.list[0].deliveryNo);
+                        if(this.state.deliveryPage.list.length) {
+                            this.getDelivery(this.state.deliveryPage.list[0].deliveryNo);
+                        }
                     });
                 }).catch((error) => {
                 this.printErrorAlert(error);

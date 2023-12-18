@@ -165,7 +165,9 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
                 .then((result) => {
                     this.setState({productPage: result?.data}, () => {
                         // 업데이트된 상태에서 첫 번째 고객의 번호를 가져와 getCustomer 메서드를 호출합니다.
+                        if(this.state.productPage.list.length){
                         this.state.getProduct(this.state.productPage.list[0].productNo);
+                        }
                     });
                 })
                 .catch(error => {
