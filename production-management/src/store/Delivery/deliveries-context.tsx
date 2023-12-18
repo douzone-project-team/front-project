@@ -76,7 +76,8 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         cleanDelivery: () => {
             this.setState({
                 delivery: initialDelivery, newDelivery: initialNewDelivery,
-                deliveryPage: initialDeliveryPageState
+                deliveryPage: initialDeliveryPageState,
+                search: initialDeliverySearchState,
             })
         },
 

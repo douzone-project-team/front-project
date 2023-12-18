@@ -2,6 +2,7 @@ import {EmployeeContext} from "../../store/Employee/employee-context";
 import React, {Component} from "react";
 import {EmployeeState} from "../../object/Employee/employee-object";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {EmptyText} from "../../core/EmptyText";
 
 const boldCellStyle = {
     fontWeight: 'bold',
@@ -49,7 +50,7 @@ class MyInstruction extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list && list.length > 0 && list.map((row) => (
+                            {list && list.length > 0 ? list.map((row) => (
                                 <TableRow key={row.instructionNo}>
                                     <TableCell align="center" style={cellStyle}>{row.instructionNo}</TableCell>
                                     <TableCell align="center" style={cellStyle}>{row.instructionDate}</TableCell>
@@ -60,7 +61,11 @@ class MyInstruction extends Component {
                                         </div>
                                     </TableCell>
                                 </TableRow>
-                            ))}
+                            )):<TableRow>
+                                <TableCell colSpan={4} style={{border: '0'}}>
+                                    <EmptyText mt={'0px'}/>
+                                </TableCell>
+                            </TableRow>}
                         </TableBody>
                     </Table>
                 </TableContainer>

@@ -3,6 +3,8 @@ import {EmployeeContext} from "../../store/Employee/employee-context";
 import {initialUpdateEmployee} from "../../state/employeeStateMangement";
 import {EmployeeState} from "../../object/Employee/employee-object";
 import {Avatar, Box} from "@material-ui/core";
+// @ts-ignore
+import defaultImage from "../../images/default-image.jpg";
 
 type ProfileImageProps = {
 }
@@ -56,7 +58,7 @@ class MainImage extends Component<ProfileImageProps, ProfileImageState> {
                         style={{
                             marginLeft:'10px',
                             width:'160%',
-                            maxWidth: '250px',
+                            maxWidth: '200px',
                             height:'150%',
                             maxHeight: '250px',
                             marginTop: '10px',
@@ -64,17 +66,19 @@ class MainImage extends Component<ProfileImageProps, ProfileImageState> {
                             borderRadius: '100%'
                         }}/>
                 ) : employeeData.employeeNo !== 0 ? (
-                    <Avatar src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}
+                    <img src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}
                          style={{
                              marginLeft:'10px',
-                             width:'160%',
-                             maxWidth: '250px',
-                             height:'150%',
-                             maxHeight: '250px',
+                             maxWidth: '180px',
+                             maxHeight: '170px',
                              marginTop: '10px',
                              marginBottom: "10px",
                              borderRadius: '100%'
-                         }}/>
+                         }}
+                         onError={(e) => {
+                             e.currentTarget.src = defaultImage;
+                         }}
+                    />
                 ) : (
                     <div> 이미지 없음 </div>
                 )}
