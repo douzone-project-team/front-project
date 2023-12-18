@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Divider from "@material-ui/core/Divider";
-import {Box, Button} from "@material-ui/core";
+import {Avatar, Box, Button} from "@material-ui/core";
 import ScheduleIcon from '@material-ui/icons/Schedule';
 
 interface NotificationProps {
@@ -103,7 +103,7 @@ class Notification extends React.Component<NotificationProps> {
                                     >
                                         <div style={{ display: 'flex' }}>
                                             <div style={{ width: '95%', display: 'flex' }}>
-                                                <img
+                                                <Avatar
                                                     src={('http://localhost:8080/employees/' + notification.employeeNo + '/image')}
                                                     style={{ width: '23px', height: '23px', borderRadius: '8px' }}
                                                 />
