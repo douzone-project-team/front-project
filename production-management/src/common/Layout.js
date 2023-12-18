@@ -187,6 +187,7 @@ class Layout extends React.Component {
             `/sse/subscribe`,
             {
                 headers: {
+                    baseURL: 'http://localhost:8080/',
                     Authorization: 'Bearer ' + localStorage.getItem('accessToken')
                 },
                 withCredentials: true,
