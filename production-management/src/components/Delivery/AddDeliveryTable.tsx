@@ -20,7 +20,7 @@ type State = {
   product: {
     addDeliveryProduct: AddProduct
   }[],
-  selectedInstructionNo: string,
+
 }
 
 type Props = {
@@ -30,6 +30,8 @@ type Props = {
   changeInstructionModalStatus: () => void,
   changeDeliveryProductModalStatus: () => void
   existSelectedCheckBox: (productNo: number) => boolean,
+  selectedInstructionNo: string,
+  setSelectedInstructionNo: (instructionNo:string) => void
 }
 
 const boldCellStyle = {
@@ -91,8 +93,8 @@ class AddDeliveryTable extends Component<Props, State> {
 
     this.setState({
       instruction: [{addDeliveryInstruction: newInstruction}],
-      selectedInstructionNo: instructionNo,
-    })
+    });
+    this.props.setSelectedInstructionNo(instructionNo);
   }
 
   addProduct = (instructionNo: string, productNo: number, productCode: string, amount: number, remainAmount: number) => {
@@ -209,7 +211,7 @@ class AddDeliveryTable extends Component<Props, State> {
                     </TableRow>
                 ))}
                 {newDelivery.deliveryNo ? (
-                    this.state.selectedInstructionNo ? (
+                    this.props.selectedInstructionNo ? (
                         instruction.map((item, index) => (
                             <TableRow key={index}>
                               <TableCell align="center" style={{
@@ -272,7 +274,7 @@ class AddDeliveryTable extends Component<Props, State> {
                           <TableCell align="center" style={tableCellStyle}></TableCell>
                           <TableCell align="center" style={tableCellStyle}></TableCell>
                           <TableCell align="center" style={tableCellStyle}>
-                            {this.state.selectedInstructionNo ?
+                            {this.props.selectedInstructionNo ?
                                 <AddItemButton size={20}
                                                color="black"
                                                onClick={changeDeliveryProductModalStatus}/>
@@ -299,7 +301,7 @@ class AddDeliveryTable extends Component<Props, State> {
               {deliveryProductModalOpen ? (
                   <DeliveryProductModal onClose={changeDeliveryProductModalStatus}
                                         addDeliveryProduct={this.addProduct}
-                                        instructionNo={this.state.selectedInstructionNo}/>
+                                        instructionNo={this.props.selectedInstructionNo}/>
               ) : null}
             </React.Fragment>
           </div>

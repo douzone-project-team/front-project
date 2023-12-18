@@ -68,7 +68,19 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
     }
 
     handleAmountBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        const newAmount = parseInt(event.target.value, 10);
+        const amountPattern = /^[0-9]+$/;
+        const amount = event.target.value;
+
+        if(!amountPattern.test(amount)){
+
+            Swal.fire({
+                icon: 'warning',
+                text: '수량의 형식이 올바르지 않습니다. 숫자만 입력해주세요.'
+            });
+            return;
+        }
+
+        const newAmount = Number(event.target.value);
         this.setState((prevState) => ({
             product: {...prevState.product, amount: newAmount},
         }));
@@ -148,7 +160,7 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
                                     fontSize: '15px',
                                     fontWeight: 'bold'
                                 }}>수량</span>
-                                    <input type="number" placeholder="수량"
+                                    <input type="text" placeholder="수량"
                                            style={{
                                                height: '20px',
                                                marginTop: '6px',

@@ -133,7 +133,8 @@ class ViewDeliveries extends Component<Props, State> {
             <TableBox minWidth='1100px' minHeight='650px'>
               <ViewDeliveryListTable tableSize={this.state.tableSize}
                                      tableSizeUp={this.state.sizeUp}
-                                     changeAmountStatusFalse={this.state.changeAmountStatusFalse}/>
+                                     changeAmountStatusFalse={this.state.changeAmountStatusFalse}
+                                     clearCheckBoxes={this.clearCheckBoxes}/>
               <div style={{textAlign: 'center'}}>
                 <TableSizeButton tableSize={this.state.tableSize} tableSizeUp={this.state.sizeUp}/>
               </div>

@@ -65,7 +65,8 @@ class ViewEmployeeTable extends Component<Props, State> {
             cancelButtonColor: "#d33",
             confirmButtonText: "완료",
             cancelButtonText: "취소",
-            reverseButtons: true
+            reverseButtons: true,
+            focusCancel: true
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.cancel) {
                 return;

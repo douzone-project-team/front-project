@@ -84,12 +84,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     const data = result?.data;
                     const {accessToken, refreshToken} = data;
                     localStorage.setItem('accessToken', accessToken);
-                    cookieManager.setCookie('refreshToken', refreshToken);
 
-                    // TODO : localStorage employeeNo 저장 - 적용 O
-                    // TODO : employee 조회 로직 - 적용 O
-                    // TODO : F5 누를경우 사용자 정보는 어떤 방식으로 유지되도록 할 것인지. - 적용 X
-                    // TODO : isSuccess 필요성 체크 이후 필요없으면 제거 - 적용 X
                     let eventSource = null;
                     const EventSource = EventSourcePolyfill || NativeEventSource;
                     eventSource = new EventSource(
@@ -124,7 +119,10 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
             Swal.fire({
                 icon: "success",
                 text: "로그아웃 되었습니다.",
+                timer: 4000,
+                showConfirmButton: false
             });
+            window.location.href="/login";
         },
 
         cleanEmployee: () => {

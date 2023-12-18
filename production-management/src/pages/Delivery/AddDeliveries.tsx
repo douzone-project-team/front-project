@@ -20,6 +20,9 @@ type State = {
   deliveryProductModalOpen: boolean,
   changeInstructionModalStatus: () => void,
   changeDeliveryProductModalStatus: () => void,
+  selectedInstructionNo: string,
+  clearSelectedInstructionNo: () => void
+  setSelectedInstructionNo: (instructoionNo : string) => void
 }
 
 class AddDeliveries extends Component<Props, State> {
@@ -31,18 +34,29 @@ class AddDeliveries extends Component<Props, State> {
       selectedCheckBoxes: [],
       instructionModalOpen: false,
       deliveryProductModalOpen: false,
+      selectedInstructionNo: '',
       changeInstructionModalStatus: () => {
         this.setState({instructionModalOpen: !this.state.instructionModalOpen});
       },
       changeDeliveryProductModalStatus: () => {
         this.setState({deliveryProductModalOpen: !this.state.deliveryProductModalOpen});
+      },
+      clearSelectedInstructionNo: () => {
+        this.setState({selectedInstructionNo: ""});
+      },
+      setSelectedInstructionNo: (instructionNo: string) => {
+        this.setState({selectedInstructionNo: instructionNo})
       }
     }
   }
 
   componentDidMount() {
     const state = this.context as DeliveriesState;
-    state.cleanDelivery()
+    state.cleanDelivery();
+  }
+
+  clearTable = () => {
+    this.setState({selectedCheckBoxes: []});
   }
 
   deleteSelectedCheckBox = () => {
@@ -94,7 +108,10 @@ class AddDeliveries extends Component<Props, State> {
     const {
       selectedCheckBoxes,
       instructionModalOpen,
-      deliveryProductModalOpen
+      deliveryProductModalOpen,
+      selectedInstructionNo,
+      clearSelectedInstructionNo,
+      setSelectedInstructionNo
     } = this.state;
     let isChecksNotEmpty = selectedCheckBoxes.length != 0;
 
@@ -103,7 +120,9 @@ class AddDeliveries extends Component<Props, State> {
           <Title title='출고등록'/>
           <Body>
             <SearchBox minWidth='1100px'>
-              <AddDeliveryBar/>
+              <AddDeliveryBar clearTable={this.clearTable}
+                              clearSelectedInstructionNo={clearSelectedInstructionNo}
+              />
             </SearchBox>
             <TableBox minWidth='1100px'>
               <AddDeliveryTable addSelectedCheckBox={this.addSelectedCheckBox}
@@ -111,7 +130,10 @@ class AddDeliveries extends Component<Props, State> {
                                 deliveryProductModalOpen={deliveryProductModalOpen}
                                 changeInstructionModalStatus={this.state.changeInstructionModalStatus}
                                 changeDeliveryProductModalStatus={this.state.changeDeliveryProductModalStatus}
-                                existSelectedCheckBox={this.existSelectedCheckBox}/>
+                                existSelectedCheckBox={this.existSelectedCheckBox}
+                                selectedInstructionNo={selectedInstructionNo}
+                                setSelectedInstructionNo={setSelectedInstructionNo}
+              />
             </TableBox>
           </Body>
           {isChecksNotEmpty &&

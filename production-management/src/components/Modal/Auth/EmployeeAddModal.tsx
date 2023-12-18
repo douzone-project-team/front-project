@@ -26,6 +26,8 @@ type EmployeeAddModalProps = {
 type EmployeeAddModalState = {
     isAdmin: boolean;
     selectedImage: File | null;
+    employeeNo: number;
+    id: string;
 }
 
 class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModalState> {
@@ -47,6 +49,8 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
         this.state = {
             isAdmin: false,
             selectedImage: null,
+            employeeNo: 0,
+            id: '',
         };
     }
 
@@ -69,34 +73,44 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
         this.setState({isAdmin: event.target.checked});
     };
 
+    handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const state = this.context as AuthState;
+        state.cleanAvailabilites();
+
+        this.setState({id: e.target.value});
+    };
+
+    handleEmployeeNoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const state = this.context as AuthState;
+        state.cleanAvailabilites();
+
+        this.setState({employeeNo: Number(e.target.value)});
+    };
+
     // 중복 검사
-    checkIdDuplicate = async () => {
+    checkIdDuplicate = async (id: string) => {
         const state = this.context as AuthState;
         const idPattern = /^[a-zA-Z0-9]{4,}$/;
-        const enteredId = this.idInputRef.current?.value;
 
-        if (enteredId) {
-            if(!idPattern.test(enteredId) || enteredId.length === 0 ) {
+        if (id) {
+            if(!idPattern.test(id) || id.length === 0 ) {
                 this.alertMessage('warning', '', '아이디는 최소 4자 이상이어야 합니다.');
                 return;
             }
-            await state.idCheck(enteredId);
+            await state.idCheck(id);
         }
     };
 
-    checkEmployeeNoDuplicate = async () => {
+    checkEmployeeNoDuplicate = async (employeeNo: number) => {
         const state = this.context as AuthState;
         const employeeNoPattern = /^[0-9]{6}$/;
 
-        const enteredEmployeeNo = this.employeeNoInputRef.current?.value;
-        const etEmployeeNo = Number(enteredEmployeeNo);
-
-        if(etEmployeeNo){
-            if(!employeeNoPattern.test(String(etEmployeeNo)) || String(etEmployeeNo).length === 0 ) {
+        if(employeeNo){
+            if(!employeeNoPattern.test(String(employeeNo)) || String(employeeNo).length === 0 ) {
                 this.alertMessage('warning', '', '사번의 형식이 잘못되었습니다. (예: 230001)');
                 return;
             }
-            await state.employeeNoCheck(etEmployeeNo);
+            await state.employeeNoCheck(employeeNo);
         }
     };
 
@@ -139,6 +153,7 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
             const employeeNoPattern = /^[0-9]{6}$/;
             const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{6,}$/;
             const telPattern = /^[0-9]{11}$/;
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
             if(userData.name.length === 0 || String(userData.employeeNo).length === 0 || userData.id.length === 0 ||
                 userData.password.length === 0){
@@ -158,6 +173,11 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
 
             if(!telPattern.test(userData.tel) && userData.tel){
                 this.alertMessage('warning', '', '연락처의 형식이 잘못되었습니다. (예: 010-1234-5678');
+                return;
+            }
+
+            if(!emailPattern.test(userData.email) && userData.email){
+                this.alertMessage('warning', '', '이메일의 형식이 잘못되었습니다.');
                 return;
             }
 
@@ -257,7 +277,7 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
                                         className="form-input"
                                         placeholder="ex) 홍길동"
                                         style={{width: '45%', marginRight: '5%'}}
-                                        ref={this.nameInputRef}
+                                        onChange={this.handleIdChange}
                                     />
                                     <label className="admin" style={{
                                         background: isAdmin ? '#F0F0F0' : '#fff',
@@ -291,10 +311,10 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
                                         placeholder="ex) 입사년도2+무작위 숫자4"
                                         className="form-input"
                                         style={{width: '63%', marginBottom: '4px'}}
-                                        ref={this.employeeNoInputRef}
+                                        onChange={this.handleEmployeeNoChange}
                                     />
                                     <button className="form-duplicate-button"
-                                            onClick={this.checkEmployeeNoDuplicate}>중복 체크
+                                            onClick={() => this.checkEmployeeNoDuplicate(this.state.employeeNo)}>중복 체크
                                     </button>
                                 </div>
                                 {state.employeeNoDuplicate.availability ?
@@ -314,7 +334,7 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
                                         ref={this.idInputRef}
                                     />
                                     <button className="form-duplicate-button"
-                                            onClick={this.checkIdDuplicate}>중복 체크
+                                            onClick={() => this.checkIdDuplicate(this.state.id)}>중복 체크
                                     </button>
                                 </div>
                                 {state.idDuplicate.availability ?

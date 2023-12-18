@@ -105,7 +105,7 @@ class ViewDeliveryTable extends Component<Props, State> {
         }
     };
 
-    updateProductButtonClickEvent = (instructionNo: string, productNo: number) => {
+    updateProductButtonClickEvent = (instructionNo: string, productNo: number, amount: number) => {
         if (!/^\d+$/.test(this.state.changeValue as unknown as string)) {
             Swal.fire({
                 icon: "warning",
@@ -120,7 +120,7 @@ class ViewDeliveryTable extends Component<Props, State> {
             });
             const {changeAmountStatus} = this.props;
             this.getRemainAmount(instructionNo, productNo);
-            this.updateProductAmount(instructionNo, this.state.changeValue, productNo);
+            this.updateProductAmount(instructionNo, this.state.changeValue, productNo, amount);
             changeAmountStatus();
         }
     }
@@ -142,6 +142,12 @@ class ViewDeliveryTable extends Component<Props, State> {
             if(result.dismiss === Swal.DismissReason.cancel) {
                 return;
             }
+            Swal.fire({
+                icon: 'success',
+                text: '출고가 삭제 되었습니다.',
+                showConfirmButton: false,
+                timer: 1000
+            })
 
             clearCheckBoxes();
             deleteDelivery(delivery.deliveryNo);
@@ -169,6 +175,14 @@ class ViewDeliveryTable extends Component<Props, State> {
         const deliveryNo = state.delivery.deliveryNo;
 
         state.updateDelivery({deliveryNo, deliveryDate: newDeliveryDate});
+        Swal.fire({
+            icon: "success",
+            text: "출고일이 변경되었습니다.",
+            showConfirmButton: false,
+            timer: 1000
+        });
+        this.getDelivery();
+        this.getDeliveryList();
     };
 
     updateDeliveryStatusButtonClick = (deliveryNo: string) => {
@@ -183,12 +197,20 @@ class ViewDeliveryTable extends Component<Props, State> {
             cancelButtonColor: "#d33",
             confirmButtonText: "완료",
             cancelButtonText: "취소",
-            reverseButtons: true
+            reverseButtons: true,
+            focusCancel: true
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.cancel) {
                 return;
             }
+            Swal.fire({
+                icon: "success",
+                text: "출고의 상태가 완료 처리 되었습니다.",
+                showConfirmButton: false,
+                timer: 1000
+            })
             state.updateDeliveryStatus(deliveryNo);
+            this.getDeliveryList();
         });
     }
 
@@ -198,15 +220,14 @@ class ViewDeliveryTable extends Component<Props, State> {
     }
 
     // 한 가지 지시의 품목 amount 수정
-    updateProductAmount = (instructionNo: string, amount: number, productNo: number) => {
+    updateProductAmount = (instructionNo: string, amount: number, productNo: number, prevAmount: number) => {
         const state = this.context as DeliveriesState;
         const delivery = state.delivery;
 
-
-        if (amount > state.remainAmount.remainAmount) {
+        if (amount > state.remainAmount.remainAmount + prevAmount) {
             Swal.fire({
                 icon: "warning",
-                text: `수량이 잔량보다 많습니다. \n현재 잔량 :  ${state.remainAmount.remainAmount}`
+                text: `수량이 잔량보다 많습니다. \n현재 잔량 :  ${state.remainAmount.remainAmount + prevAmount}`
             });
             return;
         }
@@ -227,6 +248,12 @@ class ViewDeliveryTable extends Component<Props, State> {
         } as UpdateDeliveryInstruction;
 
         state.updateDeliveryInstruction(updateDeliveryInstruction);
+        Swal.fire({
+            icon: "success",
+            text: "수량이 변경되었습니다.",
+            showConfirmButton: false,
+            timer: 1000
+        })
     };
 
     addInstruction = (instructionNo: string, instructionDate: string, expirationDate: string, customerName: string) => {
@@ -290,6 +317,11 @@ class ViewDeliveryTable extends Component<Props, State> {
         state.getDelivery(deliveryNo);
     }
 
+    getDeliveryList = () => {
+        const state = this.context as DeliveriesState;
+        state.getDeliveryList();
+    }
+
     deleteDeliveryInstruction = (instructionNo: string, productNo: number) => {
         const state = this.context as DeliveriesState;
 
@@ -341,6 +373,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                                 <input type="date"
                                        style={{height: '30px', color: '#0C70F2'}}
                                        defaultValue={delivery.deliveryDate}
+                                       value={delivery.deliveryDate}
                                        onChange={(e) => {
                                            this.updateDelivery(e.target.value);
                                        }}
@@ -440,7 +473,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                                                     </div>
                                                     <div style={{width: '1%'}}>
                                                         <EditButton
-                                                            onClick={() => this.updateProductButtonClickEvent(row.instructionNo, row.productNo)}/>
+                                                            onClick={() => this.updateProductButtonClickEvent(row.instructionNo, row.productNo, row.amount)}/>
                                                     </div>
                                                 </div>
                                             }

@@ -12,11 +12,13 @@ import {Loading} from "../../core/Loading";
 const boldCellStyle = {
   fontWeight: 'bold',
   backgroundColor: '#f1f3f5',
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
+  fontSize: '16px'
 };
 
 const tableCellStyle = {
-  fontFamily: 'S-CoreDream-3Light'
+  fontFamily: 'S-CoreDream-3Light',
+  fontSize: '16px'
 }
 
 const myMap: Map<string, string> = new Map<string, string>([
@@ -29,6 +31,7 @@ type Props = {
   tableSize: boolean,
   tableSizeUp: () => void,
   changeAmountStatusFalse: () => void,
+  clearCheckBoxes: () => void,
 }
 
 type State = {
@@ -53,7 +56,7 @@ class ViewDeliveryListTable extends Component<Props, State> {
     const state = this.context as DeliveriesState;
     const list = state.deliveryPage.list || [];
     const currentPage = state.deliveryPage.currentPage;
-    const {tableSize, tableSizeUp, changeAmountStatusFalse} = this.props;
+    const {tableSize, tableSizeUp, changeAmountStatusFalse, clearCheckBoxes} = this.props;
 
     const handleNextPage = () => {
       if (state.deliveryPage.hasNextPage) {
@@ -91,6 +94,7 @@ class ViewDeliveryListTable extends Component<Props, State> {
                                     this.handleRowClick(row.deliveryNo.replace(/\D/g, '') as unknown as number);
                                     state.getDelivery(row.deliveryNo);
                                     changeAmountStatusFalse();
+                                    clearCheckBoxes();
                                     if (tableSize) {
                                       tableSizeUp();
                                     }
