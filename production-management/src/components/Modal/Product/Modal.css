@@ -8,8 +8,11 @@
     justify-content: center;
     align-content: center;
     display: flex;
+    font-family: S-CoreDream-3Light;
 }
-
+.custom-swal-container {
+    z-index: 100000000000 !important;
+}
 .modal-container {
     background: white;
     border-radius: 8px;
@@ -39,7 +42,7 @@
     float: right;
 }
 
-.product-modal-main {
+.product-modal-main{
     height: 100%;
     width: 100%;
     padding-left: 0;
@@ -56,15 +59,12 @@
     font-size: 14px;
     margin-bottom: 10px;
     font-weight: bold;
-    display: flex;
-    width:100%;
-    justify-content: center;
 }
 
 .form-input {
     height: 30px;
     width: 100%;
-    margin-left: 0%;
+    margin-left: 0;
     margin-bottom: 10px;
     font-family: S-CoreDream-3Light;
 
@@ -103,7 +103,7 @@
 .form-duplicate-button{
     font-family: S-CoreDream-3Light;
     background-color: rgb(125, 134, 155);
-    width: 100%;
+    width: 25%;
     float: right;
     margin-left: 15%;
     height: 30px;

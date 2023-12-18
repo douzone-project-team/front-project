@@ -36,22 +36,22 @@ const TodoStyle = {
     flexGrow: 1,
     padding: '2%',
     borderRadius: '8px',
-    overflow: 'auto',
+    overflow: 'scroll',
     backgroundColor: '#F3F3F3',
-    ...{
-        '&::-webkit-scrollbar': {
-            width: '10px',
-        },
-        '&::-webkit-scrollbar-thumb': {
-            height: '30%',
-            background: '#217af4',
-            borderRadius: '10px',
-        },
-        '&::-webkit-scrollbar-track': {
-            background: 'rgba(33, 122, 244, .1)',
-        },
+
+    '&::-webkit-scrollbar': {
+        width: '10px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+        height: '30%',
+        background: '#217af4',
+        borderRadius: '10px',
+    },
+    '&::-webkit-scrollbar-track': {
+        background: 'rgba(33, 122, 244, .1)',
     },
 };  // <-- replace the comma with a semicolon
+
 
 const Todoinput = {
     width: '100%',
@@ -132,21 +132,26 @@ class TodoList extends Component<{}, TodoListState> {
     handleTodoSubmit = (): void => {
         const state = this.context as TodoState;
         const { inputValue } = this.state;
-
         if (inputValue.trim() !== '') {
-            const newTodo = {
-                id: String(Date.now()),
+            const regiTodoData = {
                 content: inputValue,
-                status: 'todo',
             };
-            state.regiTodo(inputValue);
+            const regiUrl = `/todo`;
 
-            // 인풋 값 초기화 및 인풋 창 닫기
-            this.setState({
-                inputValue: '',
-                isInputOpen: false,
-            });
-            this.loadData();
+            fetcher.POST(regiUrl, regiTodoData)
+                .then((res) => {
+                    if (res) {
+                        this.loadData();
+                        this.setState({
+                            inputValue: '',
+                            isInputOpen: false,
+                        });
+                    } else {
+                        console.error(`전송 오류`);
+                    }
+                })
+                .catch((error) => {
+                });
         }
     };
     handleDelete = (todoNo: number): void => {
@@ -241,7 +246,9 @@ class TodoList extends Component<{}, TodoListState> {
                                 <div
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
-                                    style={TodoStyle}
+                                    style={{
+                                        ...TodoStyle,
+                                    }}
                                 >
                                     <div style={{display: 'flex'}}>
                                         <h2 style={{marginTop: '0%', color: '#F595BA'}}>Todo list</h2>
@@ -289,8 +296,9 @@ class TodoList extends Component<{}, TodoListState> {
                                             )}
                                         </form>
                                     </div>
-                                    {this.state.TodoItem.map((item, index) => {
+                                    {this.state.todo.map((item, index) => {
                                         if (!item || item.todoNo === undefined) {
+                                            // 처리할 로직이 있으면 추가
                                         }
 
                                         return (
@@ -316,7 +324,9 @@ class TodoList extends Component<{}, TodoListState> {
                                 <div
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
-                                    style={TodoStyle}
+                                    style={{
+                                        ...TodoStyle,
+                                    }}
                                 >
                                     <h2 style={{marginTop: '0%', color: '#3A4CA8'}}>Finish</h2>
                                     {this.state.done?.map((item, index) => (

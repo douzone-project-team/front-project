@@ -118,7 +118,7 @@ class Main extends Component <ProfileImageProps>{
         state.getCurrentBox()
     };
     state = {
-        selectedPeriod: 'Y', // 기본값은 'D'로 설정
+        selectedPeriod: 'Y',
         employeeData: {} as Employee,
         usedata:{} as Employee,
     };
@@ -169,41 +169,12 @@ class Main extends Component <ProfileImageProps>{
                                 안녕하세요.{' '} <span style={{color: '#3A4CA8', marginLeft: '0.5em'}}>{state.employee.name} 사원님</span>😁 오늘도 즐거운 하루 되세요.
                         </span>
                     </div>
-                    <div style={{display: 'flex', height: '100%'}}>
+                    <div style={{display: 'flex', height: '100%',minWidth:'100%'}}>
                         <div style={userDiv}>
                             <div>
                                 <MainImage/>
-                                {/*{this.state.selectedImage ? (*/}
-                                {/*    <img*/}
-                                {/*        src={URL.createObjectURL(this.state.selectedImage)}*/}
-                                {/*        alt="새 이미지"*/}
-                                {/*        style={{*/}
-                                {/*            maxWidth: '200px',*/}
-                                {/*            maxHeight: '250px',*/}
-                                {/*            marginTop: '10px',*/}
-                                {/*            marginBottom: "10px",*/}
-                                {/*            borderRadius: '20%'*/}
-                                {/*        }}/>*/}
-                                {/*) : employeeData.employeeNo !== 0 ? (*/}
-                                {/*    <img src={('http://localhost:8080/employees/'+employeeData.employeeNo+'/image')}*/}
-                                {/*         style={{*/}
-                                {/*             maxWidth: '200px',*/}
-                                {/*             maxHeight: '250px',*/}
-                                {/*             marginTop: '10px',*/}
-                                {/*             marginBottom: "10px",*/}
-                                {/*             borderRadius: '20%'*/}
-                                {/*         }}/>*/}
-                                {/*) : (*/}
-                                {/*    <div> 이미지 없음 </div>*/}
-                                {/*)}*/}
-{/*                                <Avatar src='http://localhost:8080/employees/200001/image' style={{
-                                    width: '130px',
-                                    height: '130px',
-                                    border: '2px solid rgba(82,99,115,0.1)',
-                                    marginTop: '10px'
-                                }} alt="사원사진"/>*/}
                             </div>
-                            <div style={{margin: '1%', paddingRight: '20%', marginLeft: '2%',width:'50%'}}>
+                            <div style={{margin: '1%', paddingRight: '20%', marginLeft: '2%',width:'50%',minWidth:'50%'}}>
                         <span
                             style={{color: '#444444', fontSize: '1.8em', fontWeight: '900'}}>
                             <SupervisorAccount style={{color: '#444444'}}/>
@@ -253,11 +224,11 @@ class Main extends Component <ProfileImageProps>{
                                                 fontWeight: '900',
                                             }}>지시 건수</span>
                                         </div>
-                                        <span style={{marginTop: '2%', color: 'gray'}}>금일, 누적 지시 건수를 나타냅니다.</span>
+                                        <span style={{marginTop: '2%', color: 'gray'}}>금월, 누적 지시 건수를 나타냅니다.</span>
                                     </div>
                                     <div style={{display: 'flex',flexDirection: 'column'}}>
                                         <div style={{...BoxStyle, backgroundColor: "#C8DDED"}}>
-                                            <span style={MainStyle}>금일 총 지시</span>
+                                            <span style={MainStyle}>금월 총 지시</span>
                                             <div style={SubStyle}>
                                             <span style={{
                                                 fontSize: '2.1em',
@@ -297,12 +268,12 @@ class Main extends Component <ProfileImageProps>{
                                                 marginLeft: '1%'
                                             }}>출고 건수</span>
                                         </div>
-                                        <span style={{marginTop: '2%', color: 'gray'}}>금일, 누적 출고 건수를 나타냅니다.</span>
+                                        <span style={{marginTop: '2%', color: 'gray'}}>금월, 누적 출고 건수를 나타냅니다.</span>
                                     </div>
                                     <div style={{display: 'flex',flexDirection: 'column'}}>
                                         <div style={{...BoxStyle, backgroundColor: "#C8DDED"
                                         }}>
-                                            <span style={MainStyle}> 금일 총 출고</span>
+                                            <span style={MainStyle}> 금월 총 출고</span>
                                             <div style={SubStyle}>
                                             <span style={{
                                                 fontSize: '2.1em',
@@ -466,23 +437,32 @@ class Main extends Component <ProfileImageProps>{
                                 width: '49%',
                                 height: '100%'
                             }}>
-    {/*                                <span style={{fontSize: '1.2em', fontWeight: '800', height: '10.5%'}}>지시사항</span>*/}
                                 <div
                                     style={{
                                         width: '100%', backgroundColor:
                                             '#FFFFFF', boxShadow: boxShadowStyle,
                                         height: '100%'
                                     }}>
-                                    {/*<GraphBox data={this.state.instructionData} labelText="지시"*/}
-                                    {/*          colors={instructionColors}/>*/}
-                                    <GraphBox data={state.circleGraph.instructionData.map(cg =>({
-                                        name: cg.progress,
-                                        value: cg.count,
-                                    }))}
-
+                                    <GraphBox
+                                        data={state.circleGraph.instructionData.map(cg => ({
+                                            name: (() => {
+                                                switch (cg.progress) {
+                                                    case 'STANDBY':
+                                                        return '준비';
+                                                    case 'PROGRESS':
+                                                        return '진행';
+                                                    case 'COMPLETED':
+                                                        return '완료';
+                                                    default:
+                                                        return '알 수 없음';
+                                                }
+                                            })(),
+                                            value: cg.count,
+                                        }))}
                                         labelText="지시"
                                         colors={instructionColors}
                                     />
+
                                 </div>
                             </div>
                             <div style={{
@@ -491,19 +471,20 @@ class Main extends Component <ProfileImageProps>{
                                 width: '49%',
                                 marginLeft: '2%'
                             }}>
-{/*                                <span style={{fontSize: '1.2em', fontWeight: '800', height: '10.5%'}}>출고사항</span>*/}
                                 <div
                                     style={{
                                         width: '100%', backgroundColor:
                                             '#FFFFFF', boxShadow: boxShadowStyle,
                                         height: '100%'
                                     }}>
-                                    <GraphBox data={state.circleGraph.deliveryData.map(cg =>({
-                                            name: cg.progress,
+                                    <GraphBox
+                                        data={state.circleGraph.deliveryData.map(cg => ({
+                                            name: cg.progress === 'STANDBY' ? '미완료' : '완료',
                                             value: cg.count,
                                         }))}
-                                              labelText="출고"
-                                              colors={deliveryColors}/>
+                                        labelText="출고"
+                                        colors={deliveryColors}
+                                    />
                                 </div>
                             </div>
                         </div>

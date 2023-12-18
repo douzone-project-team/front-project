@@ -67,16 +67,19 @@ class SearchProductBar extends Component<{}, SearchState> {
             &nbsp;&nbsp;
             <AddItemButton size={35} onClick={this.handleAddClick}/>
           </BarRightBox>
-          <Modal
-              open={this.state.isModalOpen ?? false}
-              onClose={this.handleCloseModal}
-              closeAfterTransition
-              BackdropProps={{
-                invisible: true,
-                timeout: 500,
-              }}
-              key={this.state.isModalOpen ? 'modalOpen' : 'modalClosed'} // 문자열로 key 값 지정
-          >
+            <Modal
+                open={this.state.isModalOpen ?? false}
+                onClose={this.handleCloseModal}
+                closeAfterTransition
+                BackdropProps={{
+                    invisible: true,
+                    timeout: 500,
+                }}
+                style={{
+                    zIndex: 1, // 원하는 z-index 값으로 설정
+                }}
+                key={this.state.isModalOpen ? 'modalOpen' : 'modalClosed'} // 문자열로 key 값 지정
+            >
             <Fade in={this.state.isModalOpen || false}>
               <Paper
                   style={{

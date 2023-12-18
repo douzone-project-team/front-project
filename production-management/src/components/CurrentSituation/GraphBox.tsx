@@ -1,14 +1,13 @@
 // GraphBox 컴포넌트
 
-import React, {Component, ReactNode, RefObject, createRef} from 'react';
+import React, { Component, ReactNode, RefObject, createRef } from 'react';
 import * as echarts from 'echarts';
 import './font.css';
-
 
 interface GraphBoxProps {
     data: { value: number; name: string }[];
     labelText: string;
-    colors: string[]; // 새로운 프로퍼티: 그래프의 색상 배열
+    colors: string[];
 }
 
 class GraphBox extends Component<GraphBoxProps> {
@@ -21,11 +20,26 @@ class GraphBox extends Component<GraphBoxProps> {
 
     componentDidMount() {
         this.initializeChart();
+        window.addEventListener('resize', this.resizeChart);
     }
 
     componentDidUpdate() {
         this.initializeChart();
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.resizeChart);
+    }
+
+    resizeChart = () => {
+        const chartRefCurrent = this.chartRef.current;
+        if (chartRefCurrent) {
+            const myChart = echarts.getInstanceByDom(chartRefCurrent);
+            if (myChart) {
+                myChart.resize();
+            }
+        }
+    };
 
     initializeChart() {
         const { data, labelText, colors } = this.props;
@@ -35,16 +49,15 @@ class GraphBox extends Component<GraphBoxProps> {
             const myChart = echarts.init(chartDom);
 
             const option = {
-                color: colors, // 색상을 외부에서 전달받은 배열로 설정
+                color: colors,
                 title: {
-
                     left: '8',
-                    text: labelText + " 현황",
+                    text: labelText + ' 현황',
                     textStyle: {
                         fontFamily: 'S-CoreDream-3Light',
-                        fontSize:'1.5em',
-                        fontWeight:'600',
-                        color: '#4D4D4D'
+                        fontSize: '1.5em',
+                        fontWeight: '600',
+                        color: '#4D4D4D',
                     },
                     top: 15,
                 },
@@ -54,7 +67,7 @@ class GraphBox extends Component<GraphBoxProps> {
                 legend: {
                     orient: 'vertical',
                     top: 'bottom',
-                    left: 'left'
+                    left: 'left',
                 },
                 series: [
                     {
@@ -73,8 +86,8 @@ class GraphBox extends Component<GraphBoxProps> {
                             label: {
                                 show: true,
                                 fontSize: 30,
-                                fontWeight: 'bold'
-                            }
+                                fontWeight: 'bold',
+                            },
                         },
                         labelLine: {
                             show: false,

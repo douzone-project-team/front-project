@@ -4,7 +4,9 @@ export const initialSearchState = {
   pageSize: 8,
   page: 1
 };
-
+export const initialDuplicateProductCodeResult = {
+  duplicateResult : false
+}
 export const initialProductPageState = {
   list: [],
   currentPage: 0,
@@ -26,4 +28,7 @@ export const initialProductInstruction = {
   productNo: 0,
   remain_amount: 0,
   amount: 0
+}
+export const initialCheckProductCode = {
+  productCode : ''
 }
