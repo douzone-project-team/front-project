@@ -86,6 +86,7 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                 const idPattern = /^[a-zA-Z0-9]{4,}$/;
                 const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{6,}$/;
                 const telPattern = /^[0-9]{11}$/;
+                const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
                 if(modifyValue.name.length === 0 || modifyValue.id.length === 0 || modifyValue.password.length === 0){
                     this.alertMessage('warning', '', '필수입력칸에 빈칸이 존재합니다.');
@@ -105,6 +106,12 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                 const tel= modifyValue.tel1 + modifyValue.tel2 + modifyValue.tel3;
                 if(!telPattern.test(tel) && modifyValue.tel1 && modifyValue.tel2 && modifyValue.tel3){
                     this.alertMessage('warning', '', '연락처의 형식이 잘못되었습니다. (예: 010-1234-5678');
+                    return;
+                }
+
+                const email= modifyValue.email1 + '@' + modifyValue.email2;
+                if(!emailPattern.test(email) && modifyValue.email1 && modifyValue.email2 ){
+                    this.alertMessage('warning', '', '이메일의 형식이 잘못되었습니다.');
                     return;
                 }
 
@@ -232,9 +239,9 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                                                  border: '1.5px solid #D3D3D3',
                                                  borderRadius: '4px'
                                              }}
-                                            onError={(e) => {
-                                                e.currentTarget.src = defaultImage;
-                                            }}
+                                             onError={(e) => {
+                                                 e.currentTarget.src = defaultImage;
+                                             }}
                                         />
                                     ) : (
                                         <img src={defaultImage} />
@@ -302,10 +309,10 @@ export class EmployeeModifyModal extends Component<EmployeeModalProps, EmployeeM
                                     사번 <span style={{color: 'red'}}>*</span>
                                 </label>
                                 <input
-                                        type="text"
-                                        className="form-input"
-                                        defaultValue={employee.employeeNo}
-                                        disabled
+                                    type="text"
+                                    className="form-input"
+                                    defaultValue={employee.employeeNo}
+                                    disabled
                                 />
                                 <label className="form-label">
                                     아이디 <span style={{color: 'red'}}>*</span>

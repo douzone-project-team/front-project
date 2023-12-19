@@ -4,6 +4,7 @@ import {EmployeeContext} from '../../store/Employee/employee-context';
 import {EmployeeState, UpdateEmployee} from '../../object/Employee/employee-object';
 import {initialUpdateEmployee} from "../../state/employeeStateMangement";
 import ProfileImage from "./ProfileImage";
+import Swal from "sweetalert2";
 
 const boldCellStyle = {
     fontWeight: 'bold',
@@ -30,8 +31,11 @@ let modifyValue = {
     password: '',
     passwordConfirm: '',
     name: '',
-    tel: '',
-    email: '',
+    tel1: '',
+    tel2: '',
+    tel3: '',
+    email1: '',
+    email2: '',
 }
 
 class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
@@ -70,23 +74,24 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
         const state = this.context as EmployeeState;
         const employee = state.employee;
 
-        if(!this.validateName(modifyValue.name)){
-            alert('2글자 이상의 이름을 입력해주세요.');
+        const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{6,}$/;
+        const telPattern = /^[0-9]{11}$/;
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+        if(!passwordPattern.test(modifyValue.password) && modifyValue.password){
+            this.alertMessage('warning', '', '비밀번호는 최소 6자 이상이어야 합니다.');
             return;
         }
 
-        if(!this.validateEmail(modifyValue.email)){
-            alert('올바른 이메일을 입력해주세요.');
+        const tel= modifyValue.tel1 + modifyValue.tel2 + modifyValue.tel3;
+        if(!telPattern.test(tel) && modifyValue.tel1 && modifyValue.tel2 && modifyValue.tel3){
+            this.alertMessage('warning', '', '연락처의 형식이 잘못되었습니다. (예: 010-1234-5678');
             return;
         }
 
-        if(this.state.password && this.state.password.length < 6){
-            alert('비밀번호는 6글자 이상이어야 합니다.');
-            this.setState(prevState => ({
-                oldPassword: '',
-                password: '',
-                passwordConfirm: '',
-            }));
+        const email= modifyValue.email1 + '@' + modifyValue.email2;
+        if(!emailPattern.test(email) && modifyValue.email1 && modifyValue.email2 ){
+            this.alertMessage('warning', '', '이메일의 형식이 잘못되었습니다.');
             return;
         }
 
@@ -104,27 +109,38 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
             oldPassword: modifyValue.oldPassword,
             password: modifyValue.password,
             name: modifyValue.name,
-            tel: modifyValue.tel,
-            email: modifyValue.email
+            tel: modifyValue.tel1 + modifyValue.tel2 + modifyValue.tel3,
+            email: modifyValue.email1 && modifyValue.email2 ? modifyValue.email1 + '@' + modifyValue.email2 : '',
         };
 
         state.updateEmployee(employee.employeeNo, updateEmployeeObj);
+    };
+
+    alertMessage = (icon: string, title: string, text: string) => {
+        // @ts-ignore
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: text
+        });
     };
 
     render() {
         const state = this.context as EmployeeState;
         const employee = state.employee;
 
-        if (!employee || !employee.tel || !employee.email) {
-            return null;
-        }
+        const tel = employee.tel || '';
+        const telArray = tel.split("-");
 
-        const [tel1, tel2, tel3] = employee.tel.split('-');
-        const [email1, email2] = employee.email.split('@');
+        const email = employee.email || '';
+        const emailArray = email.split("@")
 
         modifyValue.name = employee.name;
-        modifyValue.tel = tel1 + tel2 + tel3;
-        modifyValue.email = email1 + email2;
+        modifyValue.tel1 = telArray[0];
+        modifyValue.tel2 = telArray[1];
+        modifyValue.tel3 = telArray[2];
+        modifyValue.email1 = emailArray[0];
+        modifyValue.email2 = emailArray[1];
 
         return (
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '60%'}}>
@@ -150,7 +166,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         modifyValue.name = event.target.value;
                                     }}
-                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
+                                    style={{ width: '300px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -164,7 +180,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         this.setState({oldPassword: event.target.value})
                                     }}
-                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
+                                    style={{ width: '300px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -178,7 +194,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         this.setState({password: event.target.value})
                                     }}
-                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
+                                    style={{ width: '300px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -192,7 +208,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                     onChange={event => {
                                         this.setState({passwordConfirm: event.target.value})
                                     }}
-                                    style={{ width: '200px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
+                                    style={{ width: '300px', height: '25px', fontFamily: 'S-CoreDream-3Light'}}
                                 />
                             </TableCell>
                         </TableRow>
@@ -201,33 +217,35 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                             <TableCell>
                                 <input
                                     type="text"
-                                    defaultValue={tel1}
+                                    defaultValue={telArray[0]}
                                     onChange={event => {
-                                        modifyValue.tel = `${event.target.value}${tel2}${tel3}`;
+                                        modifyValue.tel1 = event.target.value;
                                     }}
-                                    style={{ width: '59px', height: '25px', fontFamily: 'S-CoreDream-3Light',
+                                    style={{ width: '93px', height: '25px', fontFamily: 'S-CoreDream-3Light',
                                         marginRight: '3px'
                                     }}
                                 />
                                 -
                                 <input
                                     type="text"
-                                    defaultValue={tel2}
+                                    defaultValue={telArray[1]}
                                     onChange={event => {
-                                        modifyValue.tel = `${tel1}${event.target.value}${tel3}`;
+                                        modifyValue.tel2 = event.target.value;
                                     }}
-                                    style={{ width: '59px', height: '25px', fontFamily: 'S-CoreDream-3Light'
-                                        , marginLeft: '3px', marginRight: '3px'}}
+                                    style={{ width: '93px', height: '25px', fontFamily: 'S-CoreDream-3Light',
+                                        marginRight: '3px', marginLeft: '3px'
+                                    }}
                                 />
                                 -
                                 <input
                                     type="text"
-                                    defaultValue={tel3}
+                                    defaultValue={telArray[2]}
                                     onChange={event => {
-                                        modifyValue.tel = `${tel1}${tel2}${event.target.value}`;
+                                        modifyValue.tel3 = event.target.value;
                                     }}
-                                    style={{ width: '59px', height: '25px', fontFamily: 'S-CoreDream-3Light',
-                                        marginLeft: '3px'}}
+                                    style={{ width: '93px', height: '25px', fontFamily: 'S-CoreDream-3Light',
+                                        marginRight: '3px',  marginLeft: '3px'
+                                    }}
                                 />
                             </TableCell>
                         </TableRow>
@@ -236,20 +254,21 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                             <TableCell>
                                 <input
                                     type="text"
-                                    defaultValue={email1}
+                                    defaultValue={emailArray[0]}
                                     onChange={event => {
-                                        modifyValue.email = event.target.value;
+                                        modifyValue.email1 = event.target.value;
                                     }}
-                                    style={{ width: '60px', height: '25px', fontFamily: 'S-CoreDream-3Light', marginRight: '5px'}}
+                                    style={{ width: '103px', height: '25px', fontFamily: 'S-CoreDream-3Light', marginRight: '5px'}}
                                 />
                                 @
                                 <input
                                     type="text"
-                                    defaultValue={email2}
+                                    defaultValue={emailArray[1]}
                                     onChange={event => {
-                                        modifyValue.email = event.target.value;
+                                        modifyValue.email2 = event.target.value;
                                     }}
-                                    style={{ width: '115px', height: '25px', fontFamily: 'S-CoreDream-3Light', marginLeft: '5px'}}
+                                    style={{ width: '175px', height: '25px', fontFamily: 'S-CoreDream-3Light',
+                                        marginRight: '5px', marginLeft: '5px'}}
                                 />
                             </TableCell>
                         </TableRow>
