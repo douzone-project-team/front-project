@@ -7,12 +7,14 @@ type DateInputProps = {
   startDate: {
     datalaceholder: string,
     onChange: (evt: ChangeEvent<HTMLInputElement>) => void,
-    required?: boolean
+    required?: boolean,
+    defaultValue?: string
   }
   endDate?: {
     datalaceholder: string,
     onChange: (evt: ChangeEvent<HTMLInputElement>) => void,
-    required?: boolean
+    required?: boolean,
+    defaultValue?: string
   }
 }
 
@@ -67,6 +69,7 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
                    startDate.onChange(e);
                    this.setState({start: e.target.value});
                  }}
+                 defaultValue={startDate.defaultValue}
                  max={end}
           />
           {endDate ? <span>&nbsp;&nbsp;~</span> : null}
@@ -83,6 +86,7 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
                        endDate.onChange(e);
                        this.setState({end: e.target.value})
                      }}
+                     defaultValue={endDate.defaultValue}
                      min={start}
               /> : null}
         </label>
