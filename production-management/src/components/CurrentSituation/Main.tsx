@@ -46,7 +46,7 @@ const downDivStyle = {
     minWidth: '1100px',
     minHeight: '250px',
     display: 'flex',
-    marginTop: '40px'
+    marginTop: '30px'
 };
 const welcomeStyle = {
     height: '20%',
