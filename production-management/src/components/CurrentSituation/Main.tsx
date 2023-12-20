@@ -26,7 +26,6 @@ type ProfileImageState = {
 const containerStyle = { // 최상위 div
     display: 'flex',
     flexDirection: 'column' as const,
-    height: '100%',
     marginTop: '1%',
     marginLeft: '3%',
     marginRight: '3%'
@@ -46,7 +45,7 @@ const downDivStyle = {
     minWidth: '1100px',
     minHeight: '250px',
     display: 'flex',
-    marginTop: '30px'
+    marginTop: '15px'
 };
 const welcomeStyle = {
     height: '20%',
@@ -179,6 +178,9 @@ class Main extends Component <ProfileImageProps>{
         const deliveryColors = ['#F77D93', '#F2BDD8', '#98FB98']; // 출고 색상
         const storedEmployeeData = localStorage.getItem('employee');
         const employeeData = storedEmployeeData ? JSON.parse(storedEmployeeData) : {};
+
+        const role = employeeData.role === 'ROLE_ADMIN' ? '관리자' : '사원';
+
         return (
             <div style={containerStyle}>
                 <div style={topDivStyle}>
@@ -191,7 +193,7 @@ class Main extends Component <ProfileImageProps>{
                                fontWeight: '900',
                                marginTop: '0.5%'
                            }}>
-                                안녕하세요.{' '} <span style={{color: '#3A4CA8', marginLeft: '0.5em'}}>{state.employee.name} 사원님</span>😁 오늘도 즐거운 하루 되세요.
+                                안녕하세요.{' '} <span style={{color: '#3A4CA8', marginLeft: '0.5em'}}>{state.employee.name} {role}님</span>😁 오늘도 즐거운 하루 되세요.
                         </span>
                     </div>
                     <div style={{display: 'flex', height: '100%',minWidth:'100%'}}>
@@ -203,7 +205,7 @@ class Main extends Component <ProfileImageProps>{
                         <span
                             style={{color: '#444444', fontSize: '30px', fontWeight: '900'}}>
                             <SupervisorAccount style={{color: '#444444'}}/>
-                            &nbsp;{state.employee.name} 사원
+                            &nbsp;{state.employee.name} {role}
                             </span><br/><br/>
                                 <span style={{
                                     color: '#3A4CA8',
