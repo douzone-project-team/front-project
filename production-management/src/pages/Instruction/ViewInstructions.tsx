@@ -121,7 +121,7 @@ class ViewInstructions extends Component<Props, State> {
 
     return (
         <Layout>
-          <Title title='지시현황'/>
+          <Title title='지시현황' minWidth='1300px'/>
           <Body>
             <SearchBox minWidth='1250px'>
               <SearchInstructionBar/>
