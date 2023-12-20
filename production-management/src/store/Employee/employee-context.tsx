@@ -170,7 +170,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                     this.setState({employee: data});
                     Swal.fire({
                         icon: "success",
-                        text: `${data.name} 사원의 정보가 업데이트 되었습니다.`,
+                        text: '정보 수정이 완료되었습니다.',
                     });
                     this.getEmployee(employeeNo);
                 }).catch((error) => {
