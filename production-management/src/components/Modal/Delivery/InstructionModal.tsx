@@ -8,6 +8,7 @@ import {SearchBox} from "../../../core/box/SearchBox";
 import {TableBox} from "../../../core/box/TableBox";
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DeliverySearchInstructionBar from "../../Delivery/DeliverySearchInstructionBar";
+import {InstructionsState} from "../../../object/Instruction/Instruction-object";
 
 type InstructionModalProps = {
   onClose: () => void,
@@ -52,6 +53,11 @@ export class InstructionModal extends Component<InstructionModalProps, Instructi
         this.state.instruction.customerName,
     );
     onClose();
+  }
+
+  componentDidMount() {
+    const state = this.context as InstructionsState;
+    state.getInstructionList();
   }
 
   render() {
