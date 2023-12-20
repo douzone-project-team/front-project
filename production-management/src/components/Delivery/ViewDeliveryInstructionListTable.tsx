@@ -19,7 +19,7 @@ import {Loading} from "../../core/Loading";
 
 type Props = {
     setInstruction: (addInstruction: AddInstruction) => void
-    tableSize: boolean
+    tableSize: boolean,
 }
 
 const boldCellStyle = {
@@ -38,7 +38,7 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
 
     render() {
         const state = this.context as InstructionsState;
-        const list = state.instructionPage.list || [];
+        const list = state.instructionPage.list;
         const currentPage = state.instructionPage.currentPage;
 
         const handleNextPage = () => {

@@ -141,7 +141,7 @@ class ViewDeliveryTable extends Component<Props, State> {
             confirmButtonText: "삭제",
             cancelButtonText: "취소"
         }).then((result) => {
-            if(result.dismiss === Swal.DismissReason.cancel) {
+            if (!result.isConfirmed) {
                 return;
             }
             Swal.fire({
@@ -203,7 +203,7 @@ class ViewDeliveryTable extends Component<Props, State> {
             reverseButtons: true,
             focusCancel: true
         }).then((result) => {
-            if (result.dismiss === Swal.DismissReason.cancel) {
+            if (!result.isConfirmed) {
                 return;
             }
             state.updateDeliveryStatus(deliveryNo);

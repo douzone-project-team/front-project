@@ -19,13 +19,6 @@ let searchValue = {
 class DeliverySearchInstructionBar extends Component {
   static contextType = InstructionsContext;
 
-    componentDidMount= async () => {
-        const state = this.context as InstructionsState;
-
-        state.search.page = 1;
-        state.setSearch(searchValue);
-    }
-
   handleSearchClick = () => {
     const state = this.context as InstructionsState;
     state.search.page = 1;
@@ -66,8 +59,9 @@ class DeliverySearchInstructionBar extends Component {
                       this.handleSearchProgressState(e.target.value);
                     }}
                 >
-                  <option value="STANDBY">준비</option>
-                  <option value="PROGRESS">진행중</option>
+                    <option value="">전체</option>
+                    <option value="STANDBY">준비</option>
+                    <option value="PROGRESS">진행중</option>
                 </select>
               </label>
               <DateInput title='지시일'
