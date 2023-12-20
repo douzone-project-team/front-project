@@ -26,10 +26,8 @@ interface TodoItem {
 }
 
 const TodoStyle = {
-    width: '18vw',
-    maxWidth: '18vw',
-    height: '15vh',
-    maxHeight: '15vh',
+    width: '50%',
+    height: '150px',
     marginBottom: '1%',
     marginTop: '2%',
     marginRight: '2%',
@@ -54,15 +52,15 @@ const TodoStyle = {
 
 
 const Todoinput = {
-    width: '8vw',
-    height: '4vh',
+    width: '80px',
+    height: '40px',
     borderRadius: '20px',
     border: 0,
     boxShadow: '0 1px 7px rgba(0, 0, 0, 0.15)',
     paddingLeft: '5%',
     marginLeft: '5%',
     marginTop: '-5%',
-    fontSize:'1.5vh'
+    fontSize:'15px'
 };
 
 const addTodoButtonImage = require('../../../images/button/add-todo-button.png');
