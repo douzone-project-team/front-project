@@ -26,10 +26,10 @@ interface TodoItem {
 }
 
 const TodoStyle = {
-    width: '100%',
-    maxWidth: '100%',
-    height: '138px',
-    maxHeight: '138px',
+    width: '18vw',
+    maxWidth: '18vw',
+    height: '15vh',
+    maxHeight: '15vh',
     marginBottom: '1%',
     marginTop: '2%',
     marginRight: '2%',
@@ -54,14 +54,15 @@ const TodoStyle = {
 
 
 const Todoinput = {
-    width: '100%',
-    height: '100%',
+    width: '8vw',
+    height: '4vh',
     borderRadius: '20px',
     border: 0,
     boxShadow: '0 1px 7px rgba(0, 0, 0, 0.15)',
     paddingLeft: '5%',
     marginLeft: '5%',
-    marginTop: '-5%'
+    marginTop: '-5%',
+    fontSize:'1.5vh'
 };
 
 const addTodoButtonImage = require('../../../images/button/add-todo-button.png');
@@ -251,7 +252,8 @@ class TodoList extends Component<{}, TodoListState> {
                                     }}
                                 >
                                     <div style={{display: 'flex'}}>
-                                        <h2 style={{marginTop: '0%', color: '#F595BA'}}>Todo list</h2>
+                                        <span style={{marginTop: '0%', color: '#F595BA', fontSize:'2.5vh',
+                                        fontWeight:'700'}}> Todo list</span>
                                         <form
                                             style={{display: 'flex'}}
                                             onSubmit={(e) => {
@@ -275,7 +277,7 @@ class TodoList extends Component<{}, TodoListState> {
                                                             marginLeft: '5px',
                                                             cursor: 'pointer',
                                                             color: 'red',
-                                                            fontSize: '1.2em',
+                                                            fontSize: '1.8vh',
                                                         }}
                                                     >
                 ❌
@@ -285,8 +287,8 @@ class TodoList extends Component<{}, TodoListState> {
                                                 <div
                                                     onClick={this.toggleInput}
                                                     style={{
-                                                        width: '30px',
-                                                        height: '30px',
+                                                        width: '3.5vh',
+                                                        height: '3.5vh',
                                                         marginLeft: '5px',
                                                         backgroundImage: `url(${addTodoButtonImage})`,
                                                         backgroundSize: 'cover',
@@ -328,7 +330,8 @@ class TodoList extends Component<{}, TodoListState> {
                                         ...TodoStyle,
                                     }}
                                 >
-                                    <h2 style={{marginTop: '0%', color: '#3A4CA8'}}>Finish</h2>
+                                     <span style={{marginTop: '0%', color: '#3A4CA8', fontSize:'2.5vh',
+                                         fontWeight:'700'}}>Finish</span>
                                     {this.state.done?.map((item, index) => (
                                         <Draggable key={item.todoNo || index} draggableId={item.todoNo?.toString() || index.toString()} index={index}>
                                             {(provided, snapshot) => (

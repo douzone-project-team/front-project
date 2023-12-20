@@ -42,7 +42,7 @@ const downDivStyle = {
     width: '95%',
     height: '80%',
     display: 'flex',
-    marginTop: '2.5%'
+    marginTop: '5.5vh'
 };
 const welcomeStyle = {
     height: '20%',
@@ -73,15 +73,16 @@ const boxPartStyle = {
     display: 'flex',
     flexDirection: 'column' as const,
     width: '49%',
-    height: '100%',
+    height: '60vh',
 };
 const graphBoxStyle = {
     width: '49%',
-    height: '100%',
+    height: '60vh',
     marginLeft: '2%',
 };
 const MainStyle={
-    fontWeight: 'bold',marginLeft:'5%'
+    fontWeight: 'bold',marginLeft:'5%',
+    fontSize:'1.8vh'
 }
 const SubStyle = {
     alignSelf: 'center', marginTop: '-5%',marginLeft:'25%'
@@ -93,7 +94,7 @@ const userDiv = {
     borderRadius: '5px',
     paddingLeft: '2%',
     paddingTop: '1%',
-    marginTop: '1%',
+    marginTop: '1vh',
     backgroundColor: 'white',
     boxShadow: boxShadowStyle,
     display: 'flex',
@@ -162,7 +163,7 @@ class Main extends Component <ProfileImageProps>{
                            style={{
                                display: 'flex',
                                marginLeft: '1%',
-                               fontSize: '1.5em',
+                               fontSize: '2.3vh',
                                fontWeight: '900',
                                marginTop: '0.5%'
                            }}>
@@ -174,15 +175,15 @@ class Main extends Component <ProfileImageProps>{
                             <div>
                                 <MainImage/>
                             </div>
-                            <div style={{margin: '1%', paddingRight: '20%', marginLeft: '2%',width:'50%',minWidth:'50%'}}>
+                            <div style={{margin: '1%', marginLeft: '2%',minWidth:'40%'}}>
                         <span
-                            style={{color: '#444444', fontSize: '1.8em', fontWeight: '900'}}>
+                            style={{color: '#444444', fontSize: '3vh', fontWeight: '900'}}>
                             <SupervisorAccount style={{color: '#444444'}}/>
                             &nbsp;{state.employee.name} 사원
                             </span><br/><br/>
                                 <span style={{
                                     color: '#3A4CA8',
-                                    fontSize: '1.2em',
+                                    fontSize: '2vh',
                                     fontWeight: '600',
                                     display: 'flex',
                                     alignItems: 'center'
@@ -190,7 +191,7 @@ class Main extends Component <ProfileImageProps>{
                                     style={{color: '#3A4CA8'}}/>&nbsp;&nbsp;{state.employee.email}</span><br/>
                                 <span style={{
                                     color: '#63992B',
-                                    fontSize: '1.2em',
+                                    fontSize: '2vh',
                                     fontWeight: '600',
                                     display: 'flex',
                                     alignItems: 'center'
@@ -206,11 +207,11 @@ class Main extends Component <ProfileImageProps>{
                     <div style={boxPartStyle}>
                         <div>
                         <span
-                            style={{fontSize: '1.8em', fontWeight: '800',height:'auto'}}>메뉴별 현황</span>
+                            style={{fontSize: '2.5vh', fontWeight: '800',height:'auto'}}>메뉴별 현황</span>
                         </div>
                         <div style={{
                             display: 'flex', backgroundColor: '#FFFFFF', boxShadow: boxShadowStyle,
-                            height: '45%',justifyContent: 'space-between',marginTop:'2%'
+                            height: '27vh',justifyContent: 'space-between',marginTop:'2%'
                         }}>
                             <div>
                                 <div style={{...BoxDivStyle,marginLeft:'25%'}}  onClick={() => {
@@ -220,18 +221,18 @@ class Main extends Component <ProfileImageProps>{
                                         <div style={{display: 'flex'}}>
                                             <AssignmentIcon style={{fontSize: '1.6em', marginTop: '1%'}}/>
                                             <span style={{
-                                                fontSize: '1.5em',
+                                                fontSize: '2.3vh',
                                                 fontWeight: '900',
                                             }}>지시 건수</span>
                                         </div>
-                                        <span style={{marginTop: '2%', color: 'gray'}}>금월, 누적 지시 건수를 나타냅니다.</span>
+                                        <span style={{marginTop: '2%', color: 'gray', fontSize:'1.5vh'}}>금월, 누적 지시 건수를 나타냅니다.</span>
                                     </div>
                                     <div style={{display: 'flex',flexDirection: 'column'}}>
                                         <div style={{...BoxStyle, backgroundColor: "#C8DDED"}}>
                                             <span style={MainStyle}>금월 총 지시</span>
                                             <div style={SubStyle}>
                                             <span style={{
-                                                fontSize: '2.1em',
+                                                fontSize: '3.3vh',
                                                 marginLeft: '1em',
                                                 fontWeight: '900'
                                             }}>{state.currentBox.instruction?.thisMonthCount}</span>
@@ -245,7 +246,7 @@ class Main extends Component <ProfileImageProps>{
                                             <span style={MainStyle}>누적 총 지시</span>
                                             <div style={SubStyle}>
                                             <span style={{
-                                                fontSize: '2.1em',
+                                                fontSize: '3.3vh',
                                                 marginLeft: '1em',
                                                 fontWeight: '900'
                                             }}>{state.currentBox.instruction?.allCount}</span>
@@ -263,12 +264,12 @@ class Main extends Component <ProfileImageProps>{
                                         <div style={{display: 'flex'}}>
                                             <LocalShippingIcon style={{fontSize: '1.6em', marginTop: '1%'}}/>
                                             <span style={{
-                                                fontSize: '1.5em',
+                                                fontSize: '2.3vh',
                                                 fontWeight: '900',
                                                 marginLeft: '1%'
                                             }}>출고 건수</span>
                                         </div>
-                                        <span style={{marginTop: '2%', color: 'gray'}}>금월, 누적 출고 건수를 나타냅니다.</span>
+                                        <span style={{marginTop: '2%', color: 'gray', fontSize:'1.5vh'}}>금월, 누적 출고 건수를 나타냅니다.</span>
                                     </div>
                                     <div style={{display: 'flex',flexDirection: 'column'}}>
                                         <div style={{...BoxStyle, backgroundColor: "#C8DDED"
@@ -276,7 +277,7 @@ class Main extends Component <ProfileImageProps>{
                                             <span style={MainStyle}> 금월 총 출고</span>
                                             <div style={SubStyle}>
                                             <span style={{
-                                                fontSize: '2.1em',
+                                                fontSize: '3.3vh',
                                                 marginLeft: '1em',
                                                 fontWeight: '900'
                                             }}>{state.currentBox.delivery?.thisMonthCount}</span>
@@ -291,7 +292,7 @@ class Main extends Component <ProfileImageProps>{
                                             <div style={SubStyle}>
                                             <span
                                                 style={{
-                                                    fontSize: '2.1em',
+                                                    fontSize: '3.3vh',
                                                     marginLeft: '1em',
                                                     fontWeight: '900'
                                                 }}>{state.currentBox.delivery?.allCount}</span>
@@ -314,18 +315,18 @@ class Main extends Component <ProfileImageProps>{
                                         <div style={{display: 'flex'}}>
                                             <AccessAlarmIcon style={{fontSize: '1.6em', marginTop: '1%'}}/>
                                             <span style={{
-                                                fontSize: '1.5em',
+                                                fontSize: '2.5vh',
                                                 fontWeight: '900',
                                             }}>마감 위험</span>
                                         </div>
-                                        <span style={{marginTop: '2%', color: 'gray'}}>가장 마감일에 인접한 지시를 나타냅니다.</span>
+                                        <span style={{marginTop: '2%', color: 'gray', fontSize:'1.5vh'}}>가장 마감일에 인접한 지시를 나타냅니다.</span>
                                     </div>
                                     <div style={{display: 'flex', flexDirection:'column',height:'60'}}>
                                         <div style={{...BoxStyle, backgroundColor: "#F2BDD8"}}>
                                             <span style={MainStyle}>마감일 : {state.currentBox.expirationDateNearInstruction.length > 0 ? state.currentBox.expirationDateNearInstruction[0].expirationDate : ''}</span>
                                             <div style={{...SubStyle, marginTop:'3%'}}>
                                            <span style={{
-                                               fontSize: '1.3em',
+                                               fontSize: '2vh',
                                                fontWeight: '900'
                                            }}>{state.currentBox.expirationDateNearInstruction.length > 0 ? state.currentBox.expirationDateNearInstruction[0].instructionNo : ''}</span>
                                             </div>
@@ -334,7 +335,7 @@ class Main extends Component <ProfileImageProps>{
                                             <span style={MainStyle}>마감일 : {state.currentBox.expirationDateNearInstruction.length > 0 ? state.currentBox.expirationDateNearInstruction[1].expirationDate : ''}</span>
                                             <div style={{...SubStyle, marginTop:'3%'}}>
                                            <span style={{
-                                               fontSize: '1.3em',
+                                               fontSize: '2vh',
                                                fontWeight: '900'
                                            }}>{state.currentBox.expirationDateNearInstruction.length > 0 ? state.currentBox.expirationDateNearInstruction[1].instructionNo : ''}</span>
                                             </div>
@@ -350,19 +351,19 @@ class Main extends Component <ProfileImageProps>{
                                         <div style={{display: 'flex'}}>
                                             <BusinessIcon style={{fontSize: '1.6em', marginTop: '1%'}}/>
                                             <span style={{
-                                                fontSize: '1.5em',
+                                                fontSize: '2.5vh',
                                                 fontWeight: '900',
                                                 marginLeft: '1%'
                                             }}>거래처</span>
                                         </div>
-                                        <span style={{marginTop: '2%', color: 'gray'}}>가장 거래량이 많은 거래처를 나타냅니다</span>
+                                        <span style={{marginTop: '2%', color: 'gray', fontSize:'1.5vh'}}>가장 거래량이 많은 거래처를 나타냅니다</span>
                                     </div>
                                     <div style={{display: 'flex', flexDirection:'column'}}>
                                         <div style={{...BoxStyle, backgroundColor: "#FFCD4A"}}>
                                             <span style={MainStyle}>최다 거래량 1등</span>
                                             <div style={{...SubStyle, marginTop:'3%'}}>
                                             <span style={{
-                                                fontSize: '1.3em',
+                                                fontSize: '2.2vh',
                                                 marginLeft: '1em',
                                                 fontWeight: '900'
                                             }}>{state.currentBox.customer.length > 0? state.currentBox.customer[0].customerName:''}</span>
@@ -375,7 +376,7 @@ class Main extends Component <ProfileImageProps>{
                                             <span style={MainStyle}>최다 거래량 2등</span>
                                             <div style={{...SubStyle, marginTop:'3%'}}>
                                             <span style={{
-                                                fontSize: '1.3em',
+                                                fontSize: '2.2vh',
                                                 marginLeft: '1em',
                                                 fontWeight: '900'
                                             }}>{state.currentBox.customer.length > 0? state.currentBox.customer[1].customerName:''}</span>
@@ -387,10 +388,15 @@ class Main extends Component <ProfileImageProps>{
                         </div>
                     </div>
                     <div style={graphBoxStyle}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <span
-                                style={{fontSize: '1.8em', fontWeight: '800',height:'auto'}}>기간별 현황</span>
-                            <ButtonGroup size="small" color="primary" aria-label="large outlined primary button group">
+                                style={{fontSize: '2.5vh', fontWeight: '800',height:'auto'}}>기간별 현황</span>
+                            <ButtonGroup
+                                size="small"
+                                color="primary"
+                                aria-label="large outlined primary button group"
+                                style={{ minHeight:'30px',minWidth:'30px', marginTop:'0.1vh',height:'1vh' }} // 버튼 그룹이 확대되도록 함
+                            >
                                 <Button
                                     onClick={() => {
                                         this.handleGraphButtonClick('D');
@@ -420,10 +426,10 @@ class Main extends Component <ProfileImageProps>{
                                 </Button>
                             </ButtonGroup>
                         </div>
-                        <div style={{height: '45%',marginTop:'2%'}}>
+                        <div style={{height: '27vh',marginTop:'2%'}}>
                             <div
                                 style={{
-                                    height: '100%',
+                                    height: '27vh',
                                     backgroundColor: '#FFFFFF',
                                     boxShadow: boxShadowStyle,
                                 }}>

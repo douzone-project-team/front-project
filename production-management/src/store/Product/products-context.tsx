@@ -114,7 +114,6 @@ export class ProductsContextProvider extends Component<Props, ProductsState> {
             // productAction을 이용하여 제품 등록 요청을 보냅니다.
             productAction.regiProducts(productCode, productName, standard, unit ,weight, price)
                 .then((result) => {
-                    alert(productCode);
                 })
                 .catch((error) => {
                     // 제품 등록 중 오류가 발생한 경우에 대한 처리를 추가할 수 있습니다.
