@@ -9,6 +9,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import './DeliveryProductModal.css';
 import { TableBox } from "../../../core/box/TableBox";
 import Swal from "sweetalert2";
+import {InstructionsState} from "../../../object/Instruction/Instruction-object";
 
 type DeliveryProductModalProps = {
     onClose: () => void,
@@ -39,11 +40,13 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
         };
     }
 
+
     setProduct = (product: AddProduct) => {
         this.setState({product: {...product, instructionNo: this.state.instructionNo}});
     }
 
     addDeliveryProduct = () => {
+        const state = this.context as InstructionsState;
         const {onClose, addDeliveryProduct} = this.props
         const {product, instructionNo} = this.state;
 
@@ -65,6 +68,7 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
 
         addDeliveryProduct(instructionNo, product.productNo, product.productCode, product.amount, product.remainAmount);
         onClose();
+        state.cleanInstruction();
     }
 
     handleAmountBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -89,13 +93,15 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
     render() {
         const {onClose, instructionNo} = this.props;
         const {product} = this.state;
+        const state = this.context as InstructionsState;
 
         return (
             <div className='modal'>
               <section className='modal-container' style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', height: '560px', width: '700px'}}>
                    <div className="modalHeader" style={{height: '55px'}}>
                         <div style={{display: 'flex'}}><DashboardIcon/>&nbsp;품목 등록</div>
-                        <button className="close" onClick={onClose}>
+                        <button className="close" onClick={() => {state.cleanInstruction();
+                                                                        onClose();}}>
                             &times;
                         </button>
                     </div>

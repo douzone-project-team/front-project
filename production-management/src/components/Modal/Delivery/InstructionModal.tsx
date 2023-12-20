@@ -26,7 +26,6 @@ type InstructionModalState = {
 export class InstructionModal extends Component<InstructionModalProps, InstructionModalState> {
   static contextType = InstructionsContext;
 
-
   constructor(props: InstructionModalProps) {
     super(props);
 
@@ -45,6 +44,7 @@ export class InstructionModal extends Component<InstructionModalProps, Instructi
   }
 
   addDeliveryInstruction = () => {
+    const state = this.context as InstructionsState;
     const {onClose, addDeliveryInstruction} = this.props as InstructionModalProps;
     addDeliveryInstruction(
         this.state.instruction.instructionNo,
@@ -53,6 +53,7 @@ export class InstructionModal extends Component<InstructionModalProps, Instructi
         this.state.instruction.customerName,
     );
     onClose();
+    state.cleanInstruction();
   }
 
   componentDidMount() {
@@ -61,6 +62,7 @@ export class InstructionModal extends Component<InstructionModalProps, Instructi
   }
 
   render() {
+    const state = this.context as InstructionsState;
     const {onClose} = this.props as InstructionModalProps;
     const {instruction} = this.state;
 
@@ -69,7 +71,8 @@ export class InstructionModal extends Component<InstructionModalProps, Instructi
           <section className='modal-container' style={{height: '625px', width: '1000px'}}>
             <div className="modalHeader" style={{height: '55px'}}>
               <div style={{display: 'flex'}}><AssignmentIcon/>&nbsp;지시 설정</div>
-              <button className="close" onClick={onClose}>
+              <button className="close" onClick={() => {state.cleanInstruction();
+                                                              onClose();}}>
                 &times;
               </button>
             </div>
