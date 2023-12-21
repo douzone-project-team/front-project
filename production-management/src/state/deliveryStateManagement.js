@@ -2,8 +2,8 @@ export const initialDeliverySearchState = {
     deliveryNo: '',
     progressStatus: '',
     employeeName: '',
-    startDate: '',
-    endDate: '',
+    startDate: new Date(new Date().setMonth(new Date().getMonth() - 2)).toISOString().split('T')[0],
+    endDate: new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString().split('T')[0],
     page: 1,
     pageSize: 8
 };

@@ -106,6 +106,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                            onChange: (e) => {
                              searchValue.startDate = e.target.value
                            },
+                           defaultValue: state.search.startDate,
                            required: true
                          }}
                          endDate={{
@@ -113,6 +114,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
                            onChange: (e) => {
                              searchValue.endDate = e.target.value
                            },
+                           defaultValue: state.search.endDate,
                            required: true
                          }}
               />
