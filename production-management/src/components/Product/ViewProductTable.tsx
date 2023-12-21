@@ -19,7 +19,6 @@ import {DetailTitle} from "../../core/DetailTitle";
 import {EditButton} from "../../core/button/EditButton";
 import {DeleteButton} from "../../core/button/DeleteButton";
 import Swal from "sweetalert2";
-import {CustomersState} from "../../object/Customer/customer-object";
 import {EmptyText} from "../../core/EmptyText";
 
 const boldCellStyle = {
@@ -54,7 +53,6 @@ class ViewProductTable extends Component<{}, DetailState> {
 
   componentDidUpdate(prevProps: any, prevState: DetailState) {
     if (this.state.isModalOpen !== prevState.isModalOpen) {
-
     }
   }
 
@@ -166,7 +164,7 @@ class ViewProductTable extends Component<{}, DetailState> {
                       <TableCell align="center"
                                  style={tableCellStyle}>{product.price.toLocaleString() + '원'}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{product.standard}</TableCell>
-                      <TableCell align="center" style={tableCellStyle}>{product.weight + 'g'}</TableCell>
+                      <TableCell align="center" style={tableCellStyle}>{product.weight.toLocaleString() + 'g'}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{product.unit.toLocaleString() + 'EA'}</TableCell>
                     </TableRow> :
                     <TableRow>

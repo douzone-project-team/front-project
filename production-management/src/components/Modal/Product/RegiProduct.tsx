@@ -5,7 +5,6 @@ import { Box } from "@material-ui/core";
 import './Modal.css';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import Swal from "sweetalert2";
-import {CustomersState} from "../../../object/Customer/customer-object";
 
 interface ModalProductProps {
     handleCloseModal: () => void;
@@ -96,6 +95,10 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
     onRegiClick = () => {
         if (!this.state.productName) {
             this.alertMessage('warning', '', '품명을 작성해주세요.');
+            return;
+        }
+        if (this.state.productName.length > 45) {
+            this.alertMessage('warning', '', '품목 이름은 45글자 이하여야 합니다.');
             return;
         }
         if (!this.state.productPrice) {
