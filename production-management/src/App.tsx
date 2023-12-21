@@ -26,7 +26,7 @@ export class PrivateRoute extends Component<PrivateRouteProps> {
       icon: "warning",
       text: "로그인 이후 접근 가능합니다.",
     });
-    return <Redirect to="/login"/>;
+    return <Redirect to="/"/>;
   }
 
 
@@ -62,7 +62,7 @@ class App extends Component {
             <PrivateRoute path="/delivery/add" component={AddDeliveries}/>
             <PrivateRoute path="/current/page" component={currentSituationpage}/>
             <PrivateRoute path="/employee/list" component={ViewEmployees}/>
-            <Route exact path="/login" component={Login}/>
+            <Route exact path="/" component={Login}/>
             <Route exact path="/error" component={Error500}/>
             <Route exact path="/not-found" component={Error404}/>
             <Route exact path="/*" component={Error404}/>
