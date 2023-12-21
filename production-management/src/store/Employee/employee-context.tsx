@@ -128,7 +128,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 timer: 1500,
                 showConfirmButton: false
             }).then(() => {
-                window.location.href="/login";
+                window.location.href="/";
             });
         },
 

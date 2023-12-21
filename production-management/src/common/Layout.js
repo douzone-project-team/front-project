@@ -86,15 +86,15 @@ const styles = theme => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing.unit * 7,
+        width: theme.spacing(7),
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing.unit * 9,
+            width: theme.spacing(9),
         },
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
-        padding: theme.spacing.unit * 3,
+        padding: theme.spacing(3),
         height: '100vh',
         overflow: 'auto',
     },
@@ -105,13 +105,13 @@ const styles = theme => ({
         height: 320,
     },
     h5: {
-        marginBottom: theme.spacing.unit * 2,
+        marginBottom: theme.spacing(3),
     },
     popover: {
         pointerEvents: 'none',
     },
     paper: {
-        padding: theme.spacing.unit,
+        padding: theme.spacing(),
     },
     overflowAuto: {
         overflowY: 'auto',
@@ -184,10 +184,9 @@ class Layout extends React.Component {
         const EventSource = EventSourcePolyfill || NativeEventSource;
 
         this.eventSource = new EventSource(
-            `/sse/subscribe`,
+            `http://localhost:8080/sse/subscribe`,
             {
                 headers: {
-                    baseURL: 'http://localhost:8080/',
                     Authorization: 'Bearer ' + localStorage.getItem('accessToken')
                 },
                 withCredentials: true,
@@ -383,7 +382,6 @@ class Layout extends React.Component {
                 >
                     <Toolbar disableGutters={!this.state.open} className={classes.toolbar}>
                         <IconButton
-                            color="#858891"
                             aria-label="Open drawer"
                             onClick={this.handleDrawerOpen}
                             className={classNames(
@@ -411,22 +409,20 @@ class Layout extends React.Component {
                         </Typography>
                         <AccountMenu/>
                         <IconButton
-                            color="#858891"
                             style={{marginLeft: '15px'}}
                             onClick={this.handleMessageOpen}
                             className={isMessageShaking ? classes.shakingNotificationIcon : null}
                         >
-                            <Badge badgeContent={messages.length} color="secondary">
+                            <Badge overlap={"rectangular"} badgeContent={messages.length} color="secondary">
                                 {messages.length === 0?<MailOutlineIcon/> : <MailIcon/>}
                             </Badge>
                         </IconButton>
                         <IconButton
-                            color="#858891"
                             style={{marginLeft: '15px'}}
                             onClick={this.handlePopoverOpen}
                             className={isNotificationShaking ? classes.shakingNotificationIcon : null}
                         >
-                            <Badge badgeContent={this.state.notifications.length} color="secondary">
+                            <Badge overlap={"rectangular"} badgeContent={this.state.notifications.length} color="secondary">
                                 {this.state.notifications.length !== 0 ? <NotificationsIcon/> : <NotificationsNoneIcon/>}
                             </Badge>
                         </IconButton>

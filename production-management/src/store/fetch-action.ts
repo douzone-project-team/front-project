@@ -72,7 +72,7 @@ class Fetcher {
       const accessToken = result?.data.accessToken;
       localStorage.setItem('accessToken', accessToken);
     } catch (error) {
-      window.location.href = '/login';
+      window.location.href = '/';
       return Promise.reject("토큰이 만료되었습니다. 로그인페이지로 이동합니다.");
     }
   }
