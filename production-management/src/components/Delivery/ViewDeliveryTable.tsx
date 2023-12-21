@@ -47,6 +47,7 @@ type Props = {
     existSelectedCheckBox: (productNo: number) => boolean,
     addSelectedCheckBox: (productNo: number) => void,
     clearCheckBoxes: () => void,
+    delivery: DeliveriesState['delivery'];
 }
 
 type State = {
@@ -82,6 +83,17 @@ class ViewDeliveryTable extends Component<Props, State> {
             if (firstDelivery) {
                 state.getDelivery(firstDelivery?.deliveryNo);
             }
+        }
+    }
+
+    componentDidUpdate(prevProps: Props) {
+        const { delivery } = this.context as DeliveriesState;
+
+        if (prevProps.delivery.deliveryNo !== delivery.deliveryNo) {
+            // Reset selectedInstructionNo when the deliveryNo changes
+            this.setState({
+                selectedInstructionNo: '',
+            });
         }
     }
 

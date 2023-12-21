@@ -152,6 +152,7 @@ class ViewDeliveries extends Component<Props, State> {
                   existSelectedCheckBox={this.existSelectedCheckBox}
                   addSelectedCheckBox={this.addSelectedCheckBox}
                   clearCheckBoxes={this.clearCheckBoxes}
+                  delivery={this.context.delivery}
               />
             </TableBox>
           </Body>
