@@ -49,7 +49,6 @@ class ModalProduct extends Component<ModalProductProps, regiProduct> {
     }
 
     checkCodeClick = () => {
-        const list = this.context.productPage.list;
         const state = this.context as ProductsState
         if (!this.state.productCode) {
             return;
