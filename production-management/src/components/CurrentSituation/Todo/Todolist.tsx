@@ -111,14 +111,11 @@ class TodoList extends Component<{}, TodoListState> {
         fetcher.PUT(updateUrl, updateData)
             .then((res) => {
                 if (res) {
-                    console.log(`Todo with todoNo ${reorderedItem.todoNo} updated successfully.`);
                     this.loadData();
                 } else {
-                    console.error(`Failed to update Todo with todoNo ${reorderedItem.todoNo}.`);
                 }
             })
             .catch((error) => {
-                console.error(`Error while updating Todo with todoNo ${reorderedItem.todoNo}:`, error);
             });
     };
 
@@ -146,7 +143,6 @@ class TodoList extends Component<{}, TodoListState> {
                             isInputOpen: false,
                         });
                     } else {
-                        console.error(`전송 오류`);
                     }
                 })
                 .catch((error) => {
@@ -164,13 +160,10 @@ class TodoList extends Component<{}, TodoListState> {
             .then((res) => {
                 if (res) {
                     this.loadData();
-                    console.log(`Todo with todoNo ${todoNo} deleted successfully.`);
                 } else {
-                    console.error(`Failed to delete Todo with todoNo ${todoNo}.`);
                 }
             })
             .catch((error) => {
-                console.error(`Error while deleting Todo with todoNo ${todoNo}:`, error);
             });
     };
 
@@ -179,6 +172,7 @@ class TodoList extends Component<{}, TodoListState> {
         this.setState((prevState) => ({
             ...prevState,
             isInputOpen: !prevState.isInputOpen,
+            inputValue: '',
         }));
     };
     loadData=()=>{
@@ -190,18 +184,14 @@ class TodoList extends Component<{}, TodoListState> {
                     // TodoItem을 배열로 업데이트
                     this.setState({ TodoItem: Array.isArray(data) ? data : [] });
 
-                    console.log('액션1', data);
-                    console.log('액션2', this.state.TodoItem);
                 }
             });
     }
     componentDidMount() {
-        console.log(123);
         this.loadData();
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<TodoListState>, snapshot?: any) {
-        console.log('업데이트');
         const todo = [];
         const done = [];
         if (prevState.TodoItem !== this.state.TodoItem) {
@@ -228,8 +218,6 @@ class TodoList extends Component<{}, TodoListState> {
                 done: done,
             });
 
-            console.log('Processed Todo Data:', todo);
-            console.log('Processed Done Data:', done);
         }
     }
 
