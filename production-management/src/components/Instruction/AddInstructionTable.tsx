@@ -30,20 +30,20 @@ type Props = {
   changeCustomerModalStatus: () => void,
   existSelectedCheckBox: (productNo: number) => boolean,
 }
-
 const boldCellStyle = {
-  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
+  backgroundColor: '#f1f3f5',
   fontFamily: 'S-CoreDream-3Light',
   minWidth: '170px',
+  fontSize: '17px'
 };
 
 const tableCellStyle = {
-  border: '1px solid #D3D3D3',
   fontFamily: 'S-CoreDream-3Light',
   minWidth: '170px',
+  fontSize: '16px',
   maxHeight: '40px',
-};
+}
 
 const statusMap = new Map([
   ['STANDBY', '준비'],

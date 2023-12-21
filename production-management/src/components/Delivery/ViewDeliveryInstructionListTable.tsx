@@ -22,15 +22,18 @@ type Props = {
     tableSize: boolean,
 }
 
+const cellStyle = {
+    fontFamily: 'S-CoreDream-3Light',
+    minWidth: '170px',
+    fontSize: '16px',
+}
 const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
-    fontFamily: 'S-CoreDream-3Light'
+    fontFamily: 'S-CoreDream-3Light',
+    minWidth: '170px',
+    fontSize: '17px'
 };
-
-const tableCellStyle = {
-    fontFamily: 'S-CoreDream-3Light'
-}
 
 
 class ViewDeliveryInstructionListTable extends Component<Props> {
@@ -81,12 +84,12 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                                               customerName: row.customerName,
                                           })}
                                     key={row.instructionNo}>
-                                    <TableCell align="center" className='cellHoverEffect' style={{fontWeight: 'bold'}}
+                                    <TableCell align="center" className='cellHoverEffect' style={{...cellStyle, fontWeight: 'bold'}}
                                                onClick={() => state.getInstruction(row.instructionNo)}>{row.instructionNo}</TableCell>
-                                    <TableCell align="center">{row.employeeName}</TableCell>
-                                    <TableCell align="center">{row.customerName}</TableCell>
-                                    <TableCell align="center">{row.instructionDate}</TableCell>
-                                    <TableCell align="center">{row.expirationDate}</TableCell>
+                                    <TableCell align="center" style={{cellStyle}}>{row.employeeName}</TableCell>
+                                    <TableCell align="center" style={{cellStyle}}>{row.customerName}</TableCell>
+                                    <TableCell align="center" style={{cellStyle}}>{row.instructionDate}</TableCell>
+                                    <TableCell align="center" style={{cellStyle}}>{row.expirationDate}</TableCell>
                                 </TableRow>
                             )) :
                             <TableRow>

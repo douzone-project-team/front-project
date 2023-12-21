@@ -22,12 +22,14 @@ const boldCellStyle = {
   fontWeight: 'bold',
   backgroundColor: '#f1f3f5',
   fontFamily: 'S-CoreDream-3Light',
-  fontSize: '16px'
+  minWidth: '170px',
+  fontSize: '17px'
 };
 
 const tableCellStyle = {
   fontFamily: 'S-CoreDream-3Light',
-  fontSize: '16px'
+  minWidth: '170px',
+  fontSize: '16px',
 }
 
 

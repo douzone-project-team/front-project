@@ -5,15 +5,18 @@ import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "
 import {EmptyText} from "../../core/EmptyText";
 
 
+const cellStyle = {
+    fontFamily: 'S-CoreDream-3Light',
+    minWidth: '170px',
+    fontSize: '16px',
+}
 const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
-    fontFamily: 'S-CoreDream-3Light'
+    fontFamily: 'S-CoreDream-3Light',
+    minWidth: '170px',
+    fontSize: '17px'
 };
-
-const cellStyle = {
-    fontFamily: 'S-CoreDream-3Light'
-}
 
 const myMap: Map<string, string> = new Map<string, string>([
 

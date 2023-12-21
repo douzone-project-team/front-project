@@ -26,12 +26,14 @@ const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
     fontFamily: 'S-CoreDream-3Light',
-    minWidth: '100px'
+    minWidth: '170px',
+    fontSize: '17px'
 };
 
 const tableCellStyle = {
     fontFamily: 'S-CoreDream-3Light',
-    minWidth: '100px'
+    minWidth: '170px',
+    fontSize: '16px'
 }
 
 type Props = {

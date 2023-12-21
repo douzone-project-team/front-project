@@ -14,12 +14,14 @@ const boldCellStyle = {
   fontWeight: 'bold',
   backgroundColor: '#f1f3f5',
   fontFamily: 'S-CoreDream-3Light',
-  minWidth: '170px'
+  minWidth: '170px',
+  fontSize: '17px'
 };
 
 const tableCellStyle = {
   fontFamily: 'S-CoreDream-3Light',
-  minWidth: '170px'
+  minWidth: '170px',
+  fontSize: '16px'
 }
 
 const myMap: Map<string, string> = new Map<string, string>([

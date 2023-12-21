@@ -13,7 +13,10 @@ type Props = {
 
 const boldCellStyle = {
   fontWeight: 'bold',
-  backgroundColor: '#f1f3f5'
+  backgroundColor: '#f1f3f5',
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px',
+  fontSize: '17px'
 };
 
 class ViewDeliveryInstructionTable extends Component<Props> {
