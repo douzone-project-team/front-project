@@ -20,6 +20,7 @@ import Swal from "sweetalert2";
 import {AddItemButton} from "../../core/button/AddItemButton";
 import {EditButton} from "../../core/button/EditButton";
 import { EmptyText } from "../../core/EmptyText";
+import {DateInput} from "../../core/input/DateInput";
 
 const boldCellStyle = {
     fontWeight: 'bold',
@@ -380,7 +381,8 @@ class ViewDeliveryTable extends Component<Props, State> {
                             <span className='table-header'
                                   style={{fontWeight: 'bold', fontSize: '16px'}}>출고일 :&nbsp;
                                 <input type="date"
-                                       style={{height: '30px', color: '#0C70F2'}}
+                                       style={{height: '30px', color: '#0C70F2',
+                                       background: `url(${require('../../images/button/date-button.png')}) no-repeat right 5px center / 16px auto`}}
                                        defaultValue={delivery.deliveryDate}
                                        value={delivery.deliveryDate}
                                        onChange={(e) => {
