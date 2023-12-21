@@ -24,14 +24,12 @@ type Props = {
 
 const cellStyle = {
     fontFamily: 'S-CoreDream-3Light',
-    minWidth: '170px',
     fontSize: '16px',
 }
 const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
     fontFamily: 'S-CoreDream-3Light',
-    minWidth: '170px',
     fontSize: '17px'
 };
 
@@ -86,10 +84,10 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                                     key={row.instructionNo}>
                                     <TableCell align="center" className='cellHoverEffect' style={{...cellStyle, fontWeight: 'bold'}}
                                                onClick={() => state.getInstruction(row.instructionNo)}>{row.instructionNo}</TableCell>
-                                    <TableCell align="center" style={{cellStyle}}>{row.employeeName}</TableCell>
-                                    <TableCell align="center" style={{cellStyle}}>{row.customerName}</TableCell>
-                                    <TableCell align="center" style={{cellStyle}}>{row.instructionDate}</TableCell>
-                                    <TableCell align="center" style={{cellStyle}}>{row.expirationDate}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.employeeName}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.customerName}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.instructionDate}</TableCell>
+                                    <TableCell align="center" style={cellStyle}>{row.expirationDate}</TableCell>
                                 </TableRow>
                             )) :
                             <TableRow>

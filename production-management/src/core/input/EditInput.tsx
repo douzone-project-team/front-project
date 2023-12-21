@@ -25,16 +25,17 @@ export class EditInput extends Component<EditInputProps> {
                  border: 0,
                  fontFamily: 'S-CoreDream-3Light',
                  fontWeight: 400,
-                 fontSize: '0.875rem',
                  padding: 0,
-                 background: 'url(' + require(darkMode ? `../../images/button/date-button-black.png` : `../../images/button/date-button.png`) + ')' + ' no-repeat right 5px center / 16px auto'
-               }}
+                 background: 'url(' + require(darkMode ? `../../images/button/date-button-black.png` : `../../images/button/date-button.png`) + ')' + ' no-repeat right 5px center / 16px auto',
+                 fontSize: '16px',
+                 minWidth: '200px'
+        }}
                defaultValue={defaultValue}
                onChange={onChange}
                onBlur={onBlur}
                min={min}
                max={max}
-               placeholder={defaultValue}
+               value={defaultValue}
         />
     );
   }
