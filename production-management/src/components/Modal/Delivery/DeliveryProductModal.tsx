@@ -61,7 +61,7 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
         if (product.amount > product.remainAmount) {
             Swal.fire({
                 icon: "warning",
-                text: '선택한 상품의 수량이 잔량보다 많습니다.'
+                text: '선택한 품목의 수량이 잔량보다 많습니다.'
             });
             return;
         }
@@ -129,7 +129,7 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
                                     marginRight: '10px',
                                     fontSize: '15px',
                                     fontWeight: 'bold'
-                                }}>상품 번호</span>
+                                }}>품목 번호</span>
                                     <input type="text"
                                            style={{
                                                height: '20px',
@@ -147,7 +147,7 @@ class DeliveryProductModal extends Component<DeliveryProductModalProps, Delivery
                                     marginRight: '10px',
                                     fontSize: '15px',
                                     fontWeight: 'bold'
-                                }}>상품 코드</span>
+                                }}>품목 코드</span>
                                     <input type="text"
                                            style={{
                                                height: '20px',

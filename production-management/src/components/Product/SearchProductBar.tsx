@@ -44,7 +44,7 @@ class SearchProductBar extends Component<{}, SearchState> {
           isModalOpen: false,
         },
         () => {
-          window.location.reload(); // 강제로 페이지 리로드
+          // window.location.reload(); // 강제로 페이지 리로드
         }
     );
   };

@@ -174,8 +174,8 @@ class Main extends Component <ProfileImageProps>{
 
     render() {
         const state = this.context as MainState
-        const instructionColors = ['#7378C2', '#8f9de3', '#c8dded']; // 지시 색상
-        const deliveryColors = ['#F77D93', '#F2BDD8', '#98FB98']; // 출고 색상
+        const instructionColors = ['#c8dded', '#8f9de3', '#7378C2']; // 지시 색상
+        const deliveryColors = ['#d0f5c3', '#5fb45f', '#F2BDD8']; // 출고 색상
         const storedEmployeeData = localStorage.getItem('employee');
         const employeeData = storedEmployeeData ? JSON.parse(storedEmployeeData) : {};
 
@@ -474,7 +474,7 @@ class Main extends Component <ProfileImageProps>{
                                     }}>
                                     <GraphBox
                                         data={state.circleGraph.deliveryData.map(cg => ({
-                                            name: cg.progress === 'STANDBY' ? '미완료' : '완료',
+                                            name: cg.progress === 'INCOMPLETE' ? '미완료' : '완료',
                                             value: cg.count,
                                         }))}
                                         labelText="출고"

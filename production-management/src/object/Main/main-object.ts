@@ -1,5 +1,5 @@
 interface CircleData {
-    "progress": "STANDBY" | "PROGRESS" | "COMPLETED",
+    "progress": "STANDBY" | "PROGRESS" | "COMPLETED" | "INCOMPLETE",
     "count": number
 }
 interface BarData {

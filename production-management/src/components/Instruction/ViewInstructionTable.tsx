@@ -86,7 +86,7 @@ class ViewInstructionTable extends Component<Props, State> {
     } else {
       Swal.fire({
         icon: "success",
-        text: "갯수를 수정하였습니다.",
+        text: "수량를 수정하였습니다.",
         showConfirmButton: false,
         timer: 1000
       });
@@ -233,7 +233,7 @@ class ViewInstructionTable extends Component<Props, State> {
                   <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>갯수</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>수량</TableCell>
                   <TableCell align="center" style={boldCellStyle}>잔량</TableCell>
                 </TableRow>
               </TableHead>
