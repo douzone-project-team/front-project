@@ -49,7 +49,7 @@ class MyInstruction extends Component {
                                 <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>만료일</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>진행 상태</TableCell>
+                                <TableCell align="center" style={{...boldCellStyle, justifyContent: 'center'}}>진행 상태</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

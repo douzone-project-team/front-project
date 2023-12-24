@@ -179,7 +179,7 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                       </TableHead>
                       <TableBody>
                         {list && list.length > 0 && list.map((row) => (
-                            <TableRow className='cellHoverEffect'
+                            <TableRow key={row.productNo} className='cellHoverEffect'
                                       onClick={() => this.setProduct({
                                         productNo: row.productNo,
                                         productCode: row.productCode,

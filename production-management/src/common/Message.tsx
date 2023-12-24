@@ -131,13 +131,17 @@ class Message extends React.Component<MessageProps> {
                                         <AccordionSummary>
                                             <Box display="flex" width="100%">
                                                 <Avatar src={('http://localhost:8080/employees/'+message.sendId+'/image')} style={{width: '23px', height:'23px' ,borderRadius: '8px'}}/>
-                                                &nbsp;&nbsp;<Typography style={{fontSize: '15px', width: '55%', fontWeight:'bold', fontFamily: 'S-CoreDream-3Light'}}>
+                                                &nbsp;&nbsp;<div>
+                                                <Typography style={{fontSize: '15px', width: '100%', fontWeight:'bold', fontFamily: 'S-CoreDream-3Light'}}>
                                                     {message.sendId}({message.sendName})님의 쪽지
-                                                    <Typography style={{
-                                                        fontSize: '12px',
-                                                        color: 'lightgray', fontFamily: 'S-CoreDream-3Light'
-                                                    }}>{message.sendTime}</Typography>
                                                 </Typography>
+                                                <Typography style={{
+                                                    fontSize: '12px',
+                                                    color: 'lightgray', fontFamily: 'S-CoreDream-3Light'
+                                                }}>
+                                                    {message.sendTime}
+                                                </Typography>
+                                            </div>
                                             </Box>
                                             <SubdirectoryArrowRightOutlinedIcon
                                                 onClick={() => this.onReplyMessage(message.sendId, message.targetId)}
@@ -185,7 +189,7 @@ class Message extends React.Component<MessageProps> {
                                     style={{fontFamily: 'S-CoreDream-3Light'}}
                                     label="메시지 작성"
                                     multiline
-                                    rows={4}
+                                    minRows={4}
                                     variant="outlined"
                                     fullWidth
                                     defaultValue={message}

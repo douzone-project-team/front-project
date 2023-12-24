@@ -1,5 +1,5 @@
 import React, {ChangeEvent, Component} from 'react';
-import {Box, Table, TableCell, TableContainer, TableRow} from '@material-ui/core';
+import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core';
 import {EmployeeContext} from '../../store/Employee/employee-context';
 import {EmployeeState, UpdateEmployee} from '../../object/Employee/employee-object';
 import {initialUpdateEmployee} from "../../state/employeeStateMangement";
@@ -150,12 +150,15 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '60%'}}>
                 <TableContainer className='table-container'>
                     <Table size='small' className='table' style={{backgroundColor: '#FDFDFD'}}>
-                        <TableRow>
-                            <TableCell style={boldCellStyle}>사번</TableCell>
-                            {employee.employeeNo !== 0 ?
-                                <TableCell style={tableCellStyle}>{employee.employeeNo}</TableCell>
-                                : null}
-                        </TableRow>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell style={boldCellStyle}>사번</TableCell>
+                                {employee.employeeNo !== 0 ?
+                                    <TableCell style={tableCellStyle}>{employee.employeeNo}</TableCell>
+                                    : null}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
                         <TableRow>
                             <TableCell style={boldCellStyle}>아이디</TableCell>
                             <TableCell style={tableCellStyle}>{employee.id}</TableCell>
@@ -276,6 +279,7 @@ class ProfileForm extends Component<ProfileFormProps, ProfileFormState> {
                                 />
                             </TableCell>
                         </TableRow>
+                        </TableBody>
                     </Table>
                 </TableContainer>
                 <button onClick={this.handleUpdateClick}

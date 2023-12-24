@@ -53,6 +53,9 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
   render() {
     const {title, startDate, endDate, darkMode} = this.props;
     const {start, end} = this.state;
+    if(this.state.start === '') {
+      this.setState({start: startDate.defaultValue as string, end: endDate?.defaultValue as string})
+    }
 
     return (
         <label>
@@ -70,7 +73,7 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
                    this.setState({start: e.target.value});
                  }}
                  defaultValue={startDate.defaultValue}
-                 value={startDate.defaultValue}
+              // value={startDate.defaultValue}
                  max={end}
           />
           {endDate ? <span>&nbsp;&nbsp;~</span> : null}
@@ -88,7 +91,7 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
                        this.setState({end: e.target.value})
                      }}
                      defaultValue={endDate.defaultValue}
-                     value={endDate.defaultValue}
+                  // value={endDate.defaultValue}
                      min={start}
               /> : null}
         </label>

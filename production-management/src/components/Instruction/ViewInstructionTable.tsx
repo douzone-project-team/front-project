@@ -112,7 +112,7 @@ class ViewInstructionTable extends Component<Props, State> {
       reverseButtons: true,
       focusCancel: true
     }).then((result) => {
-      if(result.dismiss === Swal.DismissReason.cancel) {
+      if(!result.isConfirmed) {
         return;
       }
       Swal.fire({

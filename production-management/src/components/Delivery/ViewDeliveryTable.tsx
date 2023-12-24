@@ -154,7 +154,9 @@ class ViewDeliveryTable extends Component<Props, State> {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "삭제",
-            cancelButtonText: "취소"
+            cancelButtonText: "취소",
+            reverseButtons: true,
+            focusCancel: true
         }).then((result) => {
             if (!result.isConfirmed) {
                 return;
@@ -380,7 +382,6 @@ class ViewDeliveryTable extends Component<Props, State> {
                                        style={{height: '30px', color: '#0C70F2',
                                        background: `url(${require('../../images/button/date-button.png')}) no-repeat right 5px center / 16px auto`}}
                                        defaultValue={delivery.deliveryDate}
-                                       value={delivery.deliveryDate}
                                        onChange={(e) => {
                                            this.updateDelivery(e.target.value);
                                        }}
