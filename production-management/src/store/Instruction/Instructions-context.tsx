@@ -135,7 +135,7 @@ export class InstrcutionsContextProvider extends Component<Props, InstructionsSt
       });
 
       if (isDuplicate) {
-        this.printErrorAlert("이미 존재하는 상품입니다.");
+        this.printErrorAlert("이미 존재하는 품목입니다.");
         return;
       }
 

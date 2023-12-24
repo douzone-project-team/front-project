@@ -260,12 +260,6 @@ class ViewDeliveryTable extends Component<Props, State> {
         } as UpdateDeliveryInstruction;
 
         state.updateDeliveryInstruction(updateDeliveryInstruction);
-        Swal.fire({
-            icon: "success",
-            text: "수량이 변경되었습니다.",
-            showConfirmButton: false,
-            timer: 1000
-        })
     };
 
     addInstruction = (instructionNo: string, instructionDate: string, expirationDate: string, customerName: string) => {

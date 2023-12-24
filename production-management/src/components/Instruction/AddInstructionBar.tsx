@@ -69,7 +69,9 @@ class AddInstructionBar extends Component<AddInstructionBarProps, AddInstruction
           expirationDate: expirationDate === '' ? this.getOneMonthAfterInstructionDate(this.state.instructionDate) : expirationDate,
         },
         () => {
-          state.addInstruction(this.state);
+          for(var i = 0; i<50; i++){
+            state.addInstruction(this.state);
+          }
         }
     );
     Swal.fire({

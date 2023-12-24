@@ -47,6 +47,7 @@ class GraphBox2 extends React.Component<GraphBoxProps> {
             const myChart = echarts.init(chartDom);
 
             const option: echarts.EChartsOption = {
+                color:['#5f639d', '#5fb45f'],
                 legend: {
                     orient: 'horizontal',
                     left: 'left',

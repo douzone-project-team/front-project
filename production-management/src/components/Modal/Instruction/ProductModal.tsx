@@ -143,7 +143,7 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                 <BarBox>
                   <BarLeftBox width='60%'>
                     <TextInput
-                        title='상품 코드'
+                        title='품목 코드'
                         onChange={(e) => {
                           this.setState({productCode: e.target.value})
                         }}
@@ -151,7 +151,7 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                         input={{width: '80px'}}
                     />
                     <TextInput
-                        title='상품 이름'
+                        title='품목 이름'
                         onChange={(e) => {
                           this.setState({productName: e.target.value})
                         }}
@@ -171,9 +171,9 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                     <Table size='small' className='table'>
                       <TableHead>
                         <TableRow>
-                          <TableCell align="center" style={boldCellStyle}>상품 번호</TableCell>
-                          <TableCell align="center" style={boldCellStyle}>상품 코드</TableCell>
-                          <TableCell align="center" style={boldCellStyle}>상품 이름</TableCell>
+                          <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
+                          <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
+                          <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
                           <TableCell align="center" style={boldCellStyle}>단위</TableCell>
                         </TableRow>
                       </TableHead>
@@ -220,14 +220,14 @@ export class ProductModal extends Component<ProductModalProps, ProductModalState
                     }}
                 >
                   <TextInput
-                      title='상품 코드'
+                      title='품목 코드'
                       readOnly
                       value={this.state.product.productCode}
                       input={{width: '100px'}}
                       label={{ml: '10px'}}
                   />
                   <TextInput
-                      title='상품 이름'
+                      title='품목 이름'
                       readOnly
                       value={this.state.product.productCode}
                       input={{width: '100px'}}

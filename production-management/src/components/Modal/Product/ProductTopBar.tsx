@@ -37,7 +37,7 @@ class ProductTopBar extends Component<{}, SearchState> {
         this.setState({
             isModalOpen: false,
         }, () => {
-            window.location.reload(); // 강제로 페이지 리로드
+            // window.location.reload(); // 강제로 페이지 리로드
         });
     };
 
@@ -68,11 +68,11 @@ class ProductTopBar extends Component<{}, SearchState> {
                                 fontWeight: "bold",
                             }}
                         >
-                            상품 코드
+                            품목 코드
                         </span>
                         <input
                             type="text"
-                            placeholder="상품 코드"
+                            placeholder="품목 코드"
                             style={{ height: "20px" }}
                             onChange={(e) => {
                                 this.setState({ productCode: e.target.value });
@@ -88,11 +88,11 @@ class ProductTopBar extends Component<{}, SearchState> {
                                 fontWeight: "bold",
                             }}
                         >
-                            상품 이름
+                            품목 이름
                         </span>
                         <input
                             type="text"
-                            placeholder="상품 이름"
+                            placeholder="품목 이름"
                             style={{ height: "20px" }}
                             onChange={(e) => {
                                 this.setState({ productName: e.target.value });

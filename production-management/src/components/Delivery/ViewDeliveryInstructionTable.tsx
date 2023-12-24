@@ -47,7 +47,7 @@ class ViewDeliveryInstructionTable extends Component<Props> {
                   <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>갯수</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>수량</TableCell>
                   <TableCell align="center" style={boldCellStyle}>잔량</TableCell>
                 </TableRow>
               </TableHead>

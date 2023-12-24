@@ -213,7 +213,7 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
             if (isDuplicate) {
                 Swal.fire({
                     icon: 'warning',
-                    text: "이미 존재하는 상품입니다.",
+                    text: "이미 존재하는 품목입니다.",
                 });
                 return;
             }
@@ -273,6 +273,12 @@ export class DeliveriesContextProvider extends Component<Props, DeliveriesState>
         updateDeliveryInstruction(updateDeliveryInstruction: UpdateDeliveryInstruction) {
             deliveryInstructionAction.updateDeliveryInstruction(updateDeliveryInstruction)
                 .then(() => {
+                    Swal.fire({
+                        icon: "success",
+                        text: "수량이 변경되었습니다.",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
                     this.getDelivery(updateDeliveryInstruction.deliveryNo);
                     this.getRemainAmount(updateDeliveryInstruction.instructionNo, updateDeliveryInstruction.productNo);
                 }).catch((error) => {

@@ -35,19 +35,7 @@ const TodoStyle = {
     padding: '2%',
     borderRadius: '8px',
     overflow: 'scroll',
-    backgroundColor: '#F3F3F3',
-
-    '&::-webkit-scrollbar': {
-        width: '10px',
-    },
-    '&::-webkit-scrollbar-thumb': {
-        height: '30%',
-        background: '#217af4',
-        borderRadius: '10px',
-    },
-    '&::-webkit-scrollbar-track': {
-        background: 'rgba(33, 122, 244, .1)',
-    },
+    backgroundColor: '#F3F3F3'
 };  // <-- replace the comma with a semicolon
 
 
