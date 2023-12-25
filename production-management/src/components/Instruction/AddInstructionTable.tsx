@@ -139,7 +139,6 @@ class ViewInstructionTable extends Component<Props, State> {
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 만료일</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>지시 상태</TableCell>
                   <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
@@ -166,12 +165,6 @@ class ViewInstructionTable extends Component<Props, State> {
                                  style={tableCellStyle}>{instruction.instructionDate}</TableCell>
                       <TableCell align="center"
                                  style={tableCellStyle}>{instruction.expirationDate}</TableCell>
-                      <TableCell align="center"
-                                 style={tableCellStyle}>
-                        <div className={instruction.progressStatus}>
-                          {statusMap.get(instruction.progressStatus)}
-                        </div>
-                      </TableCell>
                       <TableCell align="center"
                                  style={tableCellStyle}>{instruction.customerName}
                       </TableCell>
@@ -205,8 +198,6 @@ class ViewInstructionTable extends Component<Props, State> {
                                    onChange={(e) => this.updateInstruction({expirationDate: e.target.value})
                                    }/>
                       </TableCell>
-                      <TableCell align="center"
-                                 style={tableCellStyle}>{statusMap.get(instruction.progressStatus)}</TableCell>
                       <TableCell align="center"
                                  style={tableCellStyle}>
                         <div style={{
