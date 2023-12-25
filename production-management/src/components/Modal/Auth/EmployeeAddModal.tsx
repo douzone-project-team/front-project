@@ -34,8 +34,6 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
     static contextType = AuthContext;
 
     private nameInputRef = React.createRef<HTMLInputElement>();
-    private employeeNoInputRef = React.createRef<HTMLInputElement>();
-    private idInputRef = React.createRef<HTMLInputElement>();
     private passwordInputRef = React.createRef<HTMLInputElement>();
     private tel1InputRef = React.createRef<HTMLInputElement>();
     private tel2InputRef = React.createRef<HTMLInputElement>();
@@ -138,8 +136,8 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
 
             const userData = {
                 name: this.nameInputRef.current?.value || '',
-                employeeNo: Number(this.employeeNoInputRef.current?.value) || 0,
-                id: this.idInputRef.current?.value || '',
+                employeeNo: this.state.employeeNo,
+                id: this.state.id,
                 password: this.passwordInputRef.current?.value || '',
                 tel: tel1 + tel2 + tel3,
                 email: email,
@@ -277,7 +275,7 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
                                         className="form-input"
                                         placeholder="ex) 홍길동"
                                         style={{width: '45%', marginRight: '5%'}}
-                                        onChange={this.handleIdChange}
+                                        ref={this.nameInputRef}
                                     />
                                     <label className="admin" style={{
                                         background: isAdmin ? '#F0F0F0' : '#fff',
@@ -331,7 +329,7 @@ class EmployeeAddModal extends Component<EmployeeAddModalProps, EmployeeAddModal
                                         placeholder="ex) 4자 이상"
                                         className="form-input"
                                         style={{width: '60%', marginBottom: '4px'}}
-                                        ref={this.idInputRef}
+                                        onChange={this.handleIdChange}
                                     />
                                     <button className="form-duplicate-button"
                                             onClick={() => this.checkIdDuplicate(this.state.id)}>중복 체크
