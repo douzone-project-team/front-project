@@ -23,7 +23,7 @@ class ViewEmployees extends Component {
     render() {
         return(
             <Layout>
-                <Title title='사원 조회'/>
+                <Title title='사원 관리'/>
                 <Body>
                     <SearchBox minWidth='1100px'>
                         <SearchEmployeeBar/>
