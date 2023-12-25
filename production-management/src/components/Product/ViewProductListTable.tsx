@@ -21,11 +21,15 @@ import {Loading} from "../../core/Loading";
 const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
-    fontFamily: 'S-CoreDream-3Light'
+    fontFamily: 'S-CoreDream-3Light',
+    minWidth: '170px',
+    fontSize: '17px'
 };
 
 const tableCellStyle = {
-    fontFamily: 'S-CoreDream-3Light'
+    fontFamily: 'S-CoreDream-3Light',
+    minWidth: '170px',
+    fontSize: '16px'
 }
 
 export type ProductList = {
@@ -97,7 +101,7 @@ class ViewProductListTable extends Component<{}, ViewTableState> {  // 수정
         return (
             <Box >
                 <ListTitle options={{title: '품목 목록', count: list.length}}/>
-                <TableContainer className='table-container' style={{height:'410px'}}>
+                <TableContainer className='table-container' style={{height:'450px'}}>
                     <Table size='small' className='table'>
                         <TableHead>
                             <TableRow>

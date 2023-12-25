@@ -129,16 +129,17 @@ class ViewProductTable extends Component<{}, DetailState> {
             height: '30px',
             marginTop: '20px'
           }}>
-            <div style={{width: '95%'}}>
-              <DetailTitle options={{
-                targetName: product.productNo as unknown as string,
-                title: '품목 상세'
-              }}/>
-            </div>
-            <div style={{width: '5%', textAlign: 'right'}}>
-              <EditButton size={20} onClick={this.handlerModify}/>
-              &nbsp;&nbsp;
-              <DeleteButton size={20} onClick={() => this.handlerDelete(product.productNo)}/>
+            <DetailTitle options={{
+              targetName: state.product.productNo as unknown as string,
+              title: '품목 상세'
+            }}/>
+            <div style={{marginLeft: 'auto'}}>
+              {state.product.productNo !== 0 &&
+                  <div>
+                    <EditButton size={22} onClick={this.handlerModify}/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <DeleteButton size={22} onClick={() => this.handlerDelete(product.productNo)}/>
+                  </div>}
             </div>
           </div>
 
