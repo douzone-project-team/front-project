@@ -66,7 +66,7 @@ class ViewDeliveryInstructionListTable extends Component<Props> {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
-                                <TableCell align="center" style={boldCellStyle}>등록자</TableCell>
+                                <TableCell align="center" style={boldCellStyle}>담당자</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>거래처 명</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>시작일</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>종료일</TableCell>

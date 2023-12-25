@@ -396,7 +396,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                     <div style={{width: '8%', height: '16px', alignItems: 'center', textAlign: 'right'}}>
                         {delivery.deliveryStatus == 'INCOMPLETE' &&
                             <div>
-                                <CheckButton size={20} onClick={() =>
+                                <CheckButton size={23} onClick={() =>
                                     this.updateDeliveryStatusButtonClick(delivery.deliveryNo)} />
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <DeleteButton size={22} onClick={() => this.deleteDeliveryButtonClickEvent()} />

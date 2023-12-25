@@ -84,7 +84,7 @@ class ViewInstructionListTable extends Component<Props, State> {
               <TableHead>
                 <TableRow style={{fontFamily: 'S-CoreDream-3Light'}}>
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>등록자</TableCell>
+                  <TableCell align="center" style={boldCellStyle}>담당자</TableCell>
                   <TableCell align="center" style={boldCellStyle}>거래처 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시일</TableCell>

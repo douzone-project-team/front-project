@@ -96,7 +96,7 @@ class SearchDeliveryBar extends Component<Props, SearchState> {
               <TextInput title='출고번호' onBlur={(e) => {
                 searchValue.deliveryNo = e.target.value
               }} label={{ml: '30px'}} input={{width:'120px'}}/>
-              <TextInput title='등록자' onBlur={(e) => {
+              <TextInput title='담당자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value
               }} label={{ml: '30px'}} input={{width:'120px'}}/>
               <DateInput title='출고일'

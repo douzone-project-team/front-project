@@ -80,7 +80,7 @@ class SearchInstructionBar extends Component<Props, SearchState> {
               <TextInput title='지시번호' onBlur={(e) => {
                 searchValue.instructionNo = e.target.value;
               }} label={{ml: '30px'}} input={{width:'140px'}}/>
-              <TextInput title='등록자' onBlur={(e) => {
+              <TextInput title='담당자' onBlur={(e) => {
                 searchValue.employeeName = e.target.value;
               }} label={{ml: '30px'}} input={{width:'100px'}}/>
               <DateInput title='지시일'

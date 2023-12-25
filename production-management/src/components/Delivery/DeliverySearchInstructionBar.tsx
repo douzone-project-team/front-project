@@ -37,7 +37,7 @@ class DeliverySearchInstructionBar extends Component {
         <SearchBox p='5px'>
           <BarBox>
             <BarLeftBox width='70vw'>
-              <TextInput title='등록자'
+              <TextInput title='담당자'
                          onBlur={(e) => {
                            searchValue.employeeName = e.target.value
                          }}
