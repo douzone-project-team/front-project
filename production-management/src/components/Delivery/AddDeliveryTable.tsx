@@ -48,6 +48,15 @@ const tableCellStyle = {
   maxHeight: '40px'
 };
 
+const addTableCellStyle = {
+  border: '1px solid #D3D3D3',
+  fontWeight: 'bold',
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px',
+  maxHeight: '40px',
+  color: '#325FD2'
+}
+
 class AddDeliveryTable extends Component<Props, State> {
   static contextType = DeliveriesContext;
 
@@ -216,13 +225,13 @@ class AddDeliveryTable extends Component<Props, State> {
                             <TableRow key={index}>
                               <TableCell align="center" style={{
                                 border: '1px solid #D3D3D3',
-                                fontWeight: 'bold'
+                                fontWeight: 'bold',
                               }}>
                               </TableCell>
-                              <TableCell align="center" style={tableCellStyle}>
+                              <TableCell align="center" style={addTableCellStyle}>
                                 {newDelivery.deliveryNo}
                               </TableCell>
-                              <TableCell align="center" style={tableCellStyle}>
+                              <TableCell align="center" style={addTableCellStyle}>
                                 <div style={{
                                   display: 'flex',
                                   flexDirection: 'row',
@@ -238,21 +247,21 @@ class AddDeliveryTable extends Component<Props, State> {
                                   </div>
                                 </div>
                               </TableCell>
-                              <TableCell align="center" style={tableCellStyle}>
+                              <TableCell align="center" style={addTableCellStyle}>
                                 {item.addDeliveryInstruction.instructionDate}
                               </TableCell>
-                              <TableCell align="center" style={tableCellStyle}>
+                              <TableCell align="center" style={addTableCellStyle}>
                                 {item.addDeliveryInstruction.expirationDate}
                               </TableCell>
-                              <TableCell align="center" style={tableCellStyle}>
+                              <TableCell align="center" style={addTableCellStyle}>
                                 {item.addDeliveryInstruction.customerName}
                               </TableCell>
-                              <TableCell align="center" style={tableCellStyle}>
+                              <TableCell align="center" style={addTableCellStyle}>
                                 <AddItemButton
                                     color="black"
                                     size={20} onClick={changeDeliveryProductModalStatus}/>
                               </TableCell>
-                              <TableCell align="center" style={tableCellStyle}></TableCell>
+                              <TableCell align="center" style={addTableCellStyle}></TableCell>
                             </TableRow>
                         ))
                     ) : (
@@ -262,25 +271,25 @@ class AddDeliveryTable extends Component<Props, State> {
                             fontWeight: 'bold'
                           }}>
                           </TableCell>
-                          <TableCell align="center" style={tableCellStyle}>
+                          <TableCell align="center" style={addTableCellStyle}>
                             {newDelivery.deliveryNo}
                           </TableCell>
-                          <TableCell align="center" style={tableCellStyle}>
+                          <TableCell align="center" style={addTableCellStyle}>
                             <AddItemButton
                                 color="black"
                                            onClick={changeInstructionModalStatus}/>
                           </TableCell>
-                          <TableCell align="center" style={tableCellStyle}></TableCell>
-                          <TableCell align="center" style={tableCellStyle}></TableCell>
-                          <TableCell align="center" style={tableCellStyle}></TableCell>
-                          <TableCell align="center" style={tableCellStyle}>
+                          <TableCell align="center" style={addTableCellStyle}></TableCell>
+                          <TableCell align="center" style={addTableCellStyle}></TableCell>
+                          <TableCell align="center" style={addTableCellStyle}></TableCell>
+                          <TableCell align="center" style={addTableCellStyle}>
                             {this.props.selectedInstructionNo ?
                                 <AddItemButton size={20}
                                                color="black"
                                                onClick={changeDeliveryProductModalStatus}/>
                                 : null}
                           </TableCell>
-                          <TableCell align="center" style={tableCellStyle}></TableCell>
+                          <TableCell align="center" style={addTableCellStyle}></TableCell>
                         </TableRow>
                     )
                 ) :  <tr>

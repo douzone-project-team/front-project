@@ -45,6 +45,15 @@ const tableCellStyle = {
   maxHeight: '40px',
 }
 
+const addTableCellStyle = {
+  border: '1px solid #D3D3D3',
+  fontWeight: 'bold',
+  fontFamily: 'S-CoreDream-3Light',
+  minWidth: '170px',
+  maxHeight: '40px',
+  color: '#325FD2'
+}
+
 const statusMap = new Map([
   ['STANDBY', '준비'],
   ['PROGRESS', '진행중'],
@@ -182,9 +191,9 @@ class ViewInstructionTable extends Component<Props, State> {
                       }}>
                       </TableCell>
                       <TableCell align="center"
-                                 style={tableCellStyle}>{instruction.instructionNo}</TableCell>
+                                 style={addTableCellStyle}>{instruction.instructionNo}</TableCell>
                       <TableCell align="center"
-                                 style={tableCellStyle}>
+                                 style={addTableCellStyle}>
                         <EditInput type='date'
                                    darkMode
                                    defaultValue={instruction.instructionDate}
@@ -192,7 +201,7 @@ class ViewInstructionTable extends Component<Props, State> {
                                    max={instruction.expirationDate}/>
                       </TableCell>
                       <TableCell align="center"
-                                 style={tableCellStyle}>
+                                 style={addTableCellStyle}>
                         <EditInput type='date'
                                    darkMode
                                    defaultValue={instruction.expirationDate}
@@ -201,7 +210,7 @@ class ViewInstructionTable extends Component<Props, State> {
                         />
                       </TableCell>
                       <TableCell align="center"
-                                 style={tableCellStyle}>
+                                 style={addTableCellStyle}>
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -216,12 +225,12 @@ class ViewInstructionTable extends Component<Props, State> {
                                       onClick={changeCustomerModalStatus}/>
                         </div>
                       </TableCell>
-                      <TableCell align="center" style={tableCellStyle}>
+                      <TableCell align="center" style={addTableCellStyle}>
                         <AddItemButton color='black' onClick={changeProductModalStatus}/>
                       </TableCell>
-                      <TableCell align="center" style={tableCellStyle}></TableCell>
-                      <TableCell align="center" style={tableCellStyle}></TableCell>
-                      <TableCell align="center" style={tableCellStyle}></TableCell>
+                      <TableCell align="center" style={addTableCellStyle}></TableCell>
+                      <TableCell align="center" style={addTableCellStyle}></TableCell>
+                      <TableCell align="center" style={addTableCellStyle}></TableCell>
                     </TableRow>
                 ) : <tr>
                   <td colSpan={11} style={{textAlign: 'center'}}>

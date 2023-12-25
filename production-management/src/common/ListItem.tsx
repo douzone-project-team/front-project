@@ -169,7 +169,7 @@ class MainListItems extends Component<MainListItemsProps, MainListItemsState> {
                     <ListItemIcon style={iconAndTextStyles}>
                       <PeopleIcon/>
                     </ListItemIcon>
-                    <ListItemText><span style={iconAndTextStyles}>사원 조회</span></ListItemText>
+                    <ListItemText><span style={iconAndTextStyles}>사원</span></ListItemText>
                   </Button>
                 </ListItem>
               </Link>

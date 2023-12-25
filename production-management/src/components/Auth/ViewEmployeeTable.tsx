@@ -21,7 +21,7 @@ const boldCellStyle = {
     fontWeight: 'bold',
     backgroundColor: '#f1f3f5',
     fontFamily: 'S-CoreDream-3Light',
-    fontSize: '16px'
+    fontSize: '17px'
 };
 
 const tableCellStyle = {
@@ -100,7 +100,7 @@ class ViewEmployeeTable extends Component<Props, State> {
             <>
                 <div style={{
                     display: 'flex',
-                    height: '20px',
+                    height: '30px',
                     marginTop: '20px'
                 }}>
                     <DetailTitle options={{
@@ -110,10 +110,10 @@ class ViewEmployeeTable extends Component<Props, State> {
                     <div style={{ marginLeft: 'auto' }}>
                         {state.employee.employeeNo !== 0 &&
                             <div>
-                                <EditButton size={20}
+                                <EditButton size={22}
                                             onClick={() => this.setState({employeeModifyModalOpen: true})} />
                                 &nbsp;&nbsp;
-                                <DeleteButton size={20}  onClick={() => this.handleDeleteClick(state.employee.employeeNo)}/>
+                                <DeleteButton size={22}  onClick={() => this.handleDeleteClick(state.employee.employeeNo)}/>
                             </div>}
                     </div>
                 </div>
