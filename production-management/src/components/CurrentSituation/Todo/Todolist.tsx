@@ -40,7 +40,7 @@ const TodoStyle = {
 
 
 const Todoinput = {
-    width: '80px',
+    width: '150px',
     height: '40px',
     borderRadius: '20px',
     border: 0,

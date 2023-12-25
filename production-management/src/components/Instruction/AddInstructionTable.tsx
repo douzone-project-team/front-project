@@ -145,7 +145,6 @@ class ViewInstructionTable extends Component<Props, State> {
                   <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 이름</TableCell>
                   <TableCell align="center" style={boldCellStyle}>수량</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>잔량</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -168,7 +167,11 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center"
                                  style={tableCellStyle}>{instruction.expirationDate}</TableCell>
                       <TableCell align="center"
-                                 style={tableCellStyle}>{statusMap.get(instruction.progressStatus)}</TableCell>
+                                 style={tableCellStyle}>
+                        <div className={instruction.progressStatus}>
+                          {statusMap.get(instruction.progressStatus)}
+                        </div>
+                      </TableCell>
                       <TableCell align="center"
                                  style={tableCellStyle}>{instruction.customerName}
                       </TableCell>
@@ -176,8 +179,6 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center" style={tableCellStyle}>{row.productCode}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.productName}</TableCell>
                       <TableCell align="center" style={tableCellStyle}>{row.amount}</TableCell>
-                      <TableCell align="center"
-                                 style={tableCellStyle}>{row.remainAmount}</TableCell>
                     </TableRow>
                 ))}
                 {instruction.instructionNo ? (
@@ -225,7 +226,6 @@ class ViewInstructionTable extends Component<Props, State> {
                       <TableCell align="center" style={tableCellStyle}>
                         <AddItemButton color='black' onClick={changeProductModalStatus}/>
                       </TableCell>
-                      <TableCell align="center" style={tableCellStyle}></TableCell>
                       <TableCell align="center" style={tableCellStyle}></TableCell>
                       <TableCell align="center" style={tableCellStyle}></TableCell>
                       <TableCell align="center" style={tableCellStyle}></TableCell>
