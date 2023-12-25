@@ -228,7 +228,7 @@ class AddDeliveryTable extends Component<Props, State> {
                                   flexDirection: 'row',
                                   justifyContent: 'space-between',
                                 }}>
-                                  <div style={{width: '99%'}}>
+                                  <div style={{width: '99%', marginTop:'3px'}}>
                                     {item.addDeliveryInstruction.instructionNo}
                                   </div>
                                   <div style={{width: '1%'}}>
