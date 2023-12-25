@@ -416,8 +416,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                                             type="checkbox"
                                             onChange={this.handleCheckboxAllChange}
                                         />
-                                    </TableCell>
-                                }
+                                    </TableCell>}
                                 <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
                                 <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
@@ -431,15 +430,14 @@ class ViewDeliveryTable extends Component<Props, State> {
                         <TableBody>
                             {list && list.length > 0 ? list.map((row) => (
                                     <TableRow>
-                                        {delivery.deliveryStatus == 'INCOMPLETE' ?
+                                        {delivery.deliveryStatus == 'INCOMPLETE' &&
                                             <TableCell align="center" style={tableCellStyle}>
                                                 <input
                                                     type="checkbox"
                                                     checked={this.props.existSelectedCheckBox(row.productNo)}
                                                     onChange={() => addSelectedCheckBox(row.productNo)}
                                                 />
-                                            </TableCell>
-                                            : null }
+                                            </TableCell>}
                                         <TableCell align="center" style={tableCellStyle}>{row.instructionNo}</TableCell>
                                         <TableCell align="center" style={tableCellStyle}>{row.customerName}</TableCell>
                                         <TableCell align="center" style={tableCellStyle}>{row.instructionDate}</TableCell>
