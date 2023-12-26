@@ -39,6 +39,7 @@ const boldCellStyle = {
 };
 
 const tableCellStyle = {
+  border: '1px solid #D3D3D3',
   fontFamily: 'S-CoreDream-3Light',
   minWidth: '170px',
   fontSize: '16px',
@@ -148,7 +149,6 @@ class ViewInstructionTable extends Component<Props, State> {
                   <TableCell align="center" style={boldCellStyle}>지시 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시일</TableCell>
                   <TableCell align="center" style={boldCellStyle}>지시 만료일</TableCell>
-                  <TableCell align="center" style={boldCellStyle}>지시 상태</TableCell>
                   <TableCell align="center" style={boldCellStyle}>거래처</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 번호</TableCell>
                   <TableCell align="center" style={boldCellStyle}>품목 코드</TableCell>
@@ -175,12 +175,6 @@ class ViewInstructionTable extends Component<Props, State> {
                                  style={tableCellStyle}>{instruction.instructionDate}</TableCell>
                       <TableCell align="center"
                                  style={tableCellStyle}>{instruction.expirationDate}</TableCell>
-                      <TableCell align="center"
-                                 style={tableCellStyle}>
-                        <div className={instruction.progressStatus}>
-                          {statusMap.get(instruction.progressStatus)}
-                        </div>
-                      </TableCell>
                       <TableCell align="center"
                                  style={tableCellStyle}>{instruction.customerName}
                       </TableCell>
