@@ -7,7 +7,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import SettingsIcon from '@material-ui/icons/Settings';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import { Link as RouterLink } from 'react-router-dom';
 import {EmployeeContext} from '../store/Employee/employee-context';
@@ -117,7 +116,7 @@ class AccountMenu extends Component<{}, AccountMenuState> {
                     <MenuItem onClick={this.handleClose}>
                         <RouterLink to="/my-page" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
                             <Avatar style={{ width: 20, height: 20, marginRight: 36}} src={(`http://localhost:8080/employees/${employeeData.employeeNo}/image`)}/>
-                            프로필
+                            마이 페이지
                         </RouterLink>
                     </MenuItem>
                     <Divider />
