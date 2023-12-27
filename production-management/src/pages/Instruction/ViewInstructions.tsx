@@ -27,6 +27,7 @@ type State = {
   changeTargetNumber: (target: number) => void,
   changeAmountStatus: () => void,
   changeAmountStatusFalse: () => void,
+  initValue: string,
 }
 
 class ViewInstructions extends Component<Props, State> {
@@ -59,7 +60,8 @@ class ViewInstructions extends Component<Props, State> {
       },
       changeAmountStatusFalse: () => {
         this.setState({changeAmount: false});
-      }
+      },
+      initValue: ''
     }
   }
 

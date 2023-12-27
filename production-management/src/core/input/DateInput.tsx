@@ -50,12 +50,17 @@ export class DateInput extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  render() {
+  componentDidMount() {
     const {title, startDate, endDate, darkMode} = this.props;
     const {start, end} = this.state;
     if(this.state.start === '') {
       this.setState({start: startDate.defaultValue as string, end: endDate?.defaultValue as string})
     }
+  }
+
+  render() {
+    const {title, startDate, endDate, darkMode} = this.props;
+    const {start, end} = this.state;
 
     return (
         <label>

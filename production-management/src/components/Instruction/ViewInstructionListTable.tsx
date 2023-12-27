@@ -94,12 +94,9 @@ class ViewInstructionListTable extends Component<Props, State> {
               </TableHead>
               <TableBody>
                 {list && list.length > 0 ? list.map((row) => {
-                      if (this.state.selectedRowIndex == 0) {
-                        this.setState({selectedRowIndex: list[0].instructionNo.replace(/\D/g, '') as unknown as number});
-                      }
                       return (
                           <TableRow key={row.instructionNo.replace(/\D/g, '')}
-                                    className={`cellHoverEffect ${this.state.selectedRowIndex === row.instructionNo.replace(/\D/g, '') as unknown as number ? 'selectedRow' : ''}`}
+                                    className={`cellHoverEffect ${state.instruction.instructionNo.replace(/\D/g, '') === row.instructionNo.replace(/\D/g, '') ? 'selectedRow' : ''}`}
                                     onClick={() => {
                                       this.handleRowClick(row.instructionNo.replace(/\D/g, '') as unknown as number);
                                       state.getInstruction(row.instructionNo);

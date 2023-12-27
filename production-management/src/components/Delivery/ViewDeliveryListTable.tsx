@@ -90,12 +90,9 @@ class ViewDeliveryListTable extends Component<Props, State> {
               </TableHead>
               <TableBody>
                 {list && list.length > 0 ? list.map((row) => {
-                      if (this.state.selectedRowIndex == 0) {
-                        this.setState({selectedRowIndex: list[0].deliveryNo.replace(/\D/g, '') as unknown as number});
-                      }
                       return (
                           <TableRow key={row.deliveryNo.replace(/\D/g, '')}
-                                    className={`cellHoverEffect ${this.state.selectedRowIndex === row.deliveryNo.replace(/\D/g, '') as unknown as number ? 'selectedRow' : ''}`}
+                                    className={`cellHoverEffect ${state.delivery.deliveryNo === row.deliveryNo ? 'selectedRow' : ''}`}
                                     onClick={() => {
                                       this.handleRowClick(row.deliveryNo.replace(/\D/g, '') as unknown as number);
                                       state.getDelivery(row.deliveryNo);
