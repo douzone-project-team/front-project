@@ -69,6 +69,7 @@ export type AuthState = {
     search: Search,
     employeePage: EmployeePage,
     employee: Employee,
+    addEmployeeObj: AddEmployee,
     updateAuthEmployee: UpdateAuthEmployee,
     image: Image,
     addEmployee: (addEmployee: AddEmployee) => void,

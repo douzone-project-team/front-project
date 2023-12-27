@@ -5,7 +5,7 @@ import {
     initialSearch,
     initialEmployee,
     initialEmployeePage,
-    initialUpdateAuthEmployee, initialImage, initialIdDuplicate, initialEmployeeNoDuplicate
+    initialUpdateAuthEmployee, initialImage, initialIdDuplicate, initialEmployeeNoDuplicate, initialAddEmployee
 } from "../../state/authStateManagement";
 import EmployeeAction from "../Employee/employee-action";
 import Swal from "sweetalert2";
@@ -23,6 +23,7 @@ export const AuthContext = React.createContext<AuthState>({
     search: initialSearch,
     employeePage: initialEmployeePage,
     employee: initialEmployee,
+    addEmployeeObj: initialAddEmployee,
     updateAuthEmployee: initialUpdateAuthEmployee,
     image: initialImage,
     addEmployee(addEmployee: AddEmployee): void {},
@@ -51,6 +52,7 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         search: initialSearch,
         employeePage: initialEmployeePage,
         employee: initialEmployee,
+        addEmployeeObj: initialEmployee,
         updateAuthEmployee: initialUpdateAuthEmployee,
         image: initialImage,
 
@@ -58,15 +60,11 @@ export class AuthContextProvider extends Component<Props, AuthState> {
         addEmployee: (object: AddEmployee) => {
             authAction.addEmployee(object)
                 .then(result => {
-                    let data = result?.data;
-                    this.setState({employee: data}, () => {
-                        Swal.fire({
-                            icon: "success",
-                            text: '사원이 등록되었습니다.'
-                        });
-                        this.getEmployee(object.employeeNo);
-                        this.getEmployeeList();
+                    Swal.fire({
+                        icon: "success",
+                        text: '사원이 등록되었습니다.'
                     });
+                    this.getEmployeeList();
                 }).catch(error => {
                     this.printErrorAlert(error);
             })
@@ -146,7 +144,7 @@ export class AuthContextProvider extends Component<Props, AuthState> {
 
         cleanEmployee: () => {
             this.setState({
-                employee: initialEmployee,
+                addEmployeeObj: initialEmployee,
                 idDuplicate: initialIdDuplicate,
                 employeeNoDuplicate: initialEmployeeNoDuplicate
             });
