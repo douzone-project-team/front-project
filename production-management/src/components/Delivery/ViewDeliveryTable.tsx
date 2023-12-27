@@ -429,7 +429,7 @@ class ViewDeliveryTable extends Component<Props, State> {
                         </TableHead>
                         <TableBody>
                             {list && list.length > 0 ? list.map((row) => (
-                                    <TableRow>
+                                    <TableRow key={row.instructionNo}>
                                         {delivery.deliveryStatus == 'INCOMPLETE' &&
                                             <TableCell align="center" style={tableCellStyle}>
                                                 <input

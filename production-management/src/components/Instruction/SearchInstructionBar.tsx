@@ -9,6 +9,7 @@ import {BarBox, BarLeftBox, BarRightBox} from "../../core/box/BarBox";
 import {TextInput} from '../../core/input/TextInput';
 import {DateInput} from "../../core/input/DateInput";
 import { initialInstructionSearchState } from "../../state/InstructionStateManagement";
+import Swal from 'sweetalert2';
 
 
 let searchValue = {
@@ -57,6 +58,14 @@ class SearchInstructionBar extends Component<Props, SearchState> {
   handleSearchClick = () => {
     const state = this.context as InstructionsState;
     state.search.page = 1;
+
+    if(searchValue.startDate === '' || searchValue.endDate === '') {
+      Swal.fire({
+        icon: "warning",
+        text: "지시일은 필수값입니다. (시작일, 종료일)"
+      });
+      return;
+    }
     state.setSearch(searchValue);
   }
 
