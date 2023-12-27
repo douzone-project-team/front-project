@@ -18,6 +18,8 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import SubdirectoryArrowRightOutlinedIcon from '@material-ui/icons/SubdirectoryArrowRightOutlined';
+import {EmployeeContext} from "../store/Employee/employee-context";
+import Swal from "sweetalert2";
 
 interface MessageProps {
     messages: [],
@@ -47,10 +49,17 @@ let message = {
     message: ""
 }
 
+const styles = {
+    select: {
+        height: '200px', // 여기에 원하는 높이를 지정하세요.
+    },
+};
+
 
 class Message extends React.Component<MessageProps> {
-    static contextType = AuthContext;
+    static contextType = EmployeeContext;
     state = {
+        anchorEl: null,
         tabValue: 0,
         targetId: 0,
         message: "",
@@ -93,16 +102,43 @@ class Message extends React.Component<MessageProps> {
     handleSendMessage = () => {
         const {sendMessage} = this.props;
         const {targetId, message} = this.state;
+        if(!targetId){
+            Swal.fire({
+                position: "bottom-right",
+                icon: "warning",
+                text: '선택된 사원이 없습니다.',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            return;
+        }
+        if(message.length == 0){
+            Swal.fire({
+                position: "bottom-right",
+                icon: "warning",
+                text: '메시지를 작성해주세요',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            return;
+        }
         const employee = JSON.parse(localStorage.getItem('employee') as string) as unknown as Employees;
         sendMessage(employee.employeeNo, targetId, message);
     }
 
+    handleClose = () => {
+        this.setState({ anchorEl: null });
+    };
+
     render() {
         const {messages, onDeleteMessage} = this.props;
         const {tabValue, targetId, message} = this.state;
-        const {employeePage} = this.context;
+        const {anchorEl} = this.state;
+        const {employeeList} = this.context;
         let employee = JSON.parse(localStorage.getItem('employee') as string) as unknown as Employees;
         let messages1 = messages as unknown as Messages[];
+        const open = Boolean(anchorEl);
+        // @ts-ignore
         // @ts-ignore
         return (
             <Box
@@ -177,8 +213,13 @@ class Message extends React.Component<MessageProps> {
                                         id="targetId"
                                         onChange={this.handleTargetIdChange}
                                         defaultValue={targetId}
+                                        MenuProps={{
+                                            PaperProps: {
+                                                style: {maxHeight: '250px'},
+                                            }
+                                        }}
                                     >
-                                        {employeePage.list.map((employee: any) => (
+                                        {employeeList.list.map((employee: any) => (
                                             <MenuItem key={employee.employeeNo} value={employee.employeeNo}>
                                                 {employee.employeeNo} ({employee.name})
                                             </MenuItem>

@@ -16,6 +16,10 @@ export type EmployeeList = {
     tel: string
 }
 
+export type AllEmployeeList = {
+    list: EmployeeList[],
+}
+
 export type EmployeePage = {
     list: EmployeeList[],
     currentPage: number,
@@ -88,6 +92,7 @@ export type EmployeeState = {
     instructionList: InstructionList,
     deliveryList: DeliveryList,
     instruction: Instruction,
+    employeeList: AllEmployeeList,
     delivery: Delivery,
     message: Message,
     messages: Messages,
@@ -96,6 +101,7 @@ export type EmployeeState = {
     cleanEmployee: () => void,
     getMe: () => void,
     getEmployee: (employeeNo: number) => void,
+    getEmployeeList : () => void,
     updateEmployee: (employeeNo: number, object: UpdateEmployee) => void,
     addImage: (employeeNo: number, image: File) => void,
     updateImage: (employeeNo: number, image: File) => void,

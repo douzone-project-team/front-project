@@ -35,10 +35,10 @@ type Props = {
 }
 
 const boldCellStyle = {
-  border: '1px solid #D3D3D3',
   fontWeight: 'bold',
   fontFamily: 'S-CoreDream-3Light',
-  minWidth: '170px'
+  minWidth: '170px',
+  backgroundColor: '#f1f3f5'
 };
 
 const tableCellStyle = {

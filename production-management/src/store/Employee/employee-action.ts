@@ -26,6 +26,11 @@ class EmployeeAction {
         return fetcher.GET(URL);
     }
 
+    public getEmployeeList() {
+        const URL = `${this.baseUrl}/list/all`;
+        return fetcher.GET(URL);
+    }
+
     public updateEmployee(employeeNo: number, object: UpdateEmployee) {
         const URL = `${this.baseUrl}/${employeeNo}`;
         return fetcher.PUT(URL, object);

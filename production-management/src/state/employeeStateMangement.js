@@ -15,6 +15,10 @@ export const initialEmployeePage = {
     hasPreviousPage: false
 }
 
+export const initialEmployeeList = {
+    list: []
+}
+
 export const initialEmployee = {
     employeeNo: 0,
     id: '',

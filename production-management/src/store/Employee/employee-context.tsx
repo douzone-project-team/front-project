@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import EmployeeAction from "./employee-action";
-import {Employee, EmployeeState, Message, UpdateEmployee} from "../../object/Employee/employee-object";
+import {AllEmployeeList, Employee, EmployeeState, Message, UpdateEmployee} from "../../object/Employee/employee-object";
 import Swal from "sweetalert2";
 import {
     initialSearch,
@@ -10,7 +10,7 @@ import {
     initialIsSuccess,
     initialInstruction,
     initialDelivery, initialInstructionList, initialDeliveryList,
-    initialEmployee, initialMessage, initialMessages,
+    initialEmployee, initialMessage, initialMessages, initialEmployeeList,
 } from "../../state/employeeStateMangement";
 import CookieManager from "../../common/CookieManager";
 // @ts-ignore
@@ -31,6 +31,7 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     instructionList: initialInstructionList,
     deliveryList: initialDeliveryList,
     instruction: initialInstruction,
+    employeeList: initialEmployeeList,
     delivery: initialDelivery,
     messages: initialMessages,
     message: initialMessage,
@@ -43,6 +44,8 @@ export const EmployeeContext = React.createContext<EmployeeState>({
     getMe(): void {
     },
     getEmployee(employeeNo: number): void {
+    },
+    getEmployeeList(): void {
     },
     updateEmployee(employeeNo: number, updateEmployee: UpdateEmployee): void {
     }, // 사원 스스로 업데이트
@@ -74,6 +77,7 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
         instructionList: initialInstructionList,
         deliveryList: initialDeliveryList,
         instruction: initialInstruction,
+        employeeList: initialEmployeeList,
         delivery: initialDelivery,
         messages: initialMessages,
         message: initialMessage,
@@ -161,6 +165,16 @@ export class EmployeeContextProvider extends Component<Props, EmployeeState> {
                 }).catch((error) => {
                 this.printErrorAlert(error);
             });
+        },
+
+        getEmployeeList: () => {
+            employeeAction.getEmployeeList()
+                .then(result => {
+                    let data = result?.data;
+                    this.setState({employeeList: data});
+                }).catch((error) => {
+                    this.printErrorAlert(error);
+            })
         },
 
         updateEmployee: (employeeNo: number, updateEmployee: UpdateEmployee) => {
