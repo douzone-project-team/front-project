@@ -24,9 +24,9 @@ ReactDOM.render(
               <DeliveriesContextProvider>
                 <DeliveryInstructionContextProvider>
                   <CustomerContextProvider>
-                    <React.StrictMode>
+                    {/*<React.StrictMode>*/}
                       <App/>
-                    </React.StrictMode>
+                    {/*</React.StrictMode>*/}
                   </CustomerContextProvider>
                 </DeliveryInstructionContextProvider>
               </DeliveriesContextProvider>
